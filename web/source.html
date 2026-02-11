@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Source — Zork I: Inform 7 Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #0a0a0a;
+  color: #d4c5a9;
+  font-family: Georgia, "Times New Roman", serif;
+  overflow: hidden;
+}
+
+/* --- Layout --- */
+.container {
+  display: flex;
+  height: 100%;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: #0e0e0c;
+  border-right: 1px solid #1e1a14;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid #1e1a14;
+}
+
+.sidebar-header h1 {
+  font-size: 0.95em;
+  color: #c4b48a;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.sidebar-header a {
+  font-size: 0.8em;
+  color: #887755;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.sidebar-header a:hover {
+  color: #aa9966;
+  border-bottom-color: #aa9966;
+}
+
+.nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.nav::-webkit-scrollbar { width: 6px; }
+.nav::-webkit-scrollbar-track { background: #0e0e0c; }
+.nav::-webkit-scrollbar-thumb { background: #2a2418; border-radius: 3px; }
+
+.nav-item {
+  display: block;
+  padding: 4px 16px;
+  font-size: 0.82em;
+  color: #998866;
+  text-decoration: none;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.1s, color 0.1s;
+}
+
+.nav-item:hover {
+  background: #151510;
+  color: #c4b48a;
+}
+
+.nav-item.active {
+  background: #18160f;
+  color: #e8d090;
+  border-left-color: #e8d090;
+}
+
+.nav-part {
+  font-weight: bold;
+  color: #c4b48a;
+  padding-top: 10px;
+  font-size: 0.85em;
+}
+
+.nav-chapter {
+  padding-left: 24px;
+}
+
+.nav-section {
+  padding-left: 36px;
+  font-size: 0.78em;
+  color: #776644;
+}
+
+/* --- Main content --- */
+.main {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  padding: 8px 20px;
+  background: #0e0e0c;
+  border-bottom: 1px solid #1e1a14;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.85em;
+  color: #887755;
+}
+
+.toolbar .file-path {
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+  color: #aa9966;
+}
+
+.toolbar .line-count {
+  margin-left: auto;
+}
+
+.search-box {
+  background: #111;
+  border: 1px solid #2a2418;
+  border-radius: 4px;
+  color: #d4c5a9;
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+  padding: 3px 8px;
+  width: 200px;
+  outline: none;
+}
+
+.search-box:focus {
+  border-color: #4a3a20;
+}
+
+.search-box::placeholder {
+  color: #554433;
+}
+
+.code-wrap {
+  flex: 1;
+  overflow: auto;
+  padding: 16px 0;
+}
+
+.code-wrap::-webkit-scrollbar { width: 8px; }
+.code-wrap::-webkit-scrollbar-track { background: #0a0a0a; }
+.code-wrap::-webkit-scrollbar-thumb { background: #2a2418; border-radius: 4px; }
+.code-wrap::-webkit-scrollbar-thumb:hover { background: #3a3020; }
+
+/* --- Code display --- */
+table.code {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+table.code td {
+  vertical-align: top;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+td.ln {
+  width: 1px;
+  padding: 0 16px 0 20px;
+  text-align: right;
+  color: #3a3020;
+  user-select: none;
+  white-space: nowrap;
+}
+
+td.lc {
+  padding: 0 20px 0 0;
+}
+
+tr.heading-line td {
+  padding-top: 8px;
+}
+
+tr.heading-line td.lc {
+  font-weight: bold;
+  color: #e8d8b0;
+  font-size: 15px;
+}
+
+tr.heading-line td.ln {
+  color: #5a4a30;
+}
+
+tr:target td,
+tr.highlight td {
+  background: #1a1810;
+}
+
+tr:target td.ln,
+tr.highlight td.ln {
+  color: #887755;
+}
+
+/* --- Syntax colors --- */
+.syn-str   { color: #8bab6e; }  /* strings — muted green */
+.syn-cmt   { color: #666050; font-style: italic; }  /* comments — dim */
+.syn-sub   { color: #7ea8b0; }  /* say substitutions — teal */
+.syn-kw    { color: #c49060; }  /* keywords — warm orange */
+.syn-head  { color: #e8d8b0; font-weight: bold; }  /* headings */
+.syn-rule  { color: #b89860; }  /* rule names */
+.syn-num   { color: #b08a70; }  /* numbers */
+.syn-tbl   { color: #9090b0; }  /* table headers */
+
+/* --- Loading / error --- */
+.loading {
+  text-align: center;
+  padding: 80px 40px;
+  color: #887755;
+  font-size: 1.1em;
+}
+
+.loading em {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.error-msg {
+  text-align: center;
+  padding: 80px 40px;
+  color: #aa6644;
+}
+
+/* --- Search highlights --- */
+.search-hit {
+  background: #5a4a10;
+  color: #ffe8a0;
+  border-radius: 2px;
+}
+
+.search-current {
+  background: #7a6a20;
+  outline: 1px solid #aa9930;
+}
+
+/* --- Responsive --- */
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h1>Zork I: Inform 7</h1>
+      <a href="./">&larr; Back to project</a>
+    </div>
+    <div class="nav" id="nav"></div>
+  </div>
+  <div class="main">
+    <div class="toolbar">
+      <span class="file-path">src/inform7/story.ni</span>
+      <input type="text" class="search-box" id="search" placeholder="Search... (Ctrl+F)">
+      <span class="line-count" id="line-count"></span>
+    </div>
+    <div class="code-wrap" id="code-wrap">
+      <div class="loading"><em>Loading source...</em></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const RAW_URL = 'https://raw.githubusercontent.com/Johnesco/zork1/main/src/inform7/story.ni';
+const headingRe = /^(Volume|Book|Part|Chapter|Section)\s+(.+)/;
+
+/* ---- Inform 7 Syntax Highlighter ---- */
+function highlight(line) {
+  // Check for heading
+  const hm = line.match(headingRe);
+  if (hm) return '<span class="syn-head">' + esc(line) + '</span>';
+
+  // Check for table header
+  if (/^Table\s+/.test(line)) return '<span class="syn-tbl">' + esc(line) + '</span>';
+
+  // State machine: walk character by character
+  let out = '';
+  let i = 0;
+  const len = line.length;
+  // States: 'normal', 'string', 'comment', 'sub' (substitution inside string)
+  let state = 'normal';
+  let commentDepth = 0;
+  let buf = '';
+
+  function flush(cls) {
+    if (!buf) return;
+    if (cls) out += '<span class="' + cls + '">' + esc(buf) + '</span>';
+    else out += esc(buf);
+    buf = '';
+  }
+
+  while (i < len) {
+    const ch = line[i];
+
+    if (state === 'normal') {
+      if (ch === '"') {
+        flush();
+        buf = ch;
+        state = 'string';
+      } else if (ch === '[') {
+        flush();
+        buf = ch;
+        commentDepth = 1;
+        state = 'comment';
+      } else {
+        buf += ch;
+      }
+    } else if (state === 'string') {
+      buf += ch;
+      if (ch === '[') {
+        // Flush the string up to (not including) the bracket, start substitution
+        const before = buf.slice(0, -1);
+        if (before) out += '<span class="syn-str">' + esc(before) + '</span>';
+        buf = ch;
+        state = 'sub';
+        commentDepth = 1;
+      } else if (ch === '"') {
+        flush('syn-str');
+        state = 'normal';
+      }
+    } else if (state === 'sub') {
+      buf += ch;
+      if (ch === '[') commentDepth++;
+      else if (ch === ']') {
+        commentDepth--;
+        if (commentDepth === 0) {
+          flush('syn-sub');
+          state = 'string';
+        }
+      }
+    } else if (state === 'comment') {
+      buf += ch;
+      if (ch === '[') commentDepth++;
+      else if (ch === ']') {
+        commentDepth--;
+        if (commentDepth === 0) {
+          flush('syn-cmt');
+          state = 'normal';
+        }
+      }
+    }
+    i++;
+  }
+
+  // Flush remaining
+  if (state === 'string') flush('syn-str');
+  else if (state === 'comment') flush('syn-cmt');
+  else if (state === 'sub') flush('syn-sub');
+  else {
+    // Apply keyword and number highlighting to normal text buffer
+    if (buf) out += highlightKeywords(esc(buf));
+    buf = '';
+  }
+
+  // If the whole output has no spans yet for normal text, apply keywords
+  if (state === 'normal' && !out.includes('<span')) {
+    return highlightKeywords(esc(line));
+  }
+
+  return out;
+}
+
+function highlightKeywords(html) {
+  // Highlight keywords — careful to only match whole words
+  const kwPattern = /\b(Understand|understand|Instead of|Instead|instead of|instead|After|after|Before|before|Check|check|Carry out|carry out|Report|report|Every turn|every turn|When play begins|When|when|Rule|rule|This is|Definition|definition|To say|To decide|To |say |now |let |repeat|if |otherwise|else|end if|end while|end repeat|unless|does the player mean|Persuasion|persuasion|A thing|A room|A person|A container|A supporter|A direction|An|The|is a kind of|is a |are a |has |can be |which is |called |with )\b/g;
+  html = html.replace(kwPattern, '<span class="syn-kw">$1</span>');
+
+  // Highlight standalone numbers
+  html = html.replace(/\b(\d+)\b/g, '<span class="syn-num">$1</span>');
+
+  return html;
+}
+
+function esc(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* ---- Build page ---- */
+async function init() {
+  const wrap = document.getElementById('code-wrap');
+  const nav = document.getElementById('nav');
+  const lineCountEl = document.getElementById('line-count');
+
+  let source;
+  try {
+    const res = await fetch(RAW_URL);
+    if (!res.ok) throw new Error(res.status);
+    source = await res.text();
+  } catch (e) {
+    wrap.innerHTML = '<div class="error-msg">Failed to load source. <a href="' + RAW_URL + '">View on GitHub</a></div>';
+    return;
+  }
+
+  const lines = source.split('\n');
+  lineCountEl.textContent = lines.length + ' lines';
+
+  // Build code table and nav
+  const navItems = [];
+  const rows = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const raw = lines[i];
+    const num = i + 1;
+    const hm = raw.match(headingRe);
+    const isHeading = !!hm;
+
+    let cls = '';
+    let navCls = '';
+    if (isHeading) {
+      cls = ' class="heading-line"';
+      const level = hm[1].toLowerCase();
+      if (level === 'volume' || level === 'book') navCls = 'nav-item nav-part';
+      else if (level === 'part') navCls = 'nav-item nav-part';
+      else if (level === 'chapter') navCls = 'nav-item nav-chapter';
+      else navCls = 'nav-item nav-section';
+
+      navItems.push('<a class="' + navCls + '" data-line="' + num + '" href="#L' + num + '">' + esc(raw) + '</a>');
+    }
+
+    rows.push('<tr id="L' + num + '"' + cls + '><td class="ln">' + num + '</td><td class="lc">' + highlight(raw) + '</td></tr>');
+  }
+
+  wrap.innerHTML = '<table class="code">' + rows.join('') + '</table>';
+  nav.innerHTML = navItems.join('');
+
+  // Nav click handler — highlight active
+  nav.addEventListener('click', function(e) {
+    const a = e.target.closest('.nav-item');
+    if (!a) return;
+    nav.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    a.classList.add('active');
+  });
+
+  // Scroll to hash on load
+  if (location.hash) {
+    const el = document.querySelector(location.hash);
+    if (el) el.scrollIntoView({ block: 'start' });
+  }
+
+  // --- Search ---
+  const searchInput = document.getElementById('search');
+  let searchHits = [];
+  let currentHit = -1;
+
+  function clearSearch() {
+    document.querySelectorAll('.search-hit').forEach(el => {
+      el.outerHTML = el.textContent;
+    });
+    searchHits = [];
+    currentHit = -1;
+  }
+
+  function doSearch(query) {
+    clearSearch();
+    if (!query || query.length < 2) return;
+
+    const lower = query.toLowerCase();
+    const cells = document.querySelectorAll('td.lc');
+
+    cells.forEach(td => {
+      const text = td.textContent;
+      if (text.toLowerCase().includes(lower)) {
+        // Wrap matches in the HTML — operate on text nodes only
+        highlightMatches(td, query);
+      }
+    });
+
+    searchHits = Array.from(document.querySelectorAll('.search-hit'));
+    if (searchHits.length > 0) {
+      currentHit = 0;
+      searchHits[0].classList.add('search-current');
+      searchHits[0].scrollIntoView({ block: 'center' });
+    }
+  }
+
+  function highlightMatches(el, query) {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const lower = query.toLowerCase();
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+
+    nodes.forEach(node => {
+      const text = node.textContent;
+      const idx = text.toLowerCase().indexOf(lower);
+      if (idx === -1) return;
+
+      const before = text.slice(0, idx);
+      const match = text.slice(idx, idx + query.length);
+      const after = text.slice(idx + query.length);
+
+      const span = document.createElement('span');
+      span.className = 'search-hit';
+      span.textContent = match;
+
+      const parent = node.parentNode;
+      if (before) parent.insertBefore(document.createTextNode(before), node);
+      parent.insertBefore(span, node);
+      if (after) parent.insertBefore(document.createTextNode(after), node);
+      parent.removeChild(node);
+
+      // Recurse on the "after" text node for multiple matches per line
+      if (after.toLowerCase().includes(lower)) {
+        const afterNode = span.nextSibling;
+        if (afterNode && afterNode.nodeType === Node.TEXT_NODE) {
+          const temp = document.createElement('span');
+          temp.appendChild(afterNode.cloneNode(true));
+          // Wrap in a temporary element to recurse
+          parent.replaceChild(temp, afterNode);
+          highlightMatches(temp, query);
+          // Unwrap the temporary span
+          while (temp.firstChild) parent.insertBefore(temp.firstChild, temp);
+          parent.removeChild(temp);
+        }
+      }
+    });
+  }
+
+  function nextHit() {
+    if (searchHits.length === 0) return;
+    searchHits[currentHit].classList.remove('search-current');
+    currentHit = (currentHit + 1) % searchHits.length;
+    searchHits[currentHit].classList.add('search-current');
+    searchHits[currentHit].scrollIntoView({ block: 'center' });
+  }
+
+  function prevHit() {
+    if (searchHits.length === 0) return;
+    searchHits[currentHit].classList.remove('search-current');
+    currentHit = (currentHit - 1 + searchHits.length) % searchHits.length;
+    searchHits[currentHit].classList.add('search-current');
+    searchHits[currentHit].scrollIntoView({ block: 'center' });
+  }
+
+  let debounce;
+  searchInput.addEventListener('input', function() {
+    clearTimeout(debounce);
+    debounce = setTimeout(() => doSearch(this.value), 200);
+  });
+
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (e.shiftKey) prevHit(); else nextHit();
+    }
+    if (e.key === 'Escape') {
+      clearSearch();
+      this.value = '';
+      this.blur();
+    }
+  });
+
+  // Ctrl+F intercept
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+      e.preventDefault();
+      searchInput.focus();
+      searchInput.select();
+    }
+  });
+}
+
+init();
+</script>
+
+</body>
+</html>
