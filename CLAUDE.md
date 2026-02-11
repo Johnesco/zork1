@@ -5,6 +5,12 @@
 ZIL-to-Inform 7 translation of Zork I: The Great Underground Empire.
 The Inform 7 source is the living document; the ZIL files are read-only reference.
 
+## GitHub Repository
+
+- **Working repository**: `Johnesco/zork1` — ALL issues, PRs, and code changes go here
+- **Upstream (read-only reference)**: `historicalsource/zork1` — DO NOT create issues or PRs here
+- When using `gh` CLI, always use `--repo Johnesco/zork1` or ensure the default repo is correct
+
 ## Repository Layout
 
 ```
