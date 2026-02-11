@@ -1,6 +1,9 @@
 # Build output
 build/
 
+# Claude Code local settings
+.claude/
+
 # Inform 7 compiler (large, download separately)
 tools/
 

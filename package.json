@@ -1,0 +1,26 @@
+{
+  "name": "zork1",
+  "version": "1.0.0",
+  "description": "_Zork I_ is an interactive fiction game written by Marc Blank, Dave Lebling, Bruce Daniels and Tim Anderson. The game was published by [Infocom](https://en.wikipedia.org/wiki/Infocom).",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffnyman/zork1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jeffnyman/zork1/issues"
+  },
+  "homepage": "https://github.com/jeffnyman/zork1#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "http-server": "^14.1.1",
+    "serve": "^14.2.5"
+  }
+}
