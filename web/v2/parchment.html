@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZORK I: The Great Underground Empire — Parchment</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+<link rel="stylesheet" href="lib/parchment/parchment.css" type="text/css">
+<script src="lib/parchment/jquery.min.js"></script>
+<script src="lib/parchment/ie.js" nomodule></script>
+<script src="lib/parchment/parchment.js"></script>
+<script src="lib/parchment/resourcemap.js" type="text/javascript"></script>
+<script>
+    parchment_options = {
+        default_story: [ "lib/parchment/zork1.ulx.js" ],
+        lib_path: 'lib/parchment/',
+        story_name: 'zork1.ulx.js',
+    };
+</script>
+</head>
+<body>
+
+<div id="windowport">
+    <noscript>
+        <div style="text-align:center; padding:40px; color:#aa6644;">
+            <h2>ZORK I</h2>
+            <p>JavaScript is required to play this game.</p>
+        </div>
+    </noscript>
+</div>
+<div id="loadingpane">
+    <img src="lib/parchment/waiting.gif" alt="LOADING"><br>
+    <em>&nbsp;&nbsp;&nbsp;Loading...</em>
+</div>
+<div id="errorpane" style="display:none;"><div id="errorcontent">...</div></div>
+
+</body>
+</html>
