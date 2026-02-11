@@ -1,3 +1,12 @@
+# Build output
+build/
+
+# Inform 7 compiler (large, download separately)
+tools/
+
+# Web game data (tracked for GitHub Pages deployment)
+# web/zork1.ulx.js
+
 # OS generated files
 
 $RECYCLE.BIN/
@@ -50,3 +59,12 @@ Icon
 .idea/**/dynamic.xml
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
+
+# Node.js
+node_modules/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
