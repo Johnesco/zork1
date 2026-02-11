@@ -118,6 +118,32 @@ a:hover {
   font-size: 0.95em;
 }
 
+.links-section {
+  margin-top: 32px;
+}
+
+.links-section h3 {
+  font-size: 0.95em;
+  color: #aa9966;
+  margin-bottom: 10px;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 32px;
+  font-size: 0.9em;
+}
+
+.links-grid a {
+  color: #b0a080;
+  border-bottom-color: #2a2418;
+}
+
+.links-grid a:hover {
+  color: #e8d090;
+}
+
 footer {
   margin-top: 60px;
   padding-top: 20px;
@@ -138,10 +164,33 @@ footer a {
 <p class="subtitle">Inform 7 Edition</p>
 
 <p>
-  A faithful translation of the original
-  <a href="https://en.wikipedia.org/wiki/Zork_Implementation_Language">ZIL</a> source code
-  into <a href="http://inform7.com/">Inform 7</a>, preserving the full game while
-  incorporating bug fixes, quality-of-life improvements, and parser enhancements.
+  This project is a ground-up translation of Infocom's <em>Zork I</em> from its
+  original <a href="https://en.wikipedia.org/wiki/Zork_Implementation_Language">ZIL</a>
+  source code into <a href="http://inform7.com/">Inform 7</a>, the modern natural-language
+  interactive fiction system. The goal is a faithful recreation that preserves the
+  full original game &mdash; every room, puzzle, and mechanic &mdash; while taking
+  advantage of Inform 7's expressiveness to fix long-standing bugs, improve the
+  parser, and add quality-of-life enhancements that weren't possible in the
+  original Z-machine environment.
+</p>
+
+<p>
+  The translation works directly from the
+  <a href="https://github.com/historicalsource/zork1">historic ZIL source</a>
+  released by Activision under the MIT License, cross-referencing every routine,
+  object, and table against the Inform 7 output. Inspiration and encouragement
+  came from <a href="https://i7-dungeon.sourceforge.net/index.html">Dean Menezes' earlier Inform 7 port of Dungeon</a>
+  (the mainframe ancestor of Zork), which demonstrated that a large-scale
+  Infocom translation into Inform 7 was not only possible but could produce
+  clean, readable source. This project applies a similar philosophy to the
+  commercial Zork I specifically, working from the released ZIL rather than
+  the Fortran Dungeon source.
+</p>
+
+<p>
+  The full source code is open and readable &mdash; every line of game logic is
+  visible in the <a href="source.html">source browser</a>, and each versioned
+  release includes a snapshot of the Inform 7 source alongside the playable game.
 </p>
 
 <a class="play-btn" href="v2/">Play Current Version</a>
@@ -189,12 +238,67 @@ footer a {
   </div>
 </div>
 
+<h2>Community &amp; Related Projects</h2>
+
+<div class="links-section">
+  <h3>Zork &amp; Infocom</h3>
+  <div class="links-grid">
+    <a href="https://github.com/historicalsource/zork1">Zork I ZIL Source (GitHub)</a>
+    <a href="https://en.wikipedia.org/wiki/Zork">Zork on Wikipedia</a>
+    <a href="https://www.infocom-if.org/">Infocom Documentation Project</a>
+    <a href="https://ifdb.org/viewgame?id=0dbnusxunq7fw5ro">Zork I on IFDB</a>
+    <a href="http://www.microheaven.com/InfocomBugs/zorki.shtml">Infocom Bugs List &mdash; Zork I</a>
+    <a href="http://graeme.50webs.com/infobugs/zork1.htm">Graeme Cree's Zork I Bugs</a>
+  </div>
+</div>
+
+<div class="links-section">
+  <h3>Inform &amp; Authoring</h3>
+  <div class="links-grid">
+    <a href="http://inform7.com/">Inform 7</a>
+    <a href="https://ganelson.github.io/inform-website/">Inform 7 Documentation</a>
+    <a href="https://i7-dungeon.sourceforge.net/index.html">Dean Menezes' Inform 7 Dungeon Port</a>
+    <a href="https://www.inform-fiction.org/">Inform 6 &amp; Inform Fiction</a>
+    <a href="https://github.com/ganelson/inform">Inform Compiler (GitHub)</a>
+    <a href="https://intfiction.org/">IntFiction Forum</a>
+  </div>
+</div>
+
+<div class="links-section">
+  <h3>Play &amp; Explore Interactive Fiction</h3>
+  <div class="links-grid">
+    <a href="https://ifdb.org/">IFDB &mdash; Interactive Fiction Database</a>
+    <a href="https://ifarchive.org/">IF Archive</a>
+    <a href="https://itch.io/games/tag-interactive-fiction">Interactive Fiction on itch.io</a>
+    <a href="https://ifcomp.org/">IFComp &mdash; Annual IF Competition</a>
+  </div>
+</div>
+
+<div class="links-section">
+  <h3>Interpreters &amp; Technology</h3>
+  <div class="links-grid">
+    <a href="https://eblong.com/zarf/glulx/quixe/">Quixe &mdash; Web Glulx Interpreter</a>
+    <a href="https://eblong.com/zarf/glk/glkote/">GlkOte &mdash; Web Glk Library</a>
+    <a href="https://www.inform-fiction.org/zmachine/standards/z1point1/">Z-Machine Standard</a>
+    <a href="https://www.eblong.com/zarf/glulx/">Glulx VM Specification</a>
+    <a href="https://github.com/nickyringland/parchment">Parchment &mdash; Web Z-Machine</a>
+    <a href="https://www.ifwiki.org/">IFWiki</a>
+  </div>
+</div>
+
 <footer>
   <p>
-    Original game by Infocom (1980). Source translation from the
-    <a href="https://github.com/historicalsource/zork1">historic ZIL source</a>.
-    Built with <a href="http://inform7.com/">Inform 7</a> and
-    <a href="https://eblong.com/zarf/glulx/quixe/">Quixe</a>.
+    <em>Zork I: The Great Underground Empire</em> was written by Marc Blank, Dave Lebling,
+    Bruce Daniels, and Tim Anderson, and published by
+    <a href="https://en.wikipedia.org/wiki/Infocom">Infocom</a> (1980).
+    The ZIL source was released under the MIT License by Activision.
+    This Inform 7 translation is an unofficial fan project.
+  </p>
+  <p>
+    Built with <a href="http://inform7.com/">Inform 7</a>,
+    <a href="https://eblong.com/zarf/glulx/quixe/">Quixe</a>, and
+    <a href="https://eblong.com/zarf/glk/glkote/">GlkOte</a>.
+    Source on <a href="https://github.com/Johnesco/zork1">GitHub</a>.
   </p>
 </footer>
 
