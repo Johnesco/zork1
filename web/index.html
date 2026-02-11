@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZORK I: The Great Underground Empire</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+
+<style>
+/* === Reset & Base === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #0a0a0a;
+  color: #d4c5a9;
+  font-family: Georgia, "Times New Roman", serif;
+  overflow: hidden;
+}
+
+/* === Game Port (Quixe container) === */
+#gameport {
+  position: absolute;
+  overflow: hidden;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: #111;
+  margin: 0;
+}
+
+/* === GlkOte core === */
+#windowport {
+  width: 100%;
+  height: 100%;
+}
+
+#errorpane {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  background: #4a1010;
+  border-bottom: 2px solid #882020;
+  z-index: 100;
+}
+
+#errorpane.WarningPane {
+  background: #1a1a40;
+  border-bottom: 2px solid #3333aa;
+}
+
+#errorpane:hover {
+  opacity: 0.7;
+}
+
+#errorcontent {
+  font-size: 1em;
+  padding: 0.8em;
+  text-align: center;
+  color: #ff9999;
+}
+
+#loadingpane {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 35%;
+  color: #887755;
+  font-size: 1.2em;
+}
+
+#loadingpane img {
+  display: none;
+}
+
+/* === Window Frames === */
+.WindowFrame {
+  position: absolute;
+  margin: 0;
+  background: #111;
+}
+
+/* === Buffer Window (main text) === */
+.BufferWindow {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font-family: "Iowan Old Style", Palatino, Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.6;
+  padding: 20px 40px;
+  color: #d4c5a9;
+  background: #111;
+}
+
+/* Scrollbar styling */
+.BufferWindow::-webkit-scrollbar {
+  width: 8px;
+}
+.BufferWindow::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+.BufferWindow::-webkit-scrollbar-thumb {
+  background: #3a3020;
+  border-radius: 4px;
+}
+.BufferWindow::-webkit-scrollbar-thumb:hover {
+  background: #5a4a30;
+}
+
+.BufferLine {
+  white-space: pre-wrap;
+}
+
+.BlankLineSpan {
+  display: none;
+}
+.BlankLineSpan:only-child {
+  display: inline;
+}
+
+.BufferLine:last-child {
+  margin-bottom: 14px;
+}
+
+.HasNoInputField .BufferLine:last-child .BlankLineSpan {
+  display: none;
+}
+.HasNoInputField .BufferLine:last-child .InvisiblePos {
+  display: none;
+}
+
+/* === Grid Window (status bar) === */
+.GridWindow {
+  background: #1c1810;
+  overflow: hidden;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  font-size: 14px;
+  padding: 6px 12px;
+  color: #aa9966;
+  border-bottom: 1px solid #2a2418;
+}
+
+.GridLine {
+  white-space: pre;
+}
+
+/* === Cursor === */
+.InvisibleCursor {
+  position: relative;
+}
+
+/* === More Prompt === */
+.MorePrompt {
+  font-weight: bold;
+  position: absolute;
+  pointer-events: none;
+  background: #3a2a10;
+  color: #d4c5a9;
+  opacity: 0.7;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.PreviousMark {
+  position: absolute;
+  background: #3a2a10;
+  height: 2px;
+  width: 12px;
+  top: 0;
+  right: 0;
+}
+
+/* === Input Field === */
+.Input {
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  background: none;
+  font-weight: bold;
+  color: #e8d090;
+  caret-color: #e8d090;
+}
+
+.BufferWindow .Input {
+  font-family: "Iowan Old Style", Palatino, Georgia, "Times New Roman", serif;
+  font-size: 16px;
+}
+
+.GridWindow .Input {
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  font-size: 14px;
+}
+
+.Input:focus::placeholder {
+  color: transparent;
+}
+
+/* === Images === */
+.ImageMarginLeft  { float: left; margin-right: 0.5em; }
+.ImageMarginRight { float: right; margin-left: 0.5em; }
+.ImageInlineDown  { vertical-align: text-top; }
+.ImageInlineUp    { vertical-align: text-bottom; }
+.ImageInlineCenter { vertical-align: middle; }
+.FlowBreak { clear: both; }
+
+.GraphicsWindow canvas {
+  display: block;
+  background-color: #111;
+}
+
+/* === Glk Text Styles === */
+.Style_normal { }
+.Style_emphasized { font-style: italic; }
+.Style_preformatted {
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+}
+.Style_header {
+  font-weight: bold;
+  color: #e8d8b0;
+}
+.BufferWindow .Style_header {
+  font-size: 18px;
+}
+.Style_subheader { font-weight: bold; }
+.Style_alert { font-weight: bold; color: #cc8844; }
+.Style_note { font-style: italic; color: #aa9966; }
+.Style_blockquote { background: #1a1810; padding: 2px 4px; }
+.Style_input { font-weight: bold; color: #e8d090; }
+.Style_user1 { }
+.Style_user2 { }
+
+/* === Dialog boxes (save/restore) === */
+#dialog_screen {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.6;
+}
+
+#dialog_frame {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#dialog {
+  position: relative;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  background: #1a1810;
+  border: 2px solid #3a2a10;
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.8);
+  color: #d4c5a9;
+}
+
+#dialog .DiaCaption { margin: 16px; }
+#dialog .DiaWarning { margin: 16px; font-size: 14px; font-style: italic; }
+#dialog .DiaInput { margin: 16px; }
+#dialog input {
+  width: 100%;
+  background: #111;
+  border: 1px solid #3a2a10;
+  color: #d4c5a9;
+  padding: 4px 8px;
+}
+#dialog .DiaBody { margin: 16px; clear: both; }
+#dialog select {
+  width: 100%;
+  background: #111;
+  color: #d4c5a9;
+  border: 1px solid #3a2a10;
+}
+#dialog button {
+  margin-left: 8px;
+  background: #2a2010;
+  color: #d4c5a9;
+  border: 1px solid #4a3a20;
+  padding: 4px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+#dialog button:hover {
+  background: #3a3020;
+}
+#dialog .DiaButtons { margin: 16px; text-align: right; }
+#dialog .DiaButtonsFloat { margin: 0 16px; float: right; }
+#dialog .DiaDisplayText {
+  font-family: inherit;
+  height: 200px;
+  padding: 4px 8px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  font-size: 14px;
+  white-space: pre-wrap;
+  background: #0a0a08;
+  color: #aa9966;
+}
+
+/* === Loading screen === */
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+#loadingpane em {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+</style>
+
+<script src="lib/jquery-1.12.4.min.js"></script>
+<script src="lib/glkote.min.js"></script>
+<script src="lib/quixe.min.js"></script>
+
+<script>
+game_options = {
+  use_query_story: false,
+  log_execution_time: false,
+  set_page_title: true
+};
+</script>
+
+<script src="zork1.ulx.js"></script>
+
+</head>
+<body>
+
+<div id="gameport">
+  <div id="windowport">
+    <noscript>
+      <div style="text-align:center; padding:40px; color:#aa6644;">
+        <h2>ZORK I</h2>
+        <p>JavaScript is required to play this game.</p>
+      </div>
+    </noscript>
+  </div>
+  <div id="loadingpane">
+    <div style="margin-bottom:20px; font-size:1.4em; color:#aa9966; letter-spacing:4px;">ZORK I</div>
+    <em>Loading the Great Underground Empire...</em>
+  </div>
+  <div id="errorpane" style="display:none;">
+    <div id="errorcontent">...</div>
+  </div>
+</div>
+
+</body>
+</html>
