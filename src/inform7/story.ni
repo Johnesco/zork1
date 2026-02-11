@@ -1383,8 +1383,10 @@ Every turn when the water-level > 0 and the maint-flooded is false (this is the 
 			say "The water level here is now up to your neck.[line break]";
 	if the water-level is at least 14:
 		now the maint-flooded is true;
-		if the player is in Maintenance Room:
-			die saying "I'm afraid you have done drowned yourself."
+		if the player is in Maintenance Room and the player is not in the magic boat:
+			die saying "I'm afraid you have done drowned yourself.";
+		otherwise if the player is in Maintenance Room and the player is in the magic boat:
+			die saying "The rising water carries your boat over the top of the dam and plunges you to your death."
 
 Instead of going to Maintenance Room when the maint-flooded is true:
 	say "The room is full of water and cannot be entered." instead.
@@ -2316,6 +2318,8 @@ Every turn when the player is in Treasure Room and the thief is not defeated and
 	move the thief to Treasure Room.
 
 Instead of attacking the thief:
+	if the thief is not in the location of the player:
+		say "There is no thief here." instead;
 	if the thief is defeated:
 		say "The thief is already dead.";
 	otherwise:
