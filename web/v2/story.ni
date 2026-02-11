@@ -110,7 +110,9 @@ To die saying (reason - text):
 To scatter-possessions:
 	now every thing carried by the player is in West-of-House;
 	if the player encloses the brass lantern:
-		now the brass lantern is in Living Room.
+		now the brass lantern is in Living Room;
+	now the match-lit is false;
+	now the match-timer is 0.
 
 Chapter 5 - Darkness and Grues
 
@@ -884,6 +886,8 @@ Instead of giving something to the troll:
 		now the troll carries the bloody axe;
 	otherwise:
 		say "The troll, who is not overly proud, graciously accepts the gift and eats it hungrily.";
+		if the noun is a container:
+			spill the contents of the noun;
 		remove the noun from play.
 
 Every turn when the troll is not defeated and the troll is in Troll-Room and the player is in Troll-Room (this is the troll attacks rule):
@@ -1029,6 +1033,9 @@ Southwest of Grating Room is Maze11.
 The grate is a door. The grate is scenery. The grate is closed and openable and lockable and locked. The matching key of the grate is the skeleton key.
 Understand "grate" and "grating" as the grate.
 The grate is above Grating Room and below Grating Clearing.
+
+Before locking the grate with something when the grate is open:
+	say "You'd need to close the grate first." instead.
 
 Instead of going up in Grating Room:
 	if the grate is not open:
@@ -2349,6 +2356,16 @@ Every turn when the player carries the sword (this is the sword glow rule):
 
 Part 5 - Miscellaneous Actions and Rules
 
+Chapter 0 - Container Safety
+
+Before inserting something into a container (called the target):
+	if the target is enclosed by the noun:
+		say "That would be quite a trick." instead.
+
+To spill the contents of (C - a container):
+	repeat with item running through things in C:
+		now item is in the holder of C.
+
 Chapter 1 - Hello Sailor
 
 Understand "hello sailor" as a mistake ("Nothing happens here.").
@@ -2513,10 +2530,13 @@ Carry out deflating: say "You can't deflate that."
 Instead of deflating the magic boat:
 	say "The boat deflates.";
 	now the boat-inflated is false;
+	let R be the location of the magic boat;
 	if the player is in the magic boat:
-		move the player to the location of the magic boat;
+		move the player to R;
+	repeat with item running through things in the magic boat:
+		now item is in R;
 	now the magic boat is nowhere;
-	now the pile of plastic is in the location of the player.
+	now the pile of plastic is in R.
 
 Before entering the magic boat:
 	let sharp-items be false;
@@ -2531,6 +2551,7 @@ Before entering the magic boat:
 	if sharp-items is true:
 		say "The pointy object pokes a hole in the boat, which deflates instantly.";
 		now the boat-punctured is true;
+		spill the contents of the magic boat;
 		now the magic boat is nowhere;
 		now the punctured boat is in the location of the player;
 		stop the action.
