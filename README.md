@@ -1,51 +1,42 @@
-# Zork I: The Great Underground Empire
+# Zork I: The Great Underground Empire — Inform 7 Edition
 
-## The Game
+An [Inform 7](http://inform7.com/) translation of Infocom's *Zork I*, based on the [original ZIL source code](https://github.com/historicalsource/zork1) released under the MIT License by Microsoft, Activision, and Team Xbox.
 
-_Zork I_ is an interactive fiction game written by Marc Blank, Dave Lebling, Bruce Daniels and Tim Anderson. The game was published by [Infocom](https://en.wikipedia.org/wiki/Infocom).
+This project begins as a faithful translation of the original game and will evolve to include bug fixes, quality of life improvements, and parser enhancements — while preserving the spirit and challenge of the classic.
 
-This repository contains the source code for the game. This source code is provided in ZIL (Zork Implementation Language), which was a specialized subset of [MDL](https://en.wikipedia.org/wiki/MDL_(programming_language)), which was itself a dialect of LISP. The ZIL language was created by MIT students and staff. When compiled, the game can run on any implementation of the [Z-Machine](https://en.wikipedia.org/wiki/Z-machine). Infocom used a compiler called ZILCH to compile the source code. That compiler, however, is lost. While there was a [project to bring ZILCH back](https://github.com/ZoBoRf/ZILCH-How-to), currently the only known way to compile this kind of source code is via a project like [ZILF](https://foss.heptapod.net/zilf/zilf/-/wikis/home).
+## Goals
 
-The following sources provide further information on _Zork I_.
+- **Faithful translation** — Start from a complete, accurate port of the original ZIL logic to Inform 7
+- **Bug fixes** — Address known issues present in the original release
+- **Quality of life improvements** — Modernize rough edges without undermining the original design
+- **Parser enhancements** — Expand recognized vocabulary and phrasings so the game better understands what you mean
 
-* [Wikipedia](https://en.wikipedia.org/wiki/Zork_I)
-* [The Infocom Gallery](http://gallery.guetech.org/zork1/zork1.html)
-* [IFWiki](http://www.ifwiki.org/index.php/Zork_I)
+## Play Online
 
-## Version History
+*Coming soon* — A web-playable version will be hosted at [johnesco.github.io/zork1](https://johnesco.github.io/zork1)
 
-| Release | Serial | Type | Story File              | Obsessive Sources | Historical Sources |
-| -------:|:------:|:----:|:-----------------------:|:-----------------:|:------------------:|
-|       2 | AS000C |  PUB |   [zork1-r2-sAS000C.z1] |                 - |                  - |
-|       5 |      - |  PUB |   [zork1-r5-sXXXXXX.z1] |                 - |                  - |
-|      15 | UG3AU5 |  PUB |  [zork1-r15-sUG3AU5.z2] |                 - |                  - |
-|      20 |      - |  PUB |  [zork1-r20-sXXXXXX.z3] |                 - |                  - |
-|      23 | 820428 |  PUB |  [zork1-r23-s820428.z3] |                 - |                  - |
-|      25 | 820515 |  PUB |  [zork1-r25-s820515.z3] |                 - |                  - |
-|      26 | 820803 |  PUB |  [zork1-r26-s820803.z3] |                 - |                  - |
-|      28 | 821013 |  PUB |  [zork1-r28-s821013.z3] |                 - |                  - |
-|      30 | 830330 |  PUB |  [zork1-r30-s830330.z3] |                 - |                  - |
-|      75 | 830929 |  PUB |  [zork1-r75-s830929.z3] |                 - |                  - |
-|      76 | 840509 |  PUB |  [zork1-r76-s840509.z3] |                 - |                  - |
-|      88 | 840726 |  PUB |  [zork1-r88-s840726.z3] |   [zork1-r88.zip] |      [revision 88] |
-|     119 | 880429 |  FIN | [zork1-r119-s880429.z3] |  [zork1-r119.zip] |   [final revision] |
+## Project Structure
 
-[zork1-r2-sAS000C.z1]: https://eblong.com/infocom/gamefiles/zork1-r2-sAS000C.z1
-[zork1-r5-sXXXXXX.z1]: https://eblong.com/infocom/gamefiles/zork1-r5-sXXXXXX.z1
-[zork1-r15-sUG3AU5.z2]: https://eblong.com/infocom/gamefiles/zork1-r15-sUG3AU5.z2
-[zork1-r20-sXXXXXX.z3]: https://eblong.com/infocom/gamefiles/zork1-r20-sXXXXXX.z3
-[zork1-r23-s820428.z3]: https://eblong.com/infocom/gamefiles/zork1-r23-s820428.z3
-[zork1-r25-s820515.z3]: https://eblong.com/infocom/gamefiles/zork1-r25-s820515.z3
-[zork1-r26-s820803.z3]: https://eblong.com/infocom/gamefiles/zork1-r26-s820803.z3
-[zork1-r28-s821013.z3]: https://eblong.com/infocom/gamefiles/zork1-r28-s821013.z3
-[zork1-r30-s830330.z3]: https://eblong.com/infocom/gamefiles/zork1-r30-s830330.z3
-[zork1-r75-s830929.z3]: https://eblong.com/infocom/gamefiles/zork1-r75-s830929.z3
-[zork1-r76-s840509.z3]: https://eblong.com/infocom/gamefiles/zork1-r76-s840509.z3
+```
+src/zil/        Original ZIL source files (reference)
+src/inform7/    Inform 7 translation (story.ni)
+build/          Compiled story file (.ulx)
+web/            Web-playable version
+tests/          Playwright walkthrough tests
+```
 
-[zork1-r88-s840726.z3]: https://eblong.com/infocom/gamefiles/zork1-r88-s840726.z3
-[zork1-r88.zip]: https://eblong.com/infocom/sources/zork1-r88.zip
-[revision 88]: https://github.com/historicalsource/zork1/tree/34cc828c4fa3b5e2581ea24c43bb8acb386d25d0
+## Building
 
-[zork1-r119-s880429.z3]: https://eblong.com/infocom/gamefiles/zork1-r119-s880429.z3
-[zork1-r119.zip]: https://eblong.com/infocom/sources/zork1-r119.zip
-[final revision]: https://github.com/historicalsource/zork1/tree/87a3b787d166a441cab8d89d87f9a3753d40daa8
+The Inform 7 source is in `src/inform7/story.ni`. To compile, open it in the [Inform 7 IDE](http://inform7.com/downloads/) or use the command-line tools from the [Inform distribution](https://github.com/ganelson/inform).
+
+## Credits
+
+*Zork I: The Great Underground Empire* was written by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson, and published by [Infocom](https://en.wikipedia.org/wiki/Infocom).
+
+The original ZIL source code is available at [historicalsource/zork1](https://github.com/historicalsource/zork1) under the MIT License, courtesy of Microsoft, Activision, and Team Xbox.
+
+This Inform 7 translation is an unofficial fan project. Zork is a trademark of Activision Publishing, Inc.
+
+## License
+
+The original Zork I source code is licensed under the [MIT License](https://github.com/historicalsource/zork1/blob/master/LICENSE). This derivative work is also released under the MIT License — see [LICENSE](LICENSE) for details.
