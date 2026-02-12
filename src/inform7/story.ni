@@ -399,6 +399,7 @@ Instead of going up in Clearing:
 Grating Clearing is a room. The printed name of Grating Clearing is "Clearing".
 Grating Clearing is in Forest Area.
 North of Forest Path is Grating Clearing. East of Grating Clearing is Forest2. West of Grating Clearing is Forest1. South of Grating Clearing is Forest Path.
+The description of Grating Clearing is "You are in a clearing, with a forest surrounding you on all sides. A path leads south.[if the grate is visible and the grate is open] There is an open grating, descending into darkness.[otherwise if the grate is visible] There is a grating securely fastened into the ground.[end if]".
 
 Instead of going north in Grating Clearing:
 	say "The forest becomes impenetrable to the north."
@@ -1026,9 +1027,9 @@ Maze11 is a dark room. The printed name of Maze11 is "Maze". "This is part of a 
 Maze11 is in the Underground.
 Northeast of Maze11 is Grating Room. Down from Maze11 is Maze10. Northwest of Maze11 is Maze13. Southwest of Maze11 is Maze12.
 
-Grating Room is a dark room. "This is a small room which has a grating firmly mounted in the ceiling."
-Grating Room is in the Underground.
+Grating Room is a dark room. Grating Room is in the Underground.
 Southwest of Grating Room is Maze11.
+The description of Grating Room is "You are in a small room near the maze. There are twisty passages in the immediate vicinity.[if the grate is open] Above you is an open grating with sunlight pouring in.[otherwise if the grate is not locked] Above you is a grating.[otherwise] Above you is a grating locked with a skull-and-crossbones lock.[end if]".
 
 The grate is a door. The grate is scenery. The grate is closed and openable and lockable and locked. The matching key of the grate is the skeleton key.
 Understand "grate" and "grating" as the grate.
@@ -1218,8 +1219,8 @@ East of Round Room is Loud Room. North of Round Room is North-South Passage. Sou
 
 Chapter 10 - Dam and Reservoir Area
 
-Deep Canyon is a dark room. "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. [if the gates-open is true and the low-tide is false]You can hear the roaring of a great volume of water below.[otherwise]You can hear the sound of flowing water below.[end if]".
-Deep Canyon is in the Underground.
+Deep Canyon is a dark room. Deep Canyon is in the Underground.
+The description of Deep Canyon is "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down.[if the gates-open is true and the low-tide is false] You can hear a loud roaring sound, like that of rushing water, from below.[otherwise if the gates-open is false and the low-tide is true][otherwise] You can hear the sound of flowing water from below.[end if]".
 Northwest of Deep Canyon is Reservoir-South. Southwest of Deep Canyon is North-South Passage. Down from Deep Canyon is Loud Room.
 
 Loud Room is a dark room. Loud Room is in the Underground.
@@ -1227,7 +1228,7 @@ East of Loud Room is Damp Cave. West of Loud Room is Round Room. Up from Loud Ro
 
 The loud-room-quiet is a truth state that varies. The loud-room-quiet is false.
 
-The description of Loud Room is "[if the loud-room-quiet is true]The room is still, and a platinum bar can be seen here.[otherwise]This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an unpleasant metallic clanging sound. The source is not readily apparent.[end if]".
+The description of Loud Room is "This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward.[if the loud-room-quiet is true or (the gates-open is false and the low-tide is true)] The room is eerie in its quietness.[otherwise] The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.[end if]".
 
 The platinum bar is in Loud Room. "On the ground is a large platinum bar."
 Understand "bar" and "platinum" and "large" as the platinum bar.
@@ -1269,7 +1270,7 @@ Instead of going down in Chasm:
 	say "Are you out of your mind?"
 
 Reservoir-South is a dark room. The printed name of Reservoir-South is "Reservoir South". Reservoir-South is in the Underground.
-The description of Reservoir-South is "You are in a long room on the south shore of a large underground reservoir. [if the low-tide is false]The reservoir appears full. There appears to be a path to the north that is submerged.[otherwise]The reservoir is empty. A path leads across the reservoir to the north.[end if]".
+The description of Reservoir-South is "[if the low-tide is true and the gates-open is true]You are in a long room, to the north of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through the center of the room.[otherwise if the gates-open is true]You are in a long room. To the north is a large lake, too deep to cross. You notice, however, that the water level appears to be dropping at a rapid rate. Before long, it might be possible to cross to the other side from here.[otherwise if the low-tide is true]You are in a long room, to the north of which is a wide area which was formerly a reservoir, but now is merely a stream. You notice, however, that the level of the stream is rising quickly and that before long it will be impossible to cross here.[otherwise]You are in a long room on the south shore of a large lake, far too deep and wide for crossing.[end if][paragraph break]There is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast.".
 
 Southeast of Reservoir-South is Deep Canyon.
 East of Reservoir-South is Dam-Room. West of Reservoir-South is Stream View.
@@ -1411,11 +1412,11 @@ The description of the group of tool chests is "The chests are all empty."
 Chapter 11 - Reservoir Area
 
 Reservoir is a dark room. Reservoir is in the Underground.
-The description of Reservoir is "[if the low-tide is true]You are on a path across the reservoir, which is currently empty. You can see to the north and south.[otherwise]You are on the reservoir. The water level is high.[end if]".
+The description of Reservoir is "[if the low-tide is true]You are on what used to be a large lake, but which is now a large mud pile. There are [quotation mark]shores[quotation mark] to the north and south.[otherwise]You are on the lake. Beaches can be seen north and south. Upstream a small stream enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.[end if]".
 North of Reservoir is Reservoir-North. South of Reservoir is Reservoir-South.
 
-Reservoir-North is a dark room. The printed name of Reservoir-North is "Reservoir North". "You are in a room on the north shore of a large underground reservoir."
-Reservoir-North is in the Underground.
+Reservoir-North is a dark room. The printed name of Reservoir-North is "Reservoir North". Reservoir-North is in the Underground.
+The description of Reservoir-North is "[if the low-tide is true and the gates-open is true]You are in a large cavernous room, the south of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through there.[otherwise if the gates-open is true]You are in a large cavernous area. To the south is a wide lake, whose water level appears to be falling rapidly.[otherwise if the low-tide is true]You are in a cavernous area, to the south of which is a very wide stream. The level of the stream is rising rapidly, and it appears that before long it will be impossible to cross to the other side.[otherwise]You are in a large cavernous room, north of a large lake.[end if][paragraph break]There is a slimy stairway leaving the room to the north.".
 North of Reservoir-North is Atlantis Room.
 
 Instead of going south in Reservoir-North:
@@ -1533,7 +1534,7 @@ Understand "wall" and "engravings" and "inscription" and "old" and "ancient" as 
 The description of the engraved wall is "The engravings were incised in the living rock of the cave wall by an unknown hand. They depict, in symbolic form, the beliefs of the ancient Zorkers. Skillfully interwoven with the bas reliefs are excerpts illustrating the major religious tenets of that time. Unfortunately, a later age seems to have considered them blasphemous and just as skillfully excised them."
 
 Dome Room is a dark room. Dome Room is in the Underground.
-The description of Dome Room is "You are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing.[if the dome-flag is true] Hanging down from the railing is a rope.[end if]".
+The description of Dome Room is "You are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing which circles the dome.[if the dome-flag is true] Hanging down from the railing is a rope which ends about ten feet from the floor below.[end if]".
 West of Dome Room is Engravings Cave.
 
 The wooden railing is scenery in Dome Room. Understand "railing" and "rail" and "wooden" as the wooden railing.
@@ -1556,8 +1557,8 @@ Understand "tie [something] to [something]" as tying it to.
 Carry out tying it to:
 	say "You can't tie those things together."
 
-Torch-Room is a dark room. The printed name of Torch-Room is "Torch Room". "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome."
-Torch-Room is in the Underground.
+Torch-Room is a dark room. The printed name of Torch-Room is "Torch Room". Torch-Room is in the Underground.
+The description of Torch-Room is "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal.[if the dome-flag is true] A piece of rope descends from the railing above, ending some five feet above your head.[end if]".
 South of Torch-Room is North Temple. Down from Torch-Room is North Temple.
 
 Instead of going up in Torch-Room:
@@ -1626,9 +1627,9 @@ The sceptre is a weapon.
 The treasure-value of the sceptre is 4.
 The point-value of the sceptre is 6.
 
-Entrance to Hades is a dark room. "You are outside a large gate, through which you can see a desolation, lit by the light of a thousand flames. The gate is [if the lld-flag is true]open[otherwise]closed[end if]."
-Entrance to Hades is in the Underground.
+Entrance to Hades is a dark room. Entrance to Hades is in the Underground.
 Up from Entrance to Hades is Tiny Cave.
+The description of Entrance to Hades is "You are outside a large gateway, on which is inscribed[paragraph break]    [italic type]Abandon every hope all ye who enter here![roman type][paragraph break]The gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.[if the lld-flag is false and the player-is-dead is false][paragraph break]The way through the gate is barred by evil spirits, who jeer at your attempts to pass.[end if]".
 
 Instead of going south in Entrance to Hades:
 	if the lld-flag is true:
@@ -2168,18 +2169,18 @@ Instead of lowering the raised-basket:
 Instead of lowering the lowered-basket:
 	try lowering the raised-basket.
 
-Machine-Room is a dark room. "This is a large room full of assorted heavy machinery. There is a passageway leading north."
+Machine-Room is a dark room. Machine-Room is in the Underground.
 The printed name of Machine-Room is "Machine Room".
-Machine-Room is in the Underground.
 North of Machine-Room is Drafty Room.
+The description of Machine-Room is "This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled [quotation mark]START[quotation mark]. The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is [if the machine is open]open[otherwise]closed[end if].".
 
 The machine is a closed openable container in Machine-Room. The machine is scenery.
 Understand "machine" and "pdp10" and "dryer" and "lid" as the machine.
 The carrying capacity of the machine is 5.
-The description of the machine is "It's a large machine with a lid and a switch."
+The description of the machine is "It's a machine which is reminiscent of a clothes dryer. On its face is a switch labelled [quotation mark]START[quotation mark]. On the front is a large lid, which is [if the machine is open]open[otherwise]closed[end if]."
 
-The machine switch is scenery in Machine-Room. Understand "switch" as the machine switch.
-The description of the machine switch is "It's a switch on the machine."
+The machine switch is scenery in Machine-Room. Understand "switch" and "start" as the machine switch.
+The description of the machine switch is "The switch is labelled [quotation mark]START[quotation mark]. It does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch)."
 
 Instead of switching on the machine switch:
 	if the machine is not closed:
