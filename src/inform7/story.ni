@@ -843,11 +843,12 @@ Instead of going west in Troll-Room:
 
 Chapter 3 - Troll NPC
 
-The troll is a person in Troll-Room. "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room."
+The troll is a person in Troll-Room. "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A pathetically babbling troll is here.[end if]"
 Understand "troll" and "nasty" as the troll.
-The description of the troll is "[if the troll is not defeated]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]The troll is dead.[end if]".
+The description of the troll is "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A pathetically babbling troll is here.[end if]".
 
 The troll-unconscious is a truth state that varies. The troll-unconscious is false.
+The troll-unconscious-timer is a number that varies. The troll-unconscious-timer is 0.
 
 The troll-strength is a number that varies. The troll-strength is 2.
 
@@ -855,12 +856,22 @@ The bloody axe is carried by the troll. "There is a bloody axe here."
 Understand "axe" and "ax" and "bloody" as the bloody axe.
 The bloody axe is a weapon.
 
+To kill the troll with fog:
+	say "Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.";
+	now the troll is defeated;
+	now the troll-flag is true;
+	if the troll carries the bloody axe:
+		now the bloody axe is in Troll-Room;
+	remove the troll from play.
+
 Instead of taking the bloody axe when the troll is not defeated and the troll carries the bloody axe:
 	say "The troll swings it out of your reach."
 
 Instead of attacking the troll:
-	if the troll-unconscious is true or the troll is defeated:
-		say "The troll is already [if the troll is defeated]dead[otherwise]unconscious[end if].";
+	if the troll is defeated:
+		say "There is no troll here.";
+	otherwise if the troll-unconscious is true:
+		kill the troll with fog;
 	otherwise:
 		let W be a random weapon carried by the player;
 		if W is nothing:
@@ -870,28 +881,100 @@ Instead of attacking the troll:
 			if hit-chance is at least 4:
 				decrease the troll-strength by 1;
 				if the troll-strength is at most 0:
-					say "It appears that the blow was too much for him. He dies.";
-					now the troll is defeated;
+					now the troll-unconscious is true;
+					now the troll-unconscious-timer is 3;
 					now the troll-flag is true;
 					if the troll carries the bloody axe:
 						now the bloody axe is in Troll-Room;
-					remove the troll from play;
+					say "The troll appears dazed. He stumbles and falls to the floor unconscious.";
 				otherwise:
 					say "The troll takes a step backwards in pain.";
 			otherwise:
 				say "The troll dodges your blow."
 
+Instead of destroying the troll:
+	if the troll is defeated:
+		say "There is no troll here.";
+	otherwise if the troll-unconscious is true:
+		kill the troll with fog;
+	otherwise:
+		say "The troll laughs at your puny gesture."
+
 Instead of giving something to the troll:
-	if the noun is the bloody axe:
+	if the troll-unconscious is true:
+		say "The troll is unconscious.";
+	otherwise if the noun is the bloody axe:
+		say "The troll scratches his head in confusion, then takes the axe.";
+		now the troll carries the bloody axe;
+	otherwise if the noun is the troll:
+		say "You would have to get the troll first, and that seems unlikely.";
+	otherwise:
+		say "The troll, who is not overly proud, graciously accepts the gift";
+		if the noun is a weapon:
+			if a random chance of 1 in 5 succeeds:
+				say " and eats it hungrily. Poor troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black fog.";
+				remove the noun from play;
+				kill the troll with fog;
+			otherwise:
+				say " and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the [noun] falls to the floor. He does not look pleased.";
+				now the noun is in Troll-Room;
+		otherwise:
+			say " and not having the most discriminating tastes, gleefully eats it.";
+			if the noun is a container:
+				spill the contents of the noun;
+			remove the noun from play.
+
+Instead of throwing something at the troll:
+	if the troll-unconscious is true:
+		say "The troll is unconscious.";
+	otherwise if the noun is the bloody axe and the troll carries the bloody axe:
+		say "You would have to get the axe first, and that seems unlikely.";
+	otherwise if the noun is the bloody axe:
 		say "The troll scratches his head in confusion, then takes the axe.";
 		now the troll carries the bloody axe;
 	otherwise:
-		say "The troll, who is not overly proud, graciously accepts the gift and eats it hungrily.";
-		if the noun is a container:
-			spill the contents of the noun;
-		remove the noun from play.
+		say "The troll, who is remarkably coordinated, catches the [noun]";
+		if the noun is a weapon:
+			if a random chance of 1 in 5 succeeds:
+				say " and eats it hungrily. Poor troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black fog.";
+				remove the noun from play;
+				kill the troll with fog;
+			otherwise:
+				say " and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the [noun] falls to the floor. He does not look pleased.";
+				now the noun is in Troll-Room;
+		otherwise:
+			say " and not having the most discriminating tastes, gleefully eats it.";
+			if the noun is a container:
+				spill the contents of the noun;
+			remove the noun from play.
 
-Every turn when the troll is not defeated and the troll is in Troll-Room and the player is in Troll-Room (this is the troll attacks rule):
+Instead of taking the troll:
+	say "The troll spits in your face, grunting [quotation mark]Better luck next time[quotation mark] in a rather barbarous accent."
+
+Instead of pushing the troll:
+	say "The troll spits in your face, grunting [quotation mark]Better luck next time[quotation mark] in a rather barbarous accent."
+
+Instead of asking the troll about:
+	say "The troll isn't much of a conversationalist."
+
+Instead of telling the troll about:
+	say "The troll isn't much of a conversationalist."
+
+Instead of answering the troll that:
+	say "The troll isn't much of a conversationalist."
+
+Instead of listening to the troll:
+	say "Every so often the troll says something, probably uncomplimentary, in his guttural tongue."
+
+Every turn when the troll is not defeated and the troll-unconscious is false and the troll is in Troll-Room and the player is in Troll-Room and the troll does not carry the bloody axe (this is the troll weapon recovery rule):
+	if the bloody axe is in Troll-Room and a random chance of 3 in 4 succeeds:
+		now the troll carries the bloody axe;
+		now the troll-flag is false;
+		say "The troll, angered and humiliated, recovers his weapon. He appears to have an axe to grind with you.";
+	otherwise:
+		say "The troll, disarmed, cowers in terror, pleading for his life in the guttural tongue of the trolls."
+
+Every turn when the troll is not defeated and the troll-unconscious is false and the troll carries the bloody axe and the troll is in Troll-Room and the player is in Troll-Room (this is the troll attacks rule):
 	if a random chance of 1 in 3 succeeds:
 		let W be a random weapon carried by the player;
 		if W is not nothing:
@@ -899,6 +982,17 @@ Every turn when the troll is not defeated and the troll is in Troll-Room and the
 		otherwise:
 			say "The troll hits you with a glancing blow from his axe.";
 			die saying "The wound is fatal."
+
+Every turn when the troll-unconscious is true and the troll-unconscious-timer > 0 (this is the troll recovery rule):
+	decrease the troll-unconscious-timer by 1;
+	if the troll-unconscious-timer is 0:
+		now the troll-unconscious is false;
+		now the troll-flag is false;
+		now the troll-strength is 2;
+		if the bloody axe is in Troll-Room:
+			now the troll carries the bloody axe;
+		if the player is in Troll-Room:
+			say "The troll stirs, quickly resuming a fighting stance."
 
 Chapter 4 - East-of-Chasm
 
