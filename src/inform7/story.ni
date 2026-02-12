@@ -1124,7 +1124,7 @@ Chapter 8 - Cyclops NPC
 
 The cyclops is a person in Cyclops-Room. "A cyclops, who looks like he hasn't eaten in a while, is blocking the staircase."
 Understand "cyclops" and "monster" and "eye" and "hungry" and "giant" as the cyclops.
-The description of the cyclops is "A hungry cyclops is blocking the staircase, looking at you as if you were a potential meal."
+The description of the cyclops is "[if the cyclops-asleep is true]The cyclops is sleeping like a baby, albeit a very ugly one.[otherwise]A hungry cyclops is standing at the foot of the stairs.[end if]".
 
 The cyclops-fed is a truth state that varies. The cyclops-fed is false.
 The cyclops-watered is a truth state that varies. The cyclops-watered is false.
@@ -1138,7 +1138,10 @@ Instead of giving the lunch to the cyclops:
 	otherwise:
 		remove the lunch from play;
 		now the cyclops-fed is true;
-		decrease the cyclops-wrath by 1;
+		if the cyclops-wrath > 0:
+			now the cyclops-wrath is 0 minus the cyclops-wrath;
+		otherwise if the cyclops-wrath is 0:
+			now the cyclops-wrath is -1;
 		now the cyclops-wrath-timer is 1;
 		say "The cyclops says [quotation mark]Mmm Mmm. I love hot peppers! But oh, could I use a drink. Perhaps I could drink the blood of that thing.[quotation mark] From the gleam in his eye, it could be surmised that you are [quotation mark]that thing.[quotation mark]"
 
@@ -1170,19 +1173,37 @@ Instead of attacking the cyclops:
 		say "The cyclops yawns and stares at the thing that woke him up.";
 		now the cyclops-asleep is false;
 		now the cyclops-flag is false;
+		if the cyclops-wrath < 0:
+			now the cyclops-wrath is 0 minus the cyclops-wrath;
 	otherwise:
-		increase the cyclops-wrath by 1;
 		now the cyclops-wrath-timer is 1;
 		say "The cyclops shrugs but otherwise ignores your pitiful attempt."
 
 Every turn when the cyclops-wrath-timer > 0 and the player is in Cyclops-Room and the cyclops-asleep is false (this is the cyclops wrath rule):
-	increase the cyclops-wrath-timer by 1;
-	if the cyclops-wrath > 5 or the cyclops-wrath < -5:
+	let W be the cyclops-wrath;
+	if W < 0:
+		let W be 0 minus W;
+	if W > 5:
 		die saying "The cyclops, tired of all of your games and trickery, grabs you firmly. As he licks his chops, he says [quotation mark]Mmm. Just like Mom used to make [apostrophe]em.[quotation mark] It[apostrophe]s nice to be appreciated.";
-	otherwise if the cyclops-wrath > 0:
-		say "The cyclops seems quite angry.";
-	otherwise if the cyclops-wrath < 0:
-		say "The cyclops, having eaten the hot peppers, appears to be gasping. His enflamed tongue protrudes from his man-sized mouth."
+	if the cyclops-wrath >= 0:
+		increase the cyclops-wrath by 1;
+	otherwise:
+		decrease the cyclops-wrath by 1;
+	let V be the cyclops-wrath;
+	if V < 0:
+		let V be 0 minus V;
+	if V is 1:
+		say "The cyclops seems somewhat agitated.";
+	otherwise if V is 2:
+		say "The cyclops appears to be getting more agitated.";
+	otherwise if V is 3:
+		say "The cyclops is moving about the room, looking for something.";
+	otherwise if V is 4:
+		say "The cyclops was looking for salt and pepper. No doubt they are condiments for his upcoming snack.";
+	otherwise if V is 5:
+		say "The cyclops is moving toward you in an unfriendly manner.";
+	otherwise if V is 6:
+		say "You have two choices: 1. Leave  2. Become dinner."
 
 Odysseusing is an action applying to nothing.
 Understand "odysseus" and "ulysses" as odysseusing.
@@ -1197,6 +1218,39 @@ Carry out odysseusing:
 		say "The cyclops is asleep and can't hear you.";
 	otherwise:
 		say "Wasn't he a sailor?"
+
+Destroying is an action applying to one thing.
+Understand "destroy [something]" and "break [something]" and "mung [something]" as destroying.
+Carry out destroying: try attacking the noun.
+
+Instead of destroying the cyclops:
+	if the cyclops-asleep is true:
+		say "The cyclops yawns and stares at the thing that woke him up.";
+		now the cyclops-asleep is false;
+		now the cyclops-flag is false;
+		if the cyclops-wrath < 0:
+			now the cyclops-wrath is 0 minus the cyclops-wrath;
+	otherwise:
+		now the cyclops-wrath-timer is 1;
+		say "[quotation mark]Do you think I'm as stupid as my father was?[quotation mark], he says, dodging."
+
+Instead of asking the cyclops about:
+	if the cyclops-asleep is true:
+		say "No use talking to him. He's fast asleep.";
+	otherwise:
+		say "The cyclops prefers eating to making conversation."
+
+Instead of telling the cyclops about:
+	if the cyclops-asleep is true:
+		say "No use talking to him. He's fast asleep.";
+	otherwise:
+		say "The cyclops prefers eating to making conversation."
+
+Instead of answering the cyclops that:
+	if the cyclops-asleep is true:
+		say "No use talking to him. He's fast asleep.";
+	otherwise:
+		say "The cyclops prefers eating to making conversation."
 
 The chalice is in Treasure Room. "There is a silver chalice, intricately engraved, here."
 Understand "chalice" and "cup" and "silver" as the chalice.
