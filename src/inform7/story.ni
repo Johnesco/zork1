@@ -71,6 +71,9 @@ This is the score and rank rule:
 	say "[current-rank].[line break]".
 
 Carry out requesting the score:
+	if the player-is-dead is true:
+		say "You're dead! How can you think of your score?";
+		stop the action;
 	follow the score and rank rule;
 	stop the action.
 
@@ -114,7 +117,28 @@ To scatter-possessions:
 	now the match-lit is false;
 	now the match-timer is 0.
 
-Chapter 5 - Darkness and Grues
+Chapter 5 - Dead-State Action Intercepts
+
+Before attacking when the player-is-dead is true: say "All such attacks are vain in your condition." instead.
+Before opening something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before closing something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before eating something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before drinking something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before switching on something when the player-is-dead is true: say "You need no light to guide you." instead.
+Before switching off something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before waiting when the player-is-dead is true: say "Might as well. You've got an eternity." instead.
+Before taking something when the player-is-dead is true: say "Your hand passes through its object." instead.
+Before dropping something when the player-is-dead is true: say "You have no possessions." instead.
+Before throwing something at when the player-is-dead is true: say "You have no possessions." instead.
+Before taking inventory when the player-is-dead is true: say "You have no possessions." instead.
+Before looking when the player-is-dead is true:
+	say "The room looks strange and unearthly and objects appear indistinct.";
+	say "[line break]Although there is no light, the room seems dimly illuminated." instead.
+
+Before doing something when the player-is-dead is true and the current action is not praying and the current action is not looking and the current action is not taking inventory and the current action is not waiting and the current action is not diagnosing and the current action is not attacking and the current action is not going:
+	say "You can't even do that." instead.
+
+Chapter 6 - Darkness and Grues
 
 The dark-warning-given is a truth state that varies. The dark-warning-given is false.
 
@@ -1598,19 +1622,19 @@ Chapter 13 - Mirror Rooms and Connecting Passages
 
 Mirror Room 1 is a dark room. The printed name of Mirror Room 1 is "Mirror Room".
 Mirror Room 1 is in the Underground.
-The description of Mirror Room 1 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits to the east, west, and north."
+The description of Mirror Room 1 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall.[if the mirror-broken is true] Unfortunately, the mirror has been destroyed by your recklessness.[end if] There are exits to the east, west, and north."
 North of Mirror Room 1 is Cold Passage. West of Mirror Room 1 is Twisting Passage. East of Mirror Room 1 is Small Cave.
 
 The mirror-one is scenery in Mirror Room 1. The printed name of the mirror-one is "mirror". Understand "mirror" and "reflection" and "enormous" as the mirror-one.
-The description of the mirror-one is "There is an image of a large room reflected in the mirror."
+The description of the mirror-one is "[if the mirror-broken is true]The mirror is broken into many pieces.[otherwise]There is an ugly person staring back at you.[end if]".
 
 Mirror Room 2 is a dark room. The printed name of Mirror Room 2 is "Mirror Room".
 Mirror Room 2 is in the Underground.
-The description of Mirror Room 2 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits to the east, west, and north."
+The description of Mirror Room 2 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall.[if the mirror-broken is true] Unfortunately, the mirror has been destroyed by your recklessness.[end if] There are exits to the east, west, and north."
 West of Mirror Room 2 is Winding-Passage. North of Mirror Room 2 is Narrow Passage. East of Mirror Room 2 is Tiny Cave.
 
 The mirror-two is scenery in Mirror Room 2. The printed name of the mirror-two is "mirror". Understand "mirror" and "reflection" and "enormous" as the mirror-two.
-The description of the mirror-two is "There is an image of a large room reflected in the mirror."
+The description of the mirror-two is "[if the mirror-broken is true]The mirror is broken into many pieces.[otherwise]There is an ugly person staring back at you.[end if]".
 
 Rubbing-mirror is an action applying to one thing. Understand "rub [something]" as rubbing-mirror when the noun is the mirror-one or the noun is the mirror-two.
 
@@ -1622,13 +1646,29 @@ Instead of rubbing-mirror the mirror-two:
 	say "There is a rumble from deep within the earth and the room shakes.";
 	move the player to Mirror Room 1.
 
+The mirror-broken is a truth state that varies. The mirror-broken is false.
+
 Instead of attacking the mirror-one:
-	say "You have broken the mirror. I hope you have a streak of bad luck; you are going to need it.";
-	now the lucky-flag is false.
+	if the mirror-broken is true:
+		say "Haven't you done enough damage already?";
+	otherwise:
+		say "You have broken the mirror. I hope you have a seven years[apostrophe] supply of good luck handy.";
+		now the lucky-flag is false;
+		now the mirror-broken is true.
 
 Instead of attacking the mirror-two:
-	say "You have broken the mirror. I hope you have a streak of bad luck; you are going to need it.";
-	now the lucky-flag is false.
+	if the mirror-broken is true:
+		say "Haven't you done enough damage already?";
+	otherwise:
+		say "You have broken the mirror. I hope you have a seven years[apostrophe] supply of good luck handy.";
+		now the lucky-flag is false;
+		now the mirror-broken is true.
+
+Instead of taking the mirror-one:
+	say "The mirror is many times your size. Give up."
+
+Instead of taking the mirror-two:
+	say "The mirror is many times your size. Give up."
 
 Small Cave is a dark room. The printed name of Small Cave is "Cave". "This is a tiny cave with entrances west and north, and a staircase leading down."
 Small Cave is in the Underground.
@@ -2136,15 +2176,15 @@ Instead of waving the sceptre:
 		if the rainbow-flag is false:
 			now the rainbow-flag is true;
 			now the pot of gold is visible;
-			say "Suddenly, the rainbow appears to become solid and a shimmering, magical bridge leads across the Falls.";
+			say "Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).[paragraph break]A shimmering pot of gold appears at the end of the rainbow.";
 		otherwise:
 			now the rainbow-flag is false;
 			now the pot of gold is invisible;
-			say "The rainbow seems to shimmer and fade.";
+			say "The rainbow seems to have become somewhat run-of-the-mill.";
 			if the player is in On-the-Rainbow:
-				die saying "You fall to the rocks below.";
+				die saying "The structural integrity of the rainbow is severely compromised, leaving you hanging in midair, supported only by water vapor. Bye.";
 	otherwise:
-		say "A dazzling display of light dances along the sceptre, but nothing else happens."
+		say "A dazzling display of color briefly emanates from the sceptre."
 
 Chapter 18 - Coal Mine Area
 
@@ -2336,7 +2376,7 @@ Instead of switching on the machine switch:
 	otherwise if the small pile of coal is in the machine:
 		remove the small pile of coal from play;
 		now the huge diamond is in the machine;
-		say "The machine comes to life with a whirring sound. After a few moments, it stops.";
+		say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 	otherwise:
 		let found-something be false;
 		repeat with item running through things in the machine:
@@ -2344,9 +2384,9 @@ Instead of switching on the machine switch:
 			remove item from play;
 			now the small piece of vitreous slag is in the machine;
 		if found-something is true:
-			say "The machine comes to life with a whirring sound. After a few moments, it stops.";
+			say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 		otherwise:
-			say "The machine comes to life with a whirring sound, then stops. Nothing seems to have happened."
+			say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates."
 
 The huge diamond is a thing. "There is an enormous diamond (perfectly cut) here."
 Understand "diamond" and "huge" and "enormous" as the huge diamond.
@@ -2411,15 +2451,18 @@ Part 4 - The Thief
 
 Chapter 1 - Thief NPC
 
-The thief is a person. "There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is armed with a deadly stiletto."
+The thief is a person. "[if the thief-unconscious is true]There is a suspicious-looking individual lying unconscious on the ground.[otherwise]There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is armed with a vicious-looking stiletto.[end if]"
 Understand "thief" and "robber" and "man" and "person" and "shady" and "suspicious" and "seedy" as the thief.
 The thief is in Round Room.
+The description of the thief is "The thief is a slippery character with beady eyes that flit back and forth. He carries, along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly in your direction. I'd watch out if I were you."
 
 The thief-strength is a number that varies. The thief-strength is 5.
+The thief-unconscious is a truth state that varies. The thief-unconscious is false.
+The thief-unconscious-timer is a number that varies. The thief-unconscious-timer is 0.
 
 The large bag is carried by the thief. The large bag is a container. The carrying capacity of the large bag is 100.
 Understand "bag" and "large" and "thief's" as the large bag.
-The description of the large bag is "The bag is closed and you can't see what's inside."
+The description of the large bag is "[if the thief-unconscious is true]The bag is underneath the thief, so one can't say what, if anything, is inside.[otherwise if the thief is defeated]It's a large bag.[otherwise]The bag is closed and you can't see what's inside.[end if]".
 
 The stiletto is carried by the thief. The stiletto is a weapon.
 Understand "stiletto" and "vicious" as the stiletto.
@@ -2429,7 +2472,18 @@ Instead of taking the stiletto when the thief is not defeated and the thief carr
 	say "The thief swings it out of your reach."
 
 Instead of taking the large bag:
-	say "Getting that bag would not be easy."
+	if the thief-unconscious is true:
+		say "Sadly for you, the robber collapsed on top of the bag. Trying to take it would wake him.";
+	otherwise if the thief is not defeated:
+		say "The bag will be taken over his dead body.";
+	otherwise:
+		continue the action.
+
+Instead of opening the large bag when the thief is not defeated:
+	say "Getting close enough would be a good trick."
+
+Instead of inserting something into the large bag when the thief is not defeated:
+	say "It would be a good trick."
 
 The thief-active is a truth state that varies. The thief-active is true.
 The thief-here-count is a number that varies. The thief-here-count is 0.
@@ -2449,7 +2503,24 @@ Every turn when the thief is not defeated and the thief-active is true (this is 
 						break;
 				if stolen-item is not nothing:
 					now stolen-item is in the large bag;
-					say "The thief rummages through your belongings and takes the [stolen-item]! He then slinks away.";
+					let R be a random number between 1 and 4;
+					if R is 1:
+						say "A seedy-looking individual with a large bag just wandered through the room. On the way through, he quietly abstracted some valuables from your possession, mumbling something about [quotation mark]Doing unto others before...[quotation mark]";
+					otherwise if R is 2:
+						say "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.";
+					otherwise if R is 3:
+						say "A seedy-looking individual with a large bag just wandered through the room. On the way through, he appropriated the [stolen-item].";
+					otherwise:
+						say "A [quotation mark]lean and hungry[quotation mark] gentleman just wandered through, carrying a large bag. On the way, he helped himself to the [stolen-item].";
+					let new-dest be a random dark room that is in the Underground;
+					if new-dest is a room:
+						move the thief to new-dest;
+				otherwise:
+					let R be a random number between 1 and 2;
+					if R is 1:
+						say "A [quotation mark]lean and hungry[quotation mark] gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled.";
+					otherwise:
+						say "The thief, finding nothing of value, left disgusted.";
 					let new-dest be a random dark room that is in the Underground;
 					if new-dest is a room:
 						move the thief to new-dest;
@@ -2464,13 +2535,25 @@ Every turn when the jewel-encrusted egg is in the large bag and the jewel-encrus
 	now the jewel-encrusted egg is open.
 
 Every turn when the player is in Treasure Room and the thief is not defeated and the thief is not in Treasure Room (this is the thief lair rule):
-	move the thief to Treasure Room.
+	move the thief to Treasure Room;
+	say "You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense."
+
+To kill the thief with magic:
+	say "Almost as soon as the thief breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.";
+	if the player is in Treasure Room:
+		say "[line break]As the thief dies, the power of his magic decreases, and his treasures reappear:";
+	repeat with item running through things in the large bag:
+		now item is in the location of the player;
+	now the thief is defeated;
+	remove the thief from play.
 
 Instead of attacking the thief:
 	if the thief is not in the location of the player:
 		say "There is no thief here." instead;
 	if the thief is defeated:
 		say "The thief is already dead.";
+	otherwise if the thief-unconscious is true:
+		kill the thief with magic;
 	otherwise:
 		let W be a random weapon carried by the player;
 		if W is nothing:
@@ -2480,15 +2563,38 @@ Instead of attacking the thief:
 			if hit-chance is at least 3:
 				decrease the thief-strength by 1;
 				if the thief-strength is at most 0:
-					say "The thief drops to the ground, mortally wounded. The contents of his bag spill out onto the floor.";
-					repeat with item running through things in the large bag:
-						now item is in the location of the player;
-					now the thief is defeated;
-					remove the thief from play;
+					now the thief-unconscious is true;
+					now the thief-unconscious-timer is 3;
+					if the thief carries the stiletto:
+						now the stiletto is in the location of the player;
+					say "The thief is stunned and appears dazed. He stumbles and falls to the ground.";
 				otherwise:
 					say "You wound the thief with your [W].";
 			otherwise:
 				say "The thief deftly dodges your blow."
+
+Instead of destroying the thief:
+	if the thief-unconscious is true:
+		kill the thief with magic;
+	otherwise if the thief is not defeated:
+		say "The thief laughs at your puny attempt.";
+	otherwise:
+		say "There is no thief here."
+
+Every turn when the thief-unconscious is true and the thief-unconscious-timer > 0 (this is the thief recovery rule):
+	decrease the thief-unconscious-timer by 1;
+	if the thief-unconscious-timer is 0:
+		now the thief-unconscious is false;
+		now the thief-strength is 5;
+		if the stiletto is in the location of the thief:
+			now the thief carries the stiletto;
+			if the player is in the location of the thief:
+				say "The robber, somewhat surprised at this turn of events, nimbly retrieves his stiletto.";
+		if the player is in the location of the thief:
+			say "The robber revives, briefly feigning continued unconsciousness, and, when he sees his moment, scrambles away from you.";
+		let new-dest be a random dark room that is in the Underground;
+		if new-dest is a room:
+			move the thief to new-dest.
 
 Chapter 2 - Sword Glow
 
@@ -2527,9 +2633,16 @@ Chapter 2 - Pray
 
 Praying is an action applying to nothing. Understand "pray" as praying.
 Carry out praying:
-	if the player is in South Temple:
+	if the player-is-dead is true and the player is in South Temple:
+		now the player-is-dead is false;
+		now the always-lit-mode is false;
+		scatter-possessions;
+		say "From the distance the sound of a lone trumpet is heard. The room becomes very bright and you feel disembodied. In a moment, the brightness fades and you find yourself rising as if from a long sleep, deep in the woods. In the distance you can faintly hear a songbird and the sounds of the forest.";
 		move the player to Forest1;
-		say "If you can be sure of one thing, it is that your prayers have been answered.";
+	otherwise if the player-is-dead is true:
+		say "Your prayers are not heard.";
+	otherwise if the player is in South Temple:
+		say "If you pray enough, your prayers may be answered.";
 	otherwise:
 		say "If you pray hard enough, something may happen."
 
@@ -2542,7 +2655,14 @@ Chapter 4 - Diagnose
 
 Diagnosing is an action out of world. Understand "diagnose" as diagnosing.
 Carry out diagnosing:
-	say "You are in good health."
+	if the player-is-dead is true:
+		say "You are dead.";
+	otherwise:
+		say "You are in perfect health.";
+	if the player-deaths is 1:
+		say "[line break]You have been killed once.";
+	otherwise if the player-deaths > 1:
+		say "[line break]You have been killed [player-deaths in words] times."
 
 Chapter 5 - Rusty Knife Curse
 
