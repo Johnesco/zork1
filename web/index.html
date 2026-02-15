@@ -237,6 +237,7 @@ footer a {
   <span class="engine-label">Engine:</span>
   <button class="engine-btn active" data-engine="quixe">Quixe</button>
   <button class="engine-btn" data-engine="parchment">Parchment</button>
+  <button class="engine-btn" data-engine="glulxe">Glulxe</button>
 </div>
 
 <a class="play-btn" data-play-version="v2" href="v2/">Play Current Version</a>
@@ -331,6 +332,8 @@ footer a {
     <a href="https://www.inform-fiction.org/zmachine/standards/z1point1/">Z-Machine Standard</a>
     <a href="https://www.eblong.com/zarf/glulx/">Glulx VM Specification</a>
     <a href="https://github.com/curiousdannii/parchment">Parchment &mdash; Web IF Player</a>
+    <a href="https://github.com/erkyrath/glulxe">Glulxe &mdash; Reference Glulx Interpreter</a>
+    <a href="https://github.com/curiousdannii/emglken">Emglken &mdash; IF Engines via WebAssembly</a>
     <a href="https://www.ifwiki.org/">IFWiki</a>
   </div>
 </div>
@@ -345,8 +348,9 @@ footer a {
   </p>
   <p>
     Built with <a href="http://inform7.com/">Inform 7</a>.
-    Playable via <a href="https://eblong.com/zarf/glulx/quixe/">Quixe</a> or
-    <a href="https://github.com/curiousdannii/parchment">Parchment</a>.
+    Playable via <a href="https://eblong.com/zarf/glulx/quixe/">Quixe</a>,
+    <a href="https://github.com/curiousdannii/parchment">Parchment</a>, or
+    <a href="https://github.com/erkyrath/glulxe">Glulxe</a>.
     Source on <a href="https://github.com/Johnesco/zork1">GitHub</a>.
   </p>
 </footer>
@@ -384,6 +388,8 @@ footer a {
       var version = links[i].getAttribute('data-play-version');
       if (engine === 'parchment') {
         links[i].href = version + '/parchment.html';
+      } else if (engine === 'glulxe') {
+        links[i].href = version + '/glulxe.html';
       } else {
         links[i].href = version + '/';
       }
