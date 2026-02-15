@@ -13,15 +13,15 @@
 
   // ── Zone audio config ───────────────────────────────────────────────
   var ZONES = {
-    forest:    { src: 'audio/forest.mp3',    volume: 0.4  },
-    house:     { src: 'audio/house.mp3',     volume: 0.2  },
-    cave:      { src: 'audio/cave.mp3',      volume: 0.3  },
-    water:     { src: 'audio/water.mp3',     volume: 0.4  },
-    rapids:    { src: 'audio/rapids.mp3',    volume: 0.5  },
-    loud:      { src: 'audio/loud.mp3',      volume: 0.7  },
-    hades:     { src: 'audio/hades.mp3',     volume: 0.5  },
-    mine:      { src: 'audio/mine.mp3',      volume: 0.3  },
-    machinery: { src: 'audio/machinery.mp3', volume: 0.35 },
+    forest:    { src: 'audio/forest.mp3',    volume: 0.2   },
+    house:     { src: 'audio/house.mp3',     volume: 0.1   },
+    cave:      { src: 'audio/cave.mp3',      volume: 0.15  },
+    water:     { src: 'audio/water.mp3',     volume: 0.2   },
+    rapids:    { src: 'audio/rapids.mp3',    volume: 0.25  },
+    loud:      { src: 'audio/loud.mp3',      volume: 0.35  },
+    hades:     { src: 'audio/hades.mp3',     volume: 0.25  },
+    mine:      { src: 'audio/mine.mp3',      volume: 0.15  },
+    machinery: { src: 'audio/machinery.mp3', volume: 0.175 },
     // silence — no audio element, handled as null
   };
 
