@@ -156,6 +156,43 @@ footer a {
   color: #887755;
   border-bottom-color: #3a3020;
 }
+
+.engine-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 24px 0 8px;
+}
+
+.engine-label {
+  color: #aa9966;
+  font-size: 0.9em;
+  margin-right: 4px;
+}
+
+.engine-btn {
+  background: #1a1810;
+  border: 1px solid #2a2418;
+  border-radius: 4px;
+  color: #887755;
+  font-family: inherit;
+  font-size: 0.85em;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.engine-btn:hover {
+  background: #2a2010;
+  color: #c4b48a;
+  border-color: #4a3a20;
+}
+
+.engine-btn.active {
+  background: #2a2010;
+  border-color: #5a4a30;
+  color: #e8d090;
+}
 </style>
 </head>
 <body>
@@ -196,7 +233,13 @@ footer a {
   release includes a snapshot of the Inform 7 source alongside the playable game.
 </p>
 
-<a class="play-btn" href="v2/">Play Current Version</a>
+<div class="engine-selector">
+  <span class="engine-label">Engine:</span>
+  <button class="engine-btn active" data-engine="quixe">Quixe</button>
+  <button class="engine-btn" data-engine="parchment">Parchment</button>
+</div>
+
+<a class="play-btn" data-play-version="v2" href="v2/">Play Current Version</a>
 <a class="play-btn" href="v2/story.ni" style="margin-left: 12px;">View Source</a>
 <a class="play-btn" href="source.html" style="margin-left: 12px;">Browse Source</a>
 
@@ -219,7 +262,7 @@ footer a {
     <li>Text: Troll dialog &mdash; weapon recovery, disarmed cowering, throw/give system with hemorrhage, unconscious/conscious states, sinister fog death (#27)</li>
   </ul>
   <div class="version-links">
-    <a href="v2/">Play</a>
+    <a data-play-version="v2" href="v2/">Play</a>
     <a href="v2/story.ni">Inform 7 Source</a>
     <a href="source.html">Browse Source</a>
   </div>
@@ -238,7 +281,7 @@ footer a {
     <li>Verbosity modes, score ranks, and diagnostic commands</li>
   </ul>
   <div class="version-links">
-    <a href="v1/">Play</a>
+    <a data-play-version="v1" href="v1/">Play</a>
     <a href="v1/story.ni">Inform 7 Source</a>
     <a href="source.html">Browse Source</a>
   </div>
@@ -287,7 +330,7 @@ footer a {
     <a href="https://eblong.com/zarf/glk/glkote/">GlkOte &mdash; Web Glk Library</a>
     <a href="https://www.inform-fiction.org/zmachine/standards/z1point1/">Z-Machine Standard</a>
     <a href="https://www.eblong.com/zarf/glulx/">Glulx VM Specification</a>
-    <a href="https://github.com/nickyringland/parchment">Parchment &mdash; Web Z-Machine</a>
+    <a href="https://github.com/curiousdannii/parchment">Parchment &mdash; Web IF Player</a>
     <a href="https://www.ifwiki.org/">IFWiki</a>
   </div>
 </div>
@@ -301,12 +344,64 @@ footer a {
     This Inform 7 translation is an unofficial fan project.
   </p>
   <p>
-    Built with <a href="http://inform7.com/">Inform 7</a>,
-    <a href="https://eblong.com/zarf/glulx/quixe/">Quixe</a>, and
-    <a href="https://eblong.com/zarf/glk/glkote/">GlkOte</a>.
+    Built with <a href="http://inform7.com/">Inform 7</a>.
+    Playable via <a href="https://eblong.com/zarf/glulx/quixe/">Quixe</a> or
+    <a href="https://github.com/curiousdannii/parchment">Parchment</a>.
     Source on <a href="https://github.com/Johnesco/zork1">GitHub</a>.
   </p>
 </footer>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'zork1-engine';
+  var DEFAULT_ENGINE = 'quixe';
+
+  function getEngine() {
+    try { return localStorage.getItem(STORAGE_KEY) || DEFAULT_ENGINE; }
+    catch (e) { return DEFAULT_ENGINE; }
+  }
+
+  function setEngine(engine) {
+    try { localStorage.setItem(STORAGE_KEY, engine); } catch (e) {}
+    updateButtons(engine);
+    updatePlayLinks(engine);
+  }
+
+  function updateButtons(engine) {
+    var btns = document.querySelectorAll('.engine-btn');
+    for (var i = 0; i < btns.length; i++) {
+      if (btns[i].getAttribute('data-engine') === engine) {
+        btns[i].className = 'engine-btn active';
+      } else {
+        btns[i].className = 'engine-btn';
+      }
+    }
+  }
+
+  function updatePlayLinks(engine) {
+    var links = document.querySelectorAll('[data-play-version]');
+    for (var i = 0; i < links.length; i++) {
+      var version = links[i].getAttribute('data-play-version');
+      if (engine === 'parchment') {
+        links[i].href = version + '/parchment.html';
+      } else {
+        links[i].href = version + '/';
+      }
+    }
+  }
+
+  var engine = getEngine();
+  updateButtons(engine);
+  updatePlayLinks(engine);
+
+  var btns = document.querySelectorAll('.engine-btn');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener('click', function() {
+      setEngine(this.getAttribute('data-engine'));
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
