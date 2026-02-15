@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZORK I: The Great Underground Empire</title>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<link rel="stylesheet" href="lib/parchment/parchment.css">
+<link rel="stylesheet" href="lib/parchment/main.css">
+
+<style>
+/* Dark parchment theme overrides for AsyncGlk/Parchment */
+:root {
+  --glkote-buffer-bg: #111;
+  --glkote-buffer-fg: #d4c5a9;
+  --glkote-buffer-reverse-bg: #d4c5a9;
+  --glkote-buffer-reverse-fg: #111;
+  --glkote-buffer-size: 16px;
+  --glkote-buffer-line-height: 1.6;
+  --glkote-grid-bg: #1c1810;
+  --glkote-grid-fg: #aa9966;
+  --glkote-grid-reverse-bg: #aa9966;
+  --glkote-grid-reverse-fg: #1c1810;
+  --glkote-grid-size: 14px;
+  --glkote-input-fg: #e8d090;
+  --glkote-error-border: #882020;
+  --glkote-warning-border: #3333aa;
+  --glkote-prop-family: "Iowan Old Style", Palatino, Georgia, "Times New Roman", serif;
+  --glkote-mono-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  --glkote-grid-mono-family: var(--glkote-mono-family);
+
+  --asyncglk-ui-bg: #1a1810;
+  --asyncglk-ui-border: #3a2a10;
+  --asyncglk-ui-fg: #d4c5a9;
+  --asyncglk-ui-selected: #2a2010;
+  --asyncglk-ui-textbox: #111;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+
+div#gameport {
+  position: absolute;
+  inset: 0;
+  background: #111;
+}
+
+.WindowFrame {
+  background: #111;
+}
+
+.GridWindow {
+  border-bottom: 1px solid #2a2418;
+  padding: 6px 12px;
+}
+
+.BufferWindowInner {
+  padding: 20px 40px;
+}
+
+.Input {
+  font-weight: bold;
+  color: #e8d090;
+  caret-color: #e8d090;
+}
+
+.Style_header {
+  color: #e8d8b0;
+}
+
+.Style_alert {
+  color: #cc8844;
+}
+
+.Style_note {
+  color: #aa9966;
+}
+
+/* Scrollbar */
+.BufferWindow::-webkit-scrollbar { width: 8px; }
+.BufferWindow::-webkit-scrollbar-track { background: #1a1a1a; }
+.BufferWindow::-webkit-scrollbar-thumb { background: #3a3020; border-radius: 4px; }
+.BufferWindow::-webkit-scrollbar-thumb:hover { background: #5a4a30; }
+
+/* Loading screen */
+#loadingpane {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 35%;
+  color: #887755;
+  font-size: 1.2em;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+#loadingpane em {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+</style>
+
+<script src="lib/parchment/jquery.min.js"></script>
+<script>
+    parchment_options = {
+        default_story: ['lib/parchment/zork1.ulx.js'],
+        lib_path: 'lib/parchment/',
+        use_proxy: 0,
+        do_vm_autosave: 0,
+        story_name: 'zork1.ulx.js',
+    };
+</script>
+<script src="lib/parchment/parchment.js"></script>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) { window.location.reload(); }
+    });
+</script>
+
+</head>
+<body>
+
+<div id="gameport">
+  <div id="windowport">
+    <noscript>
+      <div style="text-align:center; padding:40px; color:#aa6644;">
+        <h2>ZORK I</h2>
+        <p>JavaScript is required to play this game.</p>
+      </div>
+    </noscript>
+  </div>
+  <div id="loadingpane">
+    <div style="margin-bottom:20px; font-size:1.4em; color:#aa9966; letter-spacing:4px;">ZORK I</div>
+    <em>Loading the Great Underground Empire...</em>
+  </div>
+  <div id="errorpane" style="display:none;">
+    <div id="errorcontent">...</div>
+  </div>
+</div>
+
+<script src="lib/ambient-audio.js"></script>
+</body>
+</html>
