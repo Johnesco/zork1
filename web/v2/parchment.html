@@ -44,6 +44,8 @@ html, body {
 }
 
 div#gameport {
+  position: absolute;
+  inset: 0;
   background: #111;
 }
 
@@ -115,6 +117,11 @@ div#gameport {
     };
 </script>
 <script src="lib/parchment/main.js"></script>
+<script>
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) { window.location.reload(); }
+    });
+</script>
 
 </head>
 <body>
