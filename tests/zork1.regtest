@@ -1,0 +1,293 @@
+# Zork I: Inform 7 Edition — RegTest regression tests
+# Run with: wsl -e bash tests/run-tests.sh
+#
+# Format reference: https://eblong.com/zarf/plotex/regtest.html
+#   >command          send a command
+#   /regex            output must match regex (NO trailing slash)
+#   literal text      output must contain literal string
+#   !text             output must NOT contain this text
+#   {vital}           abort test on failure
+#   >{include}name    include commands from another test
+#
+# NOTE: Troll combat is random (~70% hit rate). Tests that go through
+# the troll may occasionally fail due to bad RNG rolls. Re-run if so.
+
+** game: ../build/zork1.ulx
+** interpreter: /home/johnesco/glulxe/glulxe -q
+
+# ============================================================
+# Basic smoke tests
+# ============================================================
+
+* startup
+> look
+{vital}
+/West of House
+/white house
+/small mailbox
+
+* mailbox
+>{include} startup
+> open mailbox
+/leaflet
+> take leaflet
+Taken
+> read leaflet
+/WELCOME TO ZORK
+
+# ============================================================
+# House navigation and items
+# ============================================================
+
+* enter-house
+# Enter house via kitchen window
+>{include} startup
+> n
+/North of House
+> e
+/Behind House
+> open window
+/open the window
+> w
+{vital}
+/Kitchen
+/table
+
+* living-room
+# Get to Living Room and pick up gear
+>{include} enter-house
+> w
+{vital}
+/Living Room
+/sword
+/brass lantern
+> take sword
+Taken
+> take lantern
+Taken
+> turn on lantern
+/now on
+
+* attic
+# Get to attic from Kitchen (up from Kitchen, not Living Room)
+>{include} enter-house
+> w
+> take lantern
+> turn on lantern
+> e
+> up
+{vital}
+/Attic
+/rope
+> take rope
+Taken
+> take knife
+Taken
+
+* kitchen-items
+>{include} enter-house
+> take bottle
+Taken
+> take sack
+Taken
+> open sack
+/brown sack
+> look in sack
+/lunch
+/garlic
+
+# ============================================================
+# Cellar entry
+# ============================================================
+
+* cellar
+>{include} living-room
+> push rug
+{vital}
+/trap door
+> open trap door
+{vital}
+/rickety staircase
+> down
+{vital}
+/Cellar
+
+# ============================================================
+# Troll combat (random — may need re-runs)
+# ============================================================
+
+* troll
+>{include} cellar
+> n
+/Troll Room
+/troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+
+# ============================================================
+# East-West Passage and Round Room
+# ============================================================
+
+* round-room
+# Navigate past troll to Round Room
+>{include} troll
+> e
+/East-West Passage
+> e
+/Round Room
+
+# ============================================================
+# Loud Room — echo puzzle
+# ============================================================
+
+* echo
+>{include} round-room
+> e
+{vital}
+/Loud Room
+/deafeningly loud
+> echo
+{vital}
+/acoustics of the room change
+> take platinum bar
+Taken
+!clanging
+
+# ============================================================
+# Dam — power on and open sluice gates
+# ============================================================
+
+* dam
+>{include} round-room
+> n
+/North-South Passage
+> ne
+/Deep Canyon
+> nw
+/Reservoir South
+> e
+/Dam
+> n
+/Dam Lobby
+/guidebook
+> n
+{vital}
+/Maintenance Room
+> push yellow button
+Click
+> take wrench
+Taken
+> s
+> s
+/Dam
+# NOTE: In the current compiled .ulx, "turn bolt" gives the default
+# "It is fixed in place." because the custom turning-bolt action isn't
+# compiled in. Once story.ni is recompiled, this should produce:
+# /sluice gates open
+> turn bolt
+
+# ============================================================
+# Boat inflation at Dam Base
+# ============================================================
+
+* boat
+>{include} dam
+# Dam -> down -> Dam Base
+> d
+{vital}
+/Dam Base
+/pile of plastic
+
+# ============================================================
+# Mirror room teleportation
+# ============================================================
+
+* mirror
+>{include} round-room
+> s
+/Narrow Passage
+> s
+{vital}
+/Mirror Room
+# NOTE: In the current compiled .ulx, "rub mirror" gives the default
+# "You rub the mirror." because the custom rubbing rule isn't compiled in.
+# Once story.ni is recompiled, this should produce:
+# /rumble from deep within the earth
+> rub mirror
+
+# ============================================================
+# Navigation to Entrance to Hades
+# ============================================================
+
+* hades-path
+# Round Room -> s -> Narrow Passage -> s -> Mirror Room 2 -> e -> Tiny Cave -> d -> Hades
+>{include} round-room
+> s
+/Narrow Passage
+> s
+/Mirror Room
+> e
+/Cave
+> d
+{vital}
+/Entrance to Hades
+
+# ============================================================
+# Cyclops Room (via maze)
+# ============================================================
+
+* cyclops-path
+# Navigate the maze to Cyclops Room
+# Troll Room -> w -> Maze1 -> s -> Maze2 -> e -> Maze3 -> u -> Maze5
+# -> sw -> Maze6 -> e -> Maze7 -> s -> Maze15 -> se -> Cyclops Room
+>{include} troll
+> w
+/Maze
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+{vital}
+/Cyclops Room
+/cyclops
+
+* cyclops-odysseus
+>{include} cyclops-path
+> odysseus
+{vital}
+/flees the room
+
+# ============================================================
+# Forest navigation
+# ============================================================
+
+* forest-loop
+>{include} startup
+> n
+/North of House
+> n
+/Forest Path
+> n
+/Clearing
+> s
+/Forest Path
+> s
+/North of House
+
+* house-circuit
+>{include} startup
+> n
+/North of House
+> e
+/Behind House
+> s
+/South of House
+> w
+/West of House

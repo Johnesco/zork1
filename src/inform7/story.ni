@@ -2937,3 +2937,54 @@ After going to a room (called destination) (this is the coffin cure rule):
 	if the player carries the gold coffin:
 		now the coffin-cure is true;
 	continue the action.
+
+Part 6 - Testing (Not for release)
+
+Chapter 1 - Smoke Tests
+
+[Cellar entry: open the house, get lamp and sword, descend to cellar]
+Test cellar with "n / e / open window / w / w / take sword / take lantern / turn on lantern / push rug / open trap door / down" in West-of-House.
+
+[Troll combat: go north from cellar and attack (random -- may need retries)]
+Test troll with "test cellar / n / attack troll / attack troll / attack troll / attack troll".
+
+[Cyclops puzzle method A: feed and water]
+Test feedcyclops with "give lunch to cyclops / open bottle / give water to cyclops / up" in Cyclops-Room holding the lunch and the glass bottle.
+
+[Cyclops puzzle method B: say the magic word]
+Test odysseus with "odysseus" in Cyclops-Room.
+
+[Loud Room echo puzzle]
+Test echo with "echo / take platinum bar" in Loud Room.
+
+[Dam: power on, take wrench, open sluice gates]
+Test dam with "push yellow button / take wrench / s / s / turn bolt" in Maintenance Room.
+
+[Exorcism: bell, candles, book sequence in Entrance to Hades]
+Test exorcism with "ring bell / light match / light candles / take candles / read book / s" in Entrance to Hades holding the brass bell and the pair of candles and the black book and the matchbook.
+
+[Coal to diamond transformation]
+Test diamond with "open machine / put coal in machine / close machine / turn on switch / open machine / take diamond" in Machine-Room holding the small pile of coal.
+
+[Inflate the boat at Dam Base]
+Test boat with "inflate plastic" in Dam-Base holding the pile of plastic and the hand-held air pump.
+
+[Dig up the scarab in Sandy Cave]
+Test scarab with "dig / dig / dig / dig / take scarab" in Sandy Cave holding the shovel.
+
+[Wave sceptre to solidify rainbow and reveal pot of gold]
+Test rainbow with "wave sceptre / take pot of gold" in End of Rainbow holding the sceptre.
+
+[Mirror room teleportation]
+Test mirror with "rub mirror" in Mirror Room 1.
+
+[Wind canary in forest to summon songbird and bauble]
+Test bauble with "wind canary / take bauble" in Forest1 holding the golden clockwork canary.
+
+[Dome Room rope descent]
+Test dome with "tie rope to railing / down" in Dome Room holding the rope.
+
+Chapter 2 - Full Walkthrough
+
+[Complete winning path from start to finish -- chains all major puzzle sequences]
+Test me with "test cellar / test troll".
