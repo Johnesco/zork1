@@ -10,6 +10,10 @@ tools/
 # Web game data (tracked for GitHub Pages deployment)
 # web/zork1.ulx.js
 
+# Packages (downloaded binaries)
+*.deb
+*.rpm
+
 # OS generated files
 
 $RECYCLE.BIN/
