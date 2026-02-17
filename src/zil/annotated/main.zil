@@ -141,6 +141,10 @@
 				  <SET O <COND (.PTBL .OBJ1) (T .OBJ)>>
 				  <SET I <COND (.PTBL .OBJ) (T .OBJ1)>>
 
+@@ "Multiple exceptions" — when the player uses ALL or a multi-object
+@@ command, this block filters out invalid targets: objects not here,
+@@ items not in the right container, and non-takeable objects. Each
+@@ rejected object is skipped silently via AGAIN.
 ;"multiple exceptions"
 <COND (<OR <G? .NUM 1>
 	   <EQUAL? <GET <GET ,P-ITBL ,P-NC1> 0> ,W?ALL>>

@@ -113,6 +113,8 @@
 	(ACTION CHIMNEY-F)
 	(FLAGS CLIMBBIT NDESCBIT)>
 
+@@ GHOSTS — guardians of Hades. Banished by the exorcism ritual
+@@ (bell → candles → book). Block access to the Land of the Dead.
 <OBJECT GHOSTS
 	(IN ENTRANCE-TO-HADES)
 	(SYNONYM GHOSTS SPIRITS FIENDS FORCE)
@@ -121,6 +123,8 @@
 	(FLAGS ACTORBIT NDESCBIT)
 	(ACTION GHOSTS-F)>
 
+@@ Treasures have VALUE (points when first picked up) and TVALUE
+@@ (points when placed in the trophy case). Max score is 350.
 <OBJECT SKULL
 	(IN LAND-OF-LIVING-DEAD)
 	(SYNONYM SKULL HEAD TREASURE)
@@ -133,6 +137,8 @@ It appears to be grinning at you rather nastily.")
 	(VALUE 10)
 	(TVALUE 10)>
 
+@@ BASKET — dumbwaiter transport between shaft rooms. Items placed
+@@ in the raised basket can be lowered to the coal mine and vice versa.
 <OBJECT LOWERED-BASKET
 	(IN LOWER-SHAFT)
 	(SYNONYM CAGE DUMBWAITER BASKET)
@@ -159,6 +165,8 @@ It appears to be grinning at you rather nastily.")
 	(FLAGS TAKEBIT FOODBIT)
 	(LDESC "A hot pepper sandwich is here.")>
 
+@@ BAT — transports the player to a random mine room on contact.
+@@ Repelled by garlic; carrying garlic prevents the grab.
 <OBJECT BAT
 	(IN BAT-ROOM)
 	(SYNONYM BAT VAMPIRE)
@@ -168,6 +176,8 @@ It appears to be grinning at you rather nastily.")
 	(DESCFCN BAT-D)
 	(ACTION BAT-F)>
 
+@@ BELL / HOT-BELL — exorcism phase 1. Ringing the bell in Hades
+@@ makes it red-hot (swapped to HOT-BELL); cools after 20 turns.
 <OBJECT BELL
 	(IN NORTH-TEMPLE)
 	(SYNONYM BELL)
@@ -184,6 +194,8 @@ It appears to be grinning at you rather nastily.")
 	(ACTION HOT-BELL-F)
 	(LDESC "On the ground is a red hot bell.")>
 
+@@ AXE — the troll's weapon. Can be taken after defeating the troll.
+@@ WEAPONBIT marks it as usable in combat.
 <OBJECT AXE
 	(IN TROLL)
 	(SYNONYM AXE AX)
@@ -193,6 +205,8 @@ It appears to be grinning at you rather nastily.")
 	(ACTION AXE-F)
 	(SIZE 25)>
 
+@@ BOLT — turn with wrench (after pressing yellow button for power)
+@@ to open/close the dam sluice gates. Part of the dam puzzle.
 <OBJECT BOLT
 	(IN DAM-ROOM)
 	(SYNONYM BOLT NUT)
@@ -216,6 +230,8 @@ It appears to be grinning at you rather nastily.")
 	(FLAGS NDESCBIT SURFACEBIT CONTBIT OPENBIT)
 	(CAPACITY 50)>
 
+@@ BOOK — exorcism phase 3. Reading the book in Hades banishes
+@@ the spirits. Contains the humorous "Commandment #12592" text.
 <OBJECT BOOK
 	(IN ALTAR)
 	(SYNONYM BOOK PRAYER PAGE BOOKS)
@@ -243,6 +259,8 @@ Surely thou shalt repent of thy cunning." )>
 	(DESC "broken lantern")
 	(FLAGS TAKEBIT)>
 
+@@ SCEPTRE — wave at rainbow to create a solid walkable bridge
+@@ to the pot of gold. Also usable as a weapon (WEAPONBIT).
 <OBJECT SCEPTRE
 	(IN COFFIN)
 	(SYNONYM SCEPTRE SCEPTER TREASURE)
@@ -310,6 +328,9 @@ sceptre is ornamented with colored enamel, and tapers to a sharp point.")
 	(FLAGS CONTBIT OPENBIT TRYTAKEBIT SACREDBIT)
 	(ACTION TOOL-CHEST-FCN)>
 
+@@ Maintenance Room buttons — part of the dam puzzle:
+@@ Yellow = power on/off, Brown = not implemented,
+@@ Red = not implemented, Blue = causes a pipe leak.
 <OBJECT YELLOW-BUTTON
 	(IN MAINTENANCE-ROOM)
 	(SYNONYM BUTTON SWITCH)
@@ -342,6 +363,8 @@ sceptre is ornamented with colored enamel, and tapers to a sharp point.")
 	(FLAGS NDESCBIT)
 	(ACTION BUTTON-F)>
 
+@@ TROPHY-CASE — the scoring container. Place treasures here
+@@ to earn their TVALUE points. Capacity 10000 (effectively unlimited).
 <OBJECT TROPHY-CASE	;"first obj so L.R. desc looks right."
 	(IN LIVING-ROOM)
 	(SYNONYM CASE)
@@ -372,6 +395,8 @@ sceptre is ornamented with colored enamel, and tapers to a sharp point.")
 	(VALUE 10)
 	(TVALUE 5)>
 
+@@ GARLIC — repels both the thief (won't enter room) and the bat
+@@ (prevents grab). Essential for safe passage through Bat Room.
 <OBJECT GARLIC
 	(IN SANDWICH-BAG)
 	(SYNONYM GARLIC CLOVE)
@@ -391,6 +416,8 @@ sceptre is ornamented with colored enamel, and tapers to a sharp point.")
 	(VALUE 4)
 	(TVALUE 11)>
 
+@@ CYCLOPS — NPC with strength 10000 (nearly invincible in combat).
+@@ Solutions: feed lunch → give water → falls asleep, OR say "odysseus".
 <OBJECT CYCLOPS
 	(IN CYCLOPS-ROOM)
 	(SYNONYM CYCLOPS MONSTER EYE)
@@ -465,6 +492,8 @@ sceptre is ornamented with colored enamel, and tapers to a sharp point.")
 	(FLAGS NDESCBIT)
 	(ACTION CRACK-FCN)>
 
+@@ COFFIN — treasure (10/15) but also a container (holds sceptre).
+@@ SACREDBIT prevents the thief from stealing it.
 <OBJECT COFFIN
 	(IN EGYPT-ROOM)
 	(SYNONYM COFFIN CASKET TREASURE)
@@ -485,6 +514,7 @@ sceptre is ornamented with colored enamel, and tapers to a sharp point.")
 	(FLAGS DOORBIT NDESCBIT INVISIBLE)
 	(ACTION GRATE-FUNCTION)>
 
+@@ PUMP — used to inflate the deflated boat (INFLATABLE-BOAT).
 <OBJECT PUMP
 	(IN RESERVOIR-NORTH)
 	(SYNONYM PUMP AIR-PUMP TOOL TOOLS)
@@ -492,6 +522,8 @@ sceptre is ornamented with colored enamel, and tapers to a sharp point.")
 	(DESC "hand-held air pump")
 	(FLAGS TAKEBIT TOOLBIT)>
 
+@@ DIAMOND — created by putting coal in the machine and turning
+@@ the switch. Starts with no location (not in game until created).
 <OBJECT DIAMOND
 	(SYNONYM DIAMOND TREASURE)
 	(ADJECTIVE HUGE ENORMOUS)
@@ -549,6 +581,8 @@ sceptre is ornamented with colored enamel, and tapers to a sharp point.")
 	(VALUE 10)
 	(TVALUE 5)>
 
+@@ LAMP — the primary light source. 400-turn timer with warnings
+@@ at low battery. LIGHTBIT marks it as illuminating when ON.
 <OBJECT LAMP
 	(IN LIVING-ROOM)
 	(SYNONYM LAMP LANTERN LIGHT)
@@ -591,6 +625,9 @@ No computer should be without one!\"")
 	(FLAGS NDESCBIT INVISIBLE)
 	(ACTION LEAK-FUNCTION)>
 
+@@ MACHINE — the coal-to-diamond transformer. Put coal inside,
+@@ turn the switch on, then open: coal becomes a huge diamond.
+@@ Putting a diamond back in produces worthless vitreous slag (GUNK).
 <OBJECT MACHINE
 	(IN MACHINE-ROOM)
 	(SYNONYM MACHINE PDP10 DRYER LID)
@@ -599,6 +636,8 @@ No computer should be without one!\"")
 	(ACTION MACHINE-F)
 	(CAPACITY 50)>
 
+@@ INFLATED-BOAT — the magic boat (VEHBIT = vehicle). Boarding with
+@@ a sharp object (WEAPONBIT) punctures it. Required for river travel.
 <OBJECT INFLATED-BOAT
 	(SYNONYM BOAT RAFT)
 	(ADJECTIVE INFLAT MAGIC PLASTIC SEAWORTHY)
@@ -618,6 +657,8 @@ No computer should be without one!\"")
 	(CAPACITY 10)
 	(ACTION MAILBOX-F)>
 
+@@ MATCH — 6 matches total, each burns for 2 turns. Drafty rooms
+@@ (like Tiny Cave) extinguish them instantly. Secondary light source.
 <OBJECT MATCH
 	(IN DAM-LOBBY)
 	(SYNONYM MATCH MATCHES MATCHBOOK)
@@ -674,6 +715,8 @@ the far wall is a painting of unparalleled beauty.")
 	(VALUE 4)
 	(TVALUE 6)>
 
+@@ CANDLES — exorcism phase 2. 40-turn timer with stages at
+@@ 20/30/35/40 turns. Wind in Tiny Cave extinguishes them.
 <OBJECT CANDLES
 	(IN SOUTH-TEMPLE)
 	(SYNONYM CANDLES PAIR)
@@ -860,6 +903,8 @@ Zorkers were obscure." )>
 	(FLAGS TAKEBIT TOOLBIT)
 	(SIZE 15)>
 
+@@ COAL — raw material for the diamond transformation puzzle.
+@@ Put in the machine, turn switch on → becomes a huge diamond.
 <OBJECT COAL
 	(IN DEAD-END-5)
 	(SYNONYM COAL PILE HEAP)
@@ -875,6 +920,8 @@ Zorkers were obscure." )>
 	(DESC "wooden ladder")
 	(FLAGS NDESCBIT CLIMBBIT)>
 
+@@ SCARAB — hidden treasure (INVISIBLE flag). Revealed by digging
+@@ in the sand at Sandy Cave with the shovel.
 <OBJECT SCARAB
 	(IN SANDY-CAVE)
 	(SYNONYM SCARAB BUG BEETLE TREASURE)
@@ -919,6 +966,8 @@ Zorkers were obscure." )>
 	(TEXT
 "The engravings translate to \"This space intentionally left blank.\"")>
 
+@@ SWORD — elvish sword that glows blue when enemies (thief, troll,
+@@ cyclops) are nearby. Glow intensity reflects proximity/danger.
 <OBJECT SWORD
 	(IN LIVING-ROOM)
 	(SYNONYM SWORD ORCRIST GLAMDRING BLADE)
@@ -931,6 +980,8 @@ Zorkers were obscure." )>
 	(SIZE 30)
 	(TVALUE 0)>
 
+@@ MAP — endgame item. INVISIBLE until WON-FLAG is set (score >= 240
+@@ in trophy case). Reveals the path to Stone Barrow and Zork II.
 <OBJECT MAP
 	(IN TROPHY-CASE)
 	(SYNONYM PARCHMENT MAP)
@@ -972,6 +1023,9 @@ Warning:|
    This boat is made of thin plastic.|
    Good Luck!" )>
 
+@@ THIEF — roaming NPC. Moves every 5 turns, steals valuables from
+@@ the player, armed with stiletto (strength 5). Repelled by garlic.
+@@ Carries a large bag where stolen items accumulate.
 <OBJECT THIEF
 	(IN ROUND-ROOM)
 	(SYNONYM THIEF ROBBER MAN PERSON)
@@ -1040,6 +1094,8 @@ of FCD#3 as we conduct you on a guided tour of the facilities:|
         1) You start your tour here in the Dam Lobby. You will notice
 on your right that...." )>
 
+@@ TROLL — combat NPC (strength 2) blocking the east-west passage.
+@@ Armed with a bloody axe. Can be killed or driven off.
 <OBJECT TROLL
 	(IN TROLL-ROOM)
 	(SYNONYM TROLL)
@@ -1066,6 +1122,8 @@ out of the room.")
 	(VALUE 15)
 	(TVALUE 5)>
 
+@@ TUBE / PUTTY — "Frobozz Magic Gunk" used to fix the pipe leak
+@@ in the Maintenance Room (caused by pressing the blue button).
 <OBJECT TUBE
 	(IN MAINTENANCE-ROOM)
 	(SYNONYM TUBE TOOTH PASTE)
@@ -1149,6 +1207,9 @@ will provide many months of trouble-free operation.")>
 	(DESC "control panel")
 	(FLAGS NDESCBIT)>
 
+@@ NEST / EGG / CANARY / BAUBLE — music puzzle chain. The egg
+@@ contains a clockwork canary; wind the canary near a songbird to
+@@ receive a brass bauble. Breaking the egg damages the canary.
 <OBJECT NEST
 	(IN UP-A-TREE)
 	(SYNONYM NEST)

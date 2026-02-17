@@ -108,6 +108,10 @@
 		<TELL " here!\"" CR>)>
 	 <RTRUE>>
 
+@@ NOT-HERE-PRINT — reconstructs the player's typed noun from the
+@@ raw input buffer (P-ITBL) rather than using an object DESC, since
+@@ the object wasn't found. Handles the OOPS-flagged case (P-OFLAG)
+@@ and distinguishes PRSO vs PRSI noun clause positions.
 <ROUTINE NOT-HERE-PRINT (PRSO?)
  <COND (,P-OFLAG
 	<COND (,P-XADJ <PRINTB ,P-XADJN>)>

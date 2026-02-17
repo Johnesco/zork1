@@ -241,6 +241,8 @@ It is clear that the owners must have been extremely wealthy." CR>)
 "The water splashes on the walls and evaporates immediately." CR>
 		<REMOVE-CAREFULLY ,WATER>)>>
 
+@@ --- Kitchen window, entry and room handlers
+
 <GLOBAL KITCHEN-WINDOW-FLAG <>>
 
 <ROUTINE KITCHEN-WINDOW-F ()
@@ -345,6 +347,8 @@ It is clear that the owners must have been extremely wealthy." CR>)
 	      SQUEEKY-ROOM
 	      MINE-ENTRANCE>>
 
+@@ --- Exorcism bell logic
+
 <ROUTINE BELL-F ()
 	 <COND (<VERB? RING>
 		<COND (<AND <EQUAL? ,HERE ,LLD-ROOM>
@@ -405,6 +409,8 @@ window which is ">
 		     (<AND <VERB? CLIMB-UP> <EQUAL? ,PRSO ,STAIRS>>
 		      <TELL "There are no stairs leading down." CR>)>)>>
 
+@@ --- Stone Barrow — endgame transition to Zork II
+
 <ROUTINE STONE-BARROW-FCN (RARG)
 	 <COND (<AND <EQUAL? .RARG ,M-BEG>
 		     <OR <VERB? ENTER>
@@ -449,6 +455,8 @@ ZORK: The Great Underground Empire.|" CR>)>
 	   <TELL
 "The trophy case is securely fastened to the wall." CR>)>>
 	
+@@ --- Living room, trap door, and rug puzzle
+
 <GLOBAL RUG-MOVED <>>
 
 <ROUTINE LIVING-ROOM-FCN (RARG "AUX" RUG?)
@@ -3264,6 +3272,8 @@ teeth ache to touch it." CR>)>>
 
 "melee actions (object functions for villains called with these"
 
+@@ --- Combat constants and villain state flags
+
 <CONSTANT F-BUSY? 1>		;"busy recovering weapon?"
 <CONSTANT F-DEAD 2>		;"mistah kurtz, he dead."
 <CONSTANT F-UNCONSCIOUS 3>	;"into dreamland"
@@ -3359,6 +3369,9 @@ teeth ache to touch it." CR>)>>
 
 "I-FIGHT moved to DEMONS"
 
+@@ --- DO-FIGHT — main combat round orchestrator. Iterates through
+@@ all active villains, resolving each attack/defense exchange.
+
 <ROUTINE DO-FIGHT (LEN "AUX" CNT RES O OO (OUT <>))
 	<REPEAT ()
 	      <SET CNT 0>
@@ -3440,6 +3453,11 @@ property, which is normally 0"
 		       (<NOT <SET W <NEXT? .W>>> <RFALSE>)>>>
 
 \
+
+@@ --- Blow resolution: VILLAIN-BLOW (villain attacks hero) and
+@@ HERO-BLOW (hero attacks villain). Each calculates attack/defense
+@@ values from strength, weapon, and random factors, then indexes
+@@ into damage result tables (DEF1-DEF3) for the outcome.
 
 <ROUTINE VILLAIN-BLOW (OO OUT?
 		       "AUX" (VILLAIN <GET .OO ,V-VILLAIN>)
@@ -3637,6 +3655,10 @@ carcass has disappeared." CR>
 "messages for winner"
 
 <CONSTANT F-WEP 0>	;"means print weapon name"
+@@ --- Combat message tables. Each villain has a MELEE table with
+@@ messages for: missed, unconscious, killed, light wound, severe
+@@ wound, stagger, lose weapon, and hesitate outcomes.
+
 <CONSTANT F-DEF 1>	;"means print defender name (villain, e.g.)"
 
 <GLOBAL HERO-MELEE
@@ -3837,6 +3859,10 @@ livelihood.">>>>
 "DEMONS"
 
 "Fighting demon"
+
+@@ --- Combat and thief daemons. I-FIGHT coordinates per-turn
+@@ combat. I-SWORD manages the sword's proximity glow. I-THIEF
+@@ handles the thief's roaming, stealing, and item redistribution.
 
 <ROUTINE I-FIGHT ("AUX" (FIGHT? <>) (LEN <GET ,VILLAINS 0>)
 		  CNT OO O P)

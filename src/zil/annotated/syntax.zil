@@ -84,7 +84,16 @@
 <SYNTAX \#UNRECORD = V-UNRECORD>
 
 @@ --- Real (In-Game) Verbs ---
-
+@@ SYNTAX declarations map typed commands to V- routines. The
+@@ parenthesized constraints after OBJECT control how the parser
+@@ finds valid targets:
+@@   FIND flags: only match objects with that flag (e.g., LIGHTBIT,
+@@     TAKEBIT, ACTORBIT, WEAPONBIT, READBIT, CLIMBBIT, BURNBIT)
+@@   HELD = must be in player inventory
+@@   CARRIED = must be carried (not just reachable)
+@@   ON-GROUND = can be on the floor
+@@   IN-ROOM = can be anywhere in the room
+@@ Multiple constraints combine to widen the search scope.
 
 "Real Verbs"
 
