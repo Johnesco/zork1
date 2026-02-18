@@ -659,8 +659,9 @@ Instead of looking under the carpet:
 	otherwise:
 		say "There is nothing else under the carpet."
 
-Raising-rug is an action applying to one thing. Understand "raise [something]" as raising-rug when the noun is the carpet.
-Instead of raising-rug the carpet:
+Raising is an action applying to one thing. Understand "raise [something]" as raising.
+Carry out raising: say "You can't raise that."
+Instead of raising the carpet:
 	if the rug-moved is true:
 		say "The rug is too heavy to lift.";
 	otherwise:
@@ -867,8 +868,9 @@ Instead of going west in Troll-Room:
 
 Chapter 3 - Troll NPC
 
-The troll is a person in Troll-Room. "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A pathetically babbling troll is here.[end if]"
+The troll is a person in Troll-Room.
 Understand "troll" and "nasty" as the troll.
+The initial appearance of the troll is "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A pathetically babbling troll is here.[end if]".
 The description of the troll is "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A pathetically babbling troll is here.[end if]".
 
 The troll-unconscious is a truth state that varies. The troll-unconscious is false.
@@ -884,6 +886,8 @@ To kill the troll with fog:
 	say "Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.";
 	now the troll is defeated;
 	now the troll-flag is true;
+	now the troll-unconscious is false;
+	now the troll-unconscious-timer is 0;
 	if the troll carries the bloody axe:
 		now the bloody axe is in Troll-Room;
 	remove the troll from play.
@@ -2009,25 +2013,26 @@ The river-current-timer is a number that varies. The river-current-timer is 0.
 The river-current-active is a truth state that varies. The river-current-active is false.
 
 Every turn when the river-current-active is true (this is the river current rule):
+	let R be the location of the player;
 	decrease the river-current-timer by 1;
 	if the river-current-timer is at most 0:
-		if the player is in River1:
+		if R is River1:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River2;
+			move the magic boat to River2;
 			now the river-current-timer is 4;
-		otherwise if the player is in River2:
+		otherwise if R is River2:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River3;
+			move the magic boat to River3;
 			now the river-current-timer is 3;
-		otherwise if the player is in River3:
+		otherwise if R is River3:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River4;
+			move the magic boat to River4;
 			now the river-current-timer is 2;
-		otherwise if the player is in River4:
+		otherwise if R is River4:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River5;
+			move the magic boat to River5;
 			now the river-current-timer is 1;
-		otherwise if the player is in River5:
+		otherwise if R is River5:
 			die saying "Unfortunately, the magic boat doesn't provide protection from the rocks and boulders one meets at the bottom of waterfalls. Including this one.";
 		otherwise:
 			now the river-current-active is false.
@@ -2250,14 +2255,12 @@ Gas Room is in the Underground.
 Up from Gas Room is Smelly Room. East of Gas Room is Mine1.
 
 Every turn when the player is in Gas Room (this is the gas room explosion rule):
-	if the brass lantern is lit and the player carries the brass lantern:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying a lit lamp in here.[paragraph break]   BOOOOOOOOOOOM";
 	if the torch is lit and the player carries the torch:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying a lit torch in here.[paragraph break]   BOOOOOOOOOOOM";
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   BOOOOOOOOOOOM";
 	if the pair of candles is lit and the player carries the pair of candles:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying lit candles in here.[paragraph break]   BOOOOOOOOOOOM";
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   BOOOOOOOOOOOM";
 	if the match-lit is true:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about lighting a match in here.[paragraph break]   BOOOOOOOOOOOM".
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   BOOOOOOOOOOOM".
 
 The sapphire-encrusted bracelet is in Gas Room.
 Understand "bracelet" and "jewel" and "sapphire" as the sapphire-encrusted bracelet.
@@ -2309,7 +2312,7 @@ Instead of going west in Timber Room:
 	otherwise:
 		move the player to Drafty Room.
 
-Drafty Room is a dark room. The printed name of Drafty Room is "Drafty Room". "This is a small drafty room in which is the bottom of a long shaft. To the south is a passageway and to the east a very narrow passage. In the shaft can be seen a heavy iron chain."
+Drafty Room is a room. The printed name of Drafty Room is "Drafty Room". "This is a small drafty room in which is the bottom of a long shaft. To the south is a passageway and to the east a very narrow passage. In the shaft can be seen a heavy iron chain."
 Drafty Room is in the Underground.
 South of Drafty Room is Machine-Room.
 
@@ -2331,9 +2334,16 @@ The carrying capacity of the raised-basket is 10.
 
 The basket-is-at-top is a truth state that varies. The basket-is-at-top is true.
 
-Raising-basket is an action applying to one thing. Understand "raise [something]" as raising-basket when the noun is the raised-basket or the noun is the lowered-basket.
+Instead of raising the raised-basket:
+	if the basket-is-at-top is true:
+		say "The basket is already at the top.";
+	otherwise:
+		now the basket-is-at-top is true;
+		now the raised-basket is in Shaft Room;
+		now the lowered-basket is in Drafty Room;
+		say "The basket is raised to the top of the shaft."
 
-Instead of raising-basket something:
+Instead of raising the lowered-basket:
 	if the basket-is-at-top is true:
 		say "The basket is already at the top.";
 	otherwise:
@@ -2357,7 +2367,7 @@ Instead of lowering the raised-basket:
 Instead of lowering the lowered-basket:
 	try lowering the raised-basket.
 
-Machine-Room is a dark room. Machine-Room is in the Underground.
+Machine-Room is a room. Machine-Room is in the Underground.
 The printed name of Machine-Room is "Machine Room".
 North of Machine-Room is Drafty Room.
 The description of Machine-Room is "This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled [quotation mark]START[quotation mark]. The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is [if the machine is open]open[otherwise]closed[end if].".
@@ -2451,9 +2461,9 @@ Part 4 - The Thief
 
 Chapter 1 - Thief NPC
 
-The thief is a person. "[if the thief-unconscious is true]There is a suspicious-looking individual lying unconscious on the ground.[otherwise]There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is armed with a vicious-looking stiletto.[end if]"
+The thief is a person in Round Room.
 Understand "thief" and "robber" and "man" and "person" and "shady" and "suspicious" and "seedy" as the thief.
-The thief is in Round Room.
+The initial appearance of the thief is "[if the thief-unconscious is true]There is a suspicious-looking individual lying unconscious on the ground.[otherwise]There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is armed with a vicious-looking stiletto.[end if]".
 The description of the thief is "The thief is a slippery character with beady eyes that flit back and forth. He carries, along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly in your direction. I'd watch out if I were you."
 
 The thief-strength is a number that varies. The thief-strength is 5.
@@ -2766,7 +2776,7 @@ Carry out burning it with:
 
 Chapter 11 - Boat System
 
-The magic boat is a thing. The magic boat is an open enterable container. The carrying capacity of the magic boat is 10.
+The magic boat is a vehicle. The carrying capacity of the magic boat is 10.
 Understand "boat" and "raft" and "magic" and "plastic" and "seaworthy" and "inflat" as the magic boat.
 The description of the magic boat is "It's a seaworthy magic boat."
 
@@ -2831,37 +2841,38 @@ Before entering the magic boat:
 
 Launching is an action applying to nothing. Understand "launch" as launching.
 Carry out launching:
+	let R be the location of the player;
 	if the player is not in the magic boat:
 		say "You're not in a boat.";
-	otherwise if the player is in Dam-Base:
+	otherwise if R is Dam-Base:
 		say "You push off from the shore.";
 		move the magic boat to River1;
 		now the river-current-active is true;
 		now the river-current-timer is 4;
-	otherwise if the player is in White Cliffs North:
+	otherwise if R is White Cliffs North:
 		say "You push off from the shore.";
 		move the magic boat to River3;
 		now the river-current-active is true;
 		now the river-current-timer is 3;
-	otherwise if the player is in White Cliffs South:
+	otherwise if R is White Cliffs South:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
-	otherwise if the player is in Shore:
+	otherwise if R is Shore:
 		say "You push off from the shore.";
 		move the magic boat to River5;
 		now the river-current-active is true;
 		now the river-current-timer is 1;
-	otherwise if the player is in Sandy Beach:
+	otherwise if R is Sandy Beach:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
-	otherwise if the player is in Reservoir-South or the player is in Reservoir-North:
+	otherwise if R is Reservoir-South or R is Reservoir-North:
 		say "You push off from the shore.";
 		move the magic boat to Reservoir;
-	otherwise if the player is in Stream View:
+	otherwise if R is Stream View:
 		say "You push off from the shore.";
 		move the magic boat to In-Stream;
 	otherwise:
@@ -2894,9 +2905,7 @@ After going to Reservoir:
 
 Chapter 14 - Gate/Bolt Interaction
 
-Turning-bolt is an action applying to one thing. Understand "turn [something]" as turning-bolt when the noun is the bolt.
-
-Instead of turning-bolt the bolt:
+Instead of turning the bolt:
 	if the player does not carry the wrench:
 		say "The bolt won't turn with your best effort.";
 	otherwise if the gate-flag is false:

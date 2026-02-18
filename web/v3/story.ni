@@ -71,6 +71,9 @@ This is the score and rank rule:
 	say "[current-rank].[line break]".
 
 Carry out requesting the score:
+	if the player-is-dead is true:
+		say "You're dead! How can you think of your score?";
+		stop the action;
 	follow the score and rank rule;
 	stop the action.
 
@@ -114,7 +117,28 @@ To scatter-possessions:
 	now the match-lit is false;
 	now the match-timer is 0.
 
-Chapter 5 - Darkness and Grues
+Chapter 5 - Dead-State Action Intercepts
+
+Before attacking when the player-is-dead is true: say "All such attacks are vain in your condition." instead.
+Before opening something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before closing something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before eating something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before drinking something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before switching on something when the player-is-dead is true: say "You need no light to guide you." instead.
+Before switching off something when the player-is-dead is true: say "Even such an action is beyond your capabilities." instead.
+Before waiting when the player-is-dead is true: say "Might as well. You've got an eternity." instead.
+Before taking something when the player-is-dead is true: say "Your hand passes through its object." instead.
+Before dropping something when the player-is-dead is true: say "You have no possessions." instead.
+Before throwing something at when the player-is-dead is true: say "You have no possessions." instead.
+Before taking inventory when the player-is-dead is true: say "You have no possessions." instead.
+Before looking when the player-is-dead is true:
+	say "The room looks strange and unearthly and objects appear indistinct.";
+	say "[line break]Although there is no light, the room seems dimly illuminated." instead.
+
+Before doing something when the player-is-dead is true and the current action is not praying and the current action is not looking and the current action is not taking inventory and the current action is not waiting and the current action is not diagnosing and the current action is not attacking and the current action is not going:
+	say "You can't even do that." instead.
+
+Chapter 6 - Darkness and Grues
 
 The dark-warning-given is a truth state that varies. The dark-warning-given is false.
 
@@ -399,6 +423,7 @@ Instead of going up in Clearing:
 Grating Clearing is a room. The printed name of Grating Clearing is "Clearing".
 Grating Clearing is in Forest Area.
 North of Forest Path is Grating Clearing. East of Grating Clearing is Forest2. West of Grating Clearing is Forest1. South of Grating Clearing is Forest Path.
+The description of Grating Clearing is "You are in a clearing, with a forest surrounding you on all sides. A path leads south.[if the grate is visible and the grate is open] There is an open grating, descending into darkness.[otherwise if the grate is visible] There is a grating securely fastened into the ground.[end if]".
 
 Instead of going north in Grating Clearing:
 	say "The forest becomes impenetrable to the north."
@@ -634,8 +659,9 @@ Instead of looking under the carpet:
 	otherwise:
 		say "There is nothing else under the carpet."
 
-Raising-rug is an action applying to one thing. Understand "raise [something]" as raising-rug when the noun is the carpet.
-Instead of raising-rug the carpet:
+Raising is an action applying to one thing. Understand "raise [something]" as raising.
+Carry out raising: say "You can't raise that."
+Instead of raising the carpet:
 	if the rug-moved is true:
 		say "The rug is too heavy to lift.";
 	otherwise:
@@ -842,11 +868,13 @@ Instead of going west in Troll-Room:
 
 Chapter 3 - Troll NPC
 
-The troll is a person in Troll-Room. "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room."
+The troll is a person in Troll-Room.
 Understand "troll" and "nasty" as the troll.
-The description of the troll is "[if the troll is not defeated]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]The troll is dead.[end if]".
+The initial appearance of the troll is "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A pathetically babbling troll is here.[end if]".
+The description of the troll is "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A pathetically babbling troll is here.[end if]".
 
 The troll-unconscious is a truth state that varies. The troll-unconscious is false.
+The troll-unconscious-timer is a number that varies. The troll-unconscious-timer is 0.
 
 The troll-strength is a number that varies. The troll-strength is 2.
 
@@ -854,12 +882,24 @@ The bloody axe is carried by the troll. "There is a bloody axe here."
 Understand "axe" and "ax" and "bloody" as the bloody axe.
 The bloody axe is a weapon.
 
+To kill the troll with fog:
+	say "Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.";
+	now the troll is defeated;
+	now the troll-flag is true;
+	now the troll-unconscious is false;
+	now the troll-unconscious-timer is 0;
+	if the troll carries the bloody axe:
+		now the bloody axe is in Troll-Room;
+	remove the troll from play.
+
 Instead of taking the bloody axe when the troll is not defeated and the troll carries the bloody axe:
 	say "The troll swings it out of your reach."
 
 Instead of attacking the troll:
-	if the troll-unconscious is true or the troll is defeated:
-		say "The troll is already [if the troll is defeated]dead[otherwise]unconscious[end if].";
+	if the troll is defeated:
+		say "There is no troll here.";
+	otherwise if the troll-unconscious is true:
+		kill the troll with fog;
 	otherwise:
 		let W be a random weapon carried by the player;
 		if W is nothing:
@@ -869,28 +909,100 @@ Instead of attacking the troll:
 			if hit-chance is at least 4:
 				decrease the troll-strength by 1;
 				if the troll-strength is at most 0:
-					say "It appears that the blow was too much for him. He dies.";
-					now the troll is defeated;
+					now the troll-unconscious is true;
+					now the troll-unconscious-timer is 3;
 					now the troll-flag is true;
 					if the troll carries the bloody axe:
 						now the bloody axe is in Troll-Room;
-					remove the troll from play;
+					say "The troll appears dazed. He stumbles and falls to the floor unconscious.";
 				otherwise:
 					say "The troll takes a step backwards in pain.";
 			otherwise:
 				say "The troll dodges your blow."
 
+Instead of destroying the troll:
+	if the troll is defeated:
+		say "There is no troll here.";
+	otherwise if the troll-unconscious is true:
+		kill the troll with fog;
+	otherwise:
+		say "The troll laughs at your puny gesture."
+
 Instead of giving something to the troll:
-	if the noun is the bloody axe:
+	if the troll-unconscious is true:
+		say "The troll is unconscious.";
+	otherwise if the noun is the bloody axe:
+		say "The troll scratches his head in confusion, then takes the axe.";
+		now the troll carries the bloody axe;
+	otherwise if the noun is the troll:
+		say "You would have to get the troll first, and that seems unlikely.";
+	otherwise:
+		say "The troll, who is not overly proud, graciously accepts the gift";
+		if the noun is a weapon:
+			if a random chance of 1 in 5 succeeds:
+				say " and eats it hungrily. Poor troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black fog.";
+				remove the noun from play;
+				kill the troll with fog;
+			otherwise:
+				say " and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the [noun] falls to the floor. He does not look pleased.";
+				now the noun is in Troll-Room;
+		otherwise:
+			say " and not having the most discriminating tastes, gleefully eats it.";
+			if the noun is a container:
+				spill the contents of the noun;
+			remove the noun from play.
+
+Instead of throwing something at the troll:
+	if the troll-unconscious is true:
+		say "The troll is unconscious.";
+	otherwise if the noun is the bloody axe and the troll carries the bloody axe:
+		say "You would have to get the axe first, and that seems unlikely.";
+	otherwise if the noun is the bloody axe:
 		say "The troll scratches his head in confusion, then takes the axe.";
 		now the troll carries the bloody axe;
 	otherwise:
-		say "The troll, who is not overly proud, graciously accepts the gift and eats it hungrily.";
-		if the noun is a container:
-			spill the contents of the noun;
-		remove the noun from play.
+		say "The troll, who is remarkably coordinated, catches the [noun]";
+		if the noun is a weapon:
+			if a random chance of 1 in 5 succeeds:
+				say " and eats it hungrily. Poor troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black fog.";
+				remove the noun from play;
+				kill the troll with fog;
+			otherwise:
+				say " and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the [noun] falls to the floor. He does not look pleased.";
+				now the noun is in Troll-Room;
+		otherwise:
+			say " and not having the most discriminating tastes, gleefully eats it.";
+			if the noun is a container:
+				spill the contents of the noun;
+			remove the noun from play.
 
-Every turn when the troll is not defeated and the troll is in Troll-Room and the player is in Troll-Room (this is the troll attacks rule):
+Instead of taking the troll:
+	say "The troll spits in your face, grunting [quotation mark]Better luck next time[quotation mark] in a rather barbarous accent."
+
+Instead of pushing the troll:
+	say "The troll spits in your face, grunting [quotation mark]Better luck next time[quotation mark] in a rather barbarous accent."
+
+Instead of asking the troll about:
+	say "The troll isn't much of a conversationalist."
+
+Instead of telling the troll about:
+	say "The troll isn't much of a conversationalist."
+
+Instead of answering the troll that:
+	say "The troll isn't much of a conversationalist."
+
+Instead of listening to the troll:
+	say "Every so often the troll says something, probably uncomplimentary, in his guttural tongue."
+
+Every turn when the troll is not defeated and the troll-unconscious is false and the troll is in Troll-Room and the player is in Troll-Room and the troll does not carry the bloody axe (this is the troll weapon recovery rule):
+	if the bloody axe is in Troll-Room and a random chance of 3 in 4 succeeds:
+		now the troll carries the bloody axe;
+		now the troll-flag is false;
+		say "The troll, angered and humiliated, recovers his weapon. He appears to have an axe to grind with you.";
+	otherwise:
+		say "The troll, disarmed, cowers in terror, pleading for his life in the guttural tongue of the trolls."
+
+Every turn when the troll is not defeated and the troll-unconscious is false and the troll carries the bloody axe and the troll is in Troll-Room and the player is in Troll-Room (this is the troll attacks rule):
 	if a random chance of 1 in 3 succeeds:
 		let W be a random weapon carried by the player;
 		if W is not nothing:
@@ -898,6 +1010,17 @@ Every turn when the troll is not defeated and the troll is in Troll-Room and the
 		otherwise:
 			say "The troll hits you with a glancing blow from his axe.";
 			die saying "The wound is fatal."
+
+Every turn when the troll-unconscious is true and the troll-unconscious-timer > 0 (this is the troll recovery rule):
+	decrease the troll-unconscious-timer by 1;
+	if the troll-unconscious-timer is 0:
+		now the troll-unconscious is false;
+		now the troll-flag is false;
+		now the troll-strength is 2;
+		if the bloody axe is in Troll-Room:
+			now the troll carries the bloody axe;
+		if the player is in Troll-Room:
+			say "The troll stirs, quickly resuming a fighting stance."
 
 Chapter 4 - East-of-Chasm
 
@@ -1026,9 +1149,9 @@ Maze11 is a dark room. The printed name of Maze11 is "Maze". "This is part of a 
 Maze11 is in the Underground.
 Northeast of Maze11 is Grating Room. Down from Maze11 is Maze10. Northwest of Maze11 is Maze13. Southwest of Maze11 is Maze12.
 
-Grating Room is a dark room. "This is a small room which has a grating firmly mounted in the ceiling."
-Grating Room is in the Underground.
+Grating Room is a dark room. Grating Room is in the Underground.
 Southwest of Grating Room is Maze11.
+The description of Grating Room is "You are in a small room near the maze. There are twisty passages in the immediate vicinity.[if the grate is open] Above you is an open grating with sunlight pouring in.[otherwise if the grate is not locked] Above you is a grating.[otherwise] Above you is a grating locked with a skull-and-crossbones lock.[end if]".
 
 The grate is a door. The grate is scenery. The grate is closed and openable and lockable and locked. The matching key of the grate is the skeleton key.
 Understand "grate" and "grating" as the grate.
@@ -1123,7 +1246,7 @@ Chapter 8 - Cyclops NPC
 
 The cyclops is a person in Cyclops-Room. "A cyclops, who looks like he hasn't eaten in a while, is blocking the staircase."
 Understand "cyclops" and "monster" and "eye" and "hungry" and "giant" as the cyclops.
-The description of the cyclops is "A hungry cyclops is blocking the staircase, looking at you as if you were a potential meal."
+The description of the cyclops is "[if the cyclops-asleep is true]The cyclops is sleeping like a baby, albeit a very ugly one.[otherwise]A hungry cyclops is standing at the foot of the stairs.[end if]".
 
 The cyclops-fed is a truth state that varies. The cyclops-fed is false.
 The cyclops-watered is a truth state that varies. The cyclops-watered is false.
@@ -1137,7 +1260,10 @@ Instead of giving the lunch to the cyclops:
 	otherwise:
 		remove the lunch from play;
 		now the cyclops-fed is true;
-		decrease the cyclops-wrath by 1;
+		if the cyclops-wrath > 0:
+			now the cyclops-wrath is 0 minus the cyclops-wrath;
+		otherwise if the cyclops-wrath is 0:
+			now the cyclops-wrath is -1;
 		now the cyclops-wrath-timer is 1;
 		say "The cyclops says [quotation mark]Mmm Mmm. I love hot peppers! But oh, could I use a drink. Perhaps I could drink the blood of that thing.[quotation mark] From the gleam in his eye, it could be surmised that you are [quotation mark]that thing.[quotation mark]"
 
@@ -1169,19 +1295,37 @@ Instead of attacking the cyclops:
 		say "The cyclops yawns and stares at the thing that woke him up.";
 		now the cyclops-asleep is false;
 		now the cyclops-flag is false;
+		if the cyclops-wrath < 0:
+			now the cyclops-wrath is 0 minus the cyclops-wrath;
 	otherwise:
-		increase the cyclops-wrath by 1;
 		now the cyclops-wrath-timer is 1;
 		say "The cyclops shrugs but otherwise ignores your pitiful attempt."
 
 Every turn when the cyclops-wrath-timer > 0 and the player is in Cyclops-Room and the cyclops-asleep is false (this is the cyclops wrath rule):
-	increase the cyclops-wrath-timer by 1;
-	if the cyclops-wrath > 5 or the cyclops-wrath < -5:
+	let W be the cyclops-wrath;
+	if W < 0:
+		let W be 0 minus W;
+	if W > 5:
 		die saying "The cyclops, tired of all of your games and trickery, grabs you firmly. As he licks his chops, he says [quotation mark]Mmm. Just like Mom used to make [apostrophe]em.[quotation mark] It[apostrophe]s nice to be appreciated.";
-	otherwise if the cyclops-wrath > 0:
-		say "The cyclops seems quite angry.";
-	otherwise if the cyclops-wrath < 0:
-		say "The cyclops, having eaten the hot peppers, appears to be gasping. His enflamed tongue protrudes from his man-sized mouth."
+	if the cyclops-wrath >= 0:
+		increase the cyclops-wrath by 1;
+	otherwise:
+		decrease the cyclops-wrath by 1;
+	let V be the cyclops-wrath;
+	if V < 0:
+		let V be 0 minus V;
+	if V is 1:
+		say "The cyclops seems somewhat agitated.";
+	otherwise if V is 2:
+		say "The cyclops appears to be getting more agitated.";
+	otherwise if V is 3:
+		say "The cyclops is moving about the room, looking for something.";
+	otherwise if V is 4:
+		say "The cyclops was looking for salt and pepper. No doubt they are condiments for his upcoming snack.";
+	otherwise if V is 5:
+		say "The cyclops is moving toward you in an unfriendly manner.";
+	otherwise if V is 6:
+		say "You have two choices: 1. Leave  2. Become dinner."
 
 Odysseusing is an action applying to nothing.
 Understand "odysseus" and "ulysses" as odysseusing.
@@ -1196,6 +1340,39 @@ Carry out odysseusing:
 		say "The cyclops is asleep and can't hear you.";
 	otherwise:
 		say "Wasn't he a sailor?"
+
+Destroying is an action applying to one thing.
+Understand "destroy [something]" and "break [something]" and "mung [something]" as destroying.
+Carry out destroying: try attacking the noun.
+
+Instead of destroying the cyclops:
+	if the cyclops-asleep is true:
+		say "The cyclops yawns and stares at the thing that woke him up.";
+		now the cyclops-asleep is false;
+		now the cyclops-flag is false;
+		if the cyclops-wrath < 0:
+			now the cyclops-wrath is 0 minus the cyclops-wrath;
+	otherwise:
+		now the cyclops-wrath-timer is 1;
+		say "[quotation mark]Do you think I'm as stupid as my father was?[quotation mark], he says, dodging."
+
+Instead of asking the cyclops about:
+	if the cyclops-asleep is true:
+		say "No use talking to him. He's fast asleep.";
+	otherwise:
+		say "The cyclops prefers eating to making conversation."
+
+Instead of telling the cyclops about:
+	if the cyclops-asleep is true:
+		say "No use talking to him. He's fast asleep.";
+	otherwise:
+		say "The cyclops prefers eating to making conversation."
+
+Instead of answering the cyclops that:
+	if the cyclops-asleep is true:
+		say "No use talking to him. He's fast asleep.";
+	otherwise:
+		say "The cyclops prefers eating to making conversation."
 
 The chalice is in Treasure Room. "There is a silver chalice, intricately engraved, here."
 Understand "chalice" and "cup" and "silver" as the chalice.
@@ -1218,8 +1395,8 @@ East of Round Room is Loud Room. North of Round Room is North-South Passage. Sou
 
 Chapter 10 - Dam and Reservoir Area
 
-Deep Canyon is a dark room. "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. [if the gates-open is true and the low-tide is false]You can hear the roaring of a great volume of water below.[otherwise]You can hear the sound of flowing water below.[end if]".
-Deep Canyon is in the Underground.
+Deep Canyon is a dark room. Deep Canyon is in the Underground.
+The description of Deep Canyon is "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down.[if the gates-open is true and the low-tide is false] You can hear a loud roaring sound, like that of rushing water, from below.[otherwise if the gates-open is false and the low-tide is true][otherwise] You can hear the sound of flowing water from below.[end if]".
 Northwest of Deep Canyon is Reservoir-South. Southwest of Deep Canyon is North-South Passage. Down from Deep Canyon is Loud Room.
 
 Loud Room is a dark room. Loud Room is in the Underground.
@@ -1227,7 +1404,7 @@ East of Loud Room is Damp Cave. West of Loud Room is Round Room. Up from Loud Ro
 
 The loud-room-quiet is a truth state that varies. The loud-room-quiet is false.
 
-The description of Loud Room is "[if the loud-room-quiet is true]The room is still, and a platinum bar can be seen here.[otherwise]This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an unpleasant metallic clanging sound. The source is not readily apparent.[end if]".
+The description of Loud Room is "This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward.[if the loud-room-quiet is true or (the gates-open is false and the low-tide is true)] The room is eerie in its quietness.[otherwise] The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.[end if]".
 
 The platinum bar is in Loud Room. "On the ground is a large platinum bar."
 Understand "bar" and "platinum" and "large" as the platinum bar.
@@ -1269,7 +1446,7 @@ Instead of going down in Chasm:
 	say "Are you out of your mind?"
 
 Reservoir-South is a dark room. The printed name of Reservoir-South is "Reservoir South". Reservoir-South is in the Underground.
-The description of Reservoir-South is "You are in a long room on the south shore of a large underground reservoir. [if the low-tide is false]The reservoir appears full. There appears to be a path to the north that is submerged.[otherwise]The reservoir is empty. A path leads across the reservoir to the north.[end if]".
+The description of Reservoir-South is "[if the low-tide is true and the gates-open is true]You are in a long room, to the north of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through the center of the room.[otherwise if the gates-open is true]You are in a long room. To the north is a large lake, too deep to cross. You notice, however, that the water level appears to be dropping at a rapid rate. Before long, it might be possible to cross to the other side from here.[otherwise if the low-tide is true]You are in a long room, to the north of which is a wide area which was formerly a reservoir, but now is merely a stream. You notice, however, that the level of the stream is rising quickly and that before long it will be impossible to cross here.[otherwise]You are in a long room on the south shore of a large lake, far too deep and wide for crossing.[end if][paragraph break]There is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast.".
 
 Southeast of Reservoir-South is Deep Canyon.
 East of Reservoir-South is Dam-Room. West of Reservoir-South is Stream View.
@@ -1411,11 +1588,11 @@ The description of the group of tool chests is "The chests are all empty."
 Chapter 11 - Reservoir Area
 
 Reservoir is a dark room. Reservoir is in the Underground.
-The description of Reservoir is "[if the low-tide is true]You are on a path across the reservoir, which is currently empty. You can see to the north and south.[otherwise]You are on the reservoir. The water level is high.[end if]".
+The description of Reservoir is "[if the low-tide is true]You are on what used to be a large lake, but which is now a large mud pile. There are [quotation mark]shores[quotation mark] to the north and south.[otherwise]You are on the lake. Beaches can be seen north and south. Upstream a small stream enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.[end if]".
 North of Reservoir is Reservoir-North. South of Reservoir is Reservoir-South.
 
-Reservoir-North is a dark room. The printed name of Reservoir-North is "Reservoir North". "You are in a room on the north shore of a large underground reservoir."
-Reservoir-North is in the Underground.
+Reservoir-North is a dark room. The printed name of Reservoir-North is "Reservoir North". Reservoir-North is in the Underground.
+The description of Reservoir-North is "[if the low-tide is true and the gates-open is true]You are in a large cavernous room, the south of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through there.[otherwise if the gates-open is true]You are in a large cavernous area. To the south is a wide lake, whose water level appears to be falling rapidly.[otherwise if the low-tide is true]You are in a cavernous area, to the south of which is a very wide stream. The level of the stream is rising rapidly, and it appears that before long it will be impossible to cross to the other side.[otherwise]You are in a large cavernous room, north of a large lake.[end if][paragraph break]There is a slimy stairway leaving the room to the north.".
 North of Reservoir-North is Atlantis Room.
 
 Instead of going south in Reservoir-North:
@@ -1449,19 +1626,19 @@ Chapter 13 - Mirror Rooms and Connecting Passages
 
 Mirror Room 1 is a dark room. The printed name of Mirror Room 1 is "Mirror Room".
 Mirror Room 1 is in the Underground.
-The description of Mirror Room 1 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits to the east, west, and north."
+The description of Mirror Room 1 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall.[if the mirror-broken is true] Unfortunately, the mirror has been destroyed by your recklessness.[end if] There are exits to the east, west, and north."
 North of Mirror Room 1 is Cold Passage. West of Mirror Room 1 is Twisting Passage. East of Mirror Room 1 is Small Cave.
 
 The mirror-one is scenery in Mirror Room 1. The printed name of the mirror-one is "mirror". Understand "mirror" and "reflection" and "enormous" as the mirror-one.
-The description of the mirror-one is "There is an image of a large room reflected in the mirror."
+The description of the mirror-one is "[if the mirror-broken is true]The mirror is broken into many pieces.[otherwise]There is an ugly person staring back at you.[end if]".
 
 Mirror Room 2 is a dark room. The printed name of Mirror Room 2 is "Mirror Room".
 Mirror Room 2 is in the Underground.
-The description of Mirror Room 2 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits to the east, west, and north."
+The description of Mirror Room 2 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall.[if the mirror-broken is true] Unfortunately, the mirror has been destroyed by your recklessness.[end if] There are exits to the east, west, and north."
 West of Mirror Room 2 is Winding-Passage. North of Mirror Room 2 is Narrow Passage. East of Mirror Room 2 is Tiny Cave.
 
 The mirror-two is scenery in Mirror Room 2. The printed name of the mirror-two is "mirror". Understand "mirror" and "reflection" and "enormous" as the mirror-two.
-The description of the mirror-two is "There is an image of a large room reflected in the mirror."
+The description of the mirror-two is "[if the mirror-broken is true]The mirror is broken into many pieces.[otherwise]There is an ugly person staring back at you.[end if]".
 
 Rubbing-mirror is an action applying to one thing. Understand "rub [something]" as rubbing-mirror when the noun is the mirror-one or the noun is the mirror-two.
 
@@ -1473,13 +1650,29 @@ Instead of rubbing-mirror the mirror-two:
 	say "There is a rumble from deep within the earth and the room shakes.";
 	move the player to Mirror Room 1.
 
+The mirror-broken is a truth state that varies. The mirror-broken is false.
+
 Instead of attacking the mirror-one:
-	say "You have broken the mirror. I hope you have a streak of bad luck; you are going to need it.";
-	now the lucky-flag is false.
+	if the mirror-broken is true:
+		say "Haven't you done enough damage already?";
+	otherwise:
+		say "You have broken the mirror. I hope you have a seven years[apostrophe] supply of good luck handy.";
+		now the lucky-flag is false;
+		now the mirror-broken is true.
 
 Instead of attacking the mirror-two:
-	say "You have broken the mirror. I hope you have a streak of bad luck; you are going to need it.";
-	now the lucky-flag is false.
+	if the mirror-broken is true:
+		say "Haven't you done enough damage already?";
+	otherwise:
+		say "You have broken the mirror. I hope you have a seven years[apostrophe] supply of good luck handy.";
+		now the lucky-flag is false;
+		now the mirror-broken is true.
+
+Instead of taking the mirror-one:
+	say "The mirror is many times your size. Give up."
+
+Instead of taking the mirror-two:
+	say "The mirror is many times your size. Give up."
 
 Small Cave is a dark room. The printed name of Small Cave is "Cave". "This is a tiny cave with entrances west and north, and a staircase leading down."
 Small Cave is in the Underground.
@@ -1533,7 +1726,7 @@ Understand "wall" and "engravings" and "inscription" and "old" and "ancient" as 
 The description of the engraved wall is "The engravings were incised in the living rock of the cave wall by an unknown hand. They depict, in symbolic form, the beliefs of the ancient Zorkers. Skillfully interwoven with the bas reliefs are excerpts illustrating the major religious tenets of that time. Unfortunately, a later age seems to have considered them blasphemous and just as skillfully excised them."
 
 Dome Room is a dark room. Dome Room is in the Underground.
-The description of Dome Room is "You are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing.[if the dome-flag is true] Hanging down from the railing is a rope.[end if]".
+The description of Dome Room is "You are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing which circles the dome.[if the dome-flag is true] Hanging down from the railing is a rope which ends about ten feet from the floor below.[end if]".
 West of Dome Room is Engravings Cave.
 
 The wooden railing is scenery in Dome Room. Understand "railing" and "rail" and "wooden" as the wooden railing.
@@ -1556,8 +1749,8 @@ Understand "tie [something] to [something]" as tying it to.
 Carry out tying it to:
 	say "You can't tie those things together."
 
-Torch-Room is a dark room. The printed name of Torch-Room is "Torch Room". "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome."
-Torch-Room is in the Underground.
+Torch-Room is a dark room. The printed name of Torch-Room is "Torch Room". Torch-Room is in the Underground.
+The description of Torch-Room is "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal.[if the dome-flag is true] A piece of rope descends from the railing above, ending some five feet above your head.[end if]".
 South of Torch-Room is North Temple. Down from Torch-Room is North Temple.
 
 Instead of going up in Torch-Room:
@@ -1626,9 +1819,9 @@ The sceptre is a weapon.
 The treasure-value of the sceptre is 4.
 The point-value of the sceptre is 6.
 
-Entrance to Hades is a dark room. "You are outside a large gate, through which you can see a desolation, lit by the light of a thousand flames. The gate is [if the lld-flag is true]open[otherwise]closed[end if]."
-Entrance to Hades is in the Underground.
+Entrance to Hades is a dark room. Entrance to Hades is in the Underground.
 Up from Entrance to Hades is Tiny Cave.
+The description of Entrance to Hades is "You are outside a large gateway, on which is inscribed[paragraph break]    [italic type]Abandon every hope all ye who enter here![roman type][paragraph break]The gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.[if the lld-flag is false and the player-is-dead is false][paragraph break]The way through the gate is barred by evil spirits, who jeer at your attempts to pass.[end if]".
 
 Instead of going south in Entrance to Hades:
 	if the lld-flag is true:
@@ -1820,25 +2013,26 @@ The river-current-timer is a number that varies. The river-current-timer is 0.
 The river-current-active is a truth state that varies. The river-current-active is false.
 
 Every turn when the river-current-active is true (this is the river current rule):
+	let R be the location of the player;
 	decrease the river-current-timer by 1;
 	if the river-current-timer is at most 0:
-		if the player is in River1:
+		if R is River1:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River2;
+			move the magic boat to River2;
 			now the river-current-timer is 4;
-		otherwise if the player is in River2:
+		otherwise if R is River2:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River3;
+			move the magic boat to River3;
 			now the river-current-timer is 3;
-		otherwise if the player is in River3:
+		otherwise if R is River3:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River4;
+			move the magic boat to River4;
 			now the river-current-timer is 2;
-		otherwise if the player is in River4:
+		otherwise if R is River4:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River5;
+			move the magic boat to River5;
 			now the river-current-timer is 1;
-		otherwise if the player is in River5:
+		otherwise if R is River5:
 			die saying "Unfortunately, the magic boat doesn't provide protection from the rocks and boulders one meets at the bottom of waterfalls. Including this one.";
 		otherwise:
 			now the river-current-active is false.
@@ -1987,15 +2181,15 @@ Instead of waving the sceptre:
 		if the rainbow-flag is false:
 			now the rainbow-flag is true;
 			now the pot of gold is visible;
-			say "Suddenly, the rainbow appears to become solid and a shimmering, magical bridge leads across the Falls.";
+			say "Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).[paragraph break]A shimmering pot of gold appears at the end of the rainbow.";
 		otherwise:
 			now the rainbow-flag is false;
 			now the pot of gold is invisible;
-			say "The rainbow seems to shimmer and fade.";
+			say "The rainbow seems to have become somewhat run-of-the-mill.";
 			if the player is in On-the-Rainbow:
-				die saying "You fall to the rocks below.";
+				die saying "The structural integrity of the rainbow is severely compromised, leaving you hanging in midair, supported only by water vapor. Bye.";
 	otherwise:
-		say "A dazzling display of light dances along the sceptre, but nothing else happens."
+		say "A dazzling display of color briefly emanates from the sceptre."
 
 Chapter 18 - Coal Mine Area
 
@@ -2061,14 +2255,12 @@ Gas Room is in the Underground.
 Up from Gas Room is Smelly Room. East of Gas Room is Mine1.
 
 Every turn when the player is in Gas Room (this is the gas room explosion rule):
-	if the brass lantern is lit and the player carries the brass lantern:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying a lit lamp in here.[paragraph break]   BOOOOOOOOOOOM";
 	if the torch is lit and the player carries the torch:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying a lit torch in here.[paragraph break]   BOOOOOOOOOOOM";
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   BOOOOOOOOOOOM";
 	if the pair of candles is lit and the player carries the pair of candles:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying lit candles in here.[paragraph break]   BOOOOOOOOOOOM";
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   BOOOOOOOOOOOM";
 	if the match-lit is true:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about lighting a match in here.[paragraph break]   BOOOOOOOOOOOM".
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   BOOOOOOOOOOOM".
 
 The sapphire-encrusted bracelet is in Gas Room.
 Understand "bracelet" and "jewel" and "sapphire" as the sapphire-encrusted bracelet.
@@ -2120,7 +2312,7 @@ Instead of going west in Timber Room:
 	otherwise:
 		move the player to Drafty Room.
 
-Drafty Room is a dark room. The printed name of Drafty Room is "Drafty Room". "This is a small drafty room in which is the bottom of a long shaft. To the south is a passageway and to the east a very narrow passage. In the shaft can be seen a heavy iron chain."
+Drafty Room is a room. The printed name of Drafty Room is "Drafty Room". "This is a small drafty room in which is the bottom of a long shaft. To the south is a passageway and to the east a very narrow passage. In the shaft can be seen a heavy iron chain."
 Drafty Room is in the Underground.
 South of Drafty Room is Machine-Room.
 
@@ -2142,9 +2334,16 @@ The carrying capacity of the raised-basket is 10.
 
 The basket-is-at-top is a truth state that varies. The basket-is-at-top is true.
 
-Raising-basket is an action applying to one thing. Understand "raise [something]" as raising-basket when the noun is the raised-basket or the noun is the lowered-basket.
+Instead of raising the raised-basket:
+	if the basket-is-at-top is true:
+		say "The basket is already at the top.";
+	otherwise:
+		now the basket-is-at-top is true;
+		now the raised-basket is in Shaft Room;
+		now the lowered-basket is in Drafty Room;
+		say "The basket is raised to the top of the shaft."
 
-Instead of raising-basket something:
+Instead of raising the lowered-basket:
 	if the basket-is-at-top is true:
 		say "The basket is already at the top.";
 	otherwise:
@@ -2168,18 +2367,18 @@ Instead of lowering the raised-basket:
 Instead of lowering the lowered-basket:
 	try lowering the raised-basket.
 
-Machine-Room is a dark room. "This is a large room full of assorted heavy machinery. There is a passageway leading north."
+Machine-Room is a room. Machine-Room is in the Underground.
 The printed name of Machine-Room is "Machine Room".
-Machine-Room is in the Underground.
 North of Machine-Room is Drafty Room.
+The description of Machine-Room is "This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled [quotation mark]START[quotation mark]. The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is [if the machine is open]open[otherwise]closed[end if].".
 
 The machine is a closed openable container in Machine-Room. The machine is scenery.
 Understand "machine" and "pdp10" and "dryer" and "lid" as the machine.
 The carrying capacity of the machine is 5.
-The description of the machine is "It's a large machine with a lid and a switch."
+The description of the machine is "It's a machine which is reminiscent of a clothes dryer. On its face is a switch labelled [quotation mark]START[quotation mark]. On the front is a large lid, which is [if the machine is open]open[otherwise]closed[end if]."
 
-The machine switch is scenery in Machine-Room. Understand "switch" as the machine switch.
-The description of the machine switch is "It's a switch on the machine."
+The machine switch is scenery in Machine-Room. Understand "switch" and "start" as the machine switch.
+The description of the machine switch is "The switch is labelled [quotation mark]START[quotation mark]. It does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch)."
 
 Instead of switching on the machine switch:
 	if the machine is not closed:
@@ -2187,7 +2386,7 @@ Instead of switching on the machine switch:
 	otherwise if the small pile of coal is in the machine:
 		remove the small pile of coal from play;
 		now the huge diamond is in the machine;
-		say "The machine comes to life with a whirring sound. After a few moments, it stops.";
+		say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 	otherwise:
 		let found-something be false;
 		repeat with item running through things in the machine:
@@ -2195,9 +2394,9 @@ Instead of switching on the machine switch:
 			remove item from play;
 			now the small piece of vitreous slag is in the machine;
 		if found-something is true:
-			say "The machine comes to life with a whirring sound. After a few moments, it stops.";
+			say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 		otherwise:
-			say "The machine comes to life with a whirring sound, then stops. Nothing seems to have happened."
+			say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates."
 
 The huge diamond is a thing. "There is an enormous diamond (perfectly cut) here."
 Understand "diamond" and "huge" and "enormous" as the huge diamond.
@@ -2262,15 +2461,18 @@ Part 4 - The Thief
 
 Chapter 1 - Thief NPC
 
-The thief is a person. "There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is armed with a deadly stiletto."
+The thief is a person in Round Room.
 Understand "thief" and "robber" and "man" and "person" and "shady" and "suspicious" and "seedy" as the thief.
-The thief is in Round Room.
+The initial appearance of the thief is "[if the thief-unconscious is true]There is a suspicious-looking individual lying unconscious on the ground.[otherwise]There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is armed with a vicious-looking stiletto.[end if]".
+The description of the thief is "The thief is a slippery character with beady eyes that flit back and forth. He carries, along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly in your direction. I'd watch out if I were you."
 
 The thief-strength is a number that varies. The thief-strength is 5.
+The thief-unconscious is a truth state that varies. The thief-unconscious is false.
+The thief-unconscious-timer is a number that varies. The thief-unconscious-timer is 0.
 
 The large bag is carried by the thief. The large bag is a container. The carrying capacity of the large bag is 100.
 Understand "bag" and "large" and "thief's" as the large bag.
-The description of the large bag is "The bag is closed and you can't see what's inside."
+The description of the large bag is "[if the thief-unconscious is true]The bag is underneath the thief, so one can't say what, if anything, is inside.[otherwise if the thief is defeated]It's a large bag.[otherwise]The bag is closed and you can't see what's inside.[end if]".
 
 The stiletto is carried by the thief. The stiletto is a weapon.
 Understand "stiletto" and "vicious" as the stiletto.
@@ -2280,7 +2482,18 @@ Instead of taking the stiletto when the thief is not defeated and the thief carr
 	say "The thief swings it out of your reach."
 
 Instead of taking the large bag:
-	say "Getting that bag would not be easy."
+	if the thief-unconscious is true:
+		say "Sadly for you, the robber collapsed on top of the bag. Trying to take it would wake him.";
+	otherwise if the thief is not defeated:
+		say "The bag will be taken over his dead body.";
+	otherwise:
+		continue the action.
+
+Instead of opening the large bag when the thief is not defeated:
+	say "Getting close enough would be a good trick."
+
+Instead of inserting something into the large bag when the thief is not defeated:
+	say "It would be a good trick."
 
 The thief-active is a truth state that varies. The thief-active is true.
 The thief-here-count is a number that varies. The thief-here-count is 0.
@@ -2300,7 +2513,24 @@ Every turn when the thief is not defeated and the thief-active is true (this is 
 						break;
 				if stolen-item is not nothing:
 					now stolen-item is in the large bag;
-					say "The thief rummages through your belongings and takes the [stolen-item]! He then slinks away.";
+					let R be a random number between 1 and 4;
+					if R is 1:
+						say "A seedy-looking individual with a large bag just wandered through the room. On the way through, he quietly abstracted some valuables from your possession, mumbling something about [quotation mark]Doing unto others before...[quotation mark]";
+					otherwise if R is 2:
+						say "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.";
+					otherwise if R is 3:
+						say "A seedy-looking individual with a large bag just wandered through the room. On the way through, he appropriated the [stolen-item].";
+					otherwise:
+						say "A [quotation mark]lean and hungry[quotation mark] gentleman just wandered through, carrying a large bag. On the way, he helped himself to the [stolen-item].";
+					let new-dest be a random dark room that is in the Underground;
+					if new-dest is a room:
+						move the thief to new-dest;
+				otherwise:
+					let R be a random number between 1 and 2;
+					if R is 1:
+						say "A [quotation mark]lean and hungry[quotation mark] gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled.";
+					otherwise:
+						say "The thief, finding nothing of value, left disgusted.";
 					let new-dest be a random dark room that is in the Underground;
 					if new-dest is a room:
 						move the thief to new-dest;
@@ -2315,13 +2545,25 @@ Every turn when the jewel-encrusted egg is in the large bag and the jewel-encrus
 	now the jewel-encrusted egg is open.
 
 Every turn when the player is in Treasure Room and the thief is not defeated and the thief is not in Treasure Room (this is the thief lair rule):
-	move the thief to Treasure Room.
+	move the thief to Treasure Room;
+	say "You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense."
+
+To kill the thief with magic:
+	say "Almost as soon as the thief breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.";
+	if the player is in Treasure Room:
+		say "[line break]As the thief dies, the power of his magic decreases, and his treasures reappear:";
+	repeat with item running through things in the large bag:
+		now item is in the location of the player;
+	now the thief is defeated;
+	remove the thief from play.
 
 Instead of attacking the thief:
 	if the thief is not in the location of the player:
 		say "There is no thief here." instead;
 	if the thief is defeated:
 		say "The thief is already dead.";
+	otherwise if the thief-unconscious is true:
+		kill the thief with magic;
 	otherwise:
 		let W be a random weapon carried by the player;
 		if W is nothing:
@@ -2331,15 +2573,38 @@ Instead of attacking the thief:
 			if hit-chance is at least 3:
 				decrease the thief-strength by 1;
 				if the thief-strength is at most 0:
-					say "The thief drops to the ground, mortally wounded. The contents of his bag spill out onto the floor.";
-					repeat with item running through things in the large bag:
-						now item is in the location of the player;
-					now the thief is defeated;
-					remove the thief from play;
+					now the thief-unconscious is true;
+					now the thief-unconscious-timer is 3;
+					if the thief carries the stiletto:
+						now the stiletto is in the location of the player;
+					say "The thief is stunned and appears dazed. He stumbles and falls to the ground.";
 				otherwise:
 					say "You wound the thief with your [W].";
 			otherwise:
 				say "The thief deftly dodges your blow."
+
+Instead of destroying the thief:
+	if the thief-unconscious is true:
+		kill the thief with magic;
+	otherwise if the thief is not defeated:
+		say "The thief laughs at your puny attempt.";
+	otherwise:
+		say "There is no thief here."
+
+Every turn when the thief-unconscious is true and the thief-unconscious-timer > 0 (this is the thief recovery rule):
+	decrease the thief-unconscious-timer by 1;
+	if the thief-unconscious-timer is 0:
+		now the thief-unconscious is false;
+		now the thief-strength is 5;
+		if the stiletto is in the location of the thief:
+			now the thief carries the stiletto;
+			if the player is in the location of the thief:
+				say "The robber, somewhat surprised at this turn of events, nimbly retrieves his stiletto.";
+		if the player is in the location of the thief:
+			say "The robber revives, briefly feigning continued unconsciousness, and, when he sees his moment, scrambles away from you.";
+		let new-dest be a random dark room that is in the Underground;
+		if new-dest is a room:
+			move the thief to new-dest.
 
 Chapter 2 - Sword Glow
 
@@ -2378,9 +2643,16 @@ Chapter 2 - Pray
 
 Praying is an action applying to nothing. Understand "pray" as praying.
 Carry out praying:
-	if the player is in South Temple:
+	if the player-is-dead is true and the player is in South Temple:
+		now the player-is-dead is false;
+		now the always-lit-mode is false;
+		scatter-possessions;
+		say "From the distance the sound of a lone trumpet is heard. The room becomes very bright and you feel disembodied. In a moment, the brightness fades and you find yourself rising as if from a long sleep, deep in the woods. In the distance you can faintly hear a songbird and the sounds of the forest.";
 		move the player to Forest1;
-		say "If you can be sure of one thing, it is that your prayers have been answered.";
+	otherwise if the player-is-dead is true:
+		say "Your prayers are not heard.";
+	otherwise if the player is in South Temple:
+		say "If you pray enough, your prayers may be answered.";
 	otherwise:
 		say "If you pray hard enough, something may happen."
 
@@ -2393,7 +2665,14 @@ Chapter 4 - Diagnose
 
 Diagnosing is an action out of world. Understand "diagnose" as diagnosing.
 Carry out diagnosing:
-	say "You are in good health."
+	if the player-is-dead is true:
+		say "You are dead.";
+	otherwise:
+		say "You are in perfect health.";
+	if the player-deaths is 1:
+		say "[line break]You have been killed once.";
+	otherwise if the player-deaths > 1:
+		say "[line break]You have been killed [player-deaths in words] times."
 
 Chapter 5 - Rusty Knife Curse
 
@@ -2497,7 +2776,7 @@ Carry out burning it with:
 
 Chapter 11 - Boat System
 
-The magic boat is a thing. The magic boat is an open enterable container. The carrying capacity of the magic boat is 10.
+The magic boat is a vehicle. The carrying capacity of the magic boat is 10.
 Understand "boat" and "raft" and "magic" and "plastic" and "seaworthy" and "inflat" as the magic boat.
 The description of the magic boat is "It's a seaworthy magic boat."
 
@@ -2562,37 +2841,38 @@ Before entering the magic boat:
 
 Launching is an action applying to nothing. Understand "launch" as launching.
 Carry out launching:
+	let R be the location of the player;
 	if the player is not in the magic boat:
 		say "You're not in a boat.";
-	otherwise if the player is in Dam-Base:
+	otherwise if R is Dam-Base:
 		say "You push off from the shore.";
 		move the magic boat to River1;
 		now the river-current-active is true;
 		now the river-current-timer is 4;
-	otherwise if the player is in White Cliffs North:
+	otherwise if R is White Cliffs North:
 		say "You push off from the shore.";
 		move the magic boat to River3;
 		now the river-current-active is true;
 		now the river-current-timer is 3;
-	otherwise if the player is in White Cliffs South:
+	otherwise if R is White Cliffs South:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
-	otherwise if the player is in Shore:
+	otherwise if R is Shore:
 		say "You push off from the shore.";
 		move the magic boat to River5;
 		now the river-current-active is true;
 		now the river-current-timer is 1;
-	otherwise if the player is in Sandy Beach:
+	otherwise if R is Sandy Beach:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
-	otherwise if the player is in Reservoir-South or the player is in Reservoir-North:
+	otherwise if R is Reservoir-South or R is Reservoir-North:
 		say "You push off from the shore.";
 		move the magic boat to Reservoir;
-	otherwise if the player is in Stream View:
+	otherwise if R is Stream View:
 		say "You push off from the shore.";
 		move the magic boat to In-Stream;
 	otherwise:
@@ -2625,9 +2905,7 @@ After going to Reservoir:
 
 Chapter 14 - Gate/Bolt Interaction
 
-Turning-bolt is an action applying to one thing. Understand "turn [something]" as turning-bolt when the noun is the bolt.
-
-Instead of turning-bolt the bolt:
+Instead of turning the bolt:
 	if the player does not carry the wrench:
 		say "The bolt won't turn with your best effort.";
 	otherwise if the gate-flag is false:
@@ -2668,3 +2946,54 @@ After going to a room (called destination) (this is the coffin cure rule):
 	if the player carries the gold coffin:
 		now the coffin-cure is true;
 	continue the action.
+
+Part 6 - Testing (Not for release)
+
+Chapter 1 - Smoke Tests
+
+[Cellar entry: open the house, get lamp and sword, descend to cellar]
+Test cellar with "n / e / open window / w / w / take sword / take lantern / turn on lantern / push rug / open trap door / down" in West-of-House.
+
+[Troll combat: go north from cellar and attack (random -- may need retries)]
+Test troll with "test cellar / n / attack troll / attack troll / attack troll / attack troll".
+
+[Cyclops puzzle method A: feed and water]
+Test feedcyclops with "give lunch to cyclops / open bottle / give water to cyclops / up" in Cyclops-Room holding the lunch and the glass bottle.
+
+[Cyclops puzzle method B: say the magic word]
+Test odysseus with "odysseus" in Cyclops-Room.
+
+[Loud Room echo puzzle]
+Test echo with "echo / take platinum bar" in Loud Room.
+
+[Dam: power on, take wrench, open sluice gates]
+Test dam with "push yellow button / take wrench / s / s / turn bolt" in Maintenance Room.
+
+[Exorcism: bell, candles, book sequence in Entrance to Hades]
+Test exorcism with "ring bell / light match / light candles / take candles / read book / s" in Entrance to Hades holding the brass bell and the pair of candles and the black book and the matchbook.
+
+[Coal to diamond transformation]
+Test diamond with "open machine / put coal in machine / close machine / turn on switch / open machine / take diamond" in Machine-Room holding the small pile of coal.
+
+[Inflate the boat at Dam Base]
+Test boat with "inflate plastic" in Dam-Base holding the pile of plastic and the hand-held air pump.
+
+[Dig up the scarab in Sandy Cave]
+Test scarab with "dig / dig / dig / dig / take scarab" in Sandy Cave holding the shovel.
+
+[Wave sceptre to solidify rainbow and reveal pot of gold]
+Test rainbow with "wave sceptre / take pot of gold" in End of Rainbow holding the sceptre.
+
+[Mirror room teleportation]
+Test mirror with "rub mirror" in Mirror Room 1.
+
+[Wind canary in forest to summon songbird and bauble]
+Test bauble with "wind canary / take bauble" in Forest1 holding the golden clockwork canary.
+
+[Dome Room rope descent]
+Test dome with "tie rope to railing / down" in Dome Room holding the rope.
+
+Chapter 2 - Full Walkthrough
+
+[Complete winning path from start to finish -- chains all major puzzle sequences]
+Test me with "test cellar / test troll".

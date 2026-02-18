@@ -61,27 +61,6 @@ a:hover {
   border-bottom-color: #aa9966;
 }
 
-.play-btn {
-  display: inline-block;
-  margin: 20px 0 8px;
-  padding: 12px 32px;
-  background: #2a2010;
-  border: 1px solid #4a3a20;
-  border-radius: 6px;
-  color: #e8d090;
-  font-family: inherit;
-  font-size: 1.1em;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-}
-
-.play-btn:hover {
-  background: #3a3020;
-  border-color: #6a5a40;
-  border-bottom: 1px solid #6a5a40;
-}
-
 .version-entry {
   margin-bottom: 32px;
   padding: 20px 24px;
@@ -240,14 +219,27 @@ footer a {
   <button class="engine-btn" data-engine="glulxe">Glulxe</button>
 </div>
 
-<a class="play-btn" data-play-version="v2" href="v2/">Play Current Version</a>
-<a class="play-btn" href="v2/story.ni" style="margin-left: 12px;">View Source</a>
-<a class="play-btn" href="source.html" style="margin-left: 12px;">Browse Source</a>
-
 <h2>Version History</h2>
 
 <div class="version-entry">
-  <h3>v2 &mdash; In Progress</h3>
+  <h3>v3 &mdash; Ambient Audio &amp; Testing</h3>
+  <p>Experimental features and developer tooling built on the v2 bug-fix base.</p>
+  <ul>
+    <li>Ambient audio: zone-based background music with crossfade engine (forest, cave, house, water, rapids, loud, hades, mine, machinery, silence)</li>
+    <li>Built-in Test commands for smoke-testing key puzzles (cellar, troll, cyclops, dam, exorcism, and more)</li>
+    <li>RegTest infrastructure for automated walkthrough regression testing</li>
+    <li>Enriched ZIL annotations with inline object docs and sub-section headers</li>
+    <li>Browsable annotated ZIL source added to v0</li>
+  </ul>
+  <div class="version-links">
+    <a data-play-version="v3" href="v3/">Play</a>
+    <a href="v3/story.ni">Inform 7 Source</a>
+    <a href="v3/source.html">Browse Source</a>
+  </div>
+</div>
+
+<div class="version-entry">
+  <h3>v2 &mdash; Bug Fixes</h3>
   <p>Bug fixes from the original ZIL source, quality-of-life improvements, and parser enhancements.</p>
   <ul>
     <li>Fix: Deflating the boat no longer loses its contents (#2)</li>
@@ -265,7 +257,7 @@ footer a {
   <div class="version-links">
     <a data-play-version="v2" href="v2/">Play</a>
     <a href="v2/story.ni">Inform 7 Source</a>
-    <a href="source.html">Browse Source</a>
+    <a href="v2/source.html">Browse Source</a>
   </div>
 </div>
 
@@ -284,7 +276,7 @@ footer a {
   <div class="version-links">
     <a data-play-version="v1" href="v1/">Play</a>
     <a href="v1/story.ni">Inform 7 Source</a>
-    <a href="source.html">Browse Source</a>
+    <a href="v1/source.html">Browse Source</a>
   </div>
 </div>
 
