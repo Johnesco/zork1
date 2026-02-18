@@ -140,16 +140,10 @@ Before doing something when the player-is-dead is true and the current action is
 
 Chapter 6 - Darkness and Grues
 
-The dark-warning-given is a truth state that varies. The dark-warning-given is false.
+The dark-turns is a number that varies. The dark-turns is 0.
 
 Rule for printing the description of a dark room:
-	if the always-lit-mode is true:
-		say "It is pitch black.[line break]" instead;
-	if the dark-warning-given is false:
-		say "It is pitch black. You are likely to be eaten by a grue.[line break]";
-		now the dark-warning-given is true;
-	otherwise:
-		grue-death.
+	say "It is pitch black.[line break]" instead.
 
 To grue-death:
 	let R be a random number between 1 and 3;
@@ -160,13 +154,20 @@ To grue-death:
 	otherwise:
 		die saying "Oh, no! You have walked into a den of hungry grues and it[apostrophe]s dinner time!".
 
-Every turn when in darkness:
+Every turn when in darkness (this is the grue danger rule):
 	if the always-lit-mode is false:
-		now the dark-warning-given is false.
+		if the dark-turns is 0:
+			say "You are likely to be eaten by a grue.[line break]";
+		otherwise:
+			if a random chance of 4 in 5 succeeds:
+				grue-death;
+		increase the dark-turns by 1.
 
-After going to a dark room:
-	if the always-lit-mode is false:
-		now the dark-warning-given is false;
+Every turn when not in darkness (this is the grue safety rule):
+	now the dark-turns is 0.
+
+After going:
+	now the dark-turns is 0;
 	continue the action.
 
 After deciding the scope of the player when in darkness:
@@ -181,19 +182,19 @@ The lamp-burned-out is a truth state that varies. The lamp-burned-out is false.
 
 Every turn when the brass lantern is lit:
 	increase the lamp-turns by 1;
-	if the lamp-stage is 0 and the lamp-turns is at least 100:
+	if the lamp-stage is 0 and the lamp-turns is at least 200:
 		now the lamp-stage is 1;
 		if the player can see the brass lantern:
 			say "The lamp appears a bit dimmer.[line break]";
-	if the lamp-stage is 1 and the lamp-turns is at least 170:
+	if the lamp-stage is 1 and the lamp-turns is at least 300:
 		now the lamp-stage is 2;
 		if the player can see the brass lantern:
 			say "The lamp is definitely dimmer now.[line break]";
-	if the lamp-stage is 2 and the lamp-turns is at least 185:
+	if the lamp-stage is 2 and the lamp-turns is at least 370:
 		now the lamp-stage is 3;
 		if the player can see the brass lantern:
 			say "The lamp is nearly out.[line break]";
-	if the lamp-turns is at least 200:
+	if the lamp-turns is at least 385:
 		now the lamp-burned-out is true;
 		now the brass lantern is not lit;
 		now the lamp-stage is 4;
@@ -208,19 +209,19 @@ The candles-burned-out is a truth state that varies. The candles-burned-out is f
 
 Every turn when the pair of candles is lit (this is the candle timer rule):
 	increase the candle-turns by 1;
-	if the candle-stage is 0 and the candle-turns is at least 20:
+	if the candle-stage is 0 and the candle-turns is at least 40:
 		now the candle-stage is 1;
 		if the player can see the pair of candles:
 			say "The candles grow shorter.[line break]";
-	if the candle-stage is 1 and the candle-turns is at least 30:
+	if the candle-stage is 1 and the candle-turns is at least 60:
 		now the candle-stage is 2;
 		if the player can see the pair of candles:
 			say "The candles are becoming quite short.[line break]";
-	if the candle-stage is 2 and the candle-turns is at least 35:
+	if the candle-stage is 2 and the candle-turns is at least 70:
 		now the candle-stage is 3;
 		if the player can see the pair of candles:
 			say "The candles won't last long now.[line break]";
-	if the candle-turns is at least 40:
+	if the candle-turns is at least 75:
 		now the candles-burned-out is true;
 		now the pair of candles is not lit;
 		now the candle-stage is 4;
@@ -279,7 +280,7 @@ Every turn (this is the trophy case scoring rule):
 		let diff be new-score minus the trophy-case-score;
 		increase the score by diff;
 		now the trophy-case-score is new-score;
-	if the score is 350 and the won-flag is false:
+	if the score is at least 350 and the won-flag is false:
 		now the won-flag is true;
 		now the ancient map is visible;
 		say "[line break]An almost inaudible voice whispers in your ear, [quotation mark]Look to your treasures for the final secret.[quotation mark][line break]".
@@ -289,6 +290,11 @@ Chapter 8 - Treasure Values
 A thing has a number called treasure-value.
 A person can be defeated. A person is usually not defeated. The treasure-value of a thing is usually 0.
 A thing has a number called point-value. The point-value of a thing is usually 0.
+
+After taking something when the point-value of the noun is greater than 0 (this is the first-take scoring rule):
+	increase the score by the point-value of the noun;
+	now the point-value of the noun is 0;
+	continue the action.
 
 Chapter 9 - Lucky Flag
 
@@ -713,7 +719,8 @@ The point-value of the jewel-encrusted egg is 5.
 
 The golden clockwork canary is in the jewel-encrusted egg. "There is a golden clockwork canary nestled in the egg. It has ruby eyes and a silver beak. Through a crystal window below its left wing you can see intricate machinery inside. It appears to have wound down."
 Understand "canary" and "clockwork" and "gold" and "golden" as the golden clockwork canary.
-The treasure-value of the golden clockwork canary is 6.
+The treasure-value of the golden clockwork canary is 4.
+The point-value of the golden clockwork canary is 6.
 The description of the golden clockwork canary is "The canary is a beautiful golden clockwork device. It appears to have wound down."
 
 The broken jewel-encrusted egg is a thing. The printed name of the broken jewel-encrusted egg is "broken jewel-encrusted egg". "There is a somewhat ruined egg here."
@@ -1048,8 +1055,8 @@ The description of the ZORK owner's manual is "Congratulations![paragraph break]
 The painting is in Gallery. "Fortunately, there is still one chance for you to be a vandal, for on the far wall is a painting of unparalleled beauty."
 Understand "painting" and "art" and "canvas" and "beautiful" as the painting.
 The description of the painting is "This is a masterwork of painting. It depicts a serene scene of a farmhouse on a hillside."
-The treasure-value of the painting is 4.
-The point-value of the painting is 6.
+The treasure-value of the painting is 6.
+The point-value of the painting is 4.
 
 Chapter 5 - Maze
 
@@ -1101,8 +1108,8 @@ Understand "lantern" and "lamp" and "rusty" and "burned" and "dead" and "useless
 
 The leather bag of coins is in Maze5. "An old leather bag, bulging with coins, is here."
 Understand "bag" and "coins" and "old" and "leather" as the leather bag of coins.
-The treasure-value of the leather bag of coins is 10.
-The point-value of the leather bag of coins is 5.
+The treasure-value of the leather bag of coins is 5.
+The point-value of the leather bag of coins is 10.
 
 The skeleton key is in Maze5. Understand "key" and "skeleton" as the skeleton key.
 The description of the skeleton key is "It's a rusty old skeleton key."
@@ -1377,8 +1384,8 @@ Instead of answering the cyclops that:
 The chalice is in Treasure Room. "There is a silver chalice, intricately engraved, here."
 Understand "chalice" and "cup" and "silver" as the chalice.
 The description of the chalice is "It's a beautifully engraved silver chalice."
-The treasure-value of the chalice is 10.
-The point-value of the chalice is 5.
+The treasure-value of the chalice is 5.
+The point-value of the chalice is 10.
 
 Chapter 9 - East-West Passage and Round Room Area
 
@@ -1408,8 +1415,8 @@ The description of Loud Room is "This is a large room with a ceiling which canno
 
 The platinum bar is in Loud Room. "On the ground is a large platinum bar."
 Understand "bar" and "platinum" and "large" as the platinum bar.
-The treasure-value of the platinum bar is 10.
-The point-value of the platinum bar is 5.
+The treasure-value of the platinum bar is 5.
+The point-value of the platinum bar is 10.
 
 Instead of taking the platinum bar when the loud-room-quiet is false:
 	say "The acoustics of the room change as the platinum bar is carried through it. Unfortunately, the unpleasant consequences of this action are that the room now reflects sound more perfectly, and the painful clanging increases to an unbearable level. You stagger and drop the bar, and run from the room.";
@@ -1712,8 +1719,8 @@ Up from Atlantis Room is Small Cave. South of Atlantis Room is Reservoir-North.
 
 The crystal trident is in Atlantis Room. "On the shore lies Poseidon's own crystal trident."
 Understand "trident" and "fork" and "crystal" and "poseidon" as the crystal trident.
-The treasure-value of the crystal trident is 4.
-The point-value of the crystal trident is 11.
+The treasure-value of the crystal trident is 11.
+The point-value of the crystal trident is 4.
 
 Chapter 14 - Temple, Dome, Egypt, and Hades
 
@@ -1763,8 +1770,8 @@ The description of the pedestal is "It's a white marble pedestal."
 The torch is a thing on the pedestal. The initial appearance of the torch is "Sitting on the pedestal is a flaming torch, made of ivory."
 Understand "torch" and "ivory" and "flaming" as the torch.
 The torch is lit. The description of the torch is "It's a flaming ivory torch."
-The treasure-value of the torch is 14.
-The point-value of the torch is 6.
+The treasure-value of the torch is 6.
+The point-value of the torch is 14.
 
 North Temple is a dark room. The printed name of North Temple is "Temple". "This is the north end of a large temple. On the east wall is an ancient inscription, probably a prayer in a long-forgotten language. Below the prayer is a staircase leading down. The west wall is solid granite. The exit to the north end of the room is through huge marble pillars."
 North Temple is in the Underground.
@@ -1809,15 +1816,15 @@ West of Egypt Room is North Temple. Up from Egypt Room is North Temple.
 The gold coffin is in Egypt Room. "The solid-gold coffin used for the burial of Ramses II is here."
 Understand "coffin" and "casket" and "solid" and "gold" as the gold coffin.
 The gold coffin is a closed openable container.
-The treasure-value of the gold coffin is 10.
-The point-value of the gold coffin is 15.
+The treasure-value of the gold coffin is 15.
+The point-value of the gold coffin is 10.
 The carrying capacity of the gold coffin is 5.
 
 The sceptre is in the gold coffin. "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point."
 Understand "sceptre" and "scepter" and "sharp" and "egyptian" and "ancient" and "enameled" as the sceptre.
 The sceptre is a weapon.
-The treasure-value of the sceptre is 4.
-The point-value of the sceptre is 6.
+The treasure-value of the sceptre is 6.
+The point-value of the sceptre is 4.
 
 Entrance to Hades is a dark room. Entrance to Hades is in the Underground.
 Up from Entrance to Hades is Tiny Cave.
@@ -2722,6 +2729,13 @@ After going to Treasure Room when the treasure-room-visited is false:
 	increase the score by 25;
 	continue the action.
 
+The light-shaft-bonus is a truth state that varies. The light-shaft-bonus is false.
+
+After going to Drafty Room when the light-shaft-bonus is false and not in darkness:
+	now the light-shaft-bonus is true;
+	increase the score by 13;
+	continue the action.
+
 Chapter 8 - Ancient Map
 
 The ancient map is in the trophy case. The ancient map is invisible.
@@ -2886,15 +2900,15 @@ The red buoy is a closed openable container. The carrying capacity of the red bu
 
 The large emerald is in the red buoy.
 Understand "emerald" and "large" as the large emerald.
-The treasure-value of the large emerald is 5.
-The point-value of the large emerald is 10.
+The treasure-value of the large emerald is 10.
+The point-value of the large emerald is 5.
 
 Chapter 13 - Trunk of Jewels
 
 The trunk of jewels is in Reservoir. The trunk of jewels is invisible.
 Understand "trunk" and "chest" and "jewels" and "old" as the trunk of jewels.
-The treasure-value of the trunk of jewels is 15.
-The point-value of the trunk of jewels is 5.
+The treasure-value of the trunk of jewels is 5.
+The point-value of the trunk of jewels is 15.
 The description of the trunk of jewels is "There is an old trunk here, bulging with assorted jewels."
 
 After going to Reservoir:
