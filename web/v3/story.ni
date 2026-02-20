@@ -1238,6 +1238,9 @@ Instead of going east in Cyclops-Room:
 Instead of going up in Cyclops-Room:
 	if the cyclops-flag is true:
 		move the player to Treasure Room;
+		if the treasure-room-visited is false:
+			now the treasure-room-visited is true;
+			increase the score by 25;
 	otherwise:
 		say "The cyclops doesn[apostrophe]t look like he'll let you past."
 
@@ -1750,6 +1753,7 @@ Instead of tying the rope to the wooden railing:
 		say "The rope is already tied to it.";
 	otherwise:
 		now the dome-flag is true;
+		now the rope is in Dome Room;
 		say "The rope drops over the side and comes within ten feet of the floor."
 
 Understand "tie [something] to [something]" as tying it to.
@@ -2020,43 +2024,43 @@ The river-current-timer is a number that varies. The river-current-timer is 0.
 The river-current-active is a truth state that varies. The river-current-active is false.
 
 Every turn when the river-current-active is true (this is the river current rule):
-	let R be the location of the player;
+	let here be the location of the player;
 	decrease the river-current-timer by 1;
 	if the river-current-timer is at most 0:
-		if R is River1:
+		if here is River1:
 			say "The flow of the river carries you downstream.[line break]";
 			move the magic boat to River2;
-			now the river-current-timer is 4;
-		otherwise if R is River2:
+			now the river-current-timer is 2;
+		otherwise if here is River2:
 			say "The flow of the river carries you downstream.[line break]";
 			move the magic boat to River3;
-			now the river-current-timer is 3;
-		otherwise if R is River3:
+			now the river-current-timer is 1;
+		otherwise if here is River3:
 			say "The flow of the river carries you downstream.[line break]";
 			move the magic boat to River4;
 			now the river-current-timer is 2;
-		otherwise if R is River4:
+		otherwise if here is River4:
 			say "The flow of the river carries you downstream.[line break]";
 			move the magic boat to River5;
 			now the river-current-timer is 1;
-		otherwise if R is River5:
+		otherwise if here is River5:
 			die saying "Unfortunately, the magic boat doesn't provide protection from the rocks and boulders one meets at the bottom of waterfalls. Including this one.";
 		otherwise:
 			now the river-current-active is false.
 
 After going to River1:
 	now the river-current-active is true;
-	now the river-current-timer is 4;
+	now the river-current-timer is 2;
 	continue the action.
 
 After going to River2:
 	now the river-current-active is true;
-	now the river-current-timer is 4;
+	now the river-current-timer is 2;
 	continue the action.
 
 After going to River3:
 	now the river-current-active is true;
-	now the river-current-timer is 3;
+	now the river-current-timer is 1;
 	continue the action.
 
 After going to River4:
@@ -2387,6 +2391,8 @@ The description of the machine is "It's a machine which is reminiscent of a clot
 The machine switch is scenery in Machine-Room. Understand "switch" and "start" as the machine switch.
 The description of the machine switch is "The switch is labelled [quotation mark]START[quotation mark]. It does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch)."
 
+Does the player mean inserting something into the machine: it is very likely.
+
 Instead of switching on the machine switch:
 	if the machine is not closed:
 		say "The machine must be closed first.";
@@ -2505,48 +2511,41 @@ Instead of inserting something into the large bag when the thief is not defeated
 The thief-active is a truth state that varies. The thief-active is true.
 The thief-here-count is a number that varies. The thief-here-count is 0.
 The thief-engrossed is a truth state that varies. The thief-engrossed is false.
+The thief-timer is a number that varies. The thief-timer is 0.
 
 Every turn when the thief is not defeated and the thief-active is true (this is the thief daemon rule):
-	if a random chance of 1 in 5 succeeds:
+	increase the thief-timer by 1;
+	if the thief-timer < 5:
+		do nothing;
+	otherwise:
+		now the thief-timer is 0;
 		let thief-room be the location of the thief;
-		if thief-room is the location of the player:
+		let player-room be the location of the player;
+		if thief-room is player-room:
 			if the player carries the clove of garlic:
-				do nothing; [garlic repels]
-			otherwise:
-				let stolen-item be nothing;
+				do nothing;
+			otherwise if a random chance of 3 in 10 succeeds:
+				let stolen-any be false;
 				repeat with item running through things carried by the player:
 					if the treasure-value of item > 0:
-						now stolen-item is item;
-						break;
-				if stolen-item is not nothing:
-					now stolen-item is in the large bag;
-					let R be a random number between 1 and 4;
-					if R is 1:
-						say "A seedy-looking individual with a large bag just wandered through the room. On the way through, he quietly abstracted some valuables from your possession, mumbling something about [quotation mark]Doing unto others before...[quotation mark]";
-					otherwise if R is 2:
-						say "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.";
-					otherwise if R is 3:
-						say "A seedy-looking individual with a large bag just wandered through the room. On the way through, he appropriated the [stolen-item].";
-					otherwise:
-						say "A [quotation mark]lean and hungry[quotation mark] gentleman just wandered through, carrying a large bag. On the way, he helped himself to the [stolen-item].";
-					let new-dest be a random dark room that is in the Underground;
-					if new-dest is a room:
-						move the thief to new-dest;
+						if a random chance of 3 in 4 succeeds:
+							now item is in the large bag;
+							now stolen-any is true;
+				if stolen-any is true:
+					say "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.";
 				otherwise:
-					let R be a random number between 1 and 2;
-					if R is 1:
-						say "A [quotation mark]lean and hungry[quotation mark] gentleman just wandered through, carrying a large bag. Finding nothing of value, he left disgruntled.";
-					otherwise:
-						say "The thief, finding nothing of value, left disgusted.";
-					let new-dest be a random dark room that is in the Underground;
-					if new-dest is a room:
-						move the thief to new-dest;
+					say "The thief, finding nothing of value, left disgusted.";
+				let new-dest be a random dark room that is in the Underground;
+				if new-dest is a room:
+					move the thief to new-dest;
 		otherwise:
-			if a random chance of 1 in 3 succeeds:
-				let dir be a random direction;
-				let new-room be the room dir from thief-room;
-				if new-room is a room:
-					move the thief to new-room.
+			repeat with item running through things in thief-room:
+				if the treasure-value of item > 0:
+					if a random chance of 3 in 4 succeeds:
+						now item is in the large bag;
+			let new-dest be a random dark room that is in the Underground;
+			if new-dest is a room and new-dest is not player-room:
+				move the thief to new-dest.
 
 Every turn when the jewel-encrusted egg is in the large bag and the jewel-encrusted egg is closed (this is the thief opens egg rule):
 	now the jewel-encrusted egg is open.
@@ -2564,9 +2563,18 @@ To kill the thief with magic:
 	now the thief is defeated;
 	remove the thief from play.
 
+Instead of giving something to the thief:
+	if the thief is defeated:
+		say "He's not exactly in a position to accept gifts.";
+	otherwise:
+		now the noun is in the large bag;
+		if the treasure-value of the noun > 0:
+			now the thief-engrossed is true;
+			say "The thief is taken aback by your unexpected generosity, but accepts the [noun] and stops to admire its beauty.";
+		otherwise:
+			say "The thief places the [noun] into his bag without comment."
+
 Instead of attacking the thief:
-	if the thief is not in the location of the player:
-		say "There is no thief here." instead;
 	if the thief is defeated:
 		say "The thief is already dead.";
 	otherwise if the thief-unconscious is true:
@@ -2855,38 +2863,38 @@ Before entering the magic boat:
 
 Launching is an action applying to nothing. Understand "launch" as launching.
 Carry out launching:
-	let R be the location of the player;
+	let here be the location of the player;
 	if the player is not in the magic boat:
 		say "You're not in a boat.";
-	otherwise if R is Dam-Base:
+	otherwise if here is Dam-Base:
 		say "You push off from the shore.";
 		move the magic boat to River1;
 		now the river-current-active is true;
-		now the river-current-timer is 4;
-	otherwise if R is White Cliffs North:
+		now the river-current-timer is 2;
+	otherwise if here is White Cliffs North:
 		say "You push off from the shore.";
 		move the magic boat to River3;
 		now the river-current-active is true;
-		now the river-current-timer is 3;
-	otherwise if R is White Cliffs South:
+		now the river-current-timer is 1;
+	otherwise if here is White Cliffs South:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
-	otherwise if R is Shore:
+	otherwise if here is Shore:
 		say "You push off from the shore.";
 		move the magic boat to River5;
 		now the river-current-active is true;
 		now the river-current-timer is 1;
-	otherwise if R is Sandy Beach:
+	otherwise if here is Sandy Beach:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
-	otherwise if R is Reservoir-South or R is Reservoir-North:
+	otherwise if here is Reservoir-South or here is Reservoir-North:
 		say "You push off from the shore.";
 		move the magic boat to Reservoir;
-	otherwise if R is Stream View:
+	otherwise if here is Stream View:
 		say "You push off from the shore.";
 		move the magic boat to In-Stream;
 	otherwise:

@@ -13,23 +13,37 @@ The Inform 7 source is the living document; the ZIL files are read-only referenc
 
 ## Repository Layout
 
+This repo is the **web display layer only** — it holds the GitHub Pages site and read-only ZIL reference. All Inform 7 authoring, building, and testing lives in `C:\code\inform7\`.
+
 ```
 src/zil/           Original ZIL source files (read-only, NEVER modify)
-src/inform7/       Inform 7 source (story.ni) — the canonical game source
-build/             Inform 7 project used for compilation (build/zork1.inform/)
-tools/             Inform 7 compiler, interpreters, ZILF compiler
-tests/             Test infrastructure
-  inform7/         Inform 7 walkthrough and output
-  zil/             ZIL walkthrough and output
-  *.regtest        RegTest scripts
-  regtest.py       RegTest runner
-  run-tests.sh     RegTest runner script
 web/               GitHub Pages site deployed to johnesco.github.io/zork1/
   index.html       Landing page — project description, version links
-  source.html      Live source browser (fetches from main branch)
   v0/              Original ZIL — source browser + playable ZIL-compiled game
-  v1/, v2/, ...    Inform 7 milestone archives (self-contained snapshots)
+  v1/, v2/, ...    Inform 7 version archives (self-contained snapshots)
 ```
+
+## Inform 7 Hub (External)
+
+All Inform 7 source, compilation, and testing lives in the shared hub:
+
+```
+C:\code\inform7\
+├── CLAUDE.md                      ← Inform 7 conventions and compiler paths
+├── tools/
+│   └── regtest.py                 ← Shared test runner
+├── reference/                     ← Syntax + formatting docs
+└── projects/zork1/
+    ├── story.ni                   ← Current version (EDIT HERE)
+    ├── zork1.inform/              ← IDE bundle + compilation workspace
+    ├── zork1.materials/
+    ├── zork1.ulx                  ← Compiled output
+    └── tests/                     ← All test scripts + data
+```
+
+**Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\inform7\CLAUDE.md` for CLI usage).
+
+Any `story.ni` files found inside this repo (e.g., `web/vN/story.ni`) are **frozen snapshots**. The current version lives only in the Inform 7 hub (`C:\code\inform7\projects\zork1\story.ni`) and is never published to the web directly — it is snapshotted into a numbered version when ready. Always edit the hub copy and build from there.
 
 ## Version Philosophy
 
@@ -65,27 +79,32 @@ Experimental features and developer tooling. Includes ambient audio system (zone
 **v0** (ZIL):
 ```
 web/v0/
-  index.html        ZIL source browser with syntax highlighting and annotations
-  parchment.html    Parchment player page (plays ZIL-compiled .z3)
-  zork1.z3.js       Compiled ZIL game (base64 Z-machine, built from original ZIL)
+  index.html            ZIL source browser with syntax highlighting and annotations
+  parchment.html        Parchment player page (plays ZIL-compiled .z3)
+  zork1.z3.js           Compiled ZIL game (base64 Z-machine, built from original ZIL)
+  walkthrough.html      Walkthrough viewer (fetches local walkthrough files)
+  walkthrough.txt       Raw walkthrough commands (ZIL version)
+  walkthrough-guide.txt Annotated walkthrough guide (ZIL version)
 ```
 
 **v1+** (Inform 7):
 ```
 web/vN/
-  index.html        Quixe player page
-  parchment.html    Parchment player page
-  glulxe.html       Glulxe (WASM) player page
-  source.html       Inform 7 source browser (renders this version's story.ni)
-  story.ni          Frozen Inform 7 source snapshot
-  zork1.ulx.js      Compiled game (base64 Glulx, built from THIS story.ni)
-  lib/              Client-side libraries
-  media/            Assets
+  index.html            Quixe player page
+  parchment.html        Parchment player page
+  glulxe.html           Glulxe (WASM) player page
+  source.html           Inform 7 source browser (renders this version's story.ni)
+  story.ni              Frozen Inform 7 source snapshot
+  zork1.ulx.js          Compiled game (base64 Glulx, built from THIS story.ni)
+  walkthrough.html      Walkthrough viewer (fetches local walkthrough files)
+  walkthrough.txt       Raw walkthrough commands
+  walkthrough-guide.txt Annotated walkthrough guide
+  lib/                  Client-side libraries
+  media/                Assets
 ```
 
 ### Source Browsers
 
-- **Root-level** (`web/source.html`) — Shows live development source from `main` branch (fetches from `raw.githubusercontent.com`)
 - **Per-version** (`web/vN/source.html`) — Shows the frozen source for that version (fetches local `story.ni`)
 - **v0** (`web/v0/index.html`) — ZIL source browser with annotations (already exists)
 
@@ -98,16 +117,21 @@ web/vN/
 
 ### Versioning Workflow
 
+The **current version** (`C:\code\inform7\projects\zork1\story.ni`) is the working copy where all development happens. It is snapshotted into numbered versions when ready. The **latest numbered version** (currently v3) may be updated many times — it is republished from the current version as development progresses. Once a **new version is created** (e.g., v4), the previous one (v3) becomes permanently **frozen** and is never modified again. Only the latest numbered version and the current version ever change.
+
 When creating a new version (vN+1):
 
-1. Finish all code changes in `src/inform7/story.ni`
-2. Compile to `build/zork1.ulx` using Inform 7 compiler
-3. Run RegTest suite: `wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh'`
-4. Run walkthrough (`tests/inform7/walkthrough.txt`) against the new `.ulx` via glulxe and verify expected score
+1. Finish all code changes in the current version (`C:\code\inform7\projects\zork1\story.ni`)
+2. Build in `C:\code\inform7\projects\zork1\` (see "Building the Game" below)
+3. Run RegTest suite: `wsl -e bash -c 'cd /mnt/c/code/inform7/projects/zork1 && bash tests/run-tests.sh'`
+4. Run walkthrough: `wsl -e bash -c 'cd /mnt/c/code/inform7/projects/zork1 && bash tests/run-walkthrough.sh'`
 5. Only after tests pass:
-   - Copy `src/inform7/story.ni` → `web/vN+1/story.ni`
-   - Base64-encode `build/zork1.ulx` → `web/vN+1/zork1.ulx.js`
-   - Copy `web/source.html` into `web/vN+1/source.html`, change `RAW_URL` to `'story.ni'` (relative fetch) and update the sidebar header to show the version name
+   - Copy `C:\code\inform7\projects\zork1\story.ni` → `web/vN+1/story.ni`
+   - Base64-encode `C:\code\inform7\projects\zork1\zork1.ulx` → `web/vN+1/zork1.ulx.js`
+   - Copy `source.html` from the previous version into `web/vN+1/source.html`, change `RAW_URL` to `'story.ni'` (relative fetch) and update the sidebar header to show the version name
+   - Copy `walkthrough.html` from the previous version into `web/vN+1/walkthrough.html`, update title and sidebar header with version name, change back link to `../`
+   - Copy `C:\code\inform7\projects\zork1\tests\inform7\walkthrough.txt` → `web/vN+1/walkthrough.txt`
+   - Copy `C:\code\inform7\projects\zork1\tests\inform7\walkthrough-guide.txt` → `web/vN+1/walkthrough-guide.txt`
    - Copy player pages and `lib/` from previous version (or rebuild)
 6. Update `web/index.html`: add new version entry
 7. The previous version is now frozen — **NEVER modify after release**
@@ -123,27 +147,15 @@ GitHub Actions (`.github/workflows/deploy-pages.yml`) deploys the entire `web/` 
 
 ## Testing Policy
 
-When running tests (RegTest, walkthrough, or manual play-testing), **report any failures or issues found but do not make code changes unless explicitly instructed**. Testing is observational — log what broke, where, and why, then wait for direction before fixing.
+All testing happens in `C:\code\inform7\projects\zork1\`. See `C:\code\inform7\CLAUDE.md` and the project's `tests/` folder for scripts and data.
 
-Each version has its own walkthrough and output:
-- `tests/inform7/walkthrough.txt` + `walkthrough_output.txt` — for the Inform 7 version
-- `tests/zil/walkthrough.txt` + `walkthrough_output.txt` — for the ZIL-compiled version
+**Policy**: Report failures, don't fix unless explicitly instructed.
 
 ## Building the Game
 
-### Inform 7 (v1+)
+All building happens in `C:\code\inform7\projects\zork1\`. See `C:\code\inform7\CLAUDE.md` for compiler paths, build steps, and interpreter usage.
 
-1. Sync source: `cp src/inform7/story.ni build/zork1.inform/Source/story.ni`
-2. Compile I7→I6: `tools/inform7/extracted/Compilers/inform7.exe -internal tools/inform7/extracted/Internal -project build/zork1.inform`
-3. Compile I6→Glulx: `tools/inform7/extracted/Compilers/inform6.exe -w -G "build/zork1.inform/Build/auto.inf" "build/zork1.inform/Build/output.ulx"`
-4. Copy output: `cp build/zork1.inform/Build/output.ulx build/zork1.ulx`
-5. Test with glulxe (WSL): `wsl -e bash -c '/home/johnesco/glulxe/glulxe -q build/zork1.ulx < tests/inform7/walkthrough.txt'`
-
-### ZIL (v0)
-
-1. Source: `the-infocom-files/zork1` repo (cloned at `C:\code\zork1-zil/`) + `the-infocom-files/zork-substrate` (at `C:\code\zork-substrate/`)
-2. Compile: `cd C:\code\zork1-zil && C:\tools\zilf\bin\zilf.exe zork1.zil` → produces `zork1.z3`
-3. Test with dfrotz (WSL): `wsl -e bash -c '~/frotz-install/usr/games/dfrotz -q /mnt/c/code/zork1-zil/zork1.z3 < tests/zil/walkthrough.txt'`
+ZIL (v0) is compiled separately from `C:\code\zork1-zil\` using ZILF.
 
 ## Key Game Systems (for reference when editing story.ni)
 

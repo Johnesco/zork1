@@ -180,8 +180,13 @@ Chapter 6a - Candle Timer System
 The candle-turns is a number that varies. The candle-turns is 0.
 The candle-stage is a number that varies. The candle-stage is 0.
 The candles-burned-out is a truth state that varies. The candles-burned-out is false.
+The candle-timer-active is a truth state that varies. The candle-timer-active is false.
 
-Every turn when the pair of candles is lit (this is the candle timer rule):
+After taking the pair of candles:
+	now the candle-timer-active is true;
+	continue the action.
+
+Every turn when the pair of candles is lit and the candle-timer-active is true (this is the candle timer rule):
 	increase the candle-turns by 1;
 	if the candle-stage is 0 and the candle-turns is at least 40:
 		now the candle-stage is 1;
@@ -638,8 +643,7 @@ Instead of looking under the carpet:
 	otherwise:
 		say "There is nothing else under the carpet."
 
-Raising-rug is an action applying to one thing. Understand "raise [something]" as raising-rug when the noun is the carpet.
-Instead of raising-rug the carpet:
+Instead of raising the carpet:
 	if the rug-moved is true:
 		say "The rug is too heavy to lift.";
 	otherwise:
@@ -794,7 +798,6 @@ The low-tide is a truth state that varies. The low-tide is false.
 The rainbow-flag is a truth state that varies. The rainbow-flag is false.
 The won-flag is a truth state that varies. The won-flag is false.
 The grate-revealed is a truth state that varies. The grate-revealed is false.
-The coffin-cure is a truth state that varies. The coffin-cure is false.
 The gate-flag is a truth state that varies. The gate-flag is false.
 The gates-open is a truth state that varies. The gates-open is false.
 
@@ -1108,6 +1111,9 @@ Instead of going east in Cyclops-Room:
 Instead of going up in Cyclops-Room:
 	if the cyclops-flag is true:
 		move the player to Treasure Room;
+		if the treasure-room-visited is false:
+			now the treasure-room-visited is true;
+			increase the score by 25;
 	otherwise:
 		say "The cyclops doesn[apostrophe]t look like he'll let you past."
 
@@ -1220,7 +1226,7 @@ Chapter 10 - Dam and Reservoir Area
 
 Deep Canyon is a dark room. "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. [if the gates-open is true and the low-tide is false]You can hear the roaring of a great volume of water below.[otherwise]You can hear the sound of flowing water below.[end if]".
 Deep Canyon is in the Underground.
-Northwest of Deep Canyon is Reservoir-South. Southwest of Deep Canyon is North-South Passage. Down from Deep Canyon is Loud Room.
+Northwest of Deep Canyon is Reservoir-South. East of Deep Canyon is Dam-Room. Southwest of Deep Canyon is North-South Passage. Down from Deep Canyon is Loud Room.
 
 Loud Room is a dark room. Loud Room is in the Underground.
 East of Loud Room is Damp Cave. West of Loud Room is Round Room. Up from Loud Room is Deep Canyon.
@@ -1461,13 +1467,11 @@ West of Mirror Room 2 is Winding-Passage. North of Mirror Room 2 is Narrow Passa
 The mirror-two is scenery in Mirror Room 2. The printed name of the mirror-two is "mirror". Understand "mirror" and "reflection" and "enormous" as the mirror-two.
 The description of the mirror-two is "There is an image of a large room reflected in the mirror."
 
-Rubbing-mirror is an action applying to one thing. Understand "rub [something]" as rubbing-mirror when the noun is the mirror-one or the noun is the mirror-two.
-
-Instead of rubbing-mirror the mirror-one:
+Instead of rubbing the mirror-one:
 	say "There is a rumble from deep within the earth and the room shakes.";
 	move the player to Mirror Room 2.
 
-Instead of rubbing-mirror the mirror-two:
+Instead of rubbing the mirror-two:
 	say "There is a rumble from deep within the earth and the room shakes.";
 	move the player to Mirror Room 1.
 
@@ -1548,6 +1552,7 @@ Instead of tying the rope to the wooden railing:
 		say "The rope is already tied to it.";
 	otherwise:
 		now the dome-flag is true;
+		now the rope is in Dome Room;
 		say "The rope drops over the side and comes within ten feet of the floor."
 
 Understand "tie [something] to [something]" as tying it to.
@@ -1589,10 +1594,10 @@ South Temple is in the Underground.
 North of South Temple is North Temple.
 
 Instead of going down in South Temple:
-	if the coffin-cure is true:
-		move the player to Tiny Cave;
+	if the player carries the gold coffin:
+		say "You haven't a prayer of getting the coffin down there.";
 	otherwise:
-		say "You haven't a prayer of getting the coffin down there."
+		move the player to Tiny Cave.
 
 The altar is a supporter in South Temple. The altar is scenery.
 Understand "altar" as the altar.
@@ -1818,42 +1823,43 @@ The river-current-timer is a number that varies. The river-current-timer is 0.
 The river-current-active is a truth state that varies. The river-current-active is false.
 
 Every turn when the river-current-active is true (this is the river current rule):
+	let here be the location of the player;
 	decrease the river-current-timer by 1;
 	if the river-current-timer is at most 0:
-		if the player is in River1:
+		if here is River1:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River2;
-			now the river-current-timer is 4;
-		otherwise if the player is in River2:
-			say "The flow of the river carries you downstream.[line break]";
-			move the player to River3;
-			now the river-current-timer is 3;
-		otherwise if the player is in River3:
-			say "The flow of the river carries you downstream.[line break]";
-			move the player to River4;
+			move the magic boat to River2;
 			now the river-current-timer is 2;
-		otherwise if the player is in River4:
+		otherwise if here is River2:
 			say "The flow of the river carries you downstream.[line break]";
-			move the player to River5;
+			move the magic boat to River3;
 			now the river-current-timer is 1;
-		otherwise if the player is in River5:
+		otherwise if here is River3:
+			say "The flow of the river carries you downstream.[line break]";
+			move the magic boat to River4;
+			now the river-current-timer is 2;
+		otherwise if here is River4:
+			say "The flow of the river carries you downstream.[line break]";
+			move the magic boat to River5;
+			now the river-current-timer is 1;
+		otherwise if here is River5:
 			die saying "Unfortunately, the magic boat doesn't provide protection from the rocks and boulders one meets at the bottom of waterfalls. Including this one.";
 		otherwise:
 			now the river-current-active is false.
 
 After going to River1:
 	now the river-current-active is true;
-	now the river-current-timer is 4;
+	now the river-current-timer is 2;
 	continue the action.
 
 After going to River2:
 	now the river-current-active is true;
-	now the river-current-timer is 4;
+	now the river-current-timer is 2;
 	continue the action.
 
 After going to River3:
 	now the river-current-active is true;
-	now the river-current-timer is 3;
+	now the river-current-timer is 1;
 	continue the action.
 
 After going to River4:
@@ -2059,8 +2065,6 @@ Gas Room is in the Underground.
 Up from Gas Room is Smelly Room. East of Gas Room is Mine1.
 
 Every turn when the player is in Gas Room (this is the gas room explosion rule):
-	if the brass lantern is lit and the player carries the brass lantern:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying a lit lamp in here.[paragraph break]   BOOOOOOOOOOOM";
 	if the torch is lit and the player carries the torch:
 		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying a lit torch in here.[paragraph break]   BOOOOOOOOOOOM";
 	if the pair of candles is lit and the player carries the pair of candles:
@@ -2110,10 +2114,11 @@ Timber Room is in the Underground.
 East of Timber Room is Ladder Bottom.
 
 Instead of going west in Timber Room:
-	let total-carried be 0;
+	let heavy-found be false;
 	repeat with item running through things carried by the player:
-		increase total-carried by 1;
-	if total-carried > 0:
+		unless the item is the clove of garlic or the item is the matchbook:
+			now heavy-found is true;
+	if heavy-found is true:
 		say "You cannot fit through this passage with that load.";
 	otherwise:
 		move the player to Drafty Room.
@@ -2123,10 +2128,11 @@ Drafty Room is in the Underground.
 South of Drafty Room is Machine-Room.
 
 Instead of going east in Drafty Room:
-	let total-carried be 0;
+	let heavy-found be false;
 	repeat with item running through things carried by the player:
-		increase total-carried by 1;
-	if total-carried > 0:
+		unless the item is the clove of garlic or the item is the matchbook:
+			now heavy-found is true;
+	if heavy-found is true:
 		say "You cannot fit through this passage with that load.";
 	otherwise:
 		move the player to Timber Room.
@@ -2140,9 +2146,10 @@ The carrying capacity of the raised-basket is 10.
 
 The basket-is-at-top is a truth state that varies. The basket-is-at-top is true.
 
-Raising-basket is an action applying to one thing. Understand "raise [something]" as raising-basket when the noun is the raised-basket or the noun is the lowered-basket.
+Raising is an action applying to one thing. Understand "raise [something]" as raising.
+Carry out raising: say "You can't raise that."
 
-Instead of raising-basket something:
+Instead of raising the raised-basket:
 	if the basket-is-at-top is true:
 		say "The basket is already at the top.";
 	otherwise:
@@ -2150,6 +2157,9 @@ Instead of raising-basket something:
 		now the raised-basket is in Shaft Room;
 		now the lowered-basket is in Drafty Room;
 		say "The basket is raised to the top of the shaft."
+
+Instead of raising the lowered-basket:
+	try raising the raised-basket.
 
 Lowering is an action applying to one thing. Understand "lower [something]" as lowering.
 Carry out lowering: say "You can't lower that."
@@ -2178,6 +2188,8 @@ The description of the machine is "It's a large machine with a lid and a switch.
 
 The machine switch is scenery in Machine-Room. Understand "switch" as the machine switch.
 The description of the machine switch is "It's a switch on the machine."
+
+Does the player mean inserting something into the machine: it is very likely.
 
 Instead of switching on the machine switch:
 	if the machine is not closed:
@@ -2283,37 +2295,58 @@ Instead of taking the large bag:
 The thief-active is a truth state that varies. The thief-active is true.
 The thief-here-count is a number that varies. The thief-here-count is 0.
 The thief-engrossed is a truth state that varies. The thief-engrossed is false.
+The thief-timer is a number that varies. The thief-timer is 0.
 
 Every turn when the thief is not defeated and the thief-active is true (this is the thief daemon rule):
-	if a random chance of 1 in 5 succeeds:
+	increase the thief-timer by 1;
+	if the thief-timer < 5:
+		do nothing;
+	otherwise:
+		now the thief-timer is 0;
 		let thief-room be the location of the thief;
-		if thief-room is the location of the player:
+		let player-room be the location of the player;
+		if thief-room is player-room:
 			if the player carries the clove of garlic:
-				do nothing; [garlic repels]
-			otherwise:
-				let stolen-item be nothing;
+				do nothing;
+			otherwise if a random chance of 3 in 10 succeeds:
+				let stolen-any be false;
 				repeat with item running through things carried by the player:
 					if the treasure-value of item > 0:
-						now stolen-item is item;
-						break;
-				if stolen-item is not nothing:
-					now stolen-item is in the large bag;
-					say "The thief rummages through your belongings and takes the [stolen-item]! He then slinks away.";
-					let new-dest be a random dark room that is in the Underground;
-					if new-dest is a room:
-						move the thief to new-dest;
+						if a random chance of 3 in 4 succeeds:
+							now item is in the large bag;
+							now stolen-any is true;
+				if stolen-any is true:
+					say "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.";
+				otherwise:
+					say "The thief, finding nothing of value, left disgusted.";
+				let new-dest be a random dark room that is in the Underground;
+				if new-dest is a room:
+					move the thief to new-dest;
 		otherwise:
-			if a random chance of 1 in 3 succeeds:
-				let dir be a random direction;
-				let new-room be the room dir from thief-room;
-				if new-room is a room:
-					move the thief to new-room.
+			repeat with item running through things in thief-room:
+				if the treasure-value of item > 0:
+					if a random chance of 3 in 4 succeeds:
+						now item is in the large bag;
+			let new-dest be a random dark room that is in the Underground;
+			if new-dest is a room and new-dest is not player-room:
+				move the thief to new-dest.
 
 Every turn when the jewel-encrusted egg is in the large bag and the jewel-encrusted egg is closed (this is the thief opens egg rule):
 	now the jewel-encrusted egg is open.
 
 Every turn when the player is in Treasure Room and the thief is not defeated and the thief is not in Treasure Room (this is the thief lair rule):
 	move the thief to Treasure Room.
+
+Instead of giving something to the thief:
+	if the thief is defeated:
+		say "He's not exactly in a position to accept gifts.";
+	otherwise:
+		now the noun is in the large bag;
+		if the treasure-value of the noun > 0:
+			now the thief-engrossed is true;
+			say "The thief is taken aback by your unexpected generosity, but accepts the [noun] and stops to admire its beauty.";
+		otherwise:
+			say "The thief places the [noun] into his bag without comment."
 
 Instead of attacking the thief:
 	if the thief is defeated:
@@ -2490,7 +2523,7 @@ Carry out burning it with:
 
 Chapter 11 - Boat System
 
-The magic boat is a thing. The magic boat is an open enterable container. The carrying capacity of the magic boat is 10.
+The magic boat is an open enterable vehicle. The carrying capacity of the magic boat is 10.
 Understand "boat" and "raft" and "magic" and "plastic" and "seaworthy" and "inflat" as the magic boat.
 The description of the magic boat is "It's a seaworthy magic boat."
 
@@ -2551,37 +2584,38 @@ Before entering the magic boat:
 
 Launching is an action applying to nothing. Understand "launch" as launching.
 Carry out launching:
+	let here be the location of the player;
 	if the player is not in the magic boat:
 		say "You're not in a boat.";
-	otherwise if the player is in Dam-Base:
+	otherwise if here is Dam-Base:
 		say "You push off from the shore.";
 		move the magic boat to River1;
 		now the river-current-active is true;
-		now the river-current-timer is 4;
-	otherwise if the player is in White Cliffs North:
+		now the river-current-timer is 2;
+	otherwise if here is White Cliffs North:
 		say "You push off from the shore.";
 		move the magic boat to River3;
 		now the river-current-active is true;
-		now the river-current-timer is 3;
-	otherwise if the player is in White Cliffs South:
+		now the river-current-timer is 1;
+	otherwise if here is White Cliffs South:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
-	otherwise if the player is in Shore:
+	otherwise if here is Shore:
 		say "You push off from the shore.";
 		move the magic boat to River5;
 		now the river-current-active is true;
 		now the river-current-timer is 1;
-	otherwise if the player is in Sandy Beach:
+	otherwise if here is Sandy Beach:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
-	otherwise if the player is in Reservoir-South or the player is in Reservoir-North:
+	otherwise if here is Reservoir-South or here is Reservoir-North:
 		say "You push off from the shore.";
 		move the magic boat to Reservoir;
-	otherwise if the player is in Stream View:
+	otherwise if here is Stream View:
 		say "You push off from the shore.";
 		move the magic boat to In-Stream;
 	otherwise:
@@ -2614,9 +2648,7 @@ After going to Reservoir:
 
 Chapter 14 - Gate/Bolt Interaction
 
-Turning-bolt is an action applying to one thing. Understand "turn [something]" as turning-bolt when the noun is the bolt.
-
-Instead of turning-bolt the bolt:
+Instead of turning the bolt:
 	if the player does not carry the wrench:
 		say "The bolt won't turn with your best effort.";
 	otherwise if the gate-flag is false:
@@ -2653,7 +2685,3 @@ Every turn when the reservoir-fill-timer > 0 (this is the reservoir filling rule
 
 Chapter 15 - Room Entering Points
 
-After going to a room (called destination) (this is the coffin cure rule):
-	if the player carries the gold coffin:
-		now the coffin-cure is true;
-	continue the action.

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Source — Zork I: Inform 7 Edition</title>
+<title>Source — Zork I: Inform 7 Edition (v2)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -274,14 +274,14 @@ tr.highlight td.ln {
 <div class="container">
   <div class="sidebar">
     <div class="sidebar-header">
-      <h1>Zork I: Inform 7</h1>
-      <a href="./">&larr; Back to project</a>
+      <h1>Zork I: Inform 7 &mdash; v2</h1>
+      <a href="../">&larr; Back to project</a>
     </div>
     <div class="nav" id="nav"></div>
   </div>
   <div class="main">
     <div class="toolbar">
-      <span class="file-path">src/inform7/story.ni</span>
+      <span class="file-path">story.ni</span>
       <input type="text" class="search-box" id="search" placeholder="Search... (Ctrl+F)">
       <span class="line-count" id="line-count"></span>
     </div>
@@ -292,7 +292,7 @@ tr.highlight td.ln {
 </div>
 
 <script>
-const RAW_URL = 'https://raw.githubusercontent.com/Johnesco/zork1/main/src/inform7/story.ni';
+const RAW_URL = 'story.ni';
 const headingRe = /^(Volume|Book|Part|Chapter|Section)\s+(.+)/;
 
 /* ---- Inform 7 Syntax Highlighter ---- */
@@ -418,7 +418,7 @@ async function init() {
     if (!res.ok) throw new Error(res.status);
     source = await res.text();
   } catch (e) {
-    wrap.innerHTML = '<div class="error-msg">Failed to load source. <a href="' + RAW_URL + '">View on GitHub</a></div>';
+    wrap.innerHTML = '<div class="error-msg">Failed to load source. <a href="' + RAW_URL + '">View raw</a></div>';
     return;
   }
 
