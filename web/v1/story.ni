@@ -958,6 +958,12 @@ Instead of closing the trap door when the player is in Living Room:
 	now the trap door is not open;
 	say "The door swings shut and closes."
 
+Instead of looking under the trap door when the player is in Living Room:
+	if the trap door is open:
+		say "You see a rickety staircase descending into darkness.";
+	otherwise:
+		say "It[apostrophe]s closed."
+
 The trap-door-touched is a truth state that varies. The trap-door-touched is false.
 
 Section 5 - Objects in the Tree
@@ -1339,7 +1345,9 @@ Understand "bag" and "coins" and "old" and "leather" as the leather bag of coins
 The treasure-value of the leather bag of coins is 5.
 The point-value of the leather bag of coins is 10.
 
-Instead of opening the leather bag of coins: say "The coins are safely inside; there's no need to do that."
+Instead of opening the leather bag of coins: say "The coins are safely inside; there[apostrophe]s no need to do that."
+Instead of closing the leather bag of coins: say "The coins are safely inside; there[apostrophe]s no need to do that."
+Instead of inserting something into the leather bag of coins: say "Don[apostrophe]t be silly. It wouldn[apostrophe]t be a leather bag of coins anymore."
 Instead of searching the leather bag of coins: say "There are lots of coins in there."
 
 The skeleton key is in Maze5. Understand "key" and "skeleton" as the skeleton key.
@@ -1397,6 +1405,22 @@ Southwest of Grating Room is Maze11.
 The grate is a door. The grate is scenery. The grate is closed and openable and lockable and locked. The matching key of the grate is the skeleton key.
 Understand "grate" and "grating" as the grate.
 The grate is above Grating Room and below Grating Clearing.
+
+Instead of locking the grate with something when the player is in Grating Clearing:
+	say "You can[apostrophe]t lock it from this side."
+
+Instead of unlocking the grate with something when the player is in Grating Clearing:
+	say "You can[apostrophe]t reach the lock from here."
+
+Instead of unlocking the grate with something when the second noun is not the skeleton key:
+	say "Can you unlock a grating with a [second noun]?"
+
+Instead of inserting something into the grate when the grate is open and the player is in Grating Clearing:
+	if the noun is the coffin or the noun is the trunk of jewels:
+		say "It won[apostrophe]t fit through the grating.";
+	otherwise:
+		now the noun is in Grating Room;
+		say "The [noun] goes through the grating into the darkness below."
 
 Instead of going up in Grating Room:
 	if the grate is not open:
@@ -1605,6 +1629,9 @@ Understand "chalice" and "cup" and "silver" as the chalice.
 The description of the chalice is "It's a beautifully engraved silver chalice."
 The treasure-value of the chalice is 5.
 The point-value of the chalice is 10.
+
+Instead of inserting something into the chalice:
+	say "You can[apostrophe]t. It[apostrophe]s not a very good chalice, is it?"
 
 Instead of taking the chalice when the player is in Treasure Room and the thief is not defeated and the thief is in Treasure Room:
 	say "You[apostrophe]d be stabbed in the back first."
@@ -2369,7 +2396,10 @@ Instead of inserting yourself into the river-pseudo:
 	die saying "You splash around for a moment, then you drown."
 
 Instead of inserting something into the river-pseudo:
-	say "The [noun] splashes into the water and is gone forever.";
+	if the noun is the pile of leaves or the noun is the sack or the noun is the book or the noun is the bird's nest or the noun is the rope:
+		say "The [noun] floats for a moment, then sinks.";
+	otherwise:
+		say "The [noun] splashes into the water and is gone forever.";
 	remove the noun from play.
 
 Instead of jumping when the player can see the river-pseudo and the player is not in the magic boat:
@@ -3018,6 +3048,7 @@ Understand "thief" and "robber" and "man" and "person" and "shady" and "suspicio
 The thief is in Round Room.
 
 The thief-strength is a number that varies. The thief-strength is 5.
+The thief-unconscious is a truth state that varies. The thief-unconscious is false.
 
 The large bag is carried by the thief. The large bag is a container. The carrying capacity of the large bag is 100.
 Understand "bag" and "large" and "thief's" as the large bag.
@@ -3033,6 +3064,8 @@ Instead of taking the stiletto when the thief is not defeated and the thief carr
 Instead of taking the large bag:
 	if the thief is defeated:
 		continue the action;
+	otherwise if the thief-unconscious is true:
+		say "Sadly for you, the robber collapsed on top of the bag. Trying to take it would wake him.";
 	otherwise:
 		say "The bag will be taken over his dead body."
 
@@ -3166,6 +3199,14 @@ Every turn when the player carries the sword (this is the sword glow rule):
 		otherwise:
 			say "Your sword has begun to glow very brightly.";
 		now the sword-glow-level is danger-count.
+
+Instead of examining the sword:
+	if the sword-glow-level is 1:
+		say "Your sword is glowing with a faint blue glow.";
+	otherwise if the sword-glow-level is 2:
+		say "Your sword is glowing very brightly.";
+	otherwise:
+		continue the action.
 
 Part 5 - Miscellaneous Actions and Rules
 
@@ -3519,8 +3560,9 @@ Carry out mumbling: say "You'll have to speak up if you expect me to hear you!"
 Oiling is an action applying to one thing. Understand "oil [something]" and "lubricate [something]" and "grease [something]" as oiling.
 Carry out oiling: say "You probably put spinach in your gas tank, too."
 
-Picking is an action applying to one thing. Understand "pick [something]" as picking.
-Carry out picking: say "You can't pick that."
+Lock-picking is an action applying to one thing. Understand "pick [something]" as lock-picking.
+Carry out lock-picking: say "You can[apostrophe]t pick that."
+Instead of lock-picking the grate: say "You can[apostrophe]t pick the lock."
 
 Plugging is an action applying to one thing. Understand "plug [something]" as plugging.
 Carry out plugging: say "This has no effect."
@@ -3663,6 +3705,14 @@ Carry out helloing-nobody:
 Section 4 - Shaking
 
 Shaking is an action applying to one thing. Understand "shake [something]" as shaking.
+
+Instead of shaking the glass bottle:
+	if the glass bottle is open and the quantity of water is in the glass bottle:
+		remove the quantity of water from play;
+		say "The water spills to the floor and evaporates.";
+	otherwise:
+		say "Shaken."
+
 Carry out shaking:
 	if the noun is a person:
 		say "This seems to have no effect.";
@@ -4142,7 +4192,9 @@ The treasure-value of the trunk of jewels is 5.
 The point-value of the trunk of jewels is 15.
 The description of the trunk of jewels is "There is an old trunk here, bulging with assorted jewels."
 
-Instead of opening the trunk of jewels: say "The jewels are safely inside; there's no need to do that."
+Instead of opening the trunk of jewels: say "The jewels are safely inside; there[apostrophe]s no need to do that."
+Instead of closing the trunk of jewels: say "The jewels are safely inside; there[apostrophe]s no need to do that."
+Instead of inserting something into the trunk of jewels: say "Don[apostrophe]t be silly. It wouldn[apostrophe]t be a trunk of jewels anymore."
 Instead of searching the trunk of jewels: say "There are lots of jewels in there."
 
 After going to Reservoir:
