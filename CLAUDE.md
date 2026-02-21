@@ -60,15 +60,17 @@ Starting with v1, every version is a **self-contained snapshot** with its own:
 
 **Binary rule**: Never edit `.ulx` or `.ulx.js` files directly. Always compile from the version's own `story.ni` source. The workflow is: edit `story.ni` → compile → base64-encode → update `zork1.ulx.js`.
 
-### Updating Past Versions
+### Past Versions Are Frozen Snapshots
 
-Versions are normally frozen snapshots, but **translation fixes and text accuracy improvements may be propagated backward** when needed. When updating a past version:
+Once a version is published, it is **frozen**. All new work goes into the latest version only. Do not edit past versions unless explicitly asked.
+
+In rare cases a past version may be patched (e.g., a translation bug discovered in v1). If that happens:
 1. Edit that version's own `web/vN/story.ni` directly
 2. Compile from that source to produce a new `.ulx`
 3. Base64-encode the `.ulx` into `web/vN/zork1.ulx.js`
-4. **Propagate up the chain** — apply the same changes to all later versions (vN+1, vN+2, etc.)
+4. Apply the same fix to all later versions and recompile each
 
-Usually changes go only into the current (latest) version. Backward propagation is the exception, not the rule.
+This is exceptional — the default is always to work forward.
 
 When possible, every version should provide three buttons:
 - **Play Online** — launch the game in the browser
@@ -81,11 +83,11 @@ The unmodified Infocom ZIL source code, exactly as released. Includes a ZIL sour
 
 ### v1 — Faithful Inform 7 Port
 
-A complete, playable, and winnable translation of Zork I from ZIL to Inform 7. This version is a **faithful port only** — it reproduces the original game as accurately as possible, including all original bugs. No bug fixes, no enhancements, no quality-of-life improvements. The goal is a 1:1 behavioral match with the ZIL version.
+A complete, playable, and winnable translation of Zork I from ZIL to Inform 7. This version is a **faithful port only** — it reproduces the original game as accurately as possible, including all original bugs. No bug fixes, no enhancements, no quality-of-life improvements. The goal is a 1:1 behavioral match with the ZIL version. Text parity with v0 is now complete.
 
 ### v2 — Bug Fixes
 
-Begins fixing bugs from the original ZIL source, plus translation bugs introduced during the v1 port. Quality-of-life improvements, parser enhancements, and text corrections. Each fix is tracked with a GitHub issue noting what was changed and why.
+Fixes bugs from the original ZIL source and any translation bugs introduced during the v1 port. Bug fixes go here (not in v1, which preserves original behavior including bugs). Each fix is tracked with a GitHub issue noting what was changed and why. Changes propagate to all higher versions.
 
 ### v3 — Ambient Audio & Testing (Current)
 
@@ -143,12 +145,6 @@ The **current version** (`C:\code\inform7\projects\zork1\story.ni`) is the worki
 2. Build and test (see "Building the Game" and "Testing Policy" below)
 3. Copy `story.ni` → `web/vN/story.ni`
 4. Base64-encode `.ulx` → `web/vN/zork1.ulx.js`
-
-**Updating a past version** (exceptional — for translation fixes propagating forward):
-1. Edit `web/vN/story.ni` directly with the fixes
-2. Temporarily copy it to the hub for compilation, compile, then restore the hub's current version
-3. Base64-encode the compiled `.ulx` → `web/vN/zork1.ulx.js`
-4. Apply the same changes to all later versions and recompile each from their own source
 
 **Creating a new version** (vN+1):
 1. Finish all code changes in the current version
