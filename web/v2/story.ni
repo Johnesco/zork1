@@ -470,6 +470,13 @@ East of Behind House is Clearing.
 Instead of going east in West-of-House:
 	say "The door is boarded and you can't remove the boards."
 
+The boarded-windows are a backdrop. The boarded-windows are in North-of-House and South-of-House.
+The printed name of the boarded-windows is "boarded window".
+Understand "window" and "windows" and "boarded" as the boarded-windows.
+The description of the boarded-windows is "The windows are all boarded up."
+Instead of opening the boarded-windows: say "The windows are boarded and can[apostrophe]t be opened."
+Instead of attacking the boarded-windows: say "You can[apostrophe]t break the windows open."
+
 Instead of going south in North-of-House:
 	say "The windows are all boarded."
 
@@ -523,6 +530,11 @@ Instead of going up in Forest2:
 
 Instead of going up in Forest3:
 	say "There is no tree here suitable for climbing."
+
+The mountain-range is scenery in Mountains. The printed name of the mountain-range is "mountains".
+Understand "mountain" and "mountains" and "range" and "impassable" and "flathead" as the mountain-range.
+The description of the mountain-range is "The mountains are impassable."
+Instead of climbing the mountain-range: say "Don[apostrophe]t you believe me? The mountains are impassable!"
 
 Instead of going up in Mountains:
 	say "The mountains are impassable."
@@ -600,6 +612,7 @@ The description of the forest-pseudo is "You cannot see the forest for the trees
 
 Instead of finding the forest-pseudo: say "You cannot see the forest for the trees."
 Instead of listening to the forest-pseudo: say "The pines and the hemlocks seem to be murmuring."
+Instead of exiting when the player is in Forest Area and the player is not in the magic boat: say "You will have to specify a direction."
 
 Instead of following the forest-songbird: say "It can't be followed."
 
@@ -709,8 +722,8 @@ West of Kitchen is Living Room. Above Kitchen is Attic.
 Instead of going down in Kitchen:
 	say "Only Santa Claus climbs down chimneys."
 
-The chimney is scenery in Kitchen. Understand "chimney" and "dark" and "narrow" as the chimney.
-The description of the chimney is "The chimney leads downward, and looks climbable."
+The chimney is a backdrop. The chimney is in Kitchen and Studio. Understand "chimney" and "dark" and "narrow" and "fireplace" as the chimney.
+The description of the chimney is "[if the player is in Kitchen]The chimney leads downward, and looks climbable.[otherwise]The chimney leads upward, and looks climbable.[end if]"
 
 The kitchen table is a supporter in Kitchen. The kitchen table is scenery.
 Understand "table" and "kitchen" as the kitchen table.
@@ -1337,6 +1350,10 @@ Instead of lowering the skeleton:
 	skeleton-curse.
 Instead of touching the skeleton:
 	skeleton-curse.
+Instead of kicking the skeleton:
+	skeleton-curse.
+Instead of kissing the skeleton:
+	skeleton-curse.
 
 To skeleton-curse:
 	say "A ghost appears in the room and is appalled at your desecration of the remains of a fellow adventurer. He casts a curse on your valuables and banishes them to the Land of the Living Dead. The ghost leaves, muttering obscenities.";
@@ -1744,8 +1761,7 @@ Instead of jumping in Dome Room:
 	die saying "[jumploss]"
 
 Instead of jumping in Canyon View:
-	say "This was not a very safe place to try jumping.";
-	die saying "[jumploss]"
+	die saying "Nice view, lousy place to jump."
 
 Instead of crossing the chasm-pseudo:
 	say "It's too far to jump, and there's no bridge."
@@ -1790,7 +1806,11 @@ West of Dam-Room is Reservoir-South.
 The dam is scenery in Dam-Room. Understand "dam" and "gate" and "gates" and "fcd" as the dam.
 The description of the dam is "This is Flood Control Dam #3, quite an impressive engineering feat."
 Instead of opening or closing the dam: say "Sounds reasonable, but this isn't how."
-Instead of plugging the dam with the viscous material: say "Are you the little Dutch boy, then? Sorry, this is a big dam."
+Instead of plugging the dam with something:
+	if the second noun is the viscous material:
+		say "Are you the little Dutch boy, then? Sorry, this is a big dam.";
+	otherwise:
+		say "With a [second noun]? Do you know how big this dam is? You could only stop a tiny leak with that."
 
 The bolt is scenery in Dam-Room. Understand "bolt" and "nut" and "metal" and "large" as the bolt.
 The description of the bolt is "It's a large metal bolt attached to the dam structure."
@@ -1927,6 +1947,7 @@ The description of the viscous material is "It's a viscous, putty-like material.
 The group of tool chests is scenery in Maintenance Room. Understand "chest" and "chests" and "group" and "toolchests" and "tool" as the group of tool chests.
 The description of the group of tool chests is "The chests are all empty."
 Instead of taking or opening the group of tool chests: say "The chests are so rusty and corroded that they crumble when you touch them."
+Instead of inserting something into the group of tool chests: say "The chests are so rusty and corroded that they crumble when you touch them."
 
 Chapter 11 - Reservoir Area
 
@@ -2236,6 +2257,14 @@ The description of Entrance to Hades is "You are outside a large gateway, on whi
 Entrance to Hades is in the Underground.
 Up from Entrance to Hades is Tiny Cave.
 
+The hades-gate is scenery in Entrance to Hades. The printed name of the hades-gate is "gate".
+Understand "gate" and "gates" and "gateway" as the hades-gate when the player is in Entrance to Hades.
+The description of the hades-gate is "The gate is protected by an invisible force. It makes your teeth ache to touch it."
+Instead of entering the hades-gate: try going south.
+Instead of doing anything to the hades-gate:
+	unless we are examining or we are entering:
+		say "The gate is protected by an invisible force. It makes your teeth ache to touch it." instead.
+
 Instead of going south in Entrance to Hades:
 	if the lld-flag is true:
 		move the player to Land of the Dead;
@@ -2292,6 +2321,16 @@ The hot-bell-timer is a number that varies. The hot-bell-timer is 0.
 
 Ringing is an action applying to one thing. Understand "ring [something]" as ringing.
 Carry out ringing: say "How, exactly, can you ring that?"
+
+Bell-ringing it with is an action applying to two things. Understand "ring [something] with [something]" as bell-ringing it with.
+Carry out bell-ringing it with: say "How, exactly, can you ring that?"
+
+Instead of bell-ringing the red hot brass bell with something:
+	if the second noun is the sack or the second noun is the book or the second noun is the bird's nest or the second noun is the pile of leaves or the second noun is the rope:
+		say "The [second noun] burns and is consumed.";
+		remove the second noun from play;
+	otherwise:
+		say "The heat from the bell is too intense."
 
 The red hot brass bell is a thing. "On the ground is a red hot bell."
 Understand "bell" and "hot" and "red" and "brass" as the red hot brass bell.
@@ -2352,6 +2391,12 @@ Instead of lighting-candles the pair of candles:
 		say "You should say what to light them with."
 
 Instead of switching on the pair of candles: say "If you wish to burn the [noun], you should say so."
+
+Instead of inserting the pair of candles into the sack:
+	say "That wouldn[apostrophe]t be smart."
+
+Instead of inserting the pair of candles into the bird's nest:
+	say "That wouldn[apostrophe]t be smart."
 
 Instead of switching off the pair of candles:
 	if the pair of candles is lit:
@@ -2646,6 +2691,14 @@ Canyon Bottom is a room. "You are beneath the walls of the river canyon which ma
 Canyon Bottom is in the Underground.
 Up from Canyon Bottom is Rocky Ledge. North of Canyon Bottom is End of Rainbow.
 
+The climbable-cliff is a backdrop. The climbable-cliff is in Canyon Bottom, Rocky Ledge, and Canyon View.
+The printed name of the climbable-cliff is "cliff".
+Understand "cliff" and "wall" and "walls" and "climbable" as the climbable-cliff.
+The description of the climbable-cliff is "The cliff is steep and rocky."
+Instead of climbing the climbable-cliff: say "You can[apostrophe]t do that!"
+Instead of jumping when the player can see the climbable-cliff and the player is not in Canyon View:
+	say "That would be very unwise. Perhaps even fatal."
+
 Rocky Ledge is a room. The printed name of Rocky Ledge is "Rocky Ledge". "You are on a ledge about halfway up the wall of the river canyon. You can see from here that the main flow from Aragain Falls twists along a passage which it is impossible for you to enter. Below you is the canyon bottom. Above you is more cliff, which appears climbable."
 Rocky Ledge is in the Underground.
 Up from Rocky Ledge is Canyon View. Down from Rocky Ledge is Canyon Bottom.
@@ -2725,6 +2778,9 @@ Instead of taking or attacking the bat:
 		say "You can't reach him; he's on the ceiling.";
 	otherwise:
 		say "    Fweep![line break]    Fweep![line break]    Fweep![line break]".
+
+Instead of telling the bat about something:
+	say "    Fweep![line break]    Fweep![line break]    Fweep![line break]    Fweep![line break]    Fweep![line break]    Fweep!"
 
 Instead of going north in Bat-Room:
 	if the player carries the clove of garlic or the clove of garlic is in Bat-Room:
@@ -3447,6 +3503,7 @@ Counting-blessings is an action applying to nothing. Understand "count blessings
 Carry out counting-blessings: say "Well, for one, you are playing Zork..."
 
 Instead of counting the pile of leaves: say "There are 69,105 leaves here."
+Instead of counting the pair of candles: say "Let[apostrophe]s see, how many objects in a pair? Don[apostrophe]t tell me, I[apostrophe]ll get it."
 
 Instead of counting the matchbook:
 	let cnt be the match-count minus 1;
@@ -3571,6 +3628,12 @@ Carry out mumbling: say "You'll have to speak up if you expect me to hear you!"
 
 Oiling is an action applying to one thing. Understand "oil [something]" and "lubricate [something]" and "grease [something]" as oiling.
 Carry out oiling: say "You probably put spinach in your gas tank, too."
+
+Instead of putting the viscous material on something:
+	if the second noun is the leak:
+		try plugging the leak with the viscous material;
+	otherwise:
+		say "The all-purpose gunk isn[apostrophe]t a lubricant."
 
 Lock-picking is an action applying to one thing. Understand "pick [something]" as lock-picking.
 Carry out lock-picking: say "You can[apostrophe]t pick that."
