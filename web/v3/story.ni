@@ -1360,9 +1360,6 @@ Chapter 4 - Troll NPC
 The troll is a person in Troll-Room. "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room."
 Understand "troll" and "nasty" as the troll.
 The description of the troll is "[if the troll is not defeated]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]The troll is dead.[end if]".
-
-The troll-unconscious is a truth state that varies. The troll-unconscious is false.
-
 The troll-strength is a number that varies. The troll-strength is 2.
 
 The bloody axe is carried by the troll. "There is a bloody axe here."
@@ -1375,8 +1372,8 @@ Instead of taking the bloody axe when the troll is not defeated and the troll ca
 Instead of attacking the troll:
 	if the troll is not in the location of the player:
 		say "There is no troll here." instead;
-	if the troll-unconscious is true or the troll is defeated:
-		say "The troll is already [if the troll is defeated]dead[otherwise]unconscious[end if].";
+	if the troll is defeated:
+		say "The troll is already dead.";
 	otherwise:
 		let W be a random weapon carried by the player;
 		if W is nothing:
