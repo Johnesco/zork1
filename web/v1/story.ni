@@ -19,7 +19,7 @@ The player is in West-of-House.
 When play begins:
 	now the left hand status line is "[the player's surroundings] [if in darkness]   [otherwise]   Score: [score]/[turn count][end if]";
 	now the right hand status line is "";
-	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Copyright (c) 1980, 1981, 1982, 1983 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Revision 88 / Serial number 840726[paragraph break]".
+	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Infocom interactive fiction - a fantasy story[line break]Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Release 88 / Serial number 840726[paragraph break]".
 
 Chapter 2 - Verbosity Modes
 
@@ -752,6 +752,9 @@ Instead of drinking the quantity of water:
 	remove the quantity of water from play;
 	say "Thank you very much. I was rather thirsty (from strenuously carrying everything for you)."
 
+Instead of drinking something:
+	say "How can you drink that?"
+
 The global-water is a backdrop. The global-water is in Dam-Base, River1, River2, River3, River4, River5, White Cliffs North, White Cliffs South, Sandy Beach, Shore, Aragain Falls, End of Rainbow, Canyon Bottom, On-the-Rainbow, Reservoir-South, Reservoir-North, Stream View, In-Stream, and Reservoir.
 The printed name of the global-water is "water".
 Understand "water" and "river" and "lake" and "stream" as the global-water.
@@ -799,7 +802,7 @@ Instead of dropping the quantity of water:
 
 Instead of inserting the quantity of water into something when the second noun is not the glass bottle:
 	remove the quantity of water from play;
-	say "The water leaks out of the [second noun] and evaporates immediately."
+	say "Nice try."
 
 Instead of throwing the quantity of water at something:
 	remove the quantity of water from play;
@@ -1155,7 +1158,201 @@ Instead of going west in Troll-Room:
 	otherwise:
 		move the player to Maze1.
 
-Chapter 3 - Troll NPC
+Chapter 3 - Combat Melee Message System
+
+Section 1 - Combat Variables
+
+The melee-weapon is a thing that varies.
+The melee-target is a person that varies.
+
+Section 2 - Hero Attack Messages
+
+Table of Hero Melee Messages
+outcome (text)	message (text)
+"miss"	"Your [melee-weapon] misses the [melee-target] by an inch."
+"miss"	"A good slash, but it misses the [melee-target] by a mile."
+"miss"	"You charge, but the [melee-target] jumps nimbly aside."
+"miss"	"Clang! Crash! The [melee-target] parries."
+"miss"	"A quick stroke, but the [melee-target] is on guard."
+"miss"	"A good stroke, but it[apostrophe]s too slow; the [melee-target] dodges."
+"unconscious"	"Your [melee-weapon] crashes down, knocking the [melee-target] into dreamland."
+"unconscious"	"The [melee-target] is battered into unconsciousness."
+"unconscious"	"A furious exchange, and the [melee-target] is knocked out!"
+"unconscious"	"The haft of your [melee-weapon] knocks out the [melee-target]."
+"unconscious"	"The [melee-target] is knocked out!"
+"kill"	"It[apostrophe]s curtains for the [melee-target] as your [melee-weapon] removes his head."
+"kill"	"The fatal blow strikes the [melee-target] square in the heart: He dies."
+"kill"	"The [melee-target] takes a fatal blow and slumps to the floor dead."
+"light-wound"	"The [melee-target] is struck on the arm; blood begins to trickle down."
+"light-wound"	"Your [melee-weapon] pinks the [melee-target] on the wrist, but it[apostrophe]s not serious."
+"light-wound"	"Your stroke lands, but it was only the flat of the blade."
+"light-wound"	"The blow lands, making a shallow gash in the [melee-target][apostrophe]s arm!"
+"serious-wound"	"The [melee-target] receives a deep gash in his side."
+"serious-wound"	"A savage blow on the thigh! The [melee-target] is stunned but can still fight!"
+"serious-wound"	"Slash! Your blow lands! That one hit an artery, it could be serious!"
+"serious-wound"	"Slash! Your stroke connects! This could be serious!"
+"stagger"	"The [melee-target] is staggered, and drops to his knees."
+"stagger"	"The [melee-target] is momentarily disoriented and can[apostrophe]t fight back."
+"stagger"	"The force of your blow knocks the [melee-target] back, stunned."
+"stagger"	"The [melee-target] is confused and can[apostrophe]t fight back."
+"stagger"	"The quickness of your thrust knocks the [melee-target] back, stunned."
+"disarm"	"The [melee-target][apostrophe]s weapon is knocked to the floor, leaving him unarmed."
+"disarm"	"The [melee-target] is disarmed by a subtle feint past his guard."
+
+Section 3 - Troll Attack Messages
+
+Table of Troll Melee Messages
+outcome (text)	message (text)
+"miss"	"The troll swings his axe, but it misses."
+"miss"	"The troll[apostrophe]s axe barely misses your ear."
+"miss"	"The axe sweeps past as you jump aside."
+"miss"	"The axe crashes against the rock, throwing sparks!"
+"unconscious"	"The flat of the troll[apostrophe]s axe hits you delicately on the head, knocking you out."
+"kill"	"The troll neatly removes your head."
+"kill"	"The troll[apostrophe]s axe stroke cleaves you from the nave to the chops."
+"kill"	"The troll[apostrophe]s axe removes your head."
+"light-wound"	"The axe gets you right in the side. Ouch!"
+"light-wound"	"The flat of the troll[apostrophe]s axe skins across your forearm."
+"light-wound"	"The troll[apostrophe]s swing almost knocks you over as you barely parry in time."
+"light-wound"	"The troll swings his axe, and it nicks your arm as you dodge."
+"serious-wound"	"The troll charges, and his axe slashes you on your [melee-weapon] arm."
+"serious-wound"	"An axe stroke makes a deep wound in your leg."
+"serious-wound"	"The troll[apostrophe]s axe swings down, gashing your shoulder."
+"stagger"	"The troll hits you with a glancing blow, and you are momentarily stunned."
+"stagger"	"The troll swings; the blade turns on your armor but crashes broadside into your head."
+"stagger"	"You stagger back under a hail of axe strokes."
+"stagger"	"The troll[apostrophe]s mighty blow drops you to your knees."
+"disarm"	"The axe hits your [melee-weapon] and knocks it spinning."
+"disarm"	"The troll swings, you parry, but the force of his blow knocks your [melee-weapon] away."
+"disarm"	"The axe knocks your [melee-weapon] out of your hand. It falls to the floor."
+"hesitate"	"The troll hesitates, fingering his axe."
+"hesitate"	"The troll scratches his head ruminatively:  Might you be magically protected, he wonders?"
+"sitting-duck"	"Conquering his fears, the troll puts you to death."
+
+Section 4 - Thief Attack Messages
+
+Table of Thief Melee Messages
+outcome (text)	message (text)
+"miss"	"The thief stabs nonchalantly with his stiletto and misses."
+"miss"	"You dodge as the thief comes in low."
+"miss"	"You parry a lightning thrust, and the thief salutes you with a grim nod."
+"miss"	"The thief tries to sneak past your guard, but you twist away."
+"unconscious"	"Shifting in the midst of a thrust, the thief knocks you unconscious with the haft of his stiletto."
+"unconscious"	"The thief knocks you out."
+"kill"	"Finishing you off, the thief inserts his blade into your heart."
+"kill"	"The thief comes in from the side, feints, and inserts the blade into your ribs."
+"kill"	"The thief bows formally, raises his stiletto, and with a wry grin, ends the battle and your life."
+"light-wound"	"A quick thrust pinks your left arm, and blood starts to trickle down."
+"light-wound"	"The thief draws blood, raking his stiletto across your arm."
+"light-wound"	"The stiletto flashes faster than you can follow, and blood wells from your leg."
+"light-wound"	"The thief slowly approaches, strikes like a snake, and leaves you wounded."
+"serious-wound"	"The thief strikes like a snake! The resulting wound is serious."
+"serious-wound"	"The thief stabs a deep cut in your upper arm."
+"serious-wound"	"The stiletto touches your forehead, and the blood obscures your vision."
+"serious-wound"	"The thief strikes at your wrist, and suddenly your grip is slippery with blood."
+"stagger"	"The butt of his stiletto cracks you on the skull, and you stagger back."
+"stagger"	"The thief rams the haft of his blade into your stomach, leaving you out of breath."
+"stagger"	"The thief attacks, and you fall back desperately."
+"disarm"	"A long, theatrical slash. You catch it on your [melee-weapon], but the thief twists his knife, and the [melee-weapon] goes flying."
+"disarm"	"The thief neatly flips your [melee-weapon] out of your hands, and it drops to the floor."
+"disarm"	"You parry a low thrust, and your [melee-weapon] slips out of your hand."
+"hesitate"	"The thief, a man of superior breeding, pauses for a moment to consider the propriety of finishing you off."
+"hesitate"	"The thief amuses himself by searching your pockets."
+"hesitate"	"The thief entertains himself by rifling your pack."
+"sitting-duck"	"The thief, forgetting his essentially genteel upbringing, cuts your throat."
+"sitting-duck"	"The thief, a pragmatist, dispatches you as a threat to his livelihood."
+
+Section 5 - Cyclops Attack Messages
+
+Table of Cyclops Melee Messages
+outcome (text)	message (text)
+"miss"	"The Cyclops misses, but the backwash almost knocks you over."
+"miss"	"The Cyclops rushes you, but runs into the wall."
+"unconscious"	"The Cyclops sends you crashing to the floor, unconscious."
+"kill"	"The Cyclops breaks your neck with a massive smash."
+"light-wound"	"A quick punch, but it was only a glancing blow."
+"light-wound"	"A glancing blow from the Cyclops[apostrophe] fist."
+"serious-wound"	"The monster smashes his huge fist into your chest, breaking several ribs."
+"serious-wound"	"The Cyclops almost knocks the wind out of you with a quick punch."
+"stagger"	"The Cyclops lands a punch that knocks the wind out of you."
+"stagger"	"Heedless of your weapons, the Cyclops tosses you against the rock wall of the room."
+"disarm"	"The Cyclops grabs your [melee-weapon], tastes it, and throws it to the ground in disgust."
+"disarm"	"The monster grabs you on the wrist, squeezes, and you drop your [melee-weapon] in pain."
+"hesitate"	"The Cyclops seems unable to decide whether to broil or stew his dinner."
+"sitting-duck"	"The Cyclops, no sportsman, dispatches his unconscious victim."
+
+Section 6 - Melee Message Selection
+
+To print hero melee for (O - text):
+	let N be 0;
+	repeat through the Table of Hero Melee Messages:
+		if the outcome entry is O:
+			increase N by 1;
+	if N > 0:
+		let R be a random number between 1 and N;
+		let C be 0;
+		let done be false;
+		repeat through the Table of Hero Melee Messages:
+			if done is false and the outcome entry is O:
+				increase C by 1;
+				if C is R:
+					say "[message entry]";
+					now done is true.
+
+To print troll melee for (O - text):
+	let N be 0;
+	repeat through the Table of Troll Melee Messages:
+		if the outcome entry is O:
+			increase N by 1;
+	if N > 0:
+		let R be a random number between 1 and N;
+		let C be 0;
+		let done be false;
+		repeat through the Table of Troll Melee Messages:
+			if done is false and the outcome entry is O:
+				increase C by 1;
+				if C is R:
+					say "[message entry]";
+					now done is true.
+
+To print thief melee for (O - text):
+	let N be 0;
+	repeat through the Table of Thief Melee Messages:
+		if the outcome entry is O:
+			increase N by 1;
+	if N > 0:
+		let R be a random number between 1 and N;
+		let C be 0;
+		let done be false;
+		repeat through the Table of Thief Melee Messages:
+			if done is false and the outcome entry is O:
+				increase C by 1;
+				if C is R:
+					say "[message entry]";
+					now done is true.
+
+To print cyclops melee for (O - text):
+	let N be 0;
+	repeat through the Table of Cyclops Melee Messages:
+		if the outcome entry is O:
+			increase N by 1;
+	if N > 0:
+		let R be a random number between 1 and N;
+		let C be 0;
+		let done be false;
+		repeat through the Table of Cyclops Melee Messages:
+			if done is false and the outcome entry is O:
+				increase C by 1;
+				if C is R:
+					say "[message entry]";
+					now done is true.
+
+Section 7 - Villain Death Message
+
+To say sinister-black-fog for (V - a person):
+	say "Almost as soon as the [V] breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared."
+
+Chapter 4 - Troll NPC
 
 The troll is a person in Troll-Room. "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room."
 Understand "troll" and "nasty" as the troll.
@@ -1178,22 +1375,25 @@ Instead of attacking the troll:
 	otherwise:
 		let W be a random weapon carried by the player;
 		if W is nothing:
-			say "Striking the troll with your bare hands is a losing proposition. I'd recommend a weapon.";
+			say "Trying to attack the troll with your bare hands is suicidal.";
 		otherwise:
+			now the melee-weapon is W;
+			now the melee-target is the troll;
 			let hit-chance be a random number between 1 and 10;
 			if hit-chance is at least 4:
 				decrease the troll-strength by 1;
 				if the troll-strength is at most 0:
-					say "It appears that the blow was too much for him. He dies.";
+					print hero melee for "kill";
+					say "[line break][sinister-black-fog for the troll]";
 					now the troll is defeated;
 					now the troll-flag is true;
 					if the troll carries the bloody axe:
 						now the bloody axe is in Troll-Room;
 					remove the troll from play;
 				otherwise:
-					say "The troll takes a step backwards in pain.";
+					print hero melee for "light-wound";
 			otherwise:
-				say "The troll dodges your blow."
+				print hero melee for "miss".
 
 Instead of telling the troll about something:
 	say "The troll isn't much of a conversationalist."
@@ -1207,13 +1407,15 @@ Instead of giving something to the troll:
 		remove the noun from play.
 
 Every turn when the troll is not defeated and the troll is in Troll-Room and the player is in Troll-Room (this is the troll attacks rule):
+	let W be a random weapon carried by the player;
+	if W is not nothing:
+		now the melee-weapon is W;
 	if a random chance of 1 in 3 succeeds:
-		let W be a random weapon carried by the player;
 		if W is not nothing:
-			say "The troll swings his axe, but you parry the blow with your [W].";
+			print troll melee for "miss";
 		otherwise:
-			say "The troll hits you with a glancing blow from his axe.";
-			die saying "The wound is fatal."
+			print troll melee for "kill";
+			die saying "It appears that that last blow was too much for you. I'm afraid you are dead."
 
 Instead of taking the troll:
 	say "The troll spits in your face, grunting [quotation mark]Better luck next time[quotation mark] in a rather barbarous accent."
@@ -1690,7 +1892,7 @@ East of Loud Room is Damp Cave. West of Loud Room is Round Room. Up from Loud Ro
 
 The loud-room-quiet is a truth state that varies. The loud-room-quiet is false.
 
-The description of Loud Room is "This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward.[if the loud-room-quiet is true] The room is eerie in its quietness.[otherwise if the gates-open is true and the low-tide is false] The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.[otherwise] The room is deafeningly loud with an unpleasant metallic clanging sound. The source is not readily apparent.[end if]".
+The description of Loud Room is "This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward.[if the loud-room-quiet is true or (the gates-open is false and the low-tide is true)] The room is eerie in its quietness.[otherwise] The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.[end if]".
 
 The platinum bar is in Loud Room. "On the ground is a large platinum bar."
 Understand "bar" and "platinum" and "large" as the platinum bar.
@@ -1708,11 +1910,11 @@ Carry out echoing:
 	if the player is in Loud Room:
 		if the loud-room-quiet is false:
 			now the loud-room-quiet is true;
-			say "The acoustics of the room change subtly, and the clanging dies away to a distant murmur.";
+			say "The acoustics of the room change subtly.";
 		otherwise:
-			say "Echo echo echo...";
+			say "echo echo ...";
 	otherwise:
-		say "Echo echo echo..."
+		say "echo echo ..."
 
 Every turn when the player is in Loud Room and the gates-open is true and the low-tide is false (this is the loud room ejection rule):
 	say "It is unbearably loud here, with an ear-splitting roar seeming to come from all around you. There is a pounding in your head which won't stop. With a tremendous effort, you scramble out of the room.";
@@ -1774,7 +1976,7 @@ Instead of inserting something into the chasm-pseudo:
 	remove the noun from play.
 
 Reservoir-South is a dark room. The printed name of Reservoir-South is "Reservoir South". Reservoir-South is in the Underground.
-The description of Reservoir-South is "You are in a long room on the south shore of a large underground reservoir. [if the low-tide is false]The reservoir appears full. There appears to be a path to the north that is submerged.[otherwise]The reservoir is empty. A path leads across the reservoir to the north.[end if]".
+The description of Reservoir-South is "[if the low-tide is true and the gates-open is true]You are in a long room, to the north of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through the center of the room.[otherwise if the gates-open is true]You are in a long room. To the north is a large lake, too deep to cross. You notice, however, that the water level appears to be dropping at a rapid rate. Before long, it might be possible to cross to the other side from here.[otherwise if the low-tide is true]You are in a long room, to the north of which is a wide area which was formerly a reservoir, but now is merely a stream. You notice, however, that the level of the stream is rising quickly and that before long it will be impossible to cross here.[otherwise]You are in a long room on the south shore of a large lake, far too deep and wide for crossing.[end if][paragraph break]There is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast."
 
 Southeast of Reservoir-South is Deep Canyon.
 
@@ -1958,10 +2160,11 @@ Instead of inserting something into the group of tool chests: say "The chests ar
 Chapter 11 - Reservoir Area
 
 Reservoir is a dark room. Reservoir is in the Underground.
-The description of Reservoir is "[if the low-tide is true]You are on a path across the reservoir, which is currently empty. You can see to the north and south.[otherwise]You are on the reservoir. The water level is high.[end if]".
+The description of Reservoir is "[if the low-tide is true]You are on what used to be a large lake, but which is now a large mud pile. There are [quotation mark]shores[quotation mark] to the north and south.[otherwise]You are on the lake. Beaches can be seen north and south. Upstream a small stream enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.[end if]".
 North of Reservoir is Reservoir-North. South of Reservoir is Reservoir-South.
 
-Reservoir-North is a dark room. The printed name of Reservoir-North is "Reservoir North". "You are in a room on the north shore of a large underground reservoir."
+Reservoir-North is a dark room. The printed name of Reservoir-North is "Reservoir North".
+The description of Reservoir-North is "[if the low-tide is true and the gates-open is true]You are in a large cavernous room, the south of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through there.[otherwise if the gates-open is true]You are in a large cavernous area. To the south is a wide lake, whose water level appears to be falling rapidly.[otherwise if the low-tide is true]You are in a cavernous area, to the south of which is a very wide stream. The level of the stream is rising rapidly, and it appears that before long it will be impossible to cross to the other side.[otherwise]You are in a large cavernous room, north of a large lake.[end if][paragraph break]There is a slimy stairway leaving the room to the north."
 Reservoir-North is in the Underground.
 North of Reservoir-North is Atlantis Room.
 
@@ -3141,7 +3344,7 @@ Part 4 - The Thief
 
 Chapter 1 - Thief NPC
 
-The thief is a person. "There is a suspicious-looking individual, holding a large bag, leaning against one wall. He is armed with a deadly stiletto."
+The thief is a person. "There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto."
 Understand "thief" and "robber" and "man" and "person" and "shady" and "suspicious" and "seedy" as the thief.
 The thief is in Round Room.
 
@@ -3181,9 +3384,6 @@ The description of the thief is "The thief is a slippery character with beady ey
 Instead of listening to the thief:
 	say "The thief says nothing, as you have not been formally introduced."
 
-Instead of telling the thief about something:
-	say "The thief is a strong, silent type."
-
 Instead of taking the thief:
 	say "Once you got him, what would you do with him?"
 
@@ -3207,13 +3407,18 @@ Every turn when the thief is not defeated and the thief-active is true (this is 
 			otherwise if a random chance of 3 in 10 succeeds:
 				[Rob the player of all valuables at 75% each]
 				let stolen-any be false;
+				let lost-light be false;
 				repeat with item running through things carried by the player:
 					if the treasure-value of item > 0:
 						if a random chance of 3 in 4 succeeds:
+							if item is lit:
+								now lost-light is true;
 							now item is in the large bag;
 							now stolen-any is true;
 				if stolen-any is true:
 					say "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.";
+					if lost-light is true:
+						say "[line break]The thief seems to have left you in the dark.";
 				otherwise:
 					say "The thief, finding nothing of value, left disgusted.";
 				[Thief flees after encounter]
@@ -3238,6 +3443,22 @@ Every turn when the player is in Treasure Room and the thief is not defeated and
 	move the thief to Treasure Room;
 	say "You hear a scream of anguish as you violate the robber[apostrophe]s hideaway. Using passages unknown to you, he rushes to its defense."
 
+Instead of answering the thief that "hello":
+	if the thief is defeated:
+		say "Unfortunately, the thief can[apostrophe]t hear you.";
+	otherwise if the thief-unconscious is true:
+		say "The thief, being temporarily incapacitated, is unable to acknowledge your greeting with his usual graciousness.";
+	otherwise:
+		say "The thief says nothing, as you have not been formally introduced."
+
+Instead of telling the thief about something:
+	if the thief is defeated:
+		say "Unfortunately, the thief can[apostrophe]t hear you.";
+	otherwise if the thief-unconscious is true:
+		say "The thief, being temporarily incapacitated, is unable to respond.";
+	otherwise:
+		say "The thief is a strong, silent type."
+
 Instead of giving something to the thief:
 	if the thief is defeated:
 		say "He's not exactly in a position to accept gifts.";
@@ -3257,6 +3478,8 @@ Instead of attacking the thief:
 		if W is nothing:
 			say "Trying to attack the thief with your bare hands is suicidal.";
 		otherwise:
+			now the melee-weapon is W;
+			now the melee-target is the thief;
 			let hit-chance be a random number between 1 and 10;
 			if hit-chance is at least 3:
 				decrease the thief-strength by 1;
@@ -3266,18 +3489,20 @@ Instead of attacking the thief:
 					repeat with item running through things in the large bag:
 						now item is in the location of the player;
 					if the location of the player is Treasure Room:
-						say "As the thief dies, the power of his magic decreases, and his treasures reappear:";
+						print hero melee for "kill";
+						say "[line break][sinister-black-fog for the thief][paragraph break]As the thief dies, the power of his magic decreases, and his treasures reappear:";
 						repeat with item running through things in the location of the player:
 							if the treasure-value of item > 0:
 								say "[line break]  A [item]";
 						say "[paragraph break]The chalice is now safe to take.";
 					otherwise:
-						say "The thief drops to the ground, mortally wounded. His booty remains.";
+						print hero melee for "kill";
+						say "[line break][sinister-black-fog for the thief]";
 					remove the thief from play;
 				otherwise:
-					say "You wound the thief with your [W].";
+					print hero melee for "light-wound";
 			otherwise:
-				say "The thief deftly dodges your blow."
+				print hero melee for "miss".
 
 Chapter 2 - Sword Glow
 
@@ -3341,7 +3566,7 @@ Carry out praying:
 		move the player to Forest1;
 		say "If you can be sure of one thing, it is that your prayers have been answered.";
 	otherwise:
-		say "If you pray hard enough, something may happen."
+		say "If you pray enough, your prayers may be answered."
 
 Chapter 4 - Diagnose
 
@@ -3607,10 +3832,17 @@ Chapter 10a - Burn Action
 
 Burning it with is an action applying to two things. Understand "burn [something] with [something]" and "light [something] with [something]" as burning it with.
 
-Carry out burning it with:
-	if the noun is the pair of candles and the second noun is the matchbook and the match-lit is true:
+Instead of burning the pair of candles with the matchbook:
+	if the match-lit is true:
 		try lighting-candles the pair of candles instead;
-	say "You can't burn that."
+	say "You should light the match first."
+Instead of burning the pair of candles with the torch:
+	say "The heat from the torch is so intense that the candles are vaporized.";
+	remove the pair of candles from play.
+Instead of burning the pair of candles with something:
+	say "You have to light them with something that[apostrophe]s burning, you know."
+Carry out burning it with:
+	say "You can[apostrophe]t burn that."
 
 Chapter 10b - Generic Verb Handlers
 
@@ -3627,6 +3859,13 @@ Carry out blasting: say "You can't blast anything by using words."
 
 Brushing is an action applying to one thing. Understand "brush [something]" as brushing.
 Carry out brushing: say "If you wish, but heaven only knows why."
+
+Brushing it with is an action applying to two things. Understand "brush [something] with [something]" as brushing it with.
+Instead of brushing the global-teeth with the viscous material:
+	die saying "Well, you seem to have been brushing your teeth with some sort of glue. As a result, your mouth gets glued together (with your nose) and you die of respiratory failure."
+Instead of brushing the global-teeth with something:
+	say "A nice idea, but with a [second noun]?"
+Carry out brushing something with something: say "If you wish, but heaven only knows why."
 
 Bugging is an action applying to nothing. Understand "bug" as bugging.
 Carry out bugging: say "Bug? Not in a flawless program like this! (Cough, cough)."
@@ -3692,6 +3931,11 @@ Carry out hiding-behind: say "That hiding place is too obvious."
 Replying is an action applying to one thing. Understand "reply to [something]" and "reply [something]" as replying.
 Carry out replying: say "It is hardly likely that the [noun] is interested."
 
+Instead of searching a door:
+	if the noun is open:
+		say "The [noun] is open, but I can[apostrophe]t tell what[apostrophe]s beyond it.";
+	otherwise:
+		say "The [noun] is closed."
 Instead of searching something: say "You find nothing unusual."
 
 Spinning is an action applying to one thing. Understand "spin [something]" as spinning.
@@ -3779,6 +4023,8 @@ Instead of pushing something:
 
 Instead of squeezing a person: say "The [noun] does not understand this."
 Instead of squeezing something: say "How singularly useless."
+
+Understand "spray [something]" as squeezing.
 
 Sending is an action applying to one thing. Understand "send for [something]" and "send [something]" as sending.
 Carry out sending:
@@ -3997,9 +4243,7 @@ Carry out going-through:
 Section 8 - Eat Overrides
 
 Instead of eating something:
-	if the noun is a person:
-		say "I don't think the [noun] would agree with you.";
-	otherwise if the noun is edible:
+	if the noun is edible:
 		continue the action;
 	otherwise:
 		say "I don't think that the [noun] would agree with you."
@@ -4357,17 +4601,29 @@ Every turn when the reservoir-empty-timer > 0 (this is the reservoir emptying ru
 		if the player is in Deep Canyon:
 			say "The roar of rushing water is quieter now.";
 		if the player is in Reservoir-South or the player is in Reservoir-North:
-			say "The water level is now quite low here and you could easily cross over to the other side."
+			say "The water level is now quite low here and you could easily cross over to the other side.";
+		if the player is in the magic boat and the location of the player is Reservoir:
+			say "The water level has dropped to the point at which the boat can no longer stay afloat. It sinks into the mud."
 
 Every turn when the reservoir-fill-timer > 0 (this is the reservoir filling rule):
 	decrease the reservoir-fill-timer by 1;
 	if the reservoir-fill-timer is 0:
 		now the low-tide is false;
 		now the trunk of jewels is invisible;
-		if the player is in Reservoir:
-			die saying "You are lifted up by the rising river! You try to swim, but the currents are too strong. You come closer, closer to the awesome structure of Flood Control Dam #3. The dam beckons to you. The roar of the water nearly deafens you, but you remain conscious as you tumble over the dam toward your certain doom among the rocks at its base.";
+		if the location of the player is Reservoir:
+			if the player is in the magic boat:
+				say "The boat lifts gently out of the mud and is now floating on the reservoir.";
+			otherwise:
+				die saying "You are lifted up by the rising river! You try to swim, but the currents are too strong. You come closer, closer to the awesome structure of Flood Control Dam #3. The dam beckons to you. The roar of the water nearly deafens you, but you remain conscious as you tumble over the dam toward your certain doom among the rocks at its base.";
 		if the player is in Dam-Room:
-			say "The water level behind the dam is now quite high."
+			say "The water level behind the dam is now quite high.";
+		if the player is in Deep Canyon:
+			say "A sound, like that of flowing water, starts to come from below.";
+		if the player is in Reservoir-South or the player is in Reservoir-North:
+			say "You notice that the water level has risen to the point that it is impossible to cross."
+
+Every turn when the location of the player is Reservoir and the player is not in the magic boat and the reservoir-fill-timer > 0 and the low-tide is true (this is the reservoir perilous warning rule):
+	say "You notice that the water level here is rising rapidly. The currents are also becoming stronger. Staying here seems quite perilous!"
 
 Chapter 15 - Room Entering Points
 
