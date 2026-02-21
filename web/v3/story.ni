@@ -1442,32 +1442,42 @@ Chapter 6 - Grating and Leaves
 The pile of leaves is in Grating Clearing. "On the ground is a pile of leaves."
 Understand "leaves" and "leaf" and "pile" as the pile of leaves.
 
-Instead of burning the pile of leaves:
-	if the grate-revealed is false:
-		remove the pile of leaves from play;
+[ZIL LEAVES-APPEAR: reveals grate when leaves are disturbed]
+To reveal-grate-from-leaves (this is the leaves-appear rule):
+	if the grate-revealed is false and the grate is not open:
 		now the grate-revealed is true;
-		now the grate is visible;
-		say "The leaves burn and are consumed. In the clearing there is now a grating visible in the ground.";
-	otherwise:
-		remove the pile of leaves from play;
-		say "The leaves burn and are consumed."
+		now the grate is visible.
+
+Instead of burning the pile of leaves:
+	if the player carries the pile of leaves:
+		die saying "The leaves burn, and so do you.";
+	reveal-grate-from-leaves;
+	if the grate-revealed is true and the grate is not open:
+		say "With the leaves moved, a grating is revealed.[line break]";
+	remove the pile of leaves from play;
+	say "The leaves burn."
 
 Instead of cutting the pile of leaves:
 	say "You rustle the leaves around, making quite a mess.";
 	if the grate-revealed is false:
-		now the grate-revealed is true;
-		now the grate is visible;
+		reveal-grate-from-leaves;
+		say "[line break]With the leaves moved, a grating is revealed."
+
+Instead of pushing the pile of leaves:
+	say "Done.";
+	if the grate-revealed is false:
+		reveal-grate-from-leaves;
 		say "[line break]In disturbing the pile of leaves, a grating is revealed."
 
 Instead of taking the pile of leaves:
-	say "You take the pile of leaves.";
-	now the player carries the pile of leaves.
+	if the grate-revealed is false:
+		reveal-grate-from-leaves;
+		say "In disturbing the pile of leaves, a grating is revealed.[line break]";
+	continue the action.
 
 Instead of looking under the pile of leaves:
 	if the grate-revealed is false:
-		say "Underneath the pile of leaves you can see a grating.";
-		now the grate-revealed is true;
-		now the grate is visible;
+		say "Underneath the pile of leaves is a grating. As you release the leaves, the grating is once again concealed from view.";
 	otherwise:
 		say "There is nothing else under the leaves."
 
