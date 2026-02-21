@@ -637,7 +637,7 @@ Understand "door" and "front" and "boarded" as the front door.
 The description of the front door is "The door is boarded shut."
 
 Instead of opening the front door:
-	say "The door is nailed shut."
+	say "The door cannot be opened."
 
 Instead of attacking the front door:
 	say "You can't seem to damage the door."
@@ -690,6 +690,12 @@ Instead of closing the kitchen-window:
 	now the kitchen-window is not open;
 	now the kitchen-window-touched is true;
 	say "The window closes (more easily than it opened)."
+
+Instead of searching the kitchen-window:
+	if the player is in Kitchen:
+		say "You can see a clear area leading towards a forest.";
+	otherwise:
+		say "You can see what appears to be a kitchen."
 
 Chapter 2 - The House Interior
 
@@ -908,6 +914,12 @@ Carry out the-rug-move:
 	now the trap door is visible;
 	say "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
 
+Instead of entering the carpet:
+	if the rug-moved is false and the trap door is not open:
+		say "As you sit, you notice an irregularity underneath it. Rather than be uncomfortable, you stand up again.";
+	otherwise:
+		say "I suppose you think it[apostrophe]s a magic carpet?"
+
 Instead of looking under the carpet:
 	if the rug-moved is false and the trap door is not open:
 		say "Underneath the rug is a closed trap door. As you drop the corner of the rug, the trap door is once again concealed from view.";
@@ -1017,6 +1029,10 @@ Instead of prying open the jewel-encrusted egg with something:
 
 A thing can be a weapon or not a weapon. A thing is usually not a weapon.
 The sword is a weapon. The nasty knife is a weapon.
+
+Instead of entering the jewel-encrusted egg:
+	say "There is a noticeable crunch from beneath you, and inspection reveals that the egg is lying open, badly damaged.";
+	break-the-egg.
 
 Instead of attacking the jewel-encrusted egg:
 	say "Your rather indelicate handling of the egg has caused it some damage, although you have succeeded in opening it.";
@@ -1181,6 +1197,38 @@ Every turn when the troll is not defeated and the troll is in Troll-Room and the
 			say "The troll hits you with a glancing blow from his axe.";
 			die saying "The wound is fatal."
 
+Instead of taking the troll:
+	say "The troll spits in your face, grunting [quotation mark]Better luck next time[quotation mark] in a rather barbarous accent."
+
+Instead of pushing the troll:
+	say "The troll laughs at your puny gesture."
+
+Instead of listening to the troll:
+	say "Every so often the troll says something, probably uncomplimentary, in his guttural tongue."
+
+Instead of throwing something at the troll:
+	if the troll is not in the location of the player:
+		say "There is no troll here." instead;
+	if the noun is a weapon:
+		if a random chance of 1 in 5 succeeds:
+			say "The troll, who is remarkably coordinated, catches the [noun] and, not having the most discriminating tastes, gleefully eats it. Poor troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black fog.";
+			remove the noun from play;
+			now the troll is defeated;
+			now the troll-flag is true;
+			if the troll carries the bloody axe:
+				now the bloody axe is in Troll-Room;
+			remove the troll from play;
+		otherwise:
+			say "The troll, who is remarkably coordinated, catches the [noun] and, being for the moment sated, throws it back. Fortunately, the troll has poor control, and the [noun] falls to the floor. He does not look pleased.";
+			now the noun is in the location of the player;
+	otherwise:
+		say "The troll, who is remarkably coordinated, catches the [noun] and, not having the most discriminating tastes, gleefully eats it.";
+		remove the noun from play.
+
+Instead of answering the troll that "hello":
+	if the troll is defeated:
+		say "Unfortunately, the troll can[apostrophe]t hear you."
+
 Chapter 4 - East-of-Chasm
 
 East-of-Chasm is a dark room. "You are on the east edge of a chasm, the bottom of which cannot be seen. A narrow passage goes north, and the path you are on continues to the east."
@@ -1247,6 +1295,7 @@ Maze2 is in the Underground.
 South of Maze2 is Maze1. East of Maze2 is Maze3.
 
 Instead of going down in Maze2:
+	say "You won[apostrophe]t be able to get back up to the tunnel you are going through when it gets to the next room.";
 	move the player to Maze4.
 
 Maze3 is a dark room. The printed name of Maze3 is "Maze". "This is part of a maze of twisty little passages, all alike."
@@ -1274,9 +1323,17 @@ Instead of pushing the skeleton:
 	skeleton-curse.
 Instead of attacking the skeleton:
 	skeleton-curse.
+Instead of rubbing the skeleton:
+	skeleton-curse.
+Instead of raising the skeleton:
+	skeleton-curse.
+Instead of lowering the skeleton:
+	skeleton-curse.
+Instead of touching the skeleton:
+	skeleton-curse.
 
 To skeleton-curse:
-	say "A ghost appears in the room and is appalled at your desecration of the remains of a fellow adventurer. He casts a curse on your valuables and banishes them to the Land of the Living Dead.";
+	say "A ghost appears in the room and is appalled at your desecration of the remains of a fellow adventurer. He casts a curse on your valuables and banishes them to the Land of the Living Dead. The ghost leaves, muttering obscenities.";
 	repeat with item running through things carried by the player:
 		if the treasure-value of item is greater than 0:
 			now item is in Land of the Dead.
@@ -1312,6 +1369,7 @@ Maze7 is in the Underground.
 Up from Maze7 is Maze14. West of Maze7 is Maze6. East of Maze7 is Maze8. South of Maze7 is Maze15.
 
 Instead of going down in Maze7:
+	say "You won[apostrophe]t be able to get back up to the tunnel you are going through when it gets to the next room.";
 	move the player to Dead End 1.
 
 Maze8 is a dark room. The printed name of Maze8 is "Maze". "This is part of a maze of twisty little passages, all alike."
@@ -1327,6 +1385,7 @@ Maze9 is in the Underground.
 North of Maze9 is Maze6. East of Maze9 is Maze10. South of Maze9 is Maze13. West of Maze9 is Maze12. Northwest of Maze9 is Maze9.
 
 Instead of going down in Maze9:
+	say "You won[apostrophe]t be able to get back up to the tunnel you are going through when it gets to the next room.";
 	move the player to Maze11.
 
 Maze10 is a dark room. The printed name of Maze10 is "Maze". "This is part of a maze of twisty little passages, all alike."
@@ -1359,6 +1418,7 @@ Maze12 is in the Underground.
 Southwest of Maze12 is Maze11. East of Maze12 is Maze13. Up from Maze12 is Maze9. North of Maze12 is Dead End 4.
 
 Instead of going down in Maze12:
+	say "You won[apostrophe]t be able to get back up to the tunnel you are going through when it gets to the next room.";
 	move the player to Maze5.
 
 Dead End 4 is a dark room. The printed name of Dead End 4 is "Dead End". "You have come to a dead end in the maze."
@@ -1496,6 +1556,27 @@ Instead of attacking the cyclops:
 		now the cyclops-wrath-timer is 1;
 		say "The cyclops shrugs but otherwise ignores your pitiful attempt."
 
+Instead of telling the cyclops about something:
+	if the cyclops-asleep is true:
+		say "No use talking to him. He[apostrophe]s fast asleep.";
+	otherwise:
+		say "The cyclops prefers eating to making conversation."
+
+Instead of examining the cyclops when the cyclops-asleep is true:
+	say "The cyclops is sleeping like a baby, albeit a very ugly one."
+
+Instead of pushing the cyclops:
+	say "[quotation mark]Do you think I[apostrophe]m as stupid as my father was?[quotation mark], he says, dodging."
+
+Instead of taking the cyclops:
+	say "The cyclops doesn[apostrophe]t take kindly to being grabbed."
+
+Instead of tying the cyclops to something:
+	say "You cannot tie the cyclops, though he is fit to be tied."
+
+Instead of listening to the cyclops:
+	say "You can hear his stomach rumbling."
+
 Every turn when the cyclops-wrath-timer > 0 and the player is in Cyclops-Room and the cyclops-asleep is false (this is the cyclops wrath rule):
 	increase the cyclops-wrath-timer by 1;
 	if the cyclops-wrath > 5 or the cyclops-wrath < -5:
@@ -1540,7 +1621,7 @@ East of Round Room is Loud Room. North of Round Room is North-South Passage. Sou
 
 Chapter 10 - Dam and Reservoir Area
 
-Deep Canyon is a dark room. "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. [if the gates-open is true and the low-tide is false]You can hear the roaring of a great volume of water below.[otherwise]You can hear the sound of flowing water below.[end if]".
+Deep Canyon is a dark room. "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. [if the gates-open is true and the low-tide is false]You can hear a loud roaring sound, like that of rushing water, from below.[otherwise]You can hear the sound of flowing water from below.[end if]".
 Deep Canyon is in the Underground.
 Northwest of Deep Canyon is Reservoir-South. East of Deep Canyon is Dam-Room. Southwest of Deep Canyon is North-South Passage. Down from Deep Canyon is Loud Room.
 
@@ -1616,6 +1697,12 @@ Carry out crossing: say "You can't cross that!"
 Instead of jumping when the player is in East-of-Chasm or the player is in Chasm:
 	say "You look before leaping, and realize that you would never survive."
 
+Instead of jumping in Dome Room:
+	die saying "You leap over the railing and plunge to the rocks below."
+
+Instead of jumping in Canyon View:
+	die saying "This was not a very safe place to try jumping."
+
 Instead of crossing the chasm-pseudo:
 	say "It's too far to jump, and there's no bridge."
 
@@ -1667,6 +1754,7 @@ Instead of taking the bolt: say "It is an integral part of the control panel."
 
 The green bubble is scenery in Dam-Room. Understand "bubble" and "small" and "green" and "plastic" as the green bubble.
 The description of the green bubble is "A small green plastic bubble is floating in the stream."
+Instead of taking the green bubble: say "It is an integral part of the control panel."
 
 The control panel is scenery in Dam-Room. Understand "panel" and "control" as the control panel.
 The description of the control panel is "The control panel is part of the dam infrastructure."
@@ -1697,6 +1785,11 @@ The yellow button is scenery in Maintenance Room. Understand "yellow" and "butto
 The brown button is scenery in Maintenance Room. Understand "brown" and "button" as the brown button.
 The red button is scenery in Maintenance Room. Understand "red" and "button" as the red button.
 The blue button is scenery in Maintenance Room. Understand "blue" and "button" as the blue button.
+
+Instead of examining the yellow button: say "They[apostrophe]re greek to you."
+Instead of examining the brown button: say "They[apostrophe]re greek to you."
+Instead of examining the red button: say "They[apostrophe]re greek to you."
+Instead of examining the blue button: say "They[apostrophe]re greek to you."
 
 Instead of pushing the yellow button:
 	now the gate-flag is true;
@@ -1973,6 +2066,29 @@ Instead of tying the rope to the wooden railing:
 Understand "tie [something] to [something]" as tying it to.
 Carry out tying it to:
 	say "You can't tie those things together."
+
+Instead of tying the rope to something when the second noun is not the wooden railing:
+	say "You can[apostrophe]t tie the rope to that."
+
+Instead of tying-up something:
+	if the noun is a person:
+		say "The [noun] struggles and you cannot tie him up.";
+	otherwise:
+		say "Why would you tie up a [noun]?"
+
+Instead of untieing the rope:
+	if the dome-flag is true:
+		now the dome-flag is false;
+		say "The rope is now untied.";
+	otherwise:
+		say "It is not tied to anything."
+
+Instead of dropping the rope in Dome Room when the dome-flag is false:
+	now the rope is in Torch-Room;
+	say "The rope drops gently to the floor below."
+
+Instead of taking the rope when the dome-flag is true:
+	say "The rope is tied to the railing."
 
 Torch-Room is a dark room. The printed name of Torch-Room is "Torch Room".
 The description of Torch-Room is "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal.[if the dome-flag is true][line break]A piece of rope descends from the railing above, ending some five feet above your head.[end if]".
@@ -2431,12 +2547,18 @@ Instead of digging the sand:
 		say "You need a shovel to dig here.";
 	otherwise:
 		increase the dig-count by 1;
-		if the dig-count < 4:
-			say "You dig for a while but find nothing.";
-		otherwise:
+		if the dig-count is 1:
+			say "You seem to be digging a hole here.";
+		otherwise if the dig-count is 2:
+			say "The hole is getting deeper, but that[apostrophe]s about it.";
+		otherwise if the dig-count is 3:
+			say "You are surrounded by a wall of sand on all sides.";
+		otherwise if the dig-count is 4:
 			now the beautiful jeweled scarab is visible;
-			say "You uncover a beautiful jeweled scarab!";
-			now the beautiful jeweled scarab is in Sandy Cave.
+			say "You can see a scarab here in the sand.";
+			now the beautiful jeweled scarab is in Sandy Cave;
+		otherwise:
+			die saying "The hole collapses, smothering you."
 
 Aragain Falls is a room.
 The description of Aragain Falls is "You are at the top of Aragain Falls, an enormous waterfall with a drop of about 450 feet. The only path here is on the north end.[if the rainbow-flag is true][line break]A solid rainbow spans the falls.[otherwise][line break]A beautiful rainbow can be seen over the falls and to the west.[end if]".
@@ -2493,19 +2615,43 @@ Chapter 17 - Sceptre and Rainbow
 Carry out waving: say "You wave [the noun] around. Nothing happens."
 
 Instead of waving the sceptre:
-	if the player is in On-the-Rainbow or the player is in Aragain Falls or the player is in End of Rainbow:
+	if the player is in On-the-Rainbow:
+		die saying "The structural integrity of the rainbow is severely compromised, leaving you hanging in midair, supported only by water vapor. Bye.";
+	otherwise if the player is in Aragain Falls or the player is in End of Rainbow:
 		if the rainbow-flag is false:
 			now the rainbow-flag is true;
 			now the pot of gold is visible;
-			say "Suddenly, the rainbow appears to become solid and a shimmering, magical bridge leads across the Falls.";
+			say "Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).";
+			if the player is in End of Rainbow:
+				say "[line break]A shimmering pot of gold appears at the end of the rainbow.";
 		otherwise:
 			now the rainbow-flag is false;
 			now the pot of gold is invisible;
-			say "The rainbow seems to shimmer and fade.";
-			if the player is in On-the-Rainbow:
-				die saying "You fall to the rocks below.";
+			say "The rainbow seems to have become somewhat run-of-the-mill.";
 	otherwise:
-		say "A dazzling display of light dances along the sceptre, but nothing else happens."
+		say "A dazzling display of color briefly emanates from the sceptre."
+
+The rainbow-object is a backdrop. The rainbow-object is in Aragain Falls, On-the-Rainbow, End of Rainbow, and Canyon View. The printed name of the rainbow-object is "rainbow".
+Understand "rainbow" as the rainbow-object.
+The description of the rainbow-object is "[if the rainbow-flag is true]The rainbow is solid and provides a colorful path across the Falls.[otherwise]The rainbow is a beautiful arc of colors spanning the Falls.[end if]"
+
+Instead of entering the rainbow-object in Canyon View:
+	say "From here?!?"
+
+Instead of entering the rainbow-object in On-the-Rainbow:
+	say "You[apostrophe]ll have to say which way..."
+
+Instead of entering the rainbow-object:
+	if the rainbow-flag is true:
+		if the player is in Aragain Falls:
+			move the player to On-the-Rainbow;
+		otherwise if the player is in End of Rainbow:
+			move the player to On-the-Rainbow;
+	otherwise:
+		say "Can you walk on water vapor?"
+
+Instead of looking under the rainbow-object:
+	say "The Frigid River flows under the rainbow."
 
 Chapter 18 - Coal Mine Area
 
@@ -2737,12 +2883,14 @@ The description of the machine switch is "It's a switch on the machine."
 Does the player mean inserting something into the machine: it is very likely.
 
 Instead of switching on the machine switch:
+	if the player does not carry the screwdriver:
+		say "It[apostrophe]s not clear how to turn it on with your bare hands." instead;
 	if the machine is not closed:
 		say "The machine must be closed first.";
 	otherwise if the small pile of coal is in the machine:
 		remove the small pile of coal from play;
 		now the huge diamond is in the machine;
-		say "The machine comes to life with a whirring sound. After a few moments, it stops.";
+		say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 	otherwise:
 		let found-something be false;
 		repeat with item running through things in the machine:
@@ -2750,9 +2898,9 @@ Instead of switching on the machine switch:
 			remove item from play;
 			now the small piece of vitreous slag is in the machine;
 		if found-something is true:
-			say "The machine comes to life with a whirring sound. After a few moments, it stops.";
+			say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 		otherwise:
-			say "The machine comes to life with a whirring sound, then stops. Nothing seems to have happened."
+			say "The machine doesn[apostrophe]t seem to want to do anything."
 
 The huge diamond is a thing. "There is an enormous diamond (perfectly cut) here."
 Understand "diamond" and "huge" and "enormous" as the huge diamond.
@@ -2813,6 +2961,12 @@ Instead of going southwest in West-of-House:
 	otherwise:
 		say "You can't go that way."
 
+The barrow-door is scenery in Stone Barrow. The printed name of the barrow-door is "stone door".
+Understand "door" and "stone" and "huge" as the barrow-door.
+The description of the barrow-door is "The door is a huge slab of stone."
+Instead of opening the barrow-door: say "The door is too heavy."
+Instead of closing the barrow-door: say "The door is too heavy."
+
 Instead of going inside in Stone Barrow:
 	say "Inside the Barrow[line break]As you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large sign. It reads: All ye who stand before this bridge have completed a great and perilous adventure which has tested your wit and courage. You have mastered the first part of the ZORK trilogy. Those who pass over this bridge must be prepared to undertake an even greater adventure that will severely test your skill and bravery![paragraph break]The ZORK trilogy continues with 'ZORK II: The Wizard of Frobozz' and is completed in 'ZORK III: The Dungeon Master.'[line break]";
 	end the story finally saying "Congratulations!"
@@ -2853,7 +3007,7 @@ The thief-strength is a number that varies. The thief-strength is 5.
 
 The large bag is carried by the thief. The large bag is a container. The carrying capacity of the large bag is 100.
 Understand "bag" and "large" and "thief's" as the large bag.
-The description of the large bag is "The bag is closed and you can't see what's inside."
+The description of the large bag is "[if the thief is defeated]The bag is closed and you can[apostrophe]t see what[apostrophe]s inside.[otherwise]The bag is underneath the thief, so one can[apostrophe]t say what, if anything, is inside.[end if]"
 
 The stiletto is carried by the thief. The stiletto is a weapon.
 Understand "stiletto" and "vicious" as the stiletto.
@@ -2863,7 +3017,19 @@ Instead of taking the stiletto when the thief is not defeated and the thief carr
 	say "The thief swings it out of your reach."
 
 Instead of taking the large bag:
-	say "Getting that bag would not be easy."
+	if the thief is defeated:
+		continue the action;
+	otherwise:
+		say "The bag will be taken over his dead body."
+
+Instead of inserting something into the large bag:
+	say "It would be a good trick."
+
+Instead of opening the large bag:
+	say "Getting close enough would be a good trick."
+
+Instead of closing the large bag:
+	say "Getting close enough would be a good trick."
 
 The description of the thief is "The thief is a slippery character with beady eyes that flit back and forth. He is carrying a large bag which is nearly overflowing with loot."
 
@@ -2924,7 +3090,8 @@ Every turn when the jewel-encrusted egg is in the large bag and the jewel-encrus
 	now the jewel-encrusted egg is open.
 
 Every turn when the player is in Treasure Room and the thief is not defeated and the thief is not in Treasure Room (this is the thief lair rule):
-	move the thief to Treasure Room.
+	move the thief to Treasure Room;
+	say "You hear a scream of anguish as you violate the robber[apostrophe]s hideaway. Using passages unknown to you, he rushes to its defense."
 
 Instead of giving something to the thief:
 	if the thief is defeated:
@@ -2935,7 +3102,7 @@ Instead of giving something to the thief:
 			now the thief-engrossed is true;
 			say "The thief is taken aback by your unexpected generosity, but accepts the [noun] and stops to admire its beauty.";
 		otherwise:
-			say "The thief places the [noun] into his bag without comment."
+			say "The thief places the [noun] in his bag and thanks you politely."
 
 Instead of attacking the thief:
 	if the thief is not in the location of the player:
@@ -2951,10 +3118,18 @@ Instead of attacking the thief:
 			if hit-chance is at least 3:
 				decrease the thief-strength by 1;
 				if the thief-strength is at most 0:
-					say "The thief drops to the ground, mortally wounded. The contents of his bag spill out onto the floor.";
+					now the thief is defeated;
+					now the stiletto is in the location of the player;
 					repeat with item running through things in the large bag:
 						now item is in the location of the player;
-					now the thief is defeated;
+					if the location of the player is Treasure Room:
+						say "As the thief dies, the power of his magic decreases, and his treasures reappear:";
+						repeat with item running through things in the location of the player:
+							if the treasure-value of item > 0:
+								say "[line break]  A [item]";
+						say "[paragraph break]The chalice is now safe to take.";
+					otherwise:
+						say "The thief drops to the ground, mortally wounded. His booty remains.";
 					remove the thief from play;
 				otherwise:
 					say "You wound the thief with your [W].";
@@ -3068,6 +3243,10 @@ Instead of making yourself:
 	say "Only you can do that."
 
 Chapter 5 - Rusty Knife Curse
+
+Instead of taking the rusty knife when the player carries the sword:
+	say "As you touch the rusty knife, your sword gives a single pulse of blinding blue light.";
+	remove the rusty knife from play.
 
 Every turn when the player carries the rusty knife and the player carries the sword (this is the rusty knife curse rule):
 	say "As the rust of the knife reaches the sword, they react violently, and the rusty knife disintegrates.";
@@ -3472,10 +3651,68 @@ Carry out shaking:
 	otherwise:
 		say "Shaken."
 
+Section 4b - HO-HUM and HACK-HACK Responses
+
+[ZIL uses rotating HO-HUM suffixes for several verbs]
+To say ho-hum:
+	let R be a random number between 1 and 3;
+	if R is 1:
+		say "doesn[apostrophe]t seem to work.";
+	otherwise if R is 2:
+		say "isn[apostrophe]t notably helpful.";
+	otherwise:
+		say "has no effect."
+
+[ZIL V-KICK → I7 kicking]
+Kicking is an action applying to one thing. Understand "kick [something]" as kicking.
+Carry out kicking: say "Kicking the [noun] [ho-hum]"
+
+Section 4c - FIND verb
+
+Locating is an action applying to one visible thing. Understand "find [something]" and "where is [something]" as locating.
+Carry out locating:
+	if the noun is the player:
+		say "You[apostrophe]re around here somewhere...";
+	otherwise if the player carries the noun:
+		say "You have it.";
+	otherwise if the noun is a person:
+		if the player can see the noun:
+			say "Right in front of you, perhaps?";
+		otherwise:
+			say "Beats me.";
+	otherwise if the player can see the noun:
+		say "You find it.";
+	otherwise:
+		say "Beats me."
+
+Section 4d - SWIM verb
+
+Pool-swimming is an action applying to nothing. Understand "swim" and "dive" as pool-swimming.
+Carry out pool-swimming:
+	if the global-water is in the location of the player:
+		say "Swimming isn[apostrophe]t usually allowed in the dungeon.";
+	otherwise:
+		say "Go jump in a lake!"
+
+Section 4e - Additional LOOK actions
+
+Instead of looking under something: say "There is nothing but dust there."
+
+Looking-behind is an action applying to one thing. Understand "look behind [something]" as looking-behind.
+Carry out looking-behind: say "There is nothing behind the [noun]."
+
+Looking-on is an action applying to one thing. Understand "look on [something]" as looking-on.
+Carry out looking-on:
+	if the noun is a supporter:
+		try searching the noun;
+	otherwise:
+		say "Look on a [noun]???"
+
 Section 5 - Throwing Overrides
 
 Instead of throwing something at yourself:
-	die saying "A terrific throw! The [noun] hits you squarely in the head, and you stagger back, dazed."
+	say "A terrific throw! The [noun] hits you squarely in the head. Normally, this wouldn[apostrophe]t do much damage, but by incredible mischance, you fall over backwards trying to duck, and break your neck, justice being swift and merciful in the Great Underground Empire.";
+	die saying ""
 
 Instead of throwing something at a person:
 	if the second noun is the thief and the noun is a weapon:
@@ -3562,6 +3799,47 @@ Instead of digging something:
 	otherwise:
 		say "There's no reason to be digging here."
 
+Section 13 - Attack Defaults
+
+Instead of attacking something:
+	if the noun is not a person:
+		say "I[apostrophe]ve known strange people, but fighting a [noun]?";
+	otherwise:
+		let W be a random weapon carried by the player;
+		if W is nothing:
+			say "Strangle him with your bare hands?";
+		otherwise:
+			continue the action.
+
+Section 14 - Climb Defaults
+
+Instead of climbing the granite-wall: say "Climbing the walls is to no avail."
+
+Section 15 - Burn Defaults
+
+Instead of burning something:
+	if the player does not carry the matchbook and the player does not carry the torch:
+		say "You should say what to burn it with.";
+	otherwise:
+		say "You can[apostrophe]t burn a [noun]."
+
+Section 16 - Give Defaults
+
+Instead of giving something to something:
+	if the second noun is not a person:
+		say "You can[apostrophe]t give a [noun] to a [second noun]!";
+	otherwise:
+		say "The [second noun] refuses it politely."
+
+Section 17 - Tell Defaults
+
+Instead of telling someone about something:
+	say "The [noun] pauses for a moment, perhaps thinking that you should reread the manual."
+
+Section 18 - Tie Defaults
+
+Instead of tying something to yourself: say "You can[apostrophe]t tie anything to yourself."
+
 Chapter 11 - Boat System
 
 The magic boat is an open enterable vehicle. The carrying capacity of the magic boat is 10.
@@ -3590,17 +3868,19 @@ Inflating is an action applying to one thing. Understand "inflate [something]" a
 Carry out inflating: say "You can't inflate that."
 
 Instead of inflating the pile of plastic:
-	if the player carries the hand-held air pump or the hand-held air pump is in the location of the player:
+	if the pile of plastic is not in the location of the player:
+		say "The boat must be on the ground to be inflated.";
+	otherwise if the player carries the hand-held air pump or the hand-held air pump is in the location of the player:
 		say "The boat inflates and appears seaworthy.[line break](You are now in the magic boat.)";
 		now the boat-inflated is true;
 		now the pile of plastic is nowhere;
 		now the magic boat is in the location of the player;
 		now the player is in the magic boat;
 	otherwise:
-		say "You don't have anything to inflate it with."
+		say "You don[apostrophe]t have enough lung power to inflate it."
 
 Instead of inflating the magic boat:
-	say "It's already inflated."
+	say "Inflating it further would probably burst it."
 
 Instead of reading the magic boat:
 	say "Read the label for the boat's instructions."
@@ -3612,15 +3892,35 @@ Deflating is an action applying to one thing. Understand "deflate [something]" a
 Carry out deflating: say "You can't deflate that."
 
 Instead of deflating the magic boat:
+	if the player is in the magic boat:
+		say "You can[apostrophe]t deflate the boat while you[apostrophe]re in it." instead;
 	say "The boat deflates.";
 	now the boat-inflated is false;
 	let here be the location of the magic boat;
-	if the player is in the magic boat:
-		move the player to here;
 	repeat with item running through things in the magic boat:
 		now item is in here;
 	now the magic boat is nowhere;
 	now the pile of plastic is in here.
+
+The nonland-room is a truth state that varies. The nonland-room is false.
+
+To decide whether on-water:
+	let here be the location of the player;
+	if here is River1 or here is River2 or here is River3 or here is River4 or here is River5:
+		decide yes;
+	if here is Reservoir or here is In-Stream:
+		decide yes;
+	decide no.
+
+Instead of dropping a weapon when the player is in the magic boat and on-water:
+	say "It seems that the [noun] didn[apostrophe]t agree with the boat, as evidenced by the loud hissing noise issuing therefrom. With a pathetic sputter, the boat deflates, leaving you without.";
+	let here be the location of the player;
+	now the magic boat is nowhere;
+	now the punctured boat is in here;
+	if here is Reservoir or here is In-Stream:
+		die saying "[line break]Another pathetic sputter, this time from you, heralds your drowning.";
+	otherwise:
+		die saying "[line break]In other words, fighting the fierce currents of the Frigid River. You manage to hold your own for a bit, but then you are carried over a waterfall and into some nasty rocks. Ouch!"
 
 Before entering the magic boat:
 	let sharp-items be false;
@@ -3633,7 +3933,7 @@ Before entering the magic boat:
 	if the player carries the rusty knife:
 		now sharp-items is true;
 	if sharp-items is true:
-		say "The pointy object pokes a hole in the boat, which deflates instantly.";
+		say "Oops! Something sharp seems to have slipped and punctured the boat. The boat deflates to the sounds of hissing, sputtering, and cursing.";
 		now the boat-punctured is true;
 		let here be the location of the player;
 		repeat with item running through things in the magic boat:
@@ -3646,7 +3946,13 @@ Launching is an action applying to nothing. Understand "launch" as launching.
 Carry out launching:
 	let here be the location of the player;
 	if the player is not in the magic boat:
-		say "You're not in a boat.";
+		say "You[apostrophe]re not in the boat!";
+	otherwise if here is River1 or here is River2 or here is River3 or here is River4 or here is River5:
+		say "You are on the river, or have you forgotten?";
+	otherwise if here is Reservoir:
+		say "You are on the reservoir, or have you forgotten?";
+	otherwise if here is In-Stream:
+		say "You are on the stream, or have you forgotten?";
 	otherwise if here is Dam-Base:
 		say "You push off from the shore.";
 		move the magic boat to River1;
