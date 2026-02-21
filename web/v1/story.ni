@@ -797,6 +797,10 @@ Instead of dropping the quantity of water:
 		remove the quantity of water from play;
 		say "The water spills to the floor and evaporates immediately."
 
+Instead of inserting the quantity of water into something when the second noun is not the glass bottle:
+	remove the quantity of water from play;
+	say "The water leaks out of the [second noun] and evaporates immediately."
+
 Instead of throwing the quantity of water at something:
 	remove the quantity of water from play;
 	say "The water splashes on the walls and evaporates immediately."
@@ -1623,7 +1627,16 @@ Every turn when the cyclops-wrath-timer > 0 and the player is in Cyclops-Room an
 	if the cyclops-wrath > 5 or the cyclops-wrath < -5:
 		die saying "The cyclops, tired of all of your games and trickery, grabs you firmly. As he licks his chops, he says [quotation mark]Mmm. Just like Mom used to make [apostrophe]em.[quotation mark] It[apostrophe]s nice to be appreciated.";
 	otherwise if the cyclops-wrath > 0:
-		say "The cyclops seems quite angry.";
+		if the cyclops-wrath is 1:
+			say "The cyclops seems somewhat agitated.";
+		otherwise if the cyclops-wrath is 2:
+			say "The cyclops appears to be getting more agitated.";
+		otherwise if the cyclops-wrath is 3:
+			say "The cyclops is moving about the room, looking for something.";
+		otherwise if the cyclops-wrath is 4:
+			say "The cyclops was looking for salt and pepper. No doubt they are condiments for his upcoming snack.";
+		otherwise:
+			say "You have two choices: 1. Leave  2. Become dinner.";
 	otherwise if the cyclops-wrath < 0:
 		say "The cyclops, having eaten the hot peppers, appears to be gasping. His enflamed tongue protrudes from his man-sized mouth."
 
@@ -1823,8 +1836,11 @@ The description of the tour guidebook is "[fixed letter spacing]   Flood Control
 
 The matchbook is in Dam-Lobby. "There is a matchbook whose cover says 'Visit Beautiful FCD#3' here."
 Understand "match" and "matches" and "matchbook" as the matchbook.
-The description of the matchbook is "The matchbook isn't very interesting, except for what's written on it."
+The description of the matchbook is "The matchbook isn[apostrophe]t very interesting, except for what[apostrophe]s written on it."
 The match-count is a number that varies. The match-count is 6.
+
+Instead of examining the matchbook when the match-lit is true:
+	say "The match is burning."
 
 Reading is an action applying to one thing. Understand "read [something]" as reading.
 
@@ -2000,7 +2016,7 @@ North of Mirror Room 1 is Cold Passage. West of Mirror Room 1 is Twisting Passag
 The mirror-mung is a truth state that varies. The mirror-mung is false.
 
 The mirror-one is scenery in Mirror Room 1. The printed name of the mirror-one is "mirror". Understand "mirror" and "reflection" and "enormous" as the mirror-one.
-The description of the mirror-one is "[if the mirror-mung is true]The mirror is broken into many pieces.[otherwise]There is an image of a large room reflected in the mirror.[end if]"
+The description of the mirror-one is "[if the mirror-mung is true]The mirror is broken into many pieces.[otherwise]There is an ugly person staring back at you.[end if]"
 
 Mirror Room 2 is a dark room. The printed name of Mirror Room 2 is "Mirror Room".
 Mirror Room 2 is in the Underground.
@@ -2008,7 +2024,15 @@ The description of Mirror Room 2 is "You are in a large square room with tall ce
 West of Mirror Room 2 is Winding-Passage. North of Mirror Room 2 is Narrow Passage. East of Mirror Room 2 is Tiny Cave.
 
 The mirror-two is scenery in Mirror Room 2. The printed name of the mirror-two is "mirror". Understand "mirror" and "reflection" and "enormous" as the mirror-two.
-The description of the mirror-two is "[if the mirror-mung is true]The mirror is broken into many pieces.[otherwise]There is an image of a large room reflected in the mirror.[end if]"
+The description of the mirror-two is "[if the mirror-mung is true]The mirror is broken into many pieces.[otherwise]There is an ugly person staring back at you.[end if]"
+
+Mirror-rubbing it with is an action applying to two things. Understand "rub [something] with [something]" and "touch [something] with [something]" as mirror-rubbing it with.
+Carry out mirror-rubbing it with: say "That doesn[apostrophe]t seem to do anything."
+
+Instead of mirror-rubbing the mirror-one with something when the mirror-mung is false:
+	say "You feel a faint tingling transmitted through the [second noun]."
+Instead of mirror-rubbing the mirror-two with something when the mirror-mung is false:
+	say "You feel a faint tingling transmitted through the [second noun]."
 
 Instead of rubbing the mirror-one:
 	say "There is a rumble from deep within the earth and the room shakes.";
@@ -2017,6 +2041,9 @@ Instead of rubbing the mirror-one:
 Instead of rubbing the mirror-two:
 	say "There is a rumble from deep within the earth and the room shakes.";
 	move the player to Mirror Room 1.
+
+Instead of taking the mirror-one: say "The mirror is many times your size. Give up."
+Instead of taking the mirror-two: say "The mirror is many times your size. Give up."
 
 Instead of attacking the mirror-one:
 	if the mirror-mung is true:
@@ -2284,7 +2311,10 @@ Exorcising is an action applying to one thing. Understand "exorcise [something]"
 Carry out exorcising: say "What a bizarre concept!"
 
 Instead of exorcising the ghosts:
-	say "Only the ceremony itself has any effect."
+	if the player carries the brass bell and the player carries the black book and the player carries the pair of candles:
+		say "You must perform the ceremony.";
+	otherwise:
+		say "You aren[apostrophe]t equipped for an exorcism."
 
 Land of the Dead is a dark room. The printed name of Land of the Dead is "Land of the Dead". "You have entered the Land of the Living Dead. Thousands of lost souls can be heard weeping and moaning. In the corner are stacked the remains of dozens of previous adventurers less fortunate than yourself. A passage exits to the north."
 Land of the Dead is in the Underground.
@@ -2295,7 +2325,7 @@ Understand "bodies" and "remains" and "adventurers" and "previous" as the advent
 The description of the adventurer-bodies is "The bodies are piled up in the corner."
 Instead of taking the adventurer-bodies: say "A force keeps you from taking the bodies."
 Instead of attacking or burning the adventurer-bodies:
-	die saying "The gods in this place do not appreciate such desecration. Your strife has offended them; your unwanted life is forfeit."
+	die saying "The voice of the guardian of the dungeon booms out from the darkness, [quotation mark]Your disrespect costs you your life![quotation mark] and places your head on a sharp pole."
 
 The crystal skull is in Land of the Dead. "Lying in one corner of the room is a beautifully carved crystal skull. It appears to be grinning at you rather nastily."
 Understand "skull" and "head" and "crystal" as the crystal skull.
@@ -2831,13 +2861,22 @@ Instead of blowing the gas-pseudo:
 Instead of smelling the gas-pseudo:
 	say "It smells like coal gas in here."
 
+Instead of switching on the torch when the player is in Gas Room:
+	die saying "How sad for an aspiring adventurer to light a torch in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
+Instead of burning the pair of candles when the player is in Gas Room:
+	die saying "How sad for an aspiring adventurer to light candles in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
+Instead of burning the matchbook when the player is in Gas Room:
+	die saying "How sad for an aspiring adventurer to light a match in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
 Every turn when the player is in Gas Room (this is the gas room explosion rule):
 	if the torch is lit and the player carries the torch:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying a lit torch in here.[paragraph break]   BOOOOOOOOOOOM";
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   ** BOOOOOOOOOOOM **";
 	if the pair of candles is lit and the player carries the pair of candles:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying lit candles in here.[paragraph break]   BOOOOOOOOOOOM";
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   ** BOOOOOOOOOOOM **";
 	if the match-lit is true:
-		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about lighting a match in here.[paragraph break]   BOOOOOOOOOOOM".
+		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   ** BOOOOOOOOOOOM **".
 
 The sapphire-encrusted bracelet is in Gas Room.
 Understand "bracelet" and "jewel" and "sapphire" as the sapphire-encrusted bracelet.
@@ -2927,6 +2966,9 @@ Understand "cage" and "dumbwaiter" and "basket" as the lowered-basket.
 The raised-basket is an open container in Shaft Room. The printed name of the raised-basket is "basket". "At the end of the chain is a basket."
 Understand "cage" and "dumbwaiter" and "basket" as the raised-basket.
 The carrying capacity of the raised-basket is 10.
+
+Instead of taking the raised-basket: say "The cage is securely fastened to the iron chain."
+Instead of taking the lowered-basket: say "The cage is securely fastened to the iron chain."
 
 The basket-is-at-top is a truth state that varies. The basket-is-at-top is true.
 
@@ -3134,7 +3176,7 @@ Instead of opening the large bag:
 Instead of closing the large bag:
 	say "Getting close enough would be a good trick."
 
-The description of the thief is "The thief is a slippery character with beady eyes that flit back and forth. He is carrying a large bag which is nearly overflowing with loot."
+The description of the thief is "The thief is a slippery character with beady eyes that flit back and forth. He carries, along with an unmistakable arrogance, a large bag over his shoulder and a vicious stiletto, whose blade is aimed menacingly in your direction. I[apostrophe]d watch out if I were you."
 
 Instead of listening to the thief:
 	say "The thief says nothing, as you have not been formally introduced."
@@ -3433,6 +3475,17 @@ Instead of listening to the lurking grue:
 	say "It makes no sound but is always lurking in the darkness nearby."
 
 Chapter 9a - Global Backdrops
+
+The global-hands is a backdrop. The global-hands is everywhere.
+The printed name of the global-hands is "pair of hands".
+Understand "hands" and "hand" and "pair" as the global-hands.
+Understand "bare" as the global-hands.
+The description of the global-hands is "You have two normal-looking hands."
+
+The global-lungs is a backdrop. The global-lungs is everywhere.
+The printed name of the global-lungs is "blast of air".
+Understand "lungs" and "air" and "mouth" and "breath" as the global-lungs.
+The description of the global-lungs is "You have normal-looking lungs."
 
 The global-stairs is a backdrop. The global-stairs is everywhere.
 The printed name of the global-stairs is "stairs".
@@ -3851,7 +3904,9 @@ Section 4c - FIND verb
 
 Locating is an action applying to one visible thing. Understand "find [something]" and "where is [something]" as locating.
 Carry out locating:
-	if the noun is the player:
+	if the noun is the global-hands or the noun is the global-lungs:
+		say "Within six feet of your head, assuming you haven[apostrophe]t left that somewhere.";
+	otherwise if the noun is the player:
 		say "You[apostrophe]re around here somewhere...";
 	otherwise if the player carries the noun:
 		say "You have it.";
@@ -3962,16 +4017,23 @@ Section 10 - Alarm / Wake
 Alarming is an action applying to one thing. Understand "alarm [something]" and "wake [something]" and "wake up [something]" as alarming.
 Carry out alarming:
 	if the noun is a person:
-		say "The [noun] is wide awake, or haven't you noticed...";
+		if the noun is the troll and the troll is defeated:
+			say "The troll is rudely awakened.";
+		otherwise if the noun is the thief and the thief is defeated:
+			say "The thief is rudely awakened.";
+		otherwise if the noun is the cyclops and the cyclops-asleep is true:
+			say "The cyclops is rudely awakened.";
+		otherwise:
+			say "The [noun] is wide awake, or haven[apostrophe]t you noticed...";
 	otherwise:
-		say "The [noun] isn't sleeping."
+		say "The [noun] isn[apostrophe]t sleeping."
 
 Section 11 - Play
 
 Playing is an action applying to one thing. Understand "play [something]" as playing.
 Carry out playing:
 	if the noun is a person:
-		say "That's silly!";
+		die saying "You become so engrossed in the role of the [noun] that you kill yourself, just as he might have done!";
 	otherwise:
 		say "That's silly!"
 
