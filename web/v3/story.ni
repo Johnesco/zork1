@@ -1107,7 +1107,7 @@ Instead of closing the trap door when the player is in Cellar:
 		say "The door closes and locks.";
 		now the trap door is not open;
 	otherwise:
-		say "It is already closed."
+		say "[dummy]"
 
 After going down from Living Room to Cellar:
 	if the trap-door-touched is false:
@@ -1606,6 +1606,9 @@ The description of the chalice is "It's a beautifully engraved silver chalice."
 The treasure-value of the chalice is 5.
 The point-value of the chalice is 10.
 
+Instead of taking the chalice when the player is in Treasure Room and the thief is not defeated and the thief is in Treasure Room:
+	say "You[apostrophe]d be stabbed in the back first."
+
 Chapter 9 - East-West Passage and Round Room Area
 
 East-West Passage is a dark room. "This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room."
@@ -1698,10 +1701,14 @@ Instead of jumping when the player is in East-of-Chasm or the player is in Chasm
 	say "You look before leaping, and realize that you would never survive."
 
 Instead of jumping in Dome Room:
-	die saying "You leap over the railing and plunge to the rocks below."
+	if the dome-flag is true:
+		continue the action;
+	say "This was not a very safe place to try jumping.";
+	die saying "[jumploss]"
 
 Instead of jumping in Canyon View:
-	die saying "This was not a very safe place to try jumping."
+	say "This was not a very safe place to try jumping.";
+	die saying "[jumploss]"
 
 Instead of crossing the chasm-pseudo:
 	say "It's too far to jump, and there's no bridge."
@@ -2307,6 +2314,8 @@ Instead of lighting-candles the pair of candles:
 	otherwise:
 		say "You should say what to light them with."
 
+Instead of switching on the pair of candles: say "If you wish to burn the [noun], you should say so."
+
 Instead of switching off the pair of candles:
 	if the pair of candles is lit:
 		now the pair of candles is not lit;
@@ -2840,7 +2849,7 @@ Carry out raising: say "You can't raise that."
 
 Instead of raising the raised-basket:
 	if the basket-is-at-top is true:
-		say "The basket is already at the top.";
+		say "[dummy]";
 	otherwise:
 		now the basket-is-at-top is true;
 		now the raised-basket is in Shaft Room;
@@ -2855,7 +2864,7 @@ Carry out lowering: say "You can't lower that."
 
 Instead of lowering the raised-basket:
 	if the basket-is-at-top is false:
-		say "The basket is already at the bottom.";
+		say "[dummy]";
 	otherwise:
 		now the basket-is-at-top is false;
 		now the raised-basket is in Drafty Room;
@@ -2876,6 +2885,8 @@ The carrying capacity of the machine is 5.
 The description of the machine is "It's a large machine with a lid and a switch."
 
 Instead of taking the machine: say "It is far too large to carry."
+Instead of opening the machine when the machine is open: say "[dummy]".
+Instead of closing the machine when the machine is not open: say "[dummy]".
 
 The machine switch is scenery in Machine-Room. Understand "switch" as the machine switch.
 The description of the machine switch is "It's a switch on the machine."
@@ -2939,8 +2950,11 @@ Understand "slide" and "metal" and "steep" as the slide-object.
 The description of the slide-object is "It's a steep metal slide twisting downward."
 Instead of entering the slide-object: try going down.
 Instead of inserting something into the slide-object:
-	say "The [noun] falls into the slide and is gone.";
-	remove the noun from play.
+	if the noun is fixed in place:
+		say "[yuks]";
+	otherwise:
+		say "The [noun] falls into the slide and is gone.";
+		now the noun is in Cellar.
 
 Instead of going down in Slide Room:
 	say "You tumble down the slide....";
@@ -3248,6 +3262,10 @@ Instead of taking the rusty knife when the player carries the sword:
 	say "As you touch the rusty knife, your sword gives a single pulse of blinding blue light.";
 	remove the rusty knife from play.
 
+Instead of attacking a person when the player carries the rusty knife:
+	say "As the knife approaches its victim, your mind is submerged by an overmastering will. Slowly, your hand turns, until the rusty blade is an inch from your neck. The knife seems to sing as it savagely slits your throat.";
+	die saying ""
+
 Every turn when the player carries the rusty knife and the player carries the sword (this is the rusty knife curse rule):
 	say "As the rust of the knife reaches the sword, they react violently, and the rusty knife disintegrates.";
 	remove the rusty knife from play.
@@ -3469,6 +3487,20 @@ Carry out hatching: say "Bizarre!"
 
 Instead of cutting something: say "Strange concept, cutting the [noun]...."
 
+Cutting-with is an action applying to two things. Understand "cut [something] with [something]" and "slice [something] with [something]" as cutting-with.
+
+Instead of cutting-with when the noun is a person:
+	try attacking the noun.
+
+Instead of cutting-with when the player is in the noun:
+	say "Not a bright idea, especially since you[apostrophe]re in it."
+
+Instead of cutting-with when the second noun is not a weapon:
+	say "The [quotation mark]cutting edge[quotation mark] of a [second noun] is hardly adequate."
+
+Instead of cutting-with:
+	say "Strange concept, cutting the [noun]...."
+
 Leaning-on is an action applying to one thing. Understand "lean on [something]" and "lean against [something]" as leaning-on.
 Carry out leaning-on: say "Getting tired?"
 
@@ -3577,8 +3609,10 @@ Carry out knocking-on:
 		say "Why knock on a [noun]?"
 
 Instead of pushing something:
-	if the noun is fixed in place:
-		say "You can't move the [noun].";
+	if the player carries the noun:
+		say "You aren[apostrophe]t an accomplished enough juggler.";
+	otherwise if the noun is fixed in place:
+		say "You can[apostrophe]t move the [noun].";
 	otherwise:
 		say "Moving the [noun] reveals nothing."
 
@@ -3651,7 +3685,37 @@ Carry out shaking:
 	otherwise:
 		say "Shaken."
 
-Section 4b - HO-HUM and HACK-HACK Responses
+Section 4b - Random Text Tables
+
+[ZIL YUKS table - used for non-takeable objects and other futile actions]
+To say yuks:
+	let R be a random number between 1 and 3;
+	if R is 1:
+		say "A valiant attempt.";
+	otherwise if R is 2:
+		say "You can[apostrophe]t be serious.";
+	otherwise:
+		say "An interesting idea..."
+
+[ZIL DUMMY table - used for already-open/already-closed/already-done responses]
+To say dummy:
+	let R be a random number between 1 and 3;
+	if R is 1:
+		say "Look around.";
+	otherwise if R is 2:
+		say "Too late for that.";
+	otherwise:
+		say "Have your eyes checked."
+
+[ZIL JUMPLOSS table - random death messages for fatal jumps]
+To say jumploss:
+	let R be a random number between 1 and 3;
+	if R is 1:
+		say "You should have looked before you leaped.";
+	otherwise if R is 2:
+		say "In the movies, your life would be passing before your eyes.";
+	otherwise:
+		say "Geronimo..."
 
 [ZIL uses rotating HO-HUM suffixes for several verbs]
 To say ho-hum:
@@ -3727,6 +3791,10 @@ Instead of throwing something at a person:
 	otherwise:
 		say "The [second noun] ducks as the [noun] flies by and crashes to the ground.";
 		now the noun is in the location of the player.
+
+Instead of throwing something at something:
+	say "Thrown.";
+	now the noun is in the location of the player.
 
 Section 6 - Jump / Leap Overrides
 
@@ -3840,6 +3908,60 @@ Section 18 - Tie Defaults
 
 Instead of tying something to yourself: say "You can[apostrophe]t tie anything to yourself."
 
+Section 19 - Destroy / Mung
+
+Destroying is an action applying to one thing. Understand "destroy [something]" and "mung [something]" and "damage [something]" as destroying.
+
+Instead of destroying a person:
+	try attacking the noun.
+
+Instead of destroying something:
+	say "Nice try."
+
+Destroying-with is an action applying to two things. Understand "destroy [something] with [something]" and "mung [something] with [something]" as destroying-with.
+
+Instead of destroying-with a person:
+	try attacking the noun.
+
+Instead of destroying-with when the second noun is a weapon:
+	try attacking the noun.
+
+Instead of destroying-with:
+	say "Trying to destroy the [noun] with [if the player carries the second noun]a [second noun][otherwise]your bare hands[end if] is futile."
+
+Section 20 - Overboard
+
+Throwing-overboard is an action applying to one thing. Understand "throw [something] overboard" as throwing-overboard.
+
+Instead of throwing-overboard when the player is in the magic boat:
+	say "Ahoy -- [noun] overboard!";
+	now the noun is in the location of the player.
+
+Instead of throwing-overboard:
+	say "Huh?"
+
+Section 21 - Leaping Over
+
+Leaping-over is an action applying to one thing. Understand "jump over [something]" and "leap over [something]" and "jump across [something]" as leaping-over.
+
+Instead of leaping-over a person:
+	say "The [noun] is too big to jump over."
+
+Instead of leaping-over:
+	continue the action.
+
+Section 22 - Disembark Messages
+
+Instead of exiting when the player is in the magic boat:
+	let here be the location of the player;
+	if here is River1 or here is River2 or here is River3 or here is River4 or here is River5:
+		say "You realize that getting out here would be fatal.";
+	otherwise if here is Reservoir or here is In-Stream:
+		say "You realize that getting out here would be fatal.";
+	otherwise:
+		say "You are on your own feet again.";
+		move the player to here.
+
 Chapter 11 - Boat System
 
 The magic boat is an open enterable vehicle. The carrying capacity of the magic boat is 10.
@@ -3866,6 +3988,17 @@ The boat-punctured is a truth state that varies. The boat-punctured is false.
 
 Inflating is an action applying to one thing. Understand "inflate [something]" and "pump up [something]" as inflating.
 Carry out inflating: say "You can't inflate that."
+
+Inflating-with is an action applying to two things. Understand "inflate [something] with [something]" and "pump up [something] with [something]" and "fill [something] with [something]" as inflating-with.
+
+Instead of inflating-with the pile of plastic:
+	if the second noun is the hand-held air pump:
+		try inflating the pile of plastic;
+	otherwise:
+		say "With a [second noun]? Surely you jest!"
+
+Instead of inflating-with:
+	say "You can[apostrophe]t inflate that."
 
 Instead of inflating the pile of plastic:
 	if the pile of plastic is not in the location of the player:
