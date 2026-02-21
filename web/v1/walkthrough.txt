@@ -8,24 +8,27 @@ e
 open window
 w
 take sack
+take bottle
 w
 take sword
 take lantern
+open case
 put egg in case
 e
 turn on lantern
 u
 take rope
 d
-turn off lantern
 open sack
 take garlic
 w
 move rug
 open trap door
-turn on lantern
 d
 s
+drop sack
+drop bottle
+drop rope
 e
 take painting
 w
@@ -51,7 +54,6 @@ echo
 take platinum bar
 w
 n
-n
 ne
 e
 n
@@ -64,9 +66,10 @@ s
 s
 turn bolt
 drop wrench
+s
+sw
+s
 w
-sw
-sw
 w
 w
 s
@@ -82,9 +85,12 @@ e
 turn off lantern
 put painting in case
 put platinum bar in case
-open trap door
 turn on lantern
+open trap door
 d
+s
+take rope
+n
 n
 e
 e
@@ -93,17 +99,11 @@ e
 tie rope to railing
 d
 take torch
-turn off lantern
 s
 take bell
-d
-take coffin
-open coffin
-take sceptre
-u
 s
-take candles
 take book
+take candles
 d
 d
 ring bell
@@ -122,15 +122,42 @@ n
 n
 w
 w
+w
 s
+e
 u
+sw
+e
+s
+se
+e
+e
+turn off lantern
 put torch in case
 put skull in case
-put coffin in case
-e
+turn on lantern
+open trap door
+d
+n
 e
 e
 se
+e
+d
+s
+d
+take coffin
+open coffin
+take sceptre
+u
+s
+pray
+turn off lantern
+drop lantern
+drop screwdriver
+s
+n
+e
 d
 d
 n
@@ -140,34 +167,83 @@ sw
 u
 u
 nw
+s
+w
+take lantern
+e
+s
+e
 w
 w
-w
-put pot of gold in case
+put coffin in case
 put sceptre in case
-take torch from case
+put pot of gold in case
+turn on lantern
+open trap door
 d
 n
 e
+e
 n
 ne
+nw
 n
-take trunk
 n
 take pump
 n
 take trident
-n
-n
-n
+s
+s
+take trunk
+s
+se
+sw
+s
 w
-n
 w
-n
-take figurine
+w
+s
 e
+u
+sw
+e
+s
+se
+e
+e
+turn off lantern
+put trunk in case
+put trident in case
+e
+e
+nw
+n
+w
+take screwdriver
+e
+s
+e
+w
+w
+take torch from case
 turn on lantern
+open trap door
+d
+n
+e
+e
+s
+s
+rub mirror
+n
+w
+n
+w
+n
+take jade
+e
 put torch in basket
+put screwdriver in basket
 n
 d
 take bracelet
@@ -199,15 +275,20 @@ sw
 d
 d
 w
-drop all
+drop lantern
+drop jade
+drop bracelet
+drop pump
 w
 take torch
 take coal
+take screwdriver
 s
 open lid
-put coal in lid
+put coal in machine
 close lid
 turn on switch
+drop screwdriver
 open lid
 take diamond
 n
@@ -215,7 +296,10 @@ put diamond in basket
 put torch in basket
 raise basket
 e
-take all
+take lantern
+take jade
+take bracelet
+take pump
 e
 u
 u
@@ -227,37 +311,33 @@ u
 s
 take diamond
 take torch
-turn off lantern
 w
 s
 e
 s
 d
-u
-put trunk in case
-put trident in case
-put figurine in case
+up
+turn off lantern
+put jade in case
 put bracelet in case
 put diamond in case
 put torch in case
 turn on lantern
+open trap door
 d
 n
+e
 e
 n
 ne
 e
+turn off lantern
 d
 inflate plastic
 drop pump
+turn on lantern
+enter boat
 launch
-turn off lantern
-wait
-wait
-wait
-wait
-wait
-wait
 wait
 wait
 wait
@@ -265,8 +345,6 @@ wait
 take buoy
 east
 exit
-open buoy
-take emerald
 take shovel
 ne
 dig sand
@@ -276,6 +354,9 @@ dig sand
 take scarab
 drop shovel
 sw
+drop buoy
+open buoy
+take emerald
 s
 s
 w
@@ -291,6 +372,7 @@ put emerald in case
 put scarab in case
 take egg from case
 turn on lantern
+open trap door
 d
 n
 take axe
@@ -304,13 +386,9 @@ e
 s
 se
 u
-drop garlic
-wait
-wait
-wait
-wait
-wait
-wait
+give egg to thief
+d
+u
 attack thief
 attack thief
 attack thief
@@ -327,20 +405,22 @@ drop axe
 take canary
 take chalice
 take egg
+take painting
 d
 e
 e
 turn off lantern
 put coins in case
 put chalice in case
+put painting in case
 e
 e
-n
+nw
 n
 wind canary
 take bauble
 s
-s
+e
 w
 w
 put egg in case
@@ -348,9 +428,11 @@ put canary in case
 put bauble in case
 look
 take map
+read map
 e
 e
-n
-w
+nw
+s
+sw
 sw
 enter barrow

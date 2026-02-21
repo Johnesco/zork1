@@ -71,6 +71,9 @@ This is the score and rank rule:
 	say "[current-rank].[line break]".
 
 Carry out requesting the score:
+	if the player-is-dead is true:
+		say "You're dead! How can you think of your score?";
+		stop the action;
 	follow the score and rank rule;
 	stop the action.
 
@@ -100,6 +103,7 @@ To die saying (reason - text):
 		now the player-is-dead is true;
 		now the troll-flag is true;
 		now the always-lit-mode is true;
+		now the player carries the spirit-glow;
 		scatter-possessions;
 		move the player to Entrance to Hades;
 	otherwise:
@@ -107,10 +111,115 @@ To die saying (reason - text):
 		scatter-possessions;
 		move the player to Forest1.
 
+The spirit-glow is a thing. It is lit. It is undescribed.
+Rule for deciding whether all includes the spirit-glow: it does not.
+
 To scatter-possessions:
 	now every thing carried by the player is in West-of-House;
 	if the player encloses the brass lantern:
 		now the brass lantern is in Living Room.
+
+Section - Ghost State Actions
+
+Instead of attacking something when the player-is-dead is true:
+	say "All such attacks are vain in your condition."
+
+Instead of taking something when the player-is-dead is true:
+	say "Your hand passes through its object."
+
+Instead of removing something from something when the player-is-dead is true:
+	say "Your hand passes through its object."
+
+Instead of dropping something when the player-is-dead is true:
+	say "You have no possessions."
+
+Instead of throwing something at something when the player-is-dead is true:
+	say "You have no possessions."
+
+Instead of taking inventory when the player-is-dead is true:
+	say "You have no possessions."
+
+Instead of waiting when the player-is-dead is true:
+	say "Might as well. You've got an eternity."
+
+Instead of switching on the brass lantern when the player-is-dead is true:
+	say "You need no light to guide you."
+
+Instead of opening something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of closing something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of eating something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of drinking something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of turning something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of burning something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of tying something to something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of rubbing something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of switching on something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of switching off something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of locking something with something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of unlocking something with something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of pushing something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of pulling something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of touching something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of squeezing something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of searching something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of waving something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of putting something on something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of inserting something into something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of giving something to someone when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of doing anything when the player-is-dead is true (this is the ghost state catch-all rule):
+	if we are looking or we are examining or we are going or we are praying or we are looking under:
+		continue the action;
+	say "You can't even do that."
+
+Section - Ghost State Looking
+
+Before looking when the player-is-dead is true:
+	if the location is a dark room:
+		say "Although there is no light, the room seems dimly illuminated.[line break]";
+	say "The room looks strange and unearthly[if the number of visible things in the location is 0].[otherwise] and objects appear indistinct.[end if]";
+	say "[line break]".
 
 Chapter 5 - Darkness and Grues
 
@@ -428,6 +537,14 @@ Up a Tree is above Forest Path.
 Instead of going up in Up a Tree:
 	say "You cannot climb any higher."
 
+After looking in Up a Tree:
+	let item-list be a list of things;
+	repeat with item running through things in Forest Path:
+		if the item is not scenery and the item is not undescribed:
+			add item to item-list;
+	if the number of entries in item-list > 0:
+		say "On the ground below you can see: [item-list with indefinite articles]."
+
 Clearing is a room. "You are in a small clearing in a well marked forest path that extends to the east and west."
 Clearing is in Forest Area.
 
@@ -438,6 +555,7 @@ Instead of going up in Clearing:
 	say "There is no tree here suitable for climbing."
 
 Grating Clearing is a room. The printed name of Grating Clearing is "Clearing".
+The description of Grating Clearing is "You are in a clearing, with a forest surrounding you on all sides. A path leads south.[if the grate is open][line break]There is an open grating, descending into darkness.[otherwise if the grate-revealed is true][line break]There is a grating securely fastened into the ground.[end if]".
 Grating Clearing is in Forest Area.
 North of Forest Path is Grating Clearing. East of Grating Clearing is Forest2. West of Grating Clearing is Forest1. South of Grating Clearing is Forest Path.
 
@@ -742,6 +860,20 @@ Instead of switching off the brass lantern:
 		say "The lamp has already burned out." instead;
 	now the brass lantern is not lit;
 	say "The brass lantern is now off."
+
+The broken lamp is a thing. The printed name of the broken lamp is "broken lantern".
+Understand "lamp" and "lantern" and "broken" as the broken lamp.
+The description of the broken lamp is "The lamp is seriously damaged."
+
+Instead of switching on the broken lamp: say "The lamp is broken."
+Instead of switching off the broken lamp: say "The lamp is broken."
+
+Instead of throwing the brass lantern at something:
+	say "The lamp has smashed into the floor, and the light has gone out.";
+	now the brass lantern is not lit;
+	now the lamp-burned-out is true;
+	now the broken lamp is in the location;
+	remove the brass lantern from play.
 
 The old wooden door is scenery in Living Room. Understand "door" and "wooden" and "gothic" and "strange" and "lettering" and "writing" as the old wooden door.
 The description of the old wooden door is "[if the magic-flag is true]The door has a cyclops-shaped opening in it.[otherwise]The engravings translate to 'This space intentionally left blank.'[end if]".
@@ -1084,15 +1216,20 @@ The description of the studio-paint is "The paints are of 69 different colors."
 Instead of attacking the studio-paint:
 	say "Some paint chips away, revealing more paint."
 
-The painting is in Gallery. "Fortunately, there is still one chance for you to be a vandal, for on the far wall is a painting of unparalleled beauty."
+The painting-damaged is a truth state that varies. The painting-damaged is false.
+
+The painting is in Gallery.
 Understand "painting" and "art" and "canvas" and "beautiful" as the painting.
-The description of the painting is "This is a masterwork of painting. It depicts a serene scene of a farmhouse on a hillside."
+The initial appearance of the painting is "[if the painting-damaged is true]There is a worthless piece of canvas here.[otherwise]Fortunately, there is still one chance for you to be a vandal, for on the far wall is a painting of unparalleled beauty.[end if]".
+The description of the painting is "[if the painting-damaged is true]Worthless piece of canvas.[otherwise]This is a masterwork of painting. It depicts a serene scene of a farmhouse on a hillside.[end if]".
 The treasure-value of the painting is 6.
 The point-value of the painting is 4.
 
 Instead of attacking the painting:
-	say "Congratulations! Unlike the other vandals, who merely stole the artist's masterpieces, you have destroyed one.";
-	remove the painting from play.
+	now the painting-damaged is true;
+	now the treasure-value of the painting is 0;
+	now the point-value of the painting is 0;
+	say "Congratulations! Unlike the other vandals, who merely stole the artist's masterpieces, you have destroyed one."
 
 Chapter 5 - Maze
 
@@ -1195,7 +1332,8 @@ Maze11 is a dark room. The printed name of Maze11 is "Maze". "This is part of a 
 Maze11 is in the Underground.
 Northeast of Maze11 is Grating Room. Down from Maze11 is Maze10. Northwest of Maze11 is Maze13. Southwest of Maze11 is Maze12.
 
-Grating Room is a dark room. "This is a small room which has a grating firmly mounted in the ceiling."
+Grating Room is a dark room.
+The description of Grating Room is "You are in a small room near the maze. There are twisty passages in the immediate vicinity.[if the grate is open][line break]Above you is an open grating with sunlight pouring in.[otherwise if the grate is not locked][line break]Above you is a grating.[otherwise][line break]Above you is a grating locked with a skull-and-crossbones lock.[end if]".
 Grating Room is in the Underground.
 Southwest of Grating Room is Maze11.
 
@@ -1700,7 +1838,7 @@ Chapter 13 - Mirror Rooms and Connecting Passages
 
 Mirror Room 1 is a dark room. The printed name of Mirror Room 1 is "Mirror Room".
 Mirror Room 1 is in the Underground.
-The description of Mirror Room 1 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits to the east, west, and north."
+The description of Mirror Room 1 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.[if the mirror-mung is true][line break]Unfortunately, the mirror has been destroyed by your recklessness.[end if]".
 North of Mirror Room 1 is Cold Passage. West of Mirror Room 1 is Twisting Passage. East of Mirror Room 1 is Small Cave.
 
 The mirror-mung is a truth state that varies. The mirror-mung is false.
@@ -1710,7 +1848,7 @@ The description of the mirror-one is "[if the mirror-mung is true]The mirror is 
 
 Mirror Room 2 is a dark room. The printed name of Mirror Room 2 is "Mirror Room".
 Mirror Room 2 is in the Underground.
-The description of Mirror Room 2 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits to the east, west, and north."
+The description of Mirror Room 2 is "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.[if the mirror-mung is true][line break]Unfortunately, the mirror has been destroyed by your recklessness.[end if]".
 West of Mirror Room 2 is Winding-Passage. North of Mirror Room 2 is Narrow Passage. East of Mirror Room 2 is Tiny Cave.
 
 The mirror-two is scenery in Mirror Room 2. The printed name of the mirror-two is "mirror". Understand "mirror" and "reflection" and "enormous" as the mirror-two.
@@ -1792,7 +1930,7 @@ Understand "wall" and "engravings" and "inscription" and "old" and "ancient" as 
 The description of the engraved wall is "The engravings were incised in the living rock of the cave wall by an unknown hand. They depict, in symbolic form, the beliefs of the ancient Zorkers. Skillfully interwoven with the bas reliefs are excerpts illustrating the major religious tenets of that time. Unfortunately, a later age seems to have considered them blasphemous and just as skillfully excised them."
 
 Dome Room is a dark room. Dome Room is in the Underground.
-The description of Dome Room is "You are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing.[if the dome-flag is true] Hanging down from the railing is a rope.[end if]".
+The description of Dome Room is "You are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing which circles the dome.[if the dome-flag is true][line break]Hanging down from the railing is a rope which ends about ten feet from the floor below.[end if]".
 West of Dome Room is Engravings Cave.
 
 The dome-pseudo is a backdrop. The dome-pseudo is in Dome Room and Torch-Room.
@@ -1812,6 +1950,10 @@ Instead of going down in Dome Room:
 	otherwise:
 		say "You cannot go down without fracturing many bones."
 
+After going to Dome Room when the player-is-dead is true:
+	say "As you enter the dome you feel a strong pull as if from a wind drawing you over the railing and down.";
+	move the player to Torch-Room.
+
 Instead of tying the rope to the wooden railing:
 	if the dome-flag is true:
 		say "The rope is already tied to it.";
@@ -1824,7 +1966,8 @@ Understand "tie [something] to [something]" as tying it to.
 Carry out tying it to:
 	say "You can't tie those things together."
 
-Torch-Room is a dark room. The printed name of Torch-Room is "Torch Room". "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome."
+Torch-Room is a dark room. The printed name of Torch-Room is "Torch Room".
+The description of Torch-Room is "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal.[if the dome-flag is true][line break]A piece of rope descends from the railing above, ending some five feet above your head.[end if]".
 Torch-Room is in the Underground.
 South of Torch-Room is North Temple. Down from Torch-Room is North Temple.
 
@@ -1837,7 +1980,7 @@ The description of the pedestal is "It's a white marble pedestal."
 
 The torch is a thing on the pedestal. The initial appearance of the torch is "Sitting on the pedestal is a flaming torch, made of ivory."
 Understand "torch" and "ivory" and "flaming" as the torch.
-The torch is lit. The description of the torch is "It's a flaming ivory torch."
+The torch is lit. The description of the torch is "The torch is burning."
 
 Instead of switching off the torch:
 	say "You nearly burn your hand trying to extinguish the flame."
@@ -1920,7 +2063,8 @@ The sceptre is a weapon.
 The treasure-value of the sceptre is 6.
 The point-value of the sceptre is 4.
 
-Entrance to Hades is a dark room. "You are outside a large gate, through which you can see a desolation, lit by the light of a thousand flames. The gate is [if the lld-flag is true]open[otherwise]closed[end if]."
+Entrance to Hades is a dark room.
+The description of Entrance to Hades is "You are outside a large gateway, on which is inscribed[paragraph break]  Abandon every hope all ye who enter here![paragraph break]The gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.[if the lld-flag is false and the player-is-dead is false][line break]The way through the gate is barred by evil spirits, who jeer at your attempts to pass.[end if]".
 Entrance to Hades is in the Underground.
 Up from Entrance to Hades is Tiny Cave.
 
@@ -2286,7 +2430,8 @@ Instead of digging the sand:
 			say "You uncover a beautiful jeweled scarab!";
 			now the beautiful jeweled scarab is in Sandy Cave.
 
-Aragain Falls is a room. "You are at the top of Aragain Falls, an enormous waterfall with a drop of about 450 feet. The only path here is on the north end."
+Aragain Falls is a room.
+The description of Aragain Falls is "You are at the top of Aragain Falls, an enormous waterfall with a drop of about 450 feet. The only path here is on the north end.[if the rainbow-flag is true][line break]A solid rainbow spans the falls.[otherwise][line break]A beautiful rainbow can be seen over the falls and to the west.[end if]".
 Aragain Falls is in the Underground.
 
 Instead of going west in Aragain Falls:
@@ -2486,6 +2631,9 @@ Timber Room is a dark room. "This is a long and narrow passage, which is clutter
 Timber Room is in the Underground.
 East of Timber Room is Ladder Bottom.
 
+Instead of going west in Timber Room when the player-is-dead is true:
+	say "You cannot enter in your condition."
+
 Instead of going west in Timber Room:
 	let heavy-found be false;
 	repeat with item running through things carried by the player:
@@ -2563,7 +2711,7 @@ Instead of lowering the raised-basket:
 Instead of lowering the lowered-basket:
 	try lowering the raised-basket.
 
-Machine-Room is a dark room. "This is a large room full of assorted heavy machinery. There is a passageway leading north."
+Machine-Room is a dark room. "This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled [quotation mark]START[quotation mark]. The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is [if the machine is open]open[otherwise]closed[end if]."
 The printed name of Machine-Room is "Machine Room".
 Machine-Room is in the Underground.
 North of Machine-Room is Drafty Room.
@@ -2842,7 +2990,18 @@ Chapter 2 - Pray
 
 Praying is an action applying to nothing. Understand "pray" as praying.
 Carry out praying:
-	if the player is in South Temple:
+	if the player-is-dead is true:
+		if the player is in South Temple:
+			now the player-is-dead is false;
+			now the always-lit-mode is false;
+			if the troll is in Troll-Room:
+				now the troll-flag is false;
+			now the spirit-glow is nowhere;
+			say "From the distance the sound of a lone trumpet is heard. The room becomes very bright and you feel disembodied. In a moment, the brightness fades and you find yourself rising as if from a long sleep, deep in the woods. In the distance you can faintly hear a songbird and the sounds of the forest.";
+			move the player to Forest1;
+		otherwise:
+			say "Your prayers are not heard.";
+	otherwise if the player is in South Temple:
 		move the player to Forest1;
 		say "If you can be sure of one thing, it is that your prayers have been answered.";
 	otherwise:
@@ -2852,6 +3011,9 @@ Chapter 4 - Diagnose
 
 Diagnosing is an action out of world. Understand "diagnose" as diagnosing.
 Carry out diagnosing:
+	if the player-is-dead is true:
+		say "You are dead.";
+		stop the action;
 	say "You are in perfect health.[line break]";
 	say "You can survive several wounds.[line break]";
 	if the player-deaths > 0:
@@ -3027,6 +3189,30 @@ Counting-blessings is an action applying to nothing. Understand "count blessings
 Carry out counting-blessings: say "Well, for one, you are playing Zork..."
 
 Instead of counting the pile of leaves: say "There are 69,105 leaves here."
+
+Instead of counting the matchbook:
+	let cnt be the match-count minus 1;
+	say "You have ";
+	if cnt is less than 1:
+		say "no";
+	otherwise:
+		say "[cnt]";
+	if cnt is 1:
+		say " match.";
+	otherwise:
+		say " matches."
+
+Instead of opening the matchbook:
+	let cnt be the match-count minus 1;
+	say "You have ";
+	if cnt is less than 1:
+		say "no";
+	otherwise:
+		say "[cnt]";
+	if cnt is 1:
+		say " match.";
+	otherwise:
+		say " matches."
 
 Zorking is an action applying to nothing. Understand "zork" as zorking.
 Carry out zorking: say "At your service!"

@@ -51,6 +51,25 @@ Versions are displayed on the landing page with the **newest at top, v0 at botto
 
 **The most recent version is the default work target.** If no version is specified, work on the latest version.
 
+### Self-Contained Versions
+
+Starting with v1, every version is a **self-contained snapshot** with its own:
+- `story.ni` — Inform 7 source code (the authoritative source for that version)
+- `zork1.ulx.js` — Compiled game binary (base64-encoded Glulx, built from THIS version's `story.ni`)
+- Walkthrough, source browser, and player pages
+
+**Binary rule**: Never edit `.ulx` or `.ulx.js` files directly. Always compile from the version's own `story.ni` source. The workflow is: edit `story.ni` → compile → base64-encode → update `zork1.ulx.js`.
+
+### Updating Past Versions
+
+Versions are normally frozen snapshots, but **translation fixes and text accuracy improvements may be propagated backward** when needed. When updating a past version:
+1. Edit that version's own `web/vN/story.ni` directly
+2. Compile from that source to produce a new `.ulx`
+3. Base64-encode the `.ulx` into `web/vN/zork1.ulx.js`
+4. **Propagate up the chain** — apply the same changes to all later versions (vN+1, vN+2, etc.)
+
+Usually changes go only into the current (latest) version. Backward propagation is the exception, not the rule.
+
 When possible, every version should provide three buttons:
 - **Play Online** — launch the game in the browser
 - **Download Source** — download the source code file
@@ -117,26 +136,33 @@ web/vN/
 
 ### Versioning Workflow
 
-The **current version** (`C:\code\inform7\projects\zork1\story.ni`) is the working copy where all development happens. It is snapshotted into numbered versions when ready. The **latest numbered version** (currently v3) may be updated many times — it is republished from the current version as development progresses. Once a **new version is created** (e.g., v4), the previous one (v3) becomes permanently **frozen** and is never modified again. Only the latest numbered version and the current version ever change.
+The **current version** (`C:\code\inform7\projects\zork1\story.ni`) is the working copy where all new development happens. It is snapshotted into numbered versions when ready. The **latest numbered version** (currently v3) may be updated many times — it is republished from the current version as development progresses.
 
-When creating a new version (vN+1):
+**Updating the latest version** (routine — happens frequently):
+1. Make changes in the hub (`C:\code\inform7\projects\zork1\story.ni`)
+2. Build and test (see "Building the Game" and "Testing Policy" below)
+3. Copy `story.ni` → `web/vN/story.ni`
+4. Base64-encode `.ulx` → `web/vN/zork1.ulx.js`
 
-1. Finish all code changes in the current version (`C:\code\inform7\projects\zork1\story.ni`)
-2. Build in `C:\code\inform7\projects\zork1\` (see "Building the Game" below)
-3. Run RegTest suite: `wsl -e bash -c 'cd /mnt/c/code/inform7/projects/zork1 && bash tests/run-tests.sh'`
-4. Run walkthrough: `wsl -e bash -c 'cd /mnt/c/code/inform7/projects/zork1 && bash tests/run-walkthrough.sh'`
-5. Only after tests pass:
-   - Copy `C:\code\inform7\projects\zork1\story.ni` → `web/vN+1/story.ni`
-   - Base64-encode `C:\code\inform7\projects\zork1\zork1.ulx` → `web/vN+1/zork1.ulx.js`
-   - Copy `source.html` from the previous version into `web/vN+1/source.html`, change `RAW_URL` to `'story.ni'` (relative fetch) and update the sidebar header to show the version name
-   - Copy `walkthrough.html` from the previous version into `web/vN+1/walkthrough.html`, update title and sidebar header with version name, change back link to `../`
-   - Copy `C:\code\inform7\projects\zork1\tests\inform7\walkthrough.txt` → `web/vN+1/walkthrough.txt`
-   - Copy `C:\code\inform7\projects\zork1\tests\inform7\walkthrough-guide.txt` → `web/vN+1/walkthrough-guide.txt`
+**Updating a past version** (exceptional — for translation fixes propagating forward):
+1. Edit `web/vN/story.ni` directly with the fixes
+2. Temporarily copy it to the hub for compilation, compile, then restore the hub's current version
+3. Base64-encode the compiled `.ulx` → `web/vN/zork1.ulx.js`
+4. Apply the same changes to all later versions and recompile each from their own source
+
+**Creating a new version** (vN+1):
+1. Finish all code changes in the current version
+2. Build and run tests (RegTest + walkthrough)
+3. Only after tests pass:
+   - Copy `story.ni` → `web/vN+1/story.ni`
+   - Base64-encode `.ulx` → `web/vN+1/zork1.ulx.js`
+   - Copy `source.html` from the previous version, update `RAW_URL` and sidebar header
+   - Copy `walkthrough.html` from the previous version, update title/header/back link
+   - Copy walkthrough data files from `tests/inform7/`
    - Copy player pages and `lib/` from previous version (or rebuild)
-6. Update `web/index.html`: add new version entry
-7. The previous version is now frozen — **NEVER modify after release**
+4. Update `web/index.html`: add new version entry
 
-**Critical rule**: Every `web/vN/` (v1+) must contain a `story.ni` and `zork1.ulx.js` compiled from that exact source. Never copy stale binaries or source from a previous version. The source browser in each version must render its own local `story.ni`.
+**Critical rule**: Every `web/vN/` (v1+) must contain a `story.ni` and `zork1.ulx.js` compiled from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
 
 ### Deployment
 
