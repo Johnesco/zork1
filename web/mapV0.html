@@ -17,12 +17,12 @@ html {
 body {
   min-height: 100%;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: 30px 24px 60px;
   line-height: 1.7;
 }
 
 h1 {
-  font-size: 1.8em;
+  font-size: 1.6em;
   color: #e8d8b0;
   letter-spacing: 1px;
   margin-bottom: 6px;
@@ -30,18 +30,17 @@ h1 {
 }
 
 .subtitle {
+  text-align: center;
   font-style: italic;
   color: #aa9966;
-  margin-bottom: 12px;
-  text-align: center;
+  margin-bottom: 24px;
 }
 
 .intro {
   max-width: 740px;
   margin: 0 auto 24px;
-  font-size: 0.93em;
+  font-size: 0.95em;
   color: #b0a080;
-  text-align: center;
 }
 
 a {
@@ -56,84 +55,33 @@ a:hover {
   border-bottom-color: #aa9966;
 }
 
-.back-link {
-  display: block;
-  text-align: center;
-  margin-bottom: 24px;
+.back {
+  margin-bottom: 20px;
   font-size: 0.9em;
+}
+
+.map-container {
+  overflow: auto;
+  background: #111;
+  border: 1px solid #1e1a14;
+  border-radius: 6px;
+  padding: 20px;
+  margin: 0 auto;
 }
 
 .legend {
   max-width: 740px;
-  margin: 0 auto 24px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  justify-content: center;
-  font-size: 0.82em;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.legend-swatch {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  border: 1px solid #333;
-  flex-shrink: 0;
-}
-
-.stats {
-  max-width: 740px;
-  margin: 0 auto 24px;
-  text-align: center;
+  margin: 20px auto 0;
   font-size: 0.85em;
   color: #887755;
 }
 
-#map-container {
-  width: 100%;
-  overflow: auto;
-  background: #0e0e0e;
-  border: 1px solid #1e1a14;
-  border-radius: 6px;
-  padding: 16px;
-  min-height: 600px;
+.legend ul {
+  margin: 8px 0 0 20px;
 }
 
-/* Override Mermaid styles for dark theme */
-.mermaid {
-  text-align: center;
-}
-
-/* Zoom controls */
-.zoom-controls {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-
-.zoom-btn {
-  background: #1a1810;
-  border: 1px solid #2a2418;
-  border-radius: 4px;
-  color: #887755;
-  font-family: inherit;
-  font-size: 0.9em;
-  padding: 6px 14px;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-.zoom-btn:hover {
-  background: #2a2010;
-  color: #c4b48a;
-  border-color: #4a3a20;
+.legend li {
+  margin-bottom: 4px;
 }
 
 footer {
@@ -149,439 +97,433 @@ footer {
 </head>
 <body>
 
-<p class="back-link"><a href="./">&larr; Back to Zork I</a></p>
+<p class="back"><a href="index.html">&larr; Back to Zork I</a></p>
 
-<h1>Zork I Room Map</h1>
-<p class="subtitle">All 110 rooms from the original ZIL source</p>
+<h1>Zork I &mdash; Complete Room Map</h1>
+<p class="subtitle">110 rooms extracted from the original ZIL source</p>
 
 <p class="intro">
-  An automatically generated map of every room and directional connection
-  in Zork I, extracted from the
-  <a href="https://github.com/historicalsource/zork1">original ZIL source code</a>.
-  Edge labels show the compass direction taken to travel between rooms.
-  Dashed lines indicate conditional exits (locked doors, flags, puzzles).
+  Every <code>&lt;ROOM&gt;</code> definition and directional exit from the
+  original Infocom ZIL source code, rendered as an interactive diagram. Rooms
+  are grouped by region and colored accordingly. Solid lines are
+  always-available connections; dashed lines require a game condition (open
+  door, solved puzzle, etc.). Edge labels show the compass direction from the
+  first room. Arrows indicate one-way passages; plain lines are bidirectional.
 </p>
 
-<div class="legend">
-  <span class="legend-item"><span class="legend-swatch" style="background:#2d5a2d"></span> Surface &amp; Forest</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#6b4226"></span> House Interior</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#4a4a5a"></span> Cellar &amp; Gallery</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#5a5a5a"></span> Maze</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#8b6914"></span> Cyclops &amp; Hideaway</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#3a5a8a"></span> Round Room &amp; Passages</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#2a6a7a"></span> Dam &amp; Reservoir</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#5a3a6a"></span> Deep Underground</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#4a1a1a"></span> Hades</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#1a5a6a"></span> River &amp; Falls</span>
-  <span class="legend-item"><span class="legend-swatch" style="background:#8a5a1a"></span> Coal Mine</span>
-</div>
-
-<p class="stats">110 rooms &middot; ~250 connections &middot; 11 regions</p>
-
-<div class="zoom-controls">
-  <button class="zoom-btn" onclick="zoom(0.8)">&#x2212; Zoom Out</button>
-  <button class="zoom-btn" onclick="zoom(1.0)">Reset</button>
-  <button class="zoom-btn" onclick="zoom(1.25)">&#x2b; Zoom In</button>
-</div>
-
-<div id="map-container">
+<div class="map-container">
 <pre class="mermaid">
-%%{ init: { 'theme': 'dark', 'themeVariables': { 'primaryColor': '#2a2418', 'primaryTextColor': '#d4c5a9', 'primaryBorderColor': '#5a4a30', 'lineColor': '#887755', 'secondaryColor': '#1a1810', 'tertiaryColor': '#111', 'edgeLabelBackground': '#0a0a0a', 'clusterBkg': '#111', 'clusterBorder': '#2a2418' }, 'flowchart': { 'curve': 'basis', 'nodeSpacing': 30, 'rankSpacing': 40 } } }%%
-flowchart TD
+%%{init: {'theme': 'dark', 'themeVariables': {'darkMode': true, 'background': '#111111', 'primaryColor': '#2a3a2a', 'primaryTextColor': '#d4c5a9', 'primaryBorderColor': '#4a6a4a', 'lineColor': '#5a5a4a', 'secondaryColor': '#2a2a3a', 'tertiaryColor': '#3a2a2a'}, 'flowchart': {'useMaxWidth': false, 'htmlLabels': true, 'curve': 'basis', 'nodeSpacing': 30, 'rankSpacing': 40}}}%%
+graph TD
 
-%% ═══════════════════════════════════════
-%% SURFACE & FOREST
-%% ═══════════════════════════════════════
-subgraph surface["Surface & Forest"]
-  WOH["West of House"]
-  NOH["North of House"]
-  SOH["South of House"]
-  EOH["Behind House"]
-  F1["Forest (1)"]
-  F2["Forest (2)"]
-  F3["Forest (3)"]
-  MTN["Mountains"]
-  PATH["Forest Path"]
-  TREE["Up a Tree"]
-  CLR["Clearing"]
-  GRC["Grating Clearing"]
-  CV["Canyon View"]
-  CM["Rocky Ledge"]
-  CB["Canyon Bottom"]
-end
+    %% ===== SURFACE & FOREST =====
+    subgraph surface["Surface & Forest"]
+        WOH["West of House"]
+        NOH["North of House"]
+        SOH["South of House"]
+        BOH["Behind House"]
+        F1["Forest 1"]
+        F2["Forest 2"]
+        F3["Forest 3"]
+        MTN["Forest &#40;Mtns&#41;"]
+        FP["Forest Path"]
+        UAT["Up a Tree"]
+        GC["Grating Clearing"]
+        CLR["Clearing"]
+    end
 
-WOH -->|n| NOH
-WOH -->|s| SOH
-WOH -->|w| F1
-NOH -->|e| EOH
-SOH -->|e| EOH
-SOH -->|s| F3
-EOH -->|e| CLR
-F1 -->|n| GRC
-F1 -->|e| PATH
-F1 -->|s| F3
-F2 -->|e| MTN
-F2 -->|s| CLR
-F2 -->|w| PATH
-MTN -->|n| F2
-F3 -->|n| CLR
-F3 -->|nw| SOH
-PATH -->|u| TREE
-PATH -->|n| GRC
-PATH -->|s| NOH
-CLR -->|e| CV
-CV -->|d| CM
-CM -->|d| CB
+    subgraph house["House Interior"]
+        KIT["Kitchen"]
+        LIV["Living Room"]
+        ATT["Attic"]
+        STU["Studio"]
+    end
 
-%% ═══════════════════════════════════════
-%% HOUSE INTERIOR
-%% ═══════════════════════════════════════
-subgraph house["House Interior"]
-  KIT["Kitchen"]
-  LR["Living Room"]
-  ATT["Attic"]
-  STU["Studio"]
-end
+    subgraph canyon["Canyon & Rainbow"]
+        CV["Canyon View"]
+        CM["Rocky Ledge"]
+        CB["Canyon Bottom"]
+        EOR["End of Rainbow"]
+        OTR["On the Rainbow"]
+    end
 
-EOH -.->|w| KIT
-KIT -->|w| LR
-KIT -->|u| ATT
+    subgraph cellar["Cellar & Gallery"]
+        CEL["Cellar"]
+        EOC["East of Chasm"]
+        GAL["Gallery"]
+        TR["Troll Room"]
+    end
 
-%% ═══════════════════════════════════════
-%% CELLAR & GALLERY
-%% ═══════════════════════════════════════
-subgraph cellar["Cellar & Gallery"]
-  CEL["Cellar"]
-  EOC["East of Chasm"]
-  GAL["Gallery"]
-end
+    subgraph passages["Central Passages"]
+        EWP["E-W Passage"]
+        RR["Round Room"]
+        LOU["Loud Room"]
+        DMP["Damp Cave"]
+        NSP["N-S Passage"]
+        CHR["Chasm"]
+        DPC["Deep Canyon"]
+        ENG["Engravings Cave"]
+        NP["Narrow Passage"]
+    end
 
-LR -.->|d| CEL
-CEL -->|s| EOC
-EOC -->|e| GAL
-GAL -->|n| STU
+    subgraph maze["Maze"]
+        M1["Maze 1"]
+        M2["Maze 2"]
+        M3["Maze 3"]
+        M4["Maze 4"]
+        M5["Maze 5"]
+        M6["Maze 6"]
+        M7["Maze 7"]
+        M8["Maze 8"]
+        M9["Maze 9"]
+        M10["Maze 10"]
+        M11["Maze 11"]
+        M12["Maze 12"]
+        M13["Maze 13"]
+        M14["Maze 14"]
+        M15["Maze 15"]
+        DE1["Dead End 1"]
+        DE2["Dead End 2"]
+        DE3["Dead End 3"]
+        DE4["Dead End 4"]
+        GR["Grating Room"]
+    end
 
-%% ═══════════════════════════════════════
-%% TROLL & ROUND ROOM AREA
-%% ═══════════════════════════════════════
-subgraph passages["Round Room & Passages"]
-  TR["Troll Room"]
-  EWP["E-W Passage"]
-  RR["Round Room"]
-  NSP["N-S Passage"]
-  CHR["Chasm"]
-  LOU["Loud Room"]
-  DAMP["Damp Cave"]
-  ENG["Engravings Cave"]
-end
+    subgraph cyclops["Cyclops & Treasure"]
+        CYC["Cyclops Room"]
+        SP["Strange Passage"]
+        TRS["Treasure Room"]
+    end
 
-CEL -->|n| TR
-TR -.->|e| EWP
-EWP -->|e| RR
-EWP -->|d| CHR
-RR -->|n| NSP
-RR -->|e| LOU
-RR -->|se| ENG
-NSP -->|n| CHR
-LOU -->|e| DAMP
-LOU -->|u| DC
+    subgraph dam["Dam Area"]
+        DAM["Dam"]
+        DL["Dam Lobby"]
+        MNT["Maintenance Room"]
+    end
 
-%% ═══════════════════════════════════════
-%% MAZE
-%% ═══════════════════════════════════════
-subgraph maze["Maze"]
-  M1["Maze 1"]
-  M2["Maze 2"]
-  M3["Maze 3"]
-  M4["Maze 4"]
-  M5["Maze 5"]
-  M6["Maze 6"]
-  M7["Maze 7"]
-  M8["Maze 8"]
-  M9["Maze 9"]
-  M10["Maze 10"]
-  M11["Maze 11"]
-  M12["Maze 12"]
-  M13["Maze 13"]
-  M14["Maze 14"]
-  M15["Maze 15"]
-  DE1["Dead End (1)"]
-  DE2["Dead End (2)"]
-  DE3["Dead End (3)"]
-  DE4["Dead End (4)"]
-  GR["Grating Room"]
-end
+    subgraph reservoir["Reservoir"]
+        RSV["Reservoir South"]
+        RES["Reservoir"]
+        RN["Reservoir North"]
+        SV["Stream View"]
+        INS["In Stream"]
+    end
 
-TR -.->|w| M1
-M1 -->|s| M2
-M1 -->|w| M4
-M2 -->|e| M3
-M3 -->|n| M4
-M3 -->|u| M5
-M4 -->|e| DE1
-M5 -->|e| DE2
-M5 -->|sw| M6
-M6 -->|e| M7
-M6 -->|u| M9
-M7 -->|u| M14
-M7 -->|e| M8
-M7 -->|s| M15
-M8 -->|se| DE3
-M9 -->|e| M10
-M9 -->|s| M13
-M9 -->|w| M12
-M10 -->|u| M11
-M11 -->|ne| GR
-M11 -->|sw| M12
-M12 -->|e| M13
-M12 -->|n| DE4
-M13 -->|s| M10
-M14 -->|w| M15
-GR -.->|u| GRC
+    subgraph mirror["Mirror Rooms"]
+        MR1["Mirror Room N"]
+        MR2["Mirror Room S"]
+        SC["Small Cave"]
+        TC["Tiny Cave"]
+        CP["Cold Passage"]
+        WP["Winding Passage"]
+        TP["Twisting Passage"]
+        ATL["Atlantis Room"]
+    end
 
-%% ═══════════════════════════════════════
-%% CYCLOPS & HIDEAWAY
-%% ═══════════════════════════════════════
-subgraph cyclops["Cyclops & Hideaway"]
-  CYC["Cyclops Room"]
-  SP["Strange Passage"]
-  TRE["Treasure Room"]
-end
+    subgraph temple["Temple & Dome"]
+        DOM["Dome Room"]
+        TOR["Torch Room"]
+        NT["Temple"]
+        ER["Egyptian Room"]
+        ST["Altar"]
+    end
 
-M15 -->|se| CYC
-CYC -.->|e| SP
-CYC -.->|u| TRE
-SP -.->|e| LR
+    subgraph hades["Hades"]
+        ETH["Entrance to Hades"]
+        LLD["Land of the Dead"]
+    end
 
-%% ═══════════════════════════════════════
-%% DAM & RESERVOIR
-%% ═══════════════════════════════════════
-subgraph dam["Dam & Reservoir"]
-  DAM["Dam"]
-  DL["Dam Lobby"]
-  MNT["Maintenance Room"]
-  RS["Reservoir South"]
-  RES["Reservoir"]
-  RN["Reservoir North"]
-  SV["Stream View"]
-  INS["Stream"]
-end
+    subgraph mine["Coal Mine"]
+        SLR["Slide Room"]
+        MEE["Mine Entrance"]
+        SQ["Squeaky Room"]
+        BR["Bat Room"]
+        SR["Shaft Room"]
+        SM["Smelly Room"]
+        GAS["Gas Room"]
+        MI1["Coal Mine 1"]
+        MI2["Coal Mine 2"]
+        MI3["Coal Mine 3"]
+        MI4["Coal Mine 4"]
+        LT["Ladder Top"]
+        LB["Ladder Bottom"]
+        DE5["Dead End 5"]
+        TIM["Timber Room"]
+        LS["Drafty Room"]
+        MAC["Machine Room"]
+    end
 
-DC -->|e| DAM
-CHR -->|ne| RS
-RS -->|e| DAM
-RS -->|w| SV
-RS -.->|n| RES
-RES -.->|n| RN
-DAM -->|n| DL
-DAM -->|d| DB
-DL -->|n| MNT
-INS -->|d| RES
-SV -.->|"land"| INS
+    subgraph river["Frigid River"]
+        DB["Dam Base"]
+        R1["River 1"]
+        R2["River 2"]
+        R3["River 3"]
+        R4["River 4"]
+        R5["River 5"]
+        WCN["White Cliffs N"]
+        WCS["White Cliffs S"]
+        SHR["Shore"]
+        SBE["Sandy Beach"]
+        SBC["Sandy Cave"]
+        AF["Aragain Falls"]
+    end
 
-%% ═══════════════════════════════════════
-%% DEEP UNDERGROUND
-%% ═══════════════════════════════════════
-subgraph deep["Deep Underground"]
-  DC["Deep Canyon"]
-  MR1["Mirror Room (S)"]
-  MR2["Mirror Room (N)"]
-  SC["Cave (S)"]
-  TC["Cave (N)"]
-  CP["Cold Passage"]
-  NP["Narrow Passage"]
-  WP["Winding Passage"]
-  TP["Twisting Passage"]
-  ATL["Atlantis Room"]
-  DOME["Dome Room"]
-  TORCH["Torch Room"]
-  NT["Temple"]
-  EGY["Egyptian Room"]
-  ST["Altar"]
-end
+    subgraph endgame["Endgame"]
+        SBR["Stone Barrow"]
+    end
 
-ENG -->|e| DOME
-DOME -.->|d| TORCH
-TORCH -->|s| NT
-NT -->|s| ST
-NT -->|d| EGY
-ST -.->|d| TC
-NP -->|n| RR
-NP -->|s| MR2
-MR2 -->|w| WP
-MR2 -->|e| TC
-TC -->|d| ETH
-MR1 -->|n| CP
-MR1 -->|w| TP
-MR1 -->|e| SC
-SC -->|d| ATL
-ATL -->|s| RN
-CP -->|w| SLR
+    %% ===== SURFACE CONNECTIONS =====
+    WOH -- "n" --- NOH
+    WOH -- "s" --- SOH
+    WOH -- "w" --> F1
+    NOH -- "e" --- BOH
+    NOH -- "n" --- FP
+    SOH -- "e" --- BOH
+    SOH -- "s" --- F3
+    BOH -- "e" --- CLR
+    BOH -. "w" .- KIT
+    F1 -- "e" --- FP
+    F1 -- "s" --- F3
+    F1 -- "n" --- GC
+    F2 -- "e" --- MTN
+    F2 -- "s" --- CLR
+    F2 -- "w" --- FP
+    F3 -- "n" --- CLR
+    FP -- "u" --- UAT
+    FP -- "n" --- GC
+    GC -- "e" --> F2
+    CLR -- "e" --- CV
+    CV -- "w" --> F3
 
-%% ═══════════════════════════════════════
-%% HADES
-%% ═══════════════════════════════════════
-subgraph hades["Hades"]
-  ETH["Entrance to Hades"]
-  LLD["Land of the Dead"]
-end
+    %% ===== HOUSE CONNECTIONS =====
+    KIT -- "w" --- LIV
+    KIT -- "u" --- ATT
+    STU -. "u" .-> KIT
+    LIV -. "d" .- CEL
+    LIV -. "w" .- SP
 
-ETH -.->|s| LLD
+    %% ===== CELLAR CONNECTIONS =====
+    CEL -- "n" --- TR
+    CEL -- "s" --- EOC
+    EOC -- "e" --- GAL
+    GAL -- "n" --- STU
 
-%% ═══════════════════════════════════════
-%% RIVER & FALLS
-%% ═══════════════════════════════════════
-subgraph river["River & Falls"]
-  DB["Dam Base"]
-  R1["Frigid River 1"]
-  R2["Frigid River 2"]
-  R3["Frigid River 3"]
-  R4["Frigid River 4"]
-  R5["Frigid River 5"]
-  WCN["White Cliffs Beach (N)"]
-  WCS["White Cliffs Beach (S)"]
-  SHR["Shore"]
-  SB["Sandy Beach"]
-  SBC["Sandy Cave"]
-  AF["Aragain Falls"]
-  RBW["On the Rainbow"]
-  EOR["End of Rainbow"]
-end
+    %% ===== CENTRAL PASSAGES =====
+    TR -- "e" --- EWP
+    TR -- "w" --- M1
+    EWP -- "e" --- RR
+    EWP -- "d" --- CHR
+    RR -- "e" --- LOU
+    RR -- "n" --- NSP
+    RR -- "s" --- NP
+    RR -- "se" --- ENG
+    LOU -- "e" --- DMP
+    LOU -- "u" --- DPC
+    DMP -- "e" --- WCN
+    NSP -- "n" --- CHR
+    NSP -- "ne" --- DPC
+    CHR -- "ne" --- RSV
+    DPC -- "nw" --- RSV
+    DPC -- "e" --- DAM
 
-DB -->|"launch"| R1
-R1 -->|d| R2
-R2 -->|d| R3
-R3 -->|"land"| WCN
-R3 -->|d| R4
-R4 -->|w| WCS
-R4 -->|e| SB
-R4 -->|d| R5
-R5 -->|"land"| SHR
-WCN -.->|s| WCS
-WCN -.->|w| DAMP
-SHR -->|n| SB
-SHR -->|s| AF
-SB -->|ne| SBC
-AF -.->|w| RBW
-RBW -->|w| EOR
-EOR -->|sw| CB
-RS -->|sw| CHR
-DC -->|sw| NSP
+    %% ===== ENGRAVINGS & DOME =====
+    ENG -- "e" --- DOM
+    DOM -. "d" .- TOR
 
-%% ═══════════════════════════════════════
-%% COAL MINE
-%% ═══════════════════════════════════════
-subgraph mine["Coal Mine"]
-  SLR["Slide Room"]
-  ME["Mine Entrance"]
-  SQR["Squeaky Room"]
-  BAT["Bat Room"]
-  SHF["Shaft Room"]
-  SML["Smelly Room"]
-  GAS["Gas Room"]
-  MN1["Coal Mine 1"]
-  MN2["Coal Mine 2"]
-  MN3["Coal Mine 3"]
-  MN4["Coal Mine 4"]
-  LDT["Ladder Top"]
-  LDB["Ladder Bottom"]
-  DE5["Dead End (5)"]
-  TMB["Timber Room"]
-  LSH["Drafty Room"]
-  MCH["Machine Room"]
-end
+    %% ===== TEMPLE =====
+    TOR -- "s" --- NT
+    NT -- "e" --- ER
+    NT -- "s" --- ST
+    ST -. "d" .- TC
 
-SLR -->|n| ME
-SLR -->|d| CEL
-ME -->|w| SQR
-SQR -->|n| BAT
-BAT -->|e| SHF
-SHF -->|n| SML
-SML -->|d| GAS
-GAS -->|e| MN1
-MN1 -->|ne| MN2
-MN2 -->|se| MN3
-MN3 -->|sw| MN4
-MN4 -->|d| LDT
-LDT -->|d| LDB
-LDB -->|s| DE5
-LDB -->|w| TMB
-TMB -.->|w| LSH
-LSH -->|s| MCH
+    %% ===== MIRROR ROOMS =====
+    MR1 -- "n" --- CP
+    MR1 -- "w" --- TP
+    MR1 -- "e" --- SC
+    MR2 -- "w" --- WP
+    MR2 -- "n" --- NP
+    MR2 -- "e" --- TC
+    SC -- "d" --- ATL
 
-%% ═══════════════════════════════════════
-%% ENDGAME
-%% ═══════════════════════════════════════
-WOH -.->|sw| BARROW["Stone Barrow"]
+    %% ===== RESERVOIR =====
+    RSV -- "e" --- DAM
+    RSV -- "w" --- SV
+    RSV -. "n" .- RES
+    RES -- "n" --- RN
+    RES -- "u" --- INS
+    INS -- "land" --- SV
+    RN -- "n" --- ATL
 
-%% ═══════════════════════════════════════
-%% STYLE CLASSES
-%% ═══════════════════════════════════════
-classDef surface fill:#1a3a1a,stroke:#2d5a2d,color:#c0d8b0
-classDef house fill:#3a2213,stroke:#6b4226,color:#d4b896
-classDef cellarStyle fill:#2a2a35,stroke:#4a4a5a,color:#b0b0c0
-classDef mazeStyle fill:#2a2a2a,stroke:#5a5a5a,color:#b0b0b0
-classDef cyclopsStyle fill:#3a2a08,stroke:#8b6914,color:#d4c080
-classDef passageStyle fill:#1a2a4a,stroke:#3a5a8a,color:#a0c0e0
-classDef damStyle fill:#0a3040,stroke:#2a6a7a,color:#90c8d8
-classDef deepStyle fill:#2a1a3a,stroke:#5a3a6a,color:#c0a0d0
-classDef hadesStyle fill:#2a0a0a,stroke:#4a1a1a,color:#d0a0a0
-classDef riverStyle fill:#0a2a3a,stroke:#1a5a6a,color:#90c0d0
-classDef mineStyle fill:#3a2a0a,stroke:#8a5a1a,color:#d4b880
-classDef endgame fill:#1a1a2a,stroke:#3a3a5a,color:#b0b0d0
+    %% ===== HADES =====
+    TC -- "d" --- ETH
+    ETH -. "s" .- LLD
 
-class WOH,NOH,SOH,EOH,F1,F2,F3,MTN,PATH,TREE,CLR,GRC,CV,CM,CB surface
-class KIT,LR,ATT,STU house
-class CEL,EOC,GAL cellarStyle
-class TR,EWP,RR,NSP,CHR,LOU,DAMP,ENG passageStyle
-class M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,DE1,DE2,DE3,DE4,GR mazeStyle
-class CYC,SP,TRE cyclopsStyle
-class DAM,DL,MNT,RS,RES,RN,SV,INS damStyle
-class DC,MR1,MR2,SC,TC,CP,NP,WP,TP,ATL,DOME,TORCH,NT,EGY,ST deepStyle
-class ETH,LLD hadesStyle
-class DB,R1,R2,R3,R4,R5,WCN,WCS,SHR,SB,SBC,AF,RBW,EOR riverStyle
-class SLR,ME,SQR,BAT,SHF,SML,GAS,MN1,MN2,MN3,MN4,LDT,LDB,DE5,TMB,LSH,MCH mineStyle
-class BARROW endgame
+    %% ===== DAM =====
+    DAM -- "n" --- DL
+    DAM -- "d" --- DB
+    DL -- "n" --- MNT
+
+    %% ===== MAZE =====
+    M1 -- "s" --- M2
+    M1 -- "w" --- M4
+    M2 -- "e" --- M3
+    M2 -- "d" --> M4
+    M3 -- "n" --- M4
+    M3 -- "u" --- M5
+    M4 -- "e" --- DE1
+    M5 -- "e" --- DE2
+    M5 -- "sw" --- M6
+    M6 -- "e" --- M7
+    M6 -- "u" --- M9
+    M7 -- "u" --- M14
+    M7 -- "e" --- M8
+    M7 -- "s" --- M15
+    M7 -- "d" --> DE1
+    M8 -- "se" --- DE3
+    M9 -- "e" --- M10
+    M9 -- "s" --- M13
+    M9 -- "w" --- M12
+    M10 -- "u" --- M11
+    M11 -- "ne" --- GR
+    M11 -- "nw" --- M13
+    M11 -- "sw" --- M12
+    M12 -- "n" --- DE4
+    M12 -- "e" --- M13
+    M12 -- "d" --> M5
+    M14 -- "w" --- M15
+    M15 -- "se" --- CYC
+    GR -. "u" .- GC
+
+    %% ===== CYCLOPS & TREASURE =====
+    CYC -. "e" .- SP
+    CYC -. "u" .- TRS
+    SP -- "e" --- LIV
+
+    %% ===== COAL MINE =====
+    CP -- "w" --- SLR
+    SLR -- "n" --- MEE
+    SLR -- "d" --- CEL
+    MEE -- "w" --- SQ
+    SQ -- "n" --- BR
+    BR -- "e" --- SR
+    SR -- "n" --- SM
+    SM -- "d" --- GAS
+    GAS -- "e" --- MI1
+    MI1 -- "ne" --- MI2
+    MI2 -- "se" --- MI3
+    MI3 -- "sw" --- MI4
+    MI4 -- "d" --- LT
+    LT -- "d" --- LB
+    LB -- "s" --- DE5
+    LB -- "w" --- TIM
+    TIM -. "w" .- LS
+    LS -- "s" --- MAC
+
+    %% ===== RIVER (downstream is one-way) =====
+    DB --> R1
+    R1 --> R2
+    R2 --> R3
+    R3 --> R4
+    R4 --> R5
+    R1 -- "land" --> DB
+    R3 -- "land" --> WCN
+    R4 -- "w" --> WCS
+    R4 -- "e" --> SBE
+    R5 -- "land" --> SHR
+    WCN -. "s" .- WCS
+    SHR -- "n" --- SBE
+    SHR -- "s" --- AF
+    SBE -- "ne" --- SBC
+
+    %% ===== RAINBOW & CANYON =====
+    AF -. "w" .- OTR
+    OTR -- "w" --- EOR
+    EOR -- "sw" --- CB
+    CB -- "u" --- CM
+    CM -- "u" --- CV
+
+    %% ===== ENDGAME =====
+    WOH -. "sw" .-> SBR
+
+    %% ===== NODE STYLES =====
+    classDef surface fill:#2d4a2d,stroke:#4a7a4a,color:#d4c5a9
+    classDef house fill:#5a4030,stroke:#8a6a4a,color:#d4c5a9
+    classDef cellar fill:#3a3a3a,stroke:#6a6a6a,color:#d4c5a9
+    classDef passages fill:#3a4a5a,stroke:#5a7a9a,color:#d4c5a9
+    classDef maze fill:#4a4a3a,stroke:#7a7a5a,color:#d4c5a9
+    classDef cyclops fill:#5a3a4a,stroke:#8a5a7a,color:#d4c5a9
+    classDef dam fill:#2a3a4a,stroke:#4a6a8a,color:#d4c5a9
+    classDef reservoir fill:#2a4a5a,stroke:#4a7a9a,color:#d4c5a9
+    classDef mirror fill:#4a3a5a,stroke:#7a5a9a,color:#d4c5a9
+    classDef temple fill:#4a2a4a,stroke:#7a4a8a,color:#d4c5a9
+    classDef hades fill:#3a1a1a,stroke:#7a3a3a,color:#d4c5a9
+    classDef mine fill:#5a4a2a,stroke:#8a7a4a,color:#d4c5a9
+    classDef river fill:#2a4a4a,stroke:#4a8a8a,color:#d4c5a9
+    classDef canyon fill:#3a5a3a,stroke:#5a8a5a,color:#d4c5a9
+    classDef endgame fill:#5a5a1a,stroke:#8a8a3a,color:#d4c5a9
+
+    class WOH,NOH,SOH,BOH,F1,F2,F3,MTN,FP,UAT,GC,CLR surface
+    class KIT,LIV,ATT,STU house
+    class CEL,EOC,GAL,TR cellar
+    class EWP,RR,LOU,DMP,NSP,CHR,DPC,ENG,NP passages
+    class M1,M2,M3,M4,M5,M6,M7,M8,M9,M10,M11,M12,M13,M14,M15,DE1,DE2,DE3,DE4,GR maze
+    class CYC,SP,TRS cyclops
+    class DAM,DL,MNT dam
+    class RSV,RES,RN,SV,INS reservoir
+    class MR1,MR2,SC,TC,CP,WP,TP,ATL mirror
+    class DOM,TOR,NT,ER,ST temple
+    class ETH,LLD hades
+    class SLR,MEE,SQ,BR,SR,SM,GAS,MI1,MI2,MI3,MI4,LT,LB,DE5,TIM,LS,MAC mine
+    class DB,R1,R2,R3,R4,R5,WCN,WCS,SHR,SBE,SBC,AF river
+    class CV,CM,CB,EOR,OTR canyon
+    class SBR endgame
 </pre>
+</div>
+
+<div class="legend">
+  <p><strong>Legend</strong></p>
+  <ul>
+    <li><strong>Solid lines</strong> &mdash; always-available connections</li>
+    <li><strong>Dashed lines</strong> &mdash; conditional (open door, solved puzzle, game flag)</li>
+    <li><strong>Arrows</strong> &mdash; one-way passages (maze diodes, river current)</li>
+    <li><strong>Edge labels</strong> &mdash; compass direction (n/s/e/w/ne/nw/se/sw/u/d) or action</li>
+    <li><strong>Self-loops omitted</strong> &mdash; Maze 1, 6, 8, 9 and Coal Mine 1&ndash;4 loop to themselves</li>
+  </ul>
 </div>
 
 <footer>
   <p>
-    Map extracted from the original
-    <a href="https://github.com/historicalsource/zork1">Zork I ZIL source code</a>
-    (dungeon.zil). Dashed lines indicate conditional connections
-    (locked doors, puzzle gates, game-state flags).
+    Map extracted from the original Infocom ZIL source code
+    (<code>dungeon.zil</code>, ~12,000 lines). 110 rooms across 15 regions.
+    Generated with <a href="https://claude.com/claude-code">Claude Code</a>.
   </p>
-  <p><a href="./">&larr; Back to Zork I: Inform 7 Edition</a></p>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 <script>
 mermaid.initialize({
   startOnLoad: true,
+  securityLevel: 'loose',
+  maxTextSize: 200000,
   theme: 'dark',
+  themeVariables: {
+    darkMode: true,
+    background: '#111111',
+    primaryColor: '#2a3a2a',
+    primaryTextColor: '#d4c5a9',
+    primaryBorderColor: '#4a6a4a',
+    lineColor: '#5a5a4a',
+    secondaryColor: '#2a2a3a',
+    tertiaryColor: '#3a2a2a'
+  },
   flowchart: {
     useMaxWidth: false,
     htmlLabels: true,
-    curve: 'basis'
-  },
-  securityLevel: 'loose'
+    curve: 'basis',
+    nodeSpacing: 25,
+    rankSpacing: 35
+  }
 });
-
-var currentScale = 1.0;
-function zoom(factor) {
-  if (factor === 1.0) {
-    currentScale = 1.0;
-  } else {
-    currentScale *= factor;
-  }
-  currentScale = Math.max(0.2, Math.min(3.0, currentScale));
-  var svg = document.querySelector('#map-container svg');
-  if (svg) {
-    svg.style.transform = 'scale(' + currentScale + ')';
-    svg.style.transformOrigin = 'top center';
-  }
-}
 </script>
 
 </body>

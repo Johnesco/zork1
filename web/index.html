@@ -291,10 +291,20 @@ footer a {
 
 <div class="version-entry">
   <h3>v0 &mdash; The Original ZIL</h3>
-  <p>Browse the original Infocom ZIL source code with syntax highlighting and annotations.</p>
+  <p>
+    The unmodified Infocom ZIL source code, exactly as
+    <a href="https://github.com/historicalsource/zork1">released by Activision</a>
+    under the MIT License. Includes a ZIL source browser with syntax highlighting
+    and annotations, and a playable version of the game compiled directly from this source.
+  </p>
   <ul>
     <li>10 ZIL source files (~12,000 lines) with navigable definitions</li>
     <li>Annotation toggle explaining game engine and puzzle mechanics</li>
+    <li>Playable game compiled from the original ZIL using
+      <a href="https://foss.heptapod.net/zilf/zilf">ZILF</a>, the open-source ZIL
+      compiler, producing a Z-machine story file (.z3)</li>
+    <li>Runs in-browser via <a href="https://github.com/curiousdannii/parchment">Parchment</a>,
+      a JavaScript Z-machine interpreter &mdash; no downloads required</li>
   </ul>
   <div class="version-links">
     <a href="v0/parchment.html">Play</a>
