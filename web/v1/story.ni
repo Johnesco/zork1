@@ -1055,7 +1055,7 @@ Section 7 - Canary Wind-up and Bauble
 The canary-sang is a truth state that varies. The canary-sang is false.
 
 Winding is an action applying to one thing. Understand "wind [something]" and "wind up [something]" as winding.
-Carry out winding: say "You can't wind that."
+Carry out winding: say "You cannot wind up a [noun]."
 
 Instead of winding the golden clockwork canary:
 	if the canary-sang is false and the player is in the Forest Area:
@@ -2244,7 +2244,7 @@ The xb-timer is a number that varies. The xb-timer is 0.
 The hot-bell-timer is a number that varies. The hot-bell-timer is 0.
 
 Ringing is an action applying to one thing. Understand "ring [something]" as ringing.
-Carry out ringing: say "You can't ring that."
+Carry out ringing: say "How, exactly, can you ring that?"
 
 The red hot brass bell is a thing. "On the ground is a red hot bell."
 Understand "bell" and "hot" and "red" and "brass" as the red hot brass bell.
@@ -3424,6 +3424,11 @@ Carry out yelling: say "Aaaarrrrgggghhhh!"
 Repenting is an action applying to nothing. Understand "repent" as repenting.
 Carry out repenting: say "It could very well be too late!"
 
+Raping is an action applying to nothing. Understand "rape" as raping.
+Carry out raping: say "What a (ahem!) strange idea."
+
+Instead of turning something: say "This has no effect."
+
 Instead of waiting: say "Time passes..."
 
 Swimming is an action applying to nothing. Understand "swim" as swimming.
@@ -4018,7 +4023,7 @@ Instead of deflating the magic boat:
 	say "The boat deflates.";
 	now the boat-inflated is false;
 	now the magic boat is nowhere;
-	now the pile of plastic is in the location of the player.
+	now the pile of plastic is in here.
 
 The nonland-room is a truth state that varies. The nonland-room is false.
 
@@ -4054,7 +4059,7 @@ Before entering the magic boat:
 		say "Oops! Something sharp seems to have slipped and punctured the boat. The boat deflates to the sounds of hissing, sputtering, and cursing.";
 		now the boat-punctured is true;
 		now the magic boat is nowhere;
-		now the punctured boat is in the location of the player;
+		now the punctured boat is in here;
 		stop the action.
 
 Launching is an action applying to nothing. Understand "launch" as launching.
