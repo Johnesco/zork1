@@ -71,6 +71,9 @@ This is the score and rank rule:
 	say "[current-rank].[line break]".
 
 Carry out requesting the score:
+	if the player-is-dead is true:
+		say "You're dead! How can you think of your score?";
+		stop the action;
 	follow the score and rank rule;
 	stop the action.
 
@@ -100,6 +103,7 @@ To die saying (reason - text):
 		now the player-is-dead is true;
 		now the troll-flag is true;
 		now the always-lit-mode is true;
+		now the player carries the spirit-glow;
 		scatter-possessions;
 		move the player to Entrance to Hades;
 	otherwise:
@@ -107,10 +111,115 @@ To die saying (reason - text):
 		scatter-possessions;
 		move the player to Forest1.
 
+The spirit-glow is a thing. It is lit. It is undescribed.
+Rule for deciding whether all includes the spirit-glow: it does not.
+
 To scatter-possessions:
 	now every thing carried by the player is in West-of-House;
 	if the player encloses the brass lantern:
 		now the brass lantern is in Living Room.
+
+Section - Ghost State Actions
+
+Instead of attacking something when the player-is-dead is true:
+	say "All such attacks are vain in your condition."
+
+Instead of taking something when the player-is-dead is true:
+	say "Your hand passes through its object."
+
+Instead of removing something from something when the player-is-dead is true:
+	say "Your hand passes through its object."
+
+Instead of dropping something when the player-is-dead is true:
+	say "You have no possessions."
+
+Instead of throwing something at something when the player-is-dead is true:
+	say "You have no possessions."
+
+Instead of taking inventory when the player-is-dead is true:
+	say "You have no possessions."
+
+Instead of waiting when the player-is-dead is true:
+	say "Might as well. You've got an eternity."
+
+Instead of switching on the brass lantern when the player-is-dead is true:
+	say "You need no light to guide you."
+
+Instead of opening something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of closing something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of eating something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of drinking something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of turning something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of burning something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of tying something to something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of rubbing something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of switching on something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of switching off something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of locking something with something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of unlocking something with something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of pushing something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of pulling something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of touching something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of squeezing something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of searching something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of waving something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of putting something on something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of inserting something into something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of giving something to someone when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
+
+Instead of doing anything when the player-is-dead is true (this is the ghost state catch-all rule):
+	if we are looking or we are examining or we are going or we are praying or we are looking under:
+		continue the action;
+	say "You can't even do that."
+
+Section - Ghost State Looking
+
+Before looking when the player-is-dead is true:
+	if the location is a dark room:
+		say "Although there is no light, the room seems dimly illuminated.[line break]";
+	say "The room looks strange and unearthly[if the number of visible things in the location is 0].[otherwise] and objects appear indistinct.[end if]";
+	say "[line break]".
 
 Chapter 5 - Darkness and Grues
 
@@ -1812,6 +1921,10 @@ Instead of going down in Dome Room:
 	otherwise:
 		say "You cannot go down without fracturing many bones."
 
+After going to Dome Room when the player-is-dead is true:
+	say "As you enter the dome you feel a strong pull as if from a wind drawing you over the railing and down.";
+	move the player to Torch-Room.
+
 Instead of tying the rope to the wooden railing:
 	if the dome-flag is true:
 		say "The rope is already tied to it.";
@@ -2486,6 +2599,9 @@ Timber Room is a dark room. "This is a long and narrow passage, which is clutter
 Timber Room is in the Underground.
 East of Timber Room is Ladder Bottom.
 
+Instead of going west in Timber Room when the player-is-dead is true:
+	say "You cannot enter in your condition."
+
 Instead of going west in Timber Room:
 	let heavy-found be false;
 	repeat with item running through things carried by the player:
@@ -2842,7 +2958,18 @@ Chapter 2 - Pray
 
 Praying is an action applying to nothing. Understand "pray" as praying.
 Carry out praying:
-	if the player is in South Temple:
+	if the player-is-dead is true:
+		if the player is in South Temple:
+			now the player-is-dead is false;
+			now the always-lit-mode is false;
+			if the troll is in Troll-Room:
+				now the troll-flag is false;
+			now the spirit-glow is nowhere;
+			say "From the distance the sound of a lone trumpet is heard. The room becomes very bright and you feel disembodied. In a moment, the brightness fades and you find yourself rising as if from a long sleep, deep in the woods. In the distance you can faintly hear a songbird and the sounds of the forest.";
+			move the player to Forest1;
+		otherwise:
+			say "Your prayers are not heard.";
+	otherwise if the player is in South Temple:
 		move the player to Forest1;
 		say "If you can be sure of one thing, it is that your prayers have been answered.";
 	otherwise:
@@ -2852,6 +2979,9 @@ Chapter 4 - Diagnose
 
 Diagnosing is an action out of world. Understand "diagnose" as diagnosing.
 Carry out diagnosing:
+	if the player-is-dead is true:
+		say "You are dead.";
+		stop the action;
 	say "You are in perfect health.[line break]";
 	say "You can survive several wounds.[line break]";
 	if the player-deaths > 0:
