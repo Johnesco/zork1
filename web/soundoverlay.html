@@ -496,17 +496,17 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
   <tr>
     <td>Quixe</td>
     <td><code>v3/index.html</code></td>
-    <td><code>&lt;script src="lib/ambient-audio.js"&gt;</code></td>
+    <td><code>&lt;script src="lib/ambient-audio.js"&gt;</code> + <code>&lt;script src="lib/sound-effects.js"&gt;</code></td>
   </tr>
   <tr>
     <td>Parchment</td>
     <td><code>v3/parchment.html</code></td>
-    <td><code>&lt;script src="lib/ambient-audio.js"&gt;</code></td>
+    <td><code>&lt;script src="lib/ambient-audio.js"&gt;</code> + <code>&lt;script src="lib/sound-effects.js"&gt;</code></td>
   </tr>
   <tr>
     <td>Glulxe</td>
     <td><code>v3/glulxe.html</code></td>
-    <td><code>&lt;script src="lib/ambient-audio.js"&gt;</code></td>
+    <td><code>&lt;script src="lib/ambient-audio.js"&gt;</code> + <code>&lt;script src="lib/sound-effects.js"&gt;</code></td>
   </tr>
 </table>
 
@@ -526,9 +526,9 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
     events like combat, item pickups, or puzzle completions.
   </li>
   <li>
-    <strong>No sound effects</strong> &mdash; Only looping ambient music is
-    supported. One-shot sound effects (a sword clang, a door creaking) would
-    require the game itself to trigger them.
+    <strong>Limited sound effects</strong> &mdash; One-shot sound effects are
+    triggered by pattern-matching game text output. This works for predictable
+    text but cannot detect events that don't produce unique output strings.
   </li>
   <li>
     <strong>No in-game control</strong> &mdash; The player cannot control
@@ -547,6 +547,143 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
     may be silent until the player types a command.
   </li>
 </ul>
+
+<h2>Sound Effects</h2>
+
+<p>
+  In addition to looping ambient audio, v3 includes one-shot sound effects
+  triggered by specific in-game text. These are handled by a separate script:
+  <a href="v3/lib/sound-effects.js"><code>v3/lib/sound-effects.js</code></a>.
+</p>
+
+<h3>How It Works</h3>
+
+<p>
+  A second <code>MutationObserver</code> watches the <code>.BufferWindow</code>
+  (the main game text output area) for newly added DOM nodes. When a node's text
+  content matches a trigger pattern, the corresponding audio clip is played once
+  at a preset volume. The clip's <code>&lt;audio&gt;</code> element is
+  automatically removed when playback finishes.
+</p>
+
+<pre class="diagram">
+ ┌─────────────────────────────────────────────────┐
+ │  .BufferWindow  (game text output)              │
+ │                                                 │
+ │  "You hear in the distance the chirping of      │
+ │   a song bird."                                 │
+ └──────────────────────┬──────────────────────────┘
+                        │ DOM mutation (addedNodes)
+                        ▼
+ ┌──────────────────────────────────────────────────┐
+ │  sound-effects.js                                │
+ │                                                  │
+ │  MutationObserver                                │
+ │       │                                          │
+ │       ▼                                          │
+ │  pattern match: /chirping of a song bird/i       │
+ │       │                                          │
+ │       ▼                                          │
+ │  playEffect()  →  audio/sfx/bird.mp3  🔊         │
+ │    (cooldown check, mute check, one-shot play)   │
+ └──────────────────────────────────────────────────┘
+</pre>
+
+<h3>Triggers</h3>
+
+<table>
+  <tr>
+    <th>Trigger</th>
+    <th>Pattern</th>
+    <th>Audio File</th>
+    <th>Volume</th>
+    <th>Cooldown</th>
+  </tr>
+  <tr>
+    <td>Songbird</td>
+    <td><code>/chirping of a song bird/i</code></td>
+    <td><code>audio/sfx/bird.mp3</code></td>
+    <td>0.25</td>
+    <td>10s</td>
+  </tr>
+  <tr>
+    <td>Mailbox</td>
+    <td><code>/You open the small mailbox/i</code></td>
+    <td><code>audio/sfx/creak.mp3</code></td>
+    <td>0.3</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Window</td>
+    <td><code>/you open the window/i</code></td>
+    <td><code>audio/sfx/window.mp3</code></td>
+    <td>0.3</td>
+    <td>5s</td>
+  </tr>
+</table>
+
+<div class="info-box">
+  <h4>Cooldowns</h4>
+  <p>
+    Each trigger has a cooldown period to prevent the same sound from firing
+    repeatedly. The songbird text appears every turn in forest rooms (via a
+    recurring game rule), so it uses a 10-second cooldown. The mailbox and window
+    are one-time events but still have 5-second cooldowns as a guard.
+  </p>
+</div>
+
+<h3>Mute Sync</h3>
+
+<p>
+  Sound effects share mute state with ambient audio via the same
+  <code>localStorage</code> key (<code>zork1-audio-muted</code>). When the
+  player clicks the mute button created by <code>ambient-audio.js</code>,
+  sound effects are also silenced. No duplicate mute button is created.
+</p>
+
+<h3>Adding New Triggers</h3>
+
+<p>
+  To add a new sound effect, add an entry to the <code>SOUND_TRIGGERS</code>
+  array in <code>sound-effects.js</code>:
+</p>
+
+<pre><code>{ id: 'unique-name',
+  pattern: /text pattern to match/i,
+  src: 'audio/sfx/filename.mp3',
+  volume: 0.3,
+  cooldownMs: 5000 }</code></pre>
+
+<p>
+  Place the MP3 file in <code>v3/audio/sfx/</code>. The pattern is tested
+  against each newly added DOM node's <code>textContent</code>, so it should
+  match a substring of the game output that uniquely identifies the event.
+</p>
+
+<h3>Sound Effect Audio Files</h3>
+
+<table>
+  <tr>
+    <th>File</th>
+    <th>Trigger</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>sfx/bird.mp3</code></td>
+    <td>Songbird</td>
+    <td>Robin chirping (2s, CC0, BigSoundBank #1667)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/creak.mp3</code></td>
+    <td>Mailbox</td>
+    <td>Hinge creak (2s, CC0, BigSoundBank #0302)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/window.mp3</code></td>
+    <td>Window</td>
+    <td>Window sliding open (5s, CC0, BigSoundBank #0039)</td>
+  </tr>
+</table>
 
 <h2>Future Direction</h2>
 

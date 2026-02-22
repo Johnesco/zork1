@@ -1,0 +1,82 @@
+/**
+ * sound-effects.js — One-shot sound effects for Zork I v3
+ *
+ * Watches the game text output (.BufferWindow) for specific text patterns
+ * and plays short audio clips when matched. Shares mute state with
+ * ambient-audio.js via the same localStorage key.
+ *
+ * Audio files: CC0-licensed from BigSoundBank (bigsoundbank.com)
+ */
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'zork1-audio-muted';
+  var SOUND_TRIGGERS = [
+    { id: 'bird',    pattern: /chirping of a song bird/i,
+      src: 'audio/sfx/bird.mp3',   volume: 0.25, cooldownMs: 10000 },
+    { id: 'mailbox', pattern: /You open the small mailbox/i,
+      src: 'audio/sfx/creak.mp3',  volume: 0.3,  cooldownMs: 5000 },
+    { id: 'window',  pattern: /you open the window/i,
+      src: 'audio/sfx/window.mp3', volume: 0.3,  cooldownMs: 5000 },
+  ];
+
+  // Track cooldowns per trigger
+  var lastPlayed = {};
+
+  function isMuted() {
+    try { return localStorage.getItem(STORAGE_KEY) === '1'; }
+    catch (e) { return false; }
+  }
+
+  function isOnCooldown(trigger) {
+    var last = lastPlayed[trigger.id] || 0;
+    return (performance.now() - last) < trigger.cooldownMs;
+  }
+
+  function playEffect(trigger) {
+    if (isMuted() || isOnCooldown(trigger)) return;
+    lastPlayed[trigger.id] = performance.now();
+    var el = document.createElement('audio');
+    el.src = trigger.src;
+    el.volume = trigger.volume;
+    el.play().catch(function () {});
+    el.addEventListener('ended', function () { el.remove(); });
+  }
+
+  function onBufferMutation(mutations) {
+    for (var i = 0; i < mutations.length; i++) {
+      var added = mutations[i].addedNodes;
+      for (var j = 0; j < added.length; j++) {
+        var text = added[j].textContent;
+        if (!text) continue;
+        for (var k = 0; k < SOUND_TRIGGERS.length; k++) {
+          if (SOUND_TRIGGERS[k].pattern.test(text)) {
+            playEffect(SOUND_TRIGGERS[k]);
+            break; // one sound per added node
+          }
+        }
+      }
+    }
+  }
+
+  function attachObserver(buf) {
+    var observer = new MutationObserver(onBufferMutation);
+    observer.observe(buf, { childList: true, subtree: true });
+  }
+
+  function startObserving() {
+    var buf = document.querySelector('.BufferWindow');
+    if (buf) { attachObserver(buf); return; }
+    var poll = setInterval(function () {
+      buf = document.querySelector('.BufferWindow');
+      if (buf) { clearInterval(poll); attachObserver(buf); }
+    }, 500);
+  }
+
+  // Init
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startObserving);
+  } else {
+    startObserving();
+  }
+})();
