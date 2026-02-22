@@ -529,9 +529,10 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
     events like combat, item pickups, or puzzle completions.
   </li>
   <li>
-    <strong>Limited sound effects</strong> &mdash; One-shot sound effects are
-    triggered by pattern-matching game text output. This works for predictable
-    text but cannot detect events that don't produce unique output strings.
+    <strong>Text-matched sound effects</strong> &mdash; One-shot sound effects (17
+    triggers) are fired by pattern-matching game text output. This works for
+    predictable text but cannot detect events that don't produce unique output
+    strings.
   </li>
   <li>
     <strong>No in-game control</strong> &mdash; The player cannot control
@@ -551,7 +552,7 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
   </li>
 </ul>
 
-<h2>Sound Effects</h2>
+<h2 id="sound-effects">Sound Effects</h2>
 
 <p>
   In addition to looping ambient audio, v3 includes one-shot sound effects
@@ -623,6 +624,104 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
     <td>0.3</td>
     <td>5s</td>
   </tr>
+  <tr>
+    <td>Trap door</td>
+    <td><code>/door reluctantly opens/i</code></td>
+    <td><code>audio/sfx/trapdoor.mp3</code></td>
+    <td>0.2</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Exorcism bell</td>
+    <td><code>/bell suddenly becomes red hot/i</code></td>
+    <td><code>audio/sfx/bell.mp3</code></td>
+    <td>0.25</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Spirits departing</td>
+    <td><code>/flee through the walls/i</code></td>
+    <td><code>audio/sfx/spirits.mp3</code></td>
+    <td>0.3</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Bat swoops</td>
+    <td><code>/bat grabs you/i</code></td>
+    <td><code>audio/sfx/bat.mp3</code></td>
+    <td>0.2</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Cyclops flees</td>
+    <td><code>/cyclops.*flees the room/i</code></td>
+    <td><code>audio/sfx/footsteps.mp3</code></td>
+    <td>0.25</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Machine rumble</td>
+    <td><code>/machine comes to life/i</code></td>
+    <td><code>audio/sfx/machine.mp3</code></td>
+    <td>0.2</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Boat inflating</td>
+    <td><code>/boat inflates and appears seaworthy/i</code></td>
+    <td><code>audio/sfx/inflate.mp3</code></td>
+    <td>0.2</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Gold coffin</td>
+    <td><code>/open the gold coffin/i</code></td>
+    <td><code>audio/sfx/coffin.mp3</code></td>
+    <td>0.2</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Match strike</td>
+    <td><code>/matches starts to burn/i</code></td>
+    <td><code>audio/sfx/match.mp3</code></td>
+    <td>0.25</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Grue death</td>
+    <td><code>/Oh, no!.*grue/i</code></td>
+    <td><code>audio/sfx/grue.mp3</code></td>
+    <td>0.3</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Dam flood</td>
+    <td><code>/sluice gates open/i</code></td>
+    <td><code>audio/sfx/flood.mp3</code></td>
+    <td>0.25</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Leaves rustling</td>
+    <td><code>/disturbing the pile of leaves/i</code></td>
+    <td><code>audio/sfx/leaves.mp3</code></td>
+    <td>0.2</td>
+    <td>5s</td>
+  </tr>
+  <tr>
+    <td>Sword glow</td>
+    <td><code>/sword is glowing/i</code></td>
+    <td><code>audio/sfx/sword.mp3</code></td>
+    <td>0.15</td>
+    <td>30s</td>
+  </tr>
+  <tr>
+    <td>Thief laugh</td>
+    <td><code>/thief just left.*robbed you blind/i</code></td>
+    <td><code>audio/sfx/laugh.mp3</code></td>
+    <td>0.15</td>
+    <td>30s</td>
+  </tr>
 </table>
 
 <div class="info-box">
@@ -630,8 +729,10 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
   <p>
     Each trigger has a cooldown period to prevent the same sound from firing
     repeatedly. The songbird text appears every turn in forest rooms (via a
-    recurring game rule), so it uses a 10-second cooldown. The mailbox and window
-    are one-time events but still have 5-second cooldowns as a guard.
+    recurring game rule), so it uses a 10-second cooldown. The sword glow and
+    thief laugh use 30-second cooldowns since they can fire repeatedly during
+    gameplay. All other triggers use 5-second cooldowns as a guard against
+    rapid re-triggering.
   </p>
 </div>
 
@@ -685,6 +786,76 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
     <td><code>sfx/window.mp3</code></td>
     <td>Window</td>
     <td>Window sliding open (5s, CC0, BigSoundBank #0039)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/trapdoor.mp3</code></td>
+    <td>Trap door</td>
+    <td>Heavy door creak (6s, CC0, BigSoundBank #3207)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/bell.mp3</code></td>
+    <td>Exorcism bell</td>
+    <td>Bell toll (7s, CC0, BigSoundBank #3446)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/spirits.mp3</code></td>
+    <td>Spirits departing</td>
+    <td>Ghostly whoosh (1s, CC0, BigSoundBank #1796)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/bat.mp3</code></td>
+    <td>Bat swoops</td>
+    <td>Bat wing flapping (13s, CC0, BigSoundBank #0458)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/footsteps.mp3</code></td>
+    <td>Cyclops flees</td>
+    <td>Running footsteps (10s, CC0, BigSoundBank #0514)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/machine.mp3</code></td>
+    <td>Machine rumble</td>
+    <td>Mechanical rumble (9s, CC0, BigSoundBank #0709)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/inflate.mp3</code></td>
+    <td>Boat inflating</td>
+    <td>Air pump (9s, CC0, BigSoundBank #1129)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/coffin.mp3</code></td>
+    <td>Gold coffin</td>
+    <td>Stone scraping (23s, CC0, BigSoundBank #0580)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/match.mp3</code></td>
+    <td>Match strike</td>
+    <td>Match ignition (10s, CC0, BigSoundBank #1271)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/grue.mp3</code></td>
+    <td>Grue death</td>
+    <td>Growling creature (4s, CC0, BigSoundBank #2110)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/flood.mp3</code></td>
+    <td>Dam flood</td>
+    <td>Rushing water (28s, CC0, BigSoundBank #0507)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/leaves.mp3</code></td>
+    <td>Leaves rustling</td>
+    <td>Leaves rustling (63s, CC0, BigSoundBank #0137)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/sword.mp3</code></td>
+    <td>Sword glow</td>
+    <td>Chime tone (2s, CC0, BigSoundBank #2079)</td>
+  </tr>
+  <tr>
+    <td><code>sfx/laugh.mp3</code></td>
+    <td>Thief laugh</td>
+    <td>Deep quiet laugh (7s, CC0, BigSoundBank #0490)</td>
   </tr>
 </table>
 
