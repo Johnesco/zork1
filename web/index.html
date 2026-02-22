@@ -207,9 +207,9 @@ footer a {
 
 <div class="engine-selector">
   <span class="engine-label">Engine:</span>
-  <button class="engine-btn active" data-engine="quixe">Quixe</button>
+  <button class="engine-btn" data-engine="quixe">Quixe</button>
   <button class="engine-btn" data-engine="parchment">Parchment</button>
-  <button class="engine-btn" data-engine="glulxe">Glulxe</button>
+  <button class="engine-btn active" data-engine="glulxe">Glulxe</button>
 </div>
 
 <h2>Version History</h2>
@@ -375,7 +375,7 @@ footer a {
 <script>
 (function() {
   var STORAGE_KEY = 'zork1-engine';
-  var DEFAULT_ENGINE = 'quixe';
+  var DEFAULT_ENGINE = 'glulxe';
 
   function getEngine() {
     try { return localStorage.getItem(STORAGE_KEY) || DEFAULT_ENGINE; }
