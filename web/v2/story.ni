@@ -3555,20 +3555,37 @@ Chapter 2 - Sword Glow
 
 The sword-glow-level is a number that varies. The sword-glow-level is 0.
 
+To decide whether (V - a person) is a nearby villain:
+	if V is in the location of the player, yes;
+	no.
+
+To decide whether a villain lurks adjacent:
+	repeat with D running through directions:
+		let R be the room D from the location of the player;
+		if R is a room:
+			if the troll is not defeated and the troll is in R, yes;
+			if the thief is not defeated and the thief is in R, yes;
+			if the cyclops is in R, yes;
+	no.
+
 Every turn when the player carries the sword (this is the sword glow rule):
-	let danger-count be 0;
-	if the troll is not defeated and the troll is in the location of the player:
-		increase danger-count by 1;
-	if the thief is not defeated and the thief is in the location of the player:
-		increase danger-count by 1;
-	if danger-count is not the sword-glow-level:
-		if danger-count is 0:
+	let danger-level be 0;
+	if the troll is not defeated and the troll is a nearby villain:
+		now danger-level is 2;
+	if the thief is not defeated and the thief is a nearby villain:
+		now danger-level is 2;
+	if the cyclops is a nearby villain:
+		now danger-level is 2;
+	if danger-level is 0 and a villain lurks adjacent:
+		now danger-level is 1;
+	if danger-level is not the sword-glow-level:
+		if danger-level is 0:
 			say "Your sword is no longer glowing.";
-		otherwise if danger-count is 1:
+		otherwise if danger-level is 1:
 			say "Your sword is glowing with a faint blue glow.";
 		otherwise:
 			say "Your sword has begun to glow very brightly.";
-		now the sword-glow-level is danger-count.
+		now the sword-glow-level is danger-level.
 
 Instead of examining the sword:
 	if the sword-glow-level is 1:
