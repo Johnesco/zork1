@@ -1354,11 +1354,13 @@ To say sinister-black-fog for (V - a person):
 
 Chapter 4 - Troll NPC
 
-The troll is a person in Troll-Room. "A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room."
+The troll is a person in Troll-Room. "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room[otherwise]A troll is here[end if]."
 Understand "troll" and "nasty" as the troll.
-The description of the troll is "[if the troll is not defeated]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]The troll is dead.[end if]".
+The description of the troll is "[if the troll is defeated]The troll is dead.[otherwise if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A troll is here.[end if]".
 
 The troll-strength is a number that varies. The troll-strength is 2.
+The troll-unconscious is a truth state that varies. The troll-unconscious is false.
+The troll-recovery-chance is a number that varies. The troll-recovery-chance is 0.
 
 The bloody axe is carried by the troll. "There is a bloody axe here."
 Understand "axe" and "ax" and "bloody" as the bloody axe.
@@ -1370,6 +1372,16 @@ Instead of taking the bloody axe when the troll is not defeated and the troll ca
 Instead of attacking the troll:
 	if the troll is defeated:
 		say "The troll is already dead.";
+	otherwise if the troll-unconscious is true:
+		say "The unconscious troll cannot defend himself: He dies.";
+		say "[line break][sinister-black-fog for the troll]";
+		now the troll is defeated;
+		now the troll-flag is true;
+		now the troll-unconscious is false;
+		now the troll-recovery-chance is 0;
+		if the troll carries the bloody axe:
+			now the bloody axe is in Troll-Room;
+		remove the troll from play;
 	otherwise:
 		let W be a random weapon carried by the player;
 		if W is nothing:
@@ -1379,17 +1391,26 @@ Instead of attacking the troll:
 			now the melee-target is the troll;
 			let hit-chance be a random number between 1 and 10;
 			if hit-chance is at least 4:
-				decrease the troll-strength by 1;
-				if the troll-strength is at most 0:
-					print hero melee for "kill";
-					say "[line break][sinister-black-fog for the troll]";
-					now the troll is defeated;
+				let outcome be a random number between 1 and 3;
+				if outcome is 1:
+					print hero melee for "unconscious";
+					now the troll-unconscious is true;
+					now the troll-recovery-chance is 0;
 					now the troll-flag is true;
 					if the troll carries the bloody axe:
 						now the bloody axe is in Troll-Room;
-					remove the troll from play;
 				otherwise:
-					print hero melee for "light-wound";
+					decrease the troll-strength by 1;
+					if the troll-strength is at most 0:
+						print hero melee for "kill";
+						say "[line break][sinister-black-fog for the troll]";
+						now the troll is defeated;
+						now the troll-flag is true;
+						if the troll carries the bloody axe:
+							now the bloody axe is in Troll-Room;
+						remove the troll from play;
+					otherwise:
+						print hero melee for "light-wound";
 			otherwise:
 				print hero melee for "miss".
 
@@ -1404,7 +1425,7 @@ Instead of giving something to the troll:
 		say "The troll, who is not overly proud, graciously accepts the gift and eats it hungrily.";
 		remove the noun from play.
 
-Every turn when the troll is not defeated and the troll is in Troll-Room and the player is in Troll-Room (this is the troll attacks rule):
+Every turn when the troll is not defeated and the troll-unconscious is false and the troll is in Troll-Room and the player is in Troll-Room (this is the troll attacks rule):
 	let W be a random weapon carried by the player;
 	if W is not nothing:
 		now the melee-weapon is W;
@@ -1414,6 +1435,20 @@ Every turn when the troll is not defeated and the troll is in Troll-Room and the
 		otherwise:
 			print troll melee for "kill";
 			die saying "It appears that that last blow was too much for you. I'm afraid you are dead."
+
+Every turn when the troll-unconscious is true and the troll is in Troll-Room (this is the troll recovery rule):
+	if the troll-recovery-chance > 0:
+		let roll be a random number between 1 and 100;
+		if roll is at most the troll-recovery-chance:
+			now the troll-unconscious is false;
+			now the troll-recovery-chance is 0;
+			now the troll-flag is false;
+			if the bloody axe is in Troll-Room:
+				now the troll carries the bloody axe;
+			if the player is in Troll-Room:
+				say "The troll stirs, quickly resuming a fighting stance.";
+			rule succeeds;
+	increase the troll-recovery-chance by 25.
 
 Instead of taking the troll:
 	say "The troll spits in your face, grunting [quotation mark]Better luck next time[quotation mark] in a rather barbarous accent."
@@ -1431,6 +1466,8 @@ Instead of throwing something at the troll:
 			remove the noun from play;
 			now the troll is defeated;
 			now the troll-flag is true;
+			now the troll-unconscious is false;
+			now the troll-recovery-chance is 0;
 			if the troll carries the bloody axe:
 				now the bloody axe is in Troll-Room;
 			remove the troll from play;
@@ -3555,6 +3592,10 @@ Carry out praying:
 			now the always-lit-mode is false;
 			if the troll is in Troll-Room:
 				now the troll-flag is false;
+				now the troll-unconscious is false;
+				now the troll-recovery-chance is 0;
+				if the bloody axe is in Troll-Room:
+					now the troll carries the bloody axe;
 			now the spirit-glow is nowhere;
 			say "From the distance the sound of a lone trumpet is heard. The room becomes very bright and you feel disembodied. In a moment, the brightness fades and you find yourself rising as if from a long sleep, deep in the woods. In the distance you can faintly hear a songbird and the sounds of the forest.";
 			move the player to Forest1;
