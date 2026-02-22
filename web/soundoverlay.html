@@ -290,9 +290,12 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
 
 <p>
   When the zone changes, the old audio fades out and the new audio fades in
-  simultaneously over 1000ms. Fading uses <code>requestAnimationFrame</code>
-  for smooth linear interpolation. Each zone has a preset target volume
-  (ranging from 0.1 to 0.35) to balance the different audio loops.
+  simultaneously over 1000ms. When there is no previous audio playing (e.g.
+  on the first room after page load), the fade-in is slower &mdash; 3000ms
+  &mdash; for a gentle introduction. Fading uses
+  <code>requestAnimationFrame</code> for smooth linear interpolation. Each
+  zone has a preset target volume (ranging from 0.02 to 0.07) to balance the
+  different audio loops.
 </p>
 
 <pre><code>function fadeAudio(el, targetVol, doneCallback) {
@@ -350,47 +353,47 @@ text = text.replace(/\s{2,}.*$/, '');  // strip score/moves</code></pre>
   </tr>
   <tr>
     <td><code>forest</code></td>
-    <td>0.20</td>
+    <td>0.04</td>
     <td>West of House, North of House, South of House, Behind House, Forest, Forest Path, Up a Tree, Clearing, Canyon View, Rocky Ledge, On the Rainbow, End of Rainbow, Stone Barrow</td>
   </tr>
   <tr>
     <td><code>house</code></td>
-    <td>0.10</td>
+    <td>0.02</td>
     <td>Kitchen, Living Room, Attic</td>
   </tr>
   <tr>
     <td><code>cave</code></td>
-    <td>0.15</td>
+    <td>0.03</td>
     <td>Cellar, The Troll Room, East of Chasm, Gallery, Studio, Maze, Dead End, Grating Room, Cyclops Room, Strange Passage, Treasure Room, East-West Passage, Round Room, Deep Canyon, Damp Cave, North-South Passage, Chasm, Cold Passage, Narrow Passage, Winding Passage, Twisting Passage, Atlantis Room, Engravings Cave, Dome Room, Torch Room, Temple, Altar, Egyptian Room, Mirror Room, Cave, Small Cave, Tiny Cave</td>
   </tr>
   <tr>
     <td><code>water</code></td>
-    <td>0.20</td>
+    <td>0.04</td>
     <td>Frigid River, White Cliffs Beach, Shore, Sandy Beach, Sandy Cave, Stream, Stream View, Dam Base, Dam Lobby, Reservoir South, Reservoir North, Reservoir</td>
   </tr>
   <tr>
     <td><code>rapids</code></td>
-    <td>0.25</td>
+    <td>0.05</td>
     <td>Aragain Falls, Canyon Bottom</td>
   </tr>
   <tr>
     <td><code>loud</code></td>
-    <td>0.35</td>
+    <td>0.07</td>
     <td>Loud Room</td>
   </tr>
   <tr>
     <td><code>hades</code></td>
-    <td>0.25</td>
+    <td>0.05</td>
     <td>Entrance to Hades, Land of the Dead</td>
   </tr>
   <tr>
     <td><code>mine</code></td>
-    <td>0.15</td>
+    <td>0.03</td>
     <td>Mine Entrance, Squeaky Room, Bat Room, Shaft Room, Smelly Room, Gas Room, Coal Mine, Ladder Top, Ladder Bottom, Timber Room, Drafty Room, Slide Room</td>
   </tr>
   <tr>
     <td><code>machinery</code></td>
-    <td>0.175</td>
+    <td>0.035</td>
     <td>Dam, Maintenance Room, Machine Room</td>
   </tr>
   <tr>

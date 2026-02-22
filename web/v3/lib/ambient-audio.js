@@ -13,15 +13,15 @@
 
   // ── Zone audio config ───────────────────────────────────────────────
   var ZONES = {
-    forest:    { src: 'audio/forest.mp3',    volume: 0.2   },
-    house:     { src: 'audio/house.mp3',     volume: 0.1   },
-    cave:      { src: 'audio/cave.mp3',      volume: 0.15  },
-    water:     { src: 'audio/water.mp3',     volume: 0.2   },
-    rapids:    { src: 'audio/rapids.mp3',    volume: 0.25  },
-    loud:      { src: 'audio/loud.mp3',      volume: 0.35  },
-    hades:     { src: 'audio/hades.mp3',     volume: 0.25  },
-    mine:      { src: 'audio/mine.mp3',      volume: 0.15  },
-    machinery: { src: 'audio/machinery.mp3', volume: 0.175 },
+    forest:    { src: 'audio/forest.mp3',    volume: 0.04  },
+    house:     { src: 'audio/house.mp3',     volume: 0.02  },
+    cave:      { src: 'audio/cave.mp3',      volume: 0.03  },
+    water:     { src: 'audio/water.mp3',     volume: 0.04  },
+    rapids:    { src: 'audio/rapids.mp3',    volume: 0.05  },
+    loud:      { src: 'audio/loud.mp3',      volume: 0.07  },
+    hades:     { src: 'audio/hades.mp3',     volume: 0.05  },
+    mine:      { src: 'audio/mine.mp3',      volume: 0.03  },
+    machinery: { src: 'audio/machinery.mp3', volume: 0.035 },
     // silence — no audio element, handled as null
   };
 
@@ -130,6 +130,7 @@
 
   // ── State ───────────────────────────────────────────────────────────
   var FADE_MS        = 1000;
+  var SLOW_FADE_MS   = 3000;  // slow fade-in when no previous audio
   var STORAGE_KEY    = 'zork1-audio-muted';
   var currentRoom    = null;
   var currentZone    = null;
@@ -150,14 +151,15 @@
     return el;
   }
 
-  function fadeAudio(el, targetVol, doneCallback) {
+  function fadeAudio(el, targetVol, doneCallback, durationMs) {
     if (!el) { if (doneCallback) doneCallback(); return; }
+    var fadeMs = durationMs || FADE_MS;
     var startVol = el.volume;
     var startTime = performance.now();
 
     function step(now) {
       var elapsed = now - startTime;
-      var t = Math.min(elapsed / FADE_MS, 1);
+      var t = Math.min(elapsed / fadeMs, 1);
       el.volume = startVol + (targetVol - startVol) * t;
       if (t < 1) {
         requestAnimationFrame(step);
@@ -172,6 +174,8 @@
   function crossfadeTo(zone) {
     var cfg = ZONES[zone];
     var targetVol = (cfg && !muted) ? cfg.volume : 0;
+    var hadPreviousAudio = !!audioA;
+    var fadeInMs = hadPreviousAudio ? FADE_MS : SLOW_FADE_MS;
 
     // Fade out old
     var oldAudio = audioA;
@@ -191,7 +195,7 @@
       });
       newAudio.play().then(function () {
         console.log('[ambient] Playing: ' + cfg.src);
-        fadeAudio(newAudio, muted ? 0 : targetVol);
+        fadeAudio(newAudio, muted ? 0 : targetVol, null, fadeInMs);
       }).catch(function () {
         // Autoplay blocked — we'll try on next user interaction
         console.log('[ambient] Autoplay blocked, will retry on interaction');
