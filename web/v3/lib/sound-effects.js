@@ -42,8 +42,6 @@
       src: 'audio/sfx/grue.mp3',       volume: 0.3,  cooldownMs: 5000 },
     { id: 'flood',    pattern: /sluice gates open/i,
       src: 'audio/sfx/flood.mp3',      volume: 0.25, cooldownMs: 5000 },
-    { id: 'leaves',   pattern: /disturbing the pile of leaves/i,
-      src: 'audio/sfx/leaves.mp3',     volume: 0.2,  cooldownMs: 5000 },
     // Recurring triggers (subtle, longer cooldowns)
     { id: 'sword',    pattern: /sword is glowing/i,
       src: 'audio/sfx/sword.mp3',      volume: 0.15, cooldownMs: 30000 },
