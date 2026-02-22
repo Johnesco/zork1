@@ -10,7 +10,7 @@ Release 88 / Serial number 840726
 
 Zork I: The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 1 / Serial number 260221 / Inform 7 v10.1.2 / D
+Release 1 / Serial number 260222 / Inform 7 v10.1.2 / D
 
 West of House
 You are standing in an open field west of a white house, with a boarded front door.
@@ -120,11 +120,15 @@ You are in the living room. There is a doorway to the east, a wooden door with s
 Cellar
 You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
 
+Your sword is glowing with a faint blue glow.
+
 [Your score has just gone up by twenty-five points.]
 
 >
 East of Chasm
 You are on the east edge of a chasm, the bottom of which cannot be seen. A narrow passage goes north, and the path you are on continues to the east.
+
+Your sword is no longer glowing.
 
 >Dropped.
 
@@ -152,13 +156,15 @@ You can see a rope, a glass bottle (closed) (in which is a quantity of water) an
 Cellar
 You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
 
+Your sword is glowing with a faint blue glow.
+
 >
 The Troll Room
 This is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
 
 A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
 
-Your sword is glowing with a faint blue glow.
+Your sword has begun to glow very brightly.
 
 >A good stroke, but it's too slow; the troll dodges.
 >The troll is struck on the arm; blood begins to trickle down.

@@ -57,12 +57,12 @@
 > turn on lantern
 > d
 
-# The trap door slams shut behind you. You're now underground.
+# The trap door slams shut behind you. You're now underground. Your sword begins to glow with a faint blue glow — a monster is nearby.
 
 > s
 > e
 
-# The Gallery has a valuable painting.
+# The sword stops glowing as you move away from the troll. The Gallery has a valuable painting.
 
 > take painting
 > w
@@ -70,7 +70,7 @@
 
 ## The Troll
 
-# The troll blocks the way north. Attack repeatedly — combat is random, so the number of hits needed varies.
+# Back in the Cellar, the sword glows again. The troll blocks the way north. As you enter the Troll Room, the sword glows very brightly. Attack repeatedly — combat is random, so the number of hits needed varies.
 
 > n
 > attack troll
