@@ -241,6 +241,9 @@ footer a {
     <li>Fix: Explicit thief and troll location check prevents phantom combat (<a href="https://github.com/Johnesco/zork1/issues/6">#6</a>)</li>
     <li>Fix: Lit match is properly extinguished on player death/resurrection (<a href="https://github.com/Johnesco/zork1/issues/11">#11</a>)</li>
     <li>Fix: Grate can no longer be locked while open (<a href="https://github.com/Johnesco/zork1/issues/16">#16</a>)</li>
+    <li>Fix: Recursive container bug &mdash; putting raft in coffin and coffin in raft no longer causes both to vanish (<a href="https://github.com/Johnesco/zork1/issues/3">#3</a>)</li>
+    <li>Fix: Weapon penalty no longer applied on combat misses (<a href="https://github.com/Johnesco/zork1/issues/4">#4</a>)</li>
+    <li>Fix: Rising water no longer kills player when inside the boat (<a href="https://github.com/Johnesco/zork1/issues/15">#15</a>)</li>
     <li>Text: Inherits all v1 content &mdash; 300+ restored responses (<a href="https://github.com/Johnesco/zork1/issues/44">#44</a>), ghost state (<a href="https://github.com/Johnesco/zork1/issues/45">#45</a>), enriched descriptions (<a href="https://github.com/Johnesco/zork1/issues/46">#46</a>)</li>
   </ul>
   <div class="version-links">
@@ -271,6 +274,8 @@ footer a {
     <li>Missing object interactions &mdash; sword examine-while-glowing, trap door look-under, grate lock/unlock/pick/put-through, chalice insert, large bag unconscious-thief text, river float-vs-splash, bottle shake-spills-water, bag-of-coins/trunk close and insert handlers (<a href="https://github.com/Johnesco/zork1/issues/51">#51</a>)</li>
     <li>Scenery objects and remaining text &mdash; boarded windows, chimney in Studio, Hades gate, mountain range, climbable cliff, skeleton kick/kiss, bat Fweep, candles count/insert-safety, dam plug variants, tool chest insert, hot bell ring-with-burnable, putty lubricant rejection, forest disembark, Canyon View death text (<a href="https://github.com/Johnesco/zork1/issues/52">#52</a>)</li>
     <li>ZIL text accuracy &mdash; mirror examine/take/rub-with-object, thief description with stiletto, bodies guardian-of-dungeon death, basket &ldquo;securely fastened&rdquo;, cyclops 6-level agitation, match examine-when-lit, Gas Room deliberate-vs-accidental lighting variants, water leaks from non-bottle containers, V-PLAY actor death, V-FIND hands/lungs, exorcism equipment check, V-ALARM rudely-awakened, global hands/lungs backdrops (<a href="https://github.com/Johnesco/zork1/issues/53">#53</a>)</li>
+    <li>Translation fix: Troll unconscious mechanic restored &mdash; troll can now be knocked unconscious and recover, matching ZIL combat behavior (<a href="https://github.com/Johnesco/zork1/issues/59">#59</a>)</li>
+    <li>Translation fix: Sword glow now detects cyclops and scans adjacent rooms &mdash; ZIL <code>INFESTED?</code> checks all visible actors (troll, thief, cyclops) with faint glow for adjacent rooms (<a href="https://github.com/Johnesco/zork1/issues/62">#62</a>)</li>
   </ul>
   <div class="version-links">
     <a data-play-version="v1" href="v1/">Play</a>
