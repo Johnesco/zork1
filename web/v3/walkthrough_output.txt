@@ -1,3 +1,5 @@
+Welcome to the Cheap Glk Implementation, library version 1.0.7.
+
 
 
 
@@ -39,8 +41,6 @@ Beside you on the branch is a small bird's nest.
 Forest Path
 This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
 
-You hear in the distance the chirping of a song bird.
-
 >
 North of House
 You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
@@ -77,7 +77,7 @@ A battery-powered brass lantern is on the trophy case.
 
 >Taken.
 
->It isn't something you can open.
+>That's already open.
 
 >You put the jewel-encrusted egg into the trophy case.
 
@@ -164,14 +164,17 @@ This is a small room with passages to the east and south and a forbidding hole l
 
 A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
 
+The troll swings his axe, but it misses.
 Your sword has begun to glow very brightly.
 
->A good stroke, but it's too slow; the troll dodges.
->The troll is struck on the arm; blood begins to trickle down.
->The troll takes a fatal blow and slumps to the floor dead.
+>A furious exchange, and the troll is knocked out!
+>The unconscious troll cannot defend himself: He dies.
+
 Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 
 Your sword is no longer glowing.
+
+>You can't see any such thing.
 
 >You can't see any such thing.
 
@@ -341,8 +344,6 @@ Cyclops Room
 This room has an exit on the northwest, and a staircase leading up.
 
 A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.
-
-A cyclops, who looks like he hasn't eaten in a while, is blocking the staircase.
 
 >The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down the wall on the east of the room.
 
@@ -543,6 +544,8 @@ This is part of a maze of twisty little passages, all alike.
 Maze
 This is part of a maze of twisty little passages, all alike.
 
+There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
+
 >
 Maze
 This is part of a maze of twisty little passages, all alike.
@@ -593,7 +596,7 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 >The brass lantern is now on.
 
->It is already open.
+>Have your eyes checked.
 
 >
 Cellar
@@ -662,15 +665,11 @@ This is the south end of a large temple. In front of you is what appears to be a
 >Forest
 This is a forest, with trees in all directions. To the east, there appears to be sunlight.
 
-If you can be sure of one thing, it is that your prayers have been answered.
-
 >The brass lantern is now off.
 
 >Dropped.
 
 >Dropped.
-
-You hear in the distance the chirping of a song bird.
 
 >
 Forest
@@ -695,8 +694,6 @@ You are beneath the walls of the river canyon which may be climbable here. The l
 >
 End of Rainbow
 You are on a small, rocky beach on the continuation of the Frigid River past the Falls. The beach is narrow due to the presence of the White Cliffs. The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the east and a narrow path continues to the southwest.
-
-At the end of the rainbow is a pot of gold.
 
 >Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).
 
@@ -768,7 +765,7 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 >The brass lantern is now on.
 
->It is already open.
+>Have your eyes checked.
 
 >
 Cellar
@@ -982,7 +979,7 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 >The brass lantern is now on.
 
->It is already open.
+>Too late for that.
 
 >
 Cellar
@@ -1034,7 +1031,7 @@ You are in a small room. Strange squeaky sounds may be heard coming from the pas
 
 >
 Bat Room
-You are in a small room which has doors only to the south and east. In the corner of the room on the ceiling is a deranged vampire bat who is obviously deranged by the strong smell of garlic.
+You are in a small room which has doors only to the east and south. In the corner of the room on the ceiling is a large vampire bat who is obviously deranged and holding his nose.
 
 There is an exquisite jade figurine here.
 
@@ -1160,11 +1157,11 @@ This is a nondescript part of a coal mine.
 Coal Mine
 This is a nondescript part of a coal mine.
 
-The lamp appears a bit dimmer.
-
 >
 Coal Mine
 This is a nondescript part of a coal mine.
+
+The lamp appears a bit dimmer.
 
 >
 Ladder Top
@@ -1293,7 +1290,7 @@ At the end of the chain is a basket.
 
 >
 Bat Room
-You are in a small room which has doors only to the south and east. In the corner of the room on the ceiling is a deranged vampire bat who is obviously deranged by the strong smell of garlic.
+You are in a small room which has doors only to the east and south. In the corner of the room on the ceiling is a large vampire bat who is obviously deranged and holding his nose.
 
 >
 Squeaky Room
@@ -1336,7 +1333,7 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 >The brass lantern is now on.
 
->It is already open.
+>Look around.
 
 >
 Cellar
@@ -1386,18 +1383,15 @@ You are at the base of Flood Control Dam #3, which looms above you and to the no
 There is a folded pile of plastic here which has a small valve attached.
 
 >The boat inflates and appears seaworthy.
-(You are now in the magic boat.)
-
-Dam Base (in the magic boat)
-You are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream.
-
-In the magic boat you can see a tan label.
+A tan label is lying inside the boat.
 
 >Dropped.
 
 >The brass lantern is now on.
 
->But you're already in the magic boat.
+>You get into the magic boat.
+
+In the magic boat you can see a tan label.
 
 >You push off from the shore.
 
@@ -1426,22 +1420,20 @@ You are on a large sandy beach on the east shore of the river, which is flowing 
 
 You can see a shovel here.
 
-In the magic boat you can see a hand-held air pump and a tan label.
+In the magic boat you can see a tan label.
 
 >You are on your own feet again.
 
 Sandy Beach
 You are on a large sandy beach on the east shore of the river, which is flowing quickly by. A path runs beside the river to the south here, and a passage is partially buried in sand to the northeast.
 
-You can see a magic boat (in which are a hand-held air pump and a tan label) and a shovel here.
+You can see a magic boat (in which is a tan label) and a shovel here.
 
 >Taken.
 
 >
 Sandy Cave
 This is a sand-filled cave whose exit is to the southwest.
-
-You can see a beautiful jeweled scarab here.
 
 >You seem to be digging a hole here.
 
@@ -1461,7 +1453,7 @@ You can see a beautiful jeweled scarab here.
 Sandy Beach
 You are on a large sandy beach on the east shore of the river, which is flowing quickly by. A path runs beside the river to the south here, and a passage is partially buried in sand to the northeast.
 
-You can see a magic boat (in which are a hand-held air pump and a tan label) here.
+You can see a magic boat (in which is a tan label) here.
 
 >Dropped.
 
@@ -1529,7 +1521,7 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 >The brass lantern is now on.
 
->It is already open.
+>Look around.
 
 >
 Cellar
@@ -1547,6 +1539,8 @@ You can also see a sword here.
 
 >Maze
 This is part of a maze of twisty little passages, all alike.
+
+There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
 
 >
 Maze
@@ -1569,9 +1563,9 @@ Beside the skeleton is a rusty knife.
 
 You can also see a skeleton key here.
 
-The lamp is definitely dimmer now.
-
 >Taken.
+
+The lamp is definitely dimmer now.
 
 [Your score has just gone up by ten points.]
 
@@ -1613,15 +1607,12 @@ The east wall, previously solid, now has a cyclops-sized opening in it.
 >Treasure Room
 This is a large room, whose east wall is solid granite. A number of discarded bags, which crumble at your touch, are scattered about on the floor. There is an exit down a staircase.
 
-There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
+You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
 
-There is a silver chalice, intricately engraved, here.
-
->Your stroke lands, but it was only the flat of the blade.
->The thief is struck on the arm; blood begins to trickle down.
 >The blow lands, making a shallow gash in the thief's arm!
 >The thief is struck on the arm; blood begins to trickle down.
->Clang! Crash! The thief parries.
+>Your stroke lands, but it was only the flat of the blade.
+>The thief is struck on the arm; blood begins to trickle down.
 >The fatal blow strikes the thief square in the heart: He dies.
 Almost as soon as the thief breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 
@@ -1631,6 +1622,8 @@ As the thief dies, the power of his magic decreases, and his treasures reappear:
   A chalice
 
 The chalice is now safe to take.
+
+>You can't see any such thing.
 
 >You can't see any such thing.
 
@@ -1699,6 +1692,8 @@ You are facing the north side of a white house. There is no door here, and all t
 Forest Path
 This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
 
+You hear in the distance the chirping of a song bird.
+
 >The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the greenery flies a lovely songbird. It perches on a limb just over your head and opens its beak to sing. As it does so a beautiful brass bauble drops from its mouth, bounces off the top of your head, and lands glimmering in the grass. As the canary winds down, the songbird flies away.
 
 >Taken.
@@ -1766,10 +1761,23 @@ There is a small mailbox here.
 >Stone Barrow
 You are standing in front of a massive barrow of stone. In the east face is a huge stone door which is open. You cannot see into the dark of the tomb.
 
->You can't see any such thing.
+>Inside the Barrow
+As you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large sign. It reads: All ye who stand before this bridge have completed a great and perilous adventure which has tested your wit and courage. You have mastered the first part of the ZORK trilogy. Those who pass over this bridge must be prepared to undertake an even greater adventure that will severely test your skill and bravery!
 
->Your score is 350 (total of 350 points), in 422 moves.
+The ZORK trilogy continues with "ZORK II: The Wizard of Frobozz" and is completed in "ZORK III: The Dungeon Master."
+
+
+
+    *** Congratulations! ***
+
+
+In that game you scored 350 out of a possible 350, in 420 turns, earning you the rank of Master Adventurer.
+
+
+Your score is 350 (total of 350 points), in 420 moves.
 This gives you the rank of Master Adventurer.
 
->
+
+Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?
+> 
 <end of input>

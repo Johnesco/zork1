@@ -1,0 +1,29 @@
+name: Documentation
+description: Documentation-only changes (no code changes)
+labels: ["docs"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What documentation needs to change and why?
+    validations:
+      required: true
+  - type: textarea
+    id: affected-docs
+    attributes:
+      label: Affected Documents
+      description: Which files need updating?
+      placeholder: |
+        - CLAUDE.md — [section]
+        - README.md — [section]
+        - web/index.html — version descriptions
+  - type: textarea
+    id: done
+    attributes:
+      label: Definition of Done
+      value: |
+        - [ ] Documentation updated
+        - [ ] Content is accurate and matches current code
+        - [ ] No broken links or references
+        - [ ] Consistent across all affected documents

@@ -195,9 +195,94 @@ Report failures, don't fix unless explicitly instructed. Test all versions when 
 
 ## Building the Game
 
-Building happens in this repo. The `.inform/` IDE bundle is created alongside `story.ni` when needed. See `C:\code\i7\inform7\CLAUDE.md` for compiler paths, build steps, and interpreter usage.
+Building happens in this repo. See `C:\code\i7\inform7\CLAUDE.md` for compiler paths, build steps, and interpreter usage. Do NOT create `.inform/` IDE bundles in this repo.
 
 ZIL (v0) is compiled separately from `C:\code\zork1-zil\` using ZILF.
+
+<!-- ============================================================
+     SDLC WORKFLOW
+     Adapted from https://github.com/Johnesco/sdlc-baseline
+     ============================================================ -->
+
+## Development Workflow
+
+### Roles and Responsibilities
+
+| Role | Owner | Board Columns | Key Rule |
+|------|-------|---------------|----------|
+| **PO** (Product Owner) | Human | Backlog, Done | Decides priority, accepts work |
+| **BA** (Business Analyst) | Human or Claude | Refining, Ready | Scopes tickets, writes acceptance criteria |
+| **Dev** (Developer) | Claude (primary) | In Progress | Writes code, follows conventions |
+| **Documenter** | Claude (bundled with Dev) | In Progress | Updates CLAUDE.md, README |
+| **QA** (Quality Assurance) | Human or Claude | **Verify** | Verifies completed work |
+
+> **Project-specific override:** The baseline rule is "Claude cannot QA its own work." In this project, automated testing (RegTest, walkthrough 350/350, seed sweep) is part of **development** — Claude runs these during In Progress and reports results before moving the issue to Verify. Issues then sit in Verify for human review. Occasionally the human may ask Claude to verify and close a specific issue — only do so when explicitly asked.
+
+**Hat-switch protocol:** Explicitly state which role you're in:
+- `"PO hat — let's prioritize the backlog."`
+- `"BA mode — help me scope this feature."`
+- `"Dev time — implement ticket #12."`
+- `"QA check — I'm testing what you built."`
+
+### Ticket-First Workflow (MANDATORY)
+
+Every change — feature, bug fix, refactor, or data update — follows this sequence. No step may be skipped.
+
+1. **Capture as a ticket** — Create a GitHub Issue before any other work begins. Include title, labels, and acceptance criteria.
+
+   > **IMPORTANT — Add to Project Board:** `gh issue create` does NOT auto-add issues to the project board. Run this immediately after:
+   > ```
+   > gh project item-add 2 --owner Johnesco --url [ISSUE_URL]
+   > ```
+
+2. **Review documentation** — Read CLAUDE.md sections and source files related to the change. Identify what exists and what will be impacted.
+
+3. **Flag discrepancies** — If code differs from documentation, stop and flag the mismatch before proceeding.
+
+4. **Refine the ticket** — Update the issue with context from the doc review, affected areas, and documentation update plan.
+
+5. **Implement the change** — Write the code. Reference the ticket number in commits.
+
+6. **Update documentation** — Update CLAUDE.md, README.md, and any other affected docs. A change without a doc update is incomplete.
+
+7. **Verify consistency** — Confirm documentation and code agree. Call out any remaining gaps.
+
+**Compressing steps:** Data-only fixes or obvious bug fixes can compress steps 2–4 into a quick scan. New features, multi-file changes, and behavior changes always get the full workflow.
+
+### GitHub Issues & Projects
+
+All work is tracked in **GitHub Issues** with a **GitHub Projects** kanban board (Project #2).
+
+- **Labels** = Type (`feature`, `bug`, `chore`, `docs`) + Area (`area:combat`, `area:objects`, etc.) + Priority (`priority:high`, `priority:low`) + Version (`v1`, `v2`)
+- **Board columns**: Backlog → Refining → Ready → In Progress → Verify → Done
+- **Board automations**: Item added → Backlog; Item closed → Done; Item reopened → In Progress
+
+### Commit Convention
+
+```
+#XX: description
+```
+
+Where `XX` is the GitHub Issue number. Use `Fixes #XX` in PR body for auto-close.
+
+### Branch Naming
+
+```
+[type]/[short-description]
+```
+
+| Prefix | Use for |
+|--------|---------|
+| `feature/` | New features |
+| `fix/` | Bug fixes |
+| `docs/` | Documentation changes |
+| `chore/` | Refactors, tooling, infrastructure |
+
+Solo work can commit to `main` directly. Branch when changes need review or span multiple sessions.
+
+<!-- ============================================================
+     END SDLC WORKFLOW
+     ============================================================ -->
 
 ## Key Game Systems (for reference when editing story.ni)
 

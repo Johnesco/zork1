@@ -1,0 +1,24 @@
+name: Chore
+description: Refactors, tooling, infrastructure, or research tasks
+labels: ["chore"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be done and why?
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Why is this worth doing now? What's the cost of not doing it?
+  - type: textarea
+    id: done
+    attributes:
+      label: Definition of Done
+      value: |
+        - [ ] Change implemented
+        - [ ] No regressions introduced
+        - [ ] Documentation updated (if applicable)

@@ -1,0 +1,61 @@
+name: Feature / Enhancement
+description: New functionality or enhancement
+labels: ["feature"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What should this feature do? Which version does it target (v3+)?
+    validations:
+      required: true
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current State
+      description: What exists today? Which files or systems are involved?
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Specific, testable conditions that must be true when this is done.
+      value: |
+        - [ ] Feature implemented and working
+        - [ ] RegTest / walkthrough still passes
+        - [ ] CLAUDE.md updated (if architecture changed)
+        - [ ] Change propagated to all later versions (if applicable)
+  - type: textarea
+    id: test-plan
+    attributes:
+      label: Test Plan
+      description: How will this be verified? Game commands to test, RegTest scenarios, walkthrough impact.
+      placeholder: |
+        1. Start game, go to [room]
+        2. Type [command]
+        3. Verify output matches expected text
+  - type: dropdown
+    id: size
+    attributes:
+      label: Size
+      description: Rough effort estimate
+      options:
+        - S (< 1 hour)
+        - M (1-4 hours)
+        - L (4+ hours)
+  - type: dropdown
+    id: version
+    attributes:
+      label: Target Version
+      description: Which version does this apply to?
+      options:
+        - v3 (current)
+        - Future version
+  - type: textarea
+    id: doc-impact
+    attributes:
+      label: Documentation Impact
+      description: Which documentation sections will need updating?
+      placeholder: |
+        - CLAUDE.md (Key Game Systems, etc.)
+        - README.md
+        - web/index.html (version entry)

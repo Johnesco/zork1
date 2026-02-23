@@ -1,0 +1,64 @@
+name: Bug Report
+description: Something isn't working correctly
+labels: ["bug"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What's wrong?
+      description: Describe the bug. Include game commands and output if applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Exact game commands or steps to trigger the bug.
+      value: |
+        1. Start game (or reach [room] via walkthrough)
+        2. Type [command]
+        3. Observe [incorrect behavior]
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should happen instead? Reference ZIL output if this is a translation bug.
+  - type: dropdown
+    id: bug-type
+    attributes:
+      label: Bug Type
+      description: Is this a ZIL translation issue or an original bug?
+      options:
+        - Translation bug (I7 doesn't match ZIL behavior)
+        - Original ZIL bug (Infocom shipped it broken)
+        - New bug (introduced in I7, not from ZIL)
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How impactful is this bug?
+      options:
+        - Low — Cosmetic or text difference
+        - Medium — Works but with issues
+        - High — Puzzle or mechanic broken
+        - Critical — Game unwinnable or crashes
+  - type: dropdown
+    id: version
+    attributes:
+      label: Affected Version
+      description: Which version has this bug?
+      options:
+        - v1
+        - v2
+        - v3
+        - All versions
+  - type: textarea
+    id: done
+    attributes:
+      label: Definition of Done
+      value: |
+        - [ ] Bug fixed and verified
+        - [ ] Root cause understood
+        - [ ] RegTest / walkthrough still passes
+        - [ ] Fix propagated to all later versions
+        - [ ] No regressions introduced
