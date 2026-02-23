@@ -2,48 +2,59 @@
 
 An [Inform 7](http://inform7.com/) translation of Infocom's *Zork I*, based on the [original ZIL source code](https://github.com/historicalsource/zork1) released under the MIT License by Microsoft, Activision, and Team Xbox.
 
-This project begins as a faithful translation of the original game and will evolve to include bug fixes, quality of life improvements, and parser enhancements — while preserving the spirit and challenge of the classic.
+This project begins as a faithful 1:1 translation of the original game and evolves through versioned milestones — from bug fixes and testing infrastructure to new features that lean into what Inform 7 does best.
 
 ## Play Online
 
-**[Play the latest version](https://johnesco.github.io/zork1/)** — hosted on GitHub Pages with full in-browser gameplay via [Quixe](https://eblong.com/zarf/glulx/quixe/).
+**[Play the latest version](https://johnesco.github.io/zork1/)** — hosted on GitHub Pages with multiple interpreter options (Quixe, Parchment, Glulxe).
 
-The Inform 7 source code for each version is also available directly from the site.
-
-## Goals
-
-- **Faithful translation** — Start from a complete, accurate port of the original ZIL logic to Inform 7
-- **Bug fixes** — Address known issues present in the original release
-- **Quality of life improvements** — Modernize rough edges without undermining the original design
-- **Parser enhancements** — Expand recognized vocabulary and phrasings so the game better understands what you mean
-
-## Project Structure
-
-```
-src/zil/           Original ZIL source files (reference)
-src/inform7/       Inform 7 translation (story.ni)
-build/             Inform 7 compilation project
-web/               GitHub Pages site
-  index.html       Landing page with version history
-  v1/              Version 1 — playable game + source snapshot
-```
-
-## Building
-
-The Inform 7 source is in `src/inform7/story.ni`. To compile, open it in the [Inform 7 IDE](http://inform7.com/downloads/) or use the command-line tools from the [Inform distribution](https://github.com/ganelson/inform).
+Each version includes playable games, browsable source code, and annotated walkthroughs.
 
 ## Version History
 
-### v1 — First Light
+### v3 — Making It My Own (Current)
 
-Complete ZIL-to-Inform 7 translation of Zork I:
+The first version that intentionally diverges from the original. Adds ambient audio — zone-based background music and sound effects that respond to room changes via a JavaScript overlay using MutationObserver for room detection.
+
+### v2 — Bug Fixes & Testing
+
+Fixes bugs from the original ZIL source (things Infocom shipped broken) and translation bugs from the v1 port. Established the deterministic testing methodology — seed-based RNG walkthroughs, transcript comparison, and automated regression — that now underpins all development.
+
+### v1 — The Port
+
+Complete, playable, winnable ZIL-to-Inform 7 translation. Every room, puzzle, text response, and behavior from the original. Text parity with v0 achieved after a 6-phase audit of every ZIL TELL response.
 
 - 110+ rooms across five regions (forest/house, cellar/troll area, maze, dam/river, coal mine)
 - All 19 treasures with trophy case scoring system (350 points max)
 - NPCs: Thief (roaming daemon, combat, treasure redistribution), Troll, Cyclops
 - Full puzzle systems: dam/reservoir, exorcism ceremony, coal-to-diamond machine, boat/river, mirror rooms
 - Lamp timer, candle timer, match system, death/resurrection, grue darkness, sword glow
-- Verbosity modes, score ranks, and diagnostic commands
+
+### v0 — The Original ZIL
+
+The unmodified Infocom source code with a ZIL source browser, syntax highlighting, annotations, and a playable game compiled from the original ZIL using ZILF.
+
+## Project Structure
+
+```
+story.ni           Inform 7 source (current working version)
+tests/             Test suites, walkthroughs, seed configs
+src/zil/           Original ZIL source files (read-only reference)
+web/               GitHub Pages site
+  index.html       Landing page with version history and engine selector
+  v0/              Original ZIL — source browser + playable game
+  v1/              Inform 7 port — 1:1 translation
+  v2/              Bug fixes and testing
+  v3/              New features (ambient audio)
+```
+
+## Building
+
+The Inform 7 source is `story.ni` at the repo root. To compile, open it in the [Inform 7 IDE](http://inform7.com/downloads/) or use the command-line compilers from the Inform 7 distribution.
+
+## Testing
+
+Testing uses deterministic walkthroughs with seed-based RNG (`glulxe --rngseed N`) for reproducible runs, plus RegTest for targeted scenario testing of specific puzzles and mechanics. Test scripts are in `tests/`.
 
 ## Credits
 
