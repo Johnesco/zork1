@@ -145,19 +145,19 @@
 <h2>Quick Start</h2>
 
 <h3>Run all tests</h3>
-<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh'</code></pre>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/i7/zork1 && bash tests/run-tests.sh'</code></pre>
 
 <h3>Run a single test</h3>
-<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh cellar'</code></pre>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/i7/zork1 && bash tests/run-tests.sh cellar'</code></pre>
 
 <h3>Verbose mode (see full game transcript)</h3>
-<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh -v'</code></pre>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/i7/zork1 && bash tests/run-tests.sh -v'</code></pre>
 
 <h3>List all available tests</h3>
-<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh -l'</code></pre>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/i7/zork1 && bash tests/run-tests.sh -l'</code></pre>
 
 <h3>Verbose with stop-on-first-error</h3>
-<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh -v --vital cellar'</code></pre>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/i7/zork1 && bash tests/run-tests.sh -v --vital cellar'</code></pre>
 
 <h2>Architecture</h2>
 
@@ -320,7 +320,7 @@ Literal text that must appear in output
 > do something
 !text that should NOT appear</code></pre>
   </li>
-  <li>Run it: <code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh -v my-new-test'</code></li>
+  <li>Run it: <code>wsl -e bash -c 'cd /mnt/c/code/i7/zork1 && bash tests/run-tests.sh -v my-new-test'</code></li>
   <li>If it passes, run the full suite to make sure nothing else broke</li>
 </ol>
 
@@ -346,7 +346,7 @@ cd glulxe
 cd ../cheapglk && make
 cd ../glulxe && make
 # Result: ~/glulxe/glulxe
-cp ~/glulxe/glulxe /mnt/c/code/zork1/tools/glulxe</code></pre>
+cp ~/glulxe/glulxe /mnt/c/code/i7/zork1/tools/glulxe</code></pre>
 
 <div class="note">
   <strong>Note:</strong> If <code>sudo</code> is unavailable in WSL, gcc/make can be installed via <code>apt-get download</code> + <code>dpkg-deb -x</code> into a local prefix. See the project's git history for the original build process.

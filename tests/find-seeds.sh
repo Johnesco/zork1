@@ -12,7 +12,7 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-INFORM7_ROOT="/mnt/c/code/inform7"
+INFORM7_ROOT="/mnt/c/code/i7/inform7"
 CONFIG="$SCRIPT_DIR/project.conf"
 
 # Translate --zil to --alt for backward compatibility

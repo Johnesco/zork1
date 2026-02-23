@@ -32,7 +32,7 @@ web/               GitHub Pages site deployed to johnesco.github.io/zork1/
 Compiler conventions, shared test framework, and reference docs live in the shared hub:
 
 ```
-C:\code\inform7\
+C:\code\i7\inform7\
 ├── CLAUDE.md              ← Inform 7 conventions and compiler paths
 ├── tools/
 │   ├── regtest.py         ← Shared test runner
@@ -40,7 +40,7 @@ C:\code\inform7\
 └── reference/             ← Syntax + formatting docs
 ```
 
-**Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\inform7\CLAUDE.md` for CLI usage).
+**Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\i7\inform7\CLAUDE.md` for CLI usage).
 
 Any `story.ni` files found inside `web/` (e.g., `web/vN/story.ni`) are **frozen snapshots**. The current version is `story.ni` at the repo root — it is never published to the web directly but snapshotted into a numbered version when ready.
 
@@ -182,7 +182,7 @@ GitHub Actions (`.github/workflows/deploy-pages.yml`) deploys the entire `web/` 
 
 Testing is a **project-wide process**, not a version feature. The same methodology applies to every version.
 
-All testing happens in `tests/` at the repo root. The test wrapper scripts delegate to the shared framework at `C:\code\inform7\tools\testing\`. See `C:\code\inform7\CLAUDE.md` for interpreter paths and framework details.
+All testing happens in `tests/` at the repo root. The test wrapper scripts delegate to the shared framework at `C:\code\i7\inform7\tools\testing\`. See `C:\code\i7\inform7\CLAUDE.md` for interpreter paths and framework details.
 
 ### Methodology
 - **Deterministic walkthroughs**: Seed-based RNG (`glulxe --rngseed N`) ensures reproducible runs. Golden seeds stored in `seeds.conf`.
@@ -195,7 +195,7 @@ Report failures, don't fix unless explicitly instructed. Test all versions when 
 
 ## Building the Game
 
-Building happens in this repo. The `.inform/` IDE bundle is created alongside `story.ni` when needed. See `C:\code\inform7\CLAUDE.md` for compiler paths, build steps, and interpreter usage.
+Building happens in this repo. The `.inform/` IDE bundle is created alongside `story.ni` when needed. See `C:\code\i7\inform7\CLAUDE.md` for compiler paths, build steps, and interpreter usage.
 
 ZIL (v0) is compiled separately from `C:\code\zork1-zil\` using ZILF.
 
