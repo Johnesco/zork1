@@ -171,6 +171,13 @@ The **current version** (`story.ni` at the repo root) is the working copy where 
 
 **Critical rule**: Every `web/vN/` (v1+) must contain a `story.ni` and `zork1.ulx.js` compiled from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
 
+**Cascade rule**: When any `story.ni` is modified (repo root or `web/vN/`), three artifacts eventually need updating for each affected version:
+1. `web/vN/story.ni` — frozen snapshot synced from source
+2. `web/vN/zork1.ulx.js` — recompiled and base64-encoded from that `story.ni`
+3. `web/vN/walkthrough_output.txt` — regenerated transcript from that binary
+
+These do NOT need to happen after every edit. During active development, treat the cascade as a **known outstanding task** — note that artifacts are stale and batch the rebuild once changes stabilize. Do not silently forget it.
+
 ### Deployment
 
 GitHub Actions (`.github/workflows/deploy-pages.yml`) deploys the entire `web/` directory to GitHub Pages on push to `main`. No build step — the `web/` directory is uploaded as-is.

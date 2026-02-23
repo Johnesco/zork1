@@ -372,7 +372,7 @@ Every turn (this is the trophy case scoring rule):
 		now the trophy-case-score is new-score;
 	if the score is at least 350 and the won-flag is false:
 		now the won-flag is true;
-		now the ancient map is visible;
+		now the ancient map is zil-visible;
 		say "[line break]An almost inaudible voice whispers in your ear, [quotation mark]Look to your treasures for the final secret.[quotation mark][line break]".
 
 Chapter 8 - Treasure Values
@@ -575,7 +575,7 @@ Instead of going north in Grating Clearing:
 	say "The forest becomes impenetrable to the north."
 
 Instead of going down in Grating Clearing:
-	if the grate is not visible:
+	if the grate is not zil-visible:
 		say "You can't go that way." instead;
 	if the grate is open:
 		say "(through the grating)[line break]";
@@ -859,12 +859,14 @@ Living Room is a room. Living Room is in House Interior.
 
 The description of Living Room is "You are in the living room. There is a doorway to the east[if the magic-flag is true]. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, [otherwise], a wooden door with strange gothic lettering to the west, which appears to be nailed shut, [end if]a trophy case, [if the rug-moved is false]and a large oriental rug in the center of the room.[otherwise if the trap door is open]and a rug lying beside an open trap door.[otherwise]and a closed trap door at your feet.[end if]"
 
-The trophy case is a transparent open unopenable container in Living Room. The trophy case is scenery. "The trophy case is mounted firmly to the wall."
+The trophy case is a transparent openable open container in Living Room. The trophy case is scenery. "The trophy case is mounted firmly to the wall."
 Understand "case" and "trophy" as the trophy case.
 The carrying capacity of the trophy case is 100.
 
 Instead of taking the trophy case:
 	say "The trophy case is securely fastened to the wall."
+
+Instead of closing the trophy case: say "[dummy]".
 
 The sword is in Living Room. "Above the trophy case hangs an elvish sword of great antiquity."
 Understand "sword" and "orcrist" and "glamdring" and "blade" and "elvish" and "old" and "antique" as the sword.
@@ -928,7 +930,7 @@ Carry out the-rug-move:
 	if the rug-moved is true:
 		say "Having moved the carpet previously, you find it impossible to move it again." instead;
 	now the rug-moved is true;
-	now the trap door is visible;
+	now the trap door is zil-visible;
 	say "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
 
 Instead of entering the carpet:
@@ -953,9 +955,14 @@ The trap door is a door. The trap door is scenery. The trap door is closed and o
 Understand "door" and "trapdoor" and "trap-door" and "cover" and "trap" and "dusty" as the trap door.
 The trap door is below Living Room and above Cellar.
 
-A thing can be visible or invisible. A thing is usually visible. The trap door is invisible.
+A thing can be zil-visible or zil-invisible. A thing is usually zil-visible. The trap door is zil-invisible.
 
-Before doing anything to the trap door when the trap door is invisible:
+Rule for writing a paragraph about a zil-invisible thing: do nothing.
+Before printing the locale description of a room (called the place):
+	repeat with item running through zil-invisible things in the place:
+		now item is mentioned.
+
+Before doing anything to the trap door when the trap door is zil-invisible:
 	say "You can't see any such thing." instead.
 
 Before going down in Living Room:
@@ -965,10 +972,10 @@ Before going down in Living Room:
 		say "The trap door is closed." instead.
 
 Instead of opening the trap door when the player is in Living Room:
-	if the trap door is invisible:
+	if the trap door is zil-invisible:
 		say "You can't see any such thing." instead;
 	if the trap door is open:
-		say "It is already open." instead;
+		say "[dummy]" instead;
 	now the trap door is open;
 	say "The door reluctantly opens to reveal a rickety staircase descending into darkness."
 
@@ -1718,7 +1725,7 @@ Understand "leaves" and "leaf" and "pile" as the pile of leaves.
 To reveal-grate-from-leaves (this is the leaves-appear rule):
 	if the grate-revealed is false and the grate is not open:
 		now the grate-revealed is true;
-		now the grate is visible.
+		now the grate is zil-visible.
 
 Instead of burning the pile of leaves:
 	if the player carries the pile of leaves:
@@ -1785,8 +1792,9 @@ Down from Treasure Room is Cyclops-Room.
 
 Chapter 8 - Cyclops NPC
 
-The cyclops is a person in Cyclops-Room. "A cyclops, who looks like he hasn't eaten in a while, is blocking the staircase."
+The cyclops is a person in Cyclops-Room.
 Understand "cyclops" and "monster" and "eye" and "hungry" and "giant" as the cyclops.
+Rule for writing a paragraph about the cyclops: now the cyclops is mentioned.
 The description of the cyclops is "A hungry cyclops is blocking the staircase, looking at you as if you were a potential meal."
 
 The cyclops-fed is a truth state that varies. The cyclops-fed is false.
@@ -1918,7 +1926,7 @@ East of Round Room is Loud Room. North of Round Room is North-South Passage. Sou
 
 Chapter 10 - Dam and Reservoir Area
 
-Deep Canyon is a dark room. "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. [if the gates-open is true and the low-tide is false]You can hear a loud roaring sound, like that of rushing water, from below.[otherwise]You can hear the sound of flowing water from below.[end if]".
+Deep Canyon is a dark room. "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. [if the gates-open is true and the low-tide is false]You can hear a loud roaring sound, like that of rushing water, from below.[otherwise if the gates-open is false and the low-tide is true][otherwise]You can hear the sound of flowing water from below.[end if]".
 Deep Canyon is in the Underground.
 Northwest of Deep Canyon is Reservoir-South. East of Deep Canyon is Dam-Room. Southwest of Deep Canyon is North-South Passage. Down from Deep Canyon is Loud Room.
 
@@ -2112,14 +2120,14 @@ Instead of pushing the red button:
 The water-level is a number that varies. The water-level is 0.
 The maint-flooded is a truth state that varies. The maint-flooded is false.
 
-The leak is scenery. The leak is invisible.
+The leak is scenery. The leak is zil-invisible.
 Understand "leak" and "pipe" and "pipes" and "stream" and "water" as the leak.
 The description of the leak is "Water is pouring out of a crack in the east wall."
 
 Instead of pushing the blue button:
 	if the water-level is 0:
 		now the water-level is 1;
-		now the leak is visible;
+		now the leak is zil-visible;
 		now the leak is in Maintenance Room;
 		say "There is a rumbling sound and a stream of water appears to burst from the east wall of the room (apparently, a leak has occurred in a pipe).";
 	otherwise:
@@ -2189,8 +2197,12 @@ The description of the viscous material is "It's a viscous, putty-like material.
 
 The group of tool chests is scenery in Maintenance Room. Understand "chest" and "chests" and "group" and "toolchests" and "tool" as the group of tool chests.
 The description of the group of tool chests is "The chests are all empty."
-Instead of taking or opening the group of tool chests: say "The chests are so rusty and corroded that they crumble when you touch them."
-Instead of inserting something into the group of tool chests: say "The chests are so rusty and corroded that they crumble when you touch them."
+Instead of taking or opening the group of tool chests:
+	remove the group of tool chests from play;
+	say "The chests are so rusty and corroded that they crumble when you touch them."
+Instead of inserting something into the group of tool chests:
+	remove the group of tool chests from play;
+	say "The chests are so rusty and corroded that they crumble when you touch them."
 
 Chapter 11 - Reservoir Area
 
@@ -2382,6 +2394,8 @@ Instead of tying the rope to the wooden railing:
 		now the dome-flag is true;
 		now the rope is in Dome Room;
 		say "The rope drops over the side and comes within ten feet of the floor."
+
+Rule for writing a paragraph about the rope when the dome-flag is true: do nothing.
 
 Understand "tie [something] to [something]" as tying it to.
 Carry out tying it to:
@@ -2883,7 +2897,7 @@ Southwest of Sandy Cave is Sandy Beach.
 The sand is scenery in Sandy Cave. Understand "sand" as the sand.
 The description of the sand is "It's just sand."
 
-The beautiful jeweled scarab is in Sandy Cave. The beautiful jeweled scarab is invisible.
+The beautiful jeweled scarab is in Sandy Cave. The beautiful jeweled scarab is zil-invisible.
 Understand "scarab" and "bug" and "beetle" and "beautiful" and "carved" and "jeweled" as the beautiful jeweled scarab.
 The treasure-value of the beautiful jeweled scarab is 5.
 The point-value of the beautiful jeweled scarab is 5.
@@ -2906,7 +2920,7 @@ Instead of digging the sand:
 		otherwise if the dig-count is 3:
 			say "You are surrounded by a wall of sand on all sides.";
 		otherwise if the dig-count is 4:
-			now the beautiful jeweled scarab is visible;
+			now the beautiful jeweled scarab is zil-visible;
 			say "You can see a scarab here in the sand.";
 			now the beautiful jeweled scarab is in Sandy Cave;
 		otherwise:
@@ -2940,7 +2954,7 @@ Instead of going east in End of Rainbow:
 	otherwise:
 		say "You can't go that way."
 
-The pot of gold is in End of Rainbow. The pot of gold is invisible. "At the end of the rainbow is a pot of gold."
+The pot of gold is in End of Rainbow. The pot of gold is zil-invisible. "At the end of the rainbow is a pot of gold."
 Understand "pot" and "gold" as the pot of gold.
 The treasure-value of the pot of gold is 10.
 The point-value of the pot of gold is 10.
@@ -2980,13 +2994,13 @@ Instead of waving the sceptre:
 	otherwise if the player is in Aragain Falls or the player is in End of Rainbow:
 		if the rainbow-flag is false:
 			now the rainbow-flag is true;
-			now the pot of gold is visible;
+			now the pot of gold is zil-visible;
 			say "Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).";
 			if the player is in End of Rainbow:
 				say "[line break]A shimmering pot of gold appears at the end of the rainbow.";
 		otherwise:
 			now the rainbow-flag is false;
-			now the pot of gold is invisible;
+			now the pot of gold is zil-invisible;
 			say "The rainbow seems to have become somewhat run-of-the-mill.";
 	otherwise:
 		say "A dazzling display of color briefly emanates from the sceptre."
@@ -3063,7 +3077,7 @@ Instead of going north in Bat-Room:
 		otherwise:
 			move the player to Mine Entrance.
 
-The description of Bat-Room is "You are in a small room which has doors only to the south and east. [if the clove of garlic is enclosed by the player]In the corner of the room on the ceiling is a deranged vampire bat who is obviously deranged by the strong smell of garlic.[otherwise]A deranged vampire bat, hanging from the ceiling, swoops down at you![end if]".
+The description of Bat-Room is "You are in a small room which has doors only to the east and south. [if the clove of garlic is enclosed by the player]In the corner of the room on the ceiling is a large vampire bat who is obviously deranged and holding his nose.[otherwise]A large vampire bat, hanging from the ceiling, swoops down at you![end if]".
 
 The jade figurine is in Bat-Room. "There is an exquisite jade figurine here."
 Understand "figurine" and "jade" and "exquisite" as the jade figurine.
@@ -3344,6 +3358,12 @@ Instead of going southwest in West-of-House:
 The barrow-door is scenery in Stone Barrow. The printed name of the barrow-door is "stone door".
 Understand "door" and "stone" and "huge" as the barrow-door.
 The description of the barrow-door is "The door is a huge slab of stone."
+
+The barrow-facade is scenery in Stone Barrow. The printed name of the barrow-facade is "barrow".
+Understand "barrow" and "tomb" and "massive" as the barrow-facade.
+The description of the barrow-facade is "It's a massive barrow of stone."
+Instead of entering the barrow-facade: try going inside.
+Instead of entering the barrow-door: try going inside.
 Instead of opening the barrow-door: say "The door is too heavy."
 Instead of closing the barrow-door: say "The door is too heavy."
 
@@ -3476,7 +3496,15 @@ Every turn when the jewel-encrusted egg is in the large bag and the jewel-encrus
 
 Every turn when the player is in Treasure Room and the thief is not defeated and the thief is not in Treasure Room (this is the thief lair rule):
 	move the thief to Treasure Room;
-	say "You hear a scream of anguish as you violate the robber[apostrophe]s hideaway. Using passages unknown to you, he rushes to its defense."
+	say "You hear a scream of anguish as you violate the robber[apostrophe]s hideaway. Using passages unknown to you, he rushes to its defense.";
+	let found-treasure be false;
+	repeat with item running through zil-visible things in the Treasure Room:
+		if item is not the thief and item is not the chalice:
+			if the treasure-value of item > 0:
+				now found-treasure is true;
+				now item is zil-invisible;
+	if found-treasure is true:
+		say "[line break]The thief gestures mysteriously, and the treasures in the room suddenly vanish."
 
 Instead of answering the thief that "hello":
 	if the thief is defeated:
@@ -3524,6 +3552,8 @@ Instead of attacking the thief:
 					repeat with item running through things in the large bag:
 						now item is in the location of the player;
 					if the location of the player is Treasure Room:
+						repeat with item running through zil-invisible things in the Treasure Room:
+							now item is zil-visible;
 						print hero melee for "kill";
 						say "[line break][sinister-black-fog for the thief][paragraph break]As the thief dies, the power of his magic decreases, and his treasures reappear:";
 						repeat with item running through things in the location of the player:
@@ -3620,7 +3650,6 @@ Carry out praying:
 			say "Your prayers are not heard.";
 	otherwise if the player is in South Temple:
 		move the player to Forest1;
-		say "If you can be sure of one thing, it is that your prayers have been answered.";
 	otherwise:
 		say "If you pray enough, your prayers may be answered."
 
@@ -3739,7 +3768,7 @@ After going to Drafty Room when the light-shaft-bonus is false and not in darkne
 
 Chapter 8 - Ancient Map
 
-The ancient map is in the trophy case. The ancient map is invisible.
+The ancient map is in the trophy case. The ancient map is zil-invisible.
 Understand "parchment" and "map" and "antique" and "old" and "ancient" as the ancient map.
 The description of the ancient map is "The map shows a forest with three clearings. The largest clearing contains a house. Three paths leave the large clearing. One of these paths, leading southwest, is marked 'To Stone Barrow'."
 
@@ -4482,11 +4511,12 @@ Instead of inflating the pile of plastic:
 	if the pile of plastic is not in the location of the player:
 		say "The boat must be on the ground to be inflated.";
 	otherwise if the player carries the hand-held air pump or the hand-held air pump is in the location of the player:
-		say "The boat inflates and appears seaworthy.[line break](You are now in the magic boat.)";
+		say "The boat inflates and appears seaworthy.";
+		if the tan label is not handled:
+			say "A tan label is lying inside the boat.";
 		now the boat-inflated is true;
 		now the pile of plastic is nowhere;
 		now the magic boat is in the location of the player;
-		now the player is in the magic boat;
 	otherwise:
 		say "You don[apostrophe]t have enough lung power to inflate it."
 
@@ -4611,7 +4641,7 @@ The point-value of the large emerald is 5.
 
 Chapter 13 - Trunk of Jewels
 
-The trunk of jewels is in Reservoir. The trunk of jewels is invisible.
+The trunk of jewels is in Reservoir. The trunk of jewels is zil-invisible.
 Understand "trunk" and "chest" and "jewels" and "old" as the trunk of jewels.
 The treasure-value of the trunk of jewels is 5.
 The point-value of the trunk of jewels is 15.
@@ -4623,8 +4653,8 @@ Instead of inserting something into the trunk of jewels: say "Don[apostrophe]t b
 Instead of searching the trunk of jewels: say "There are lots of jewels in there."
 
 After going to Reservoir:
-	if the low-tide is true and the trunk of jewels is invisible:
-		now the trunk of jewels is visible;
+	if the low-tide is true and the trunk of jewels is zil-invisible:
+		now the trunk of jewels is zil-visible;
 		say "Lying half buried in the mud is an old trunk, bulging with jewels.[line break]";
 	continue the action.
 
@@ -4651,7 +4681,7 @@ Every turn when the reservoir-empty-timer > 0 (this is the reservoir emptying ru
 	decrease the reservoir-empty-timer by 1;
 	if the reservoir-empty-timer is 0:
 		now the low-tide is true;
-		now the trunk of jewels is visible;
+		now the trunk of jewels is zil-visible;
 		if the player is in Dam-Room:
 			say "The water level behind the dam is now quite low.";
 		if the player is in Deep Canyon:
@@ -4665,7 +4695,7 @@ Every turn when the reservoir-fill-timer > 0 (this is the reservoir filling rule
 	decrease the reservoir-fill-timer by 1;
 	if the reservoir-fill-timer is 0:
 		now the low-tide is false;
-		now the trunk of jewels is invisible;
+		now the trunk of jewels is zil-invisible;
 		if the location of the player is Reservoir:
 			if the player is in the magic boat:
 				say "The boat lifts gently out of the mud and is now floating on the reservoir.";

@@ -195,14 +195,14 @@ footer a {
 </p>
 
 <p>
-  Each version builds on the last. <strong>v0</strong> is the original ZIL
-  compiled and playable exactly as Infocom shipped it. <strong>v1</strong> is
-  the initial faithful translation into Inform 7 &mdash; every room, puzzle,
-  and mechanic reproduced, bugs and all. <strong>v2</strong> fixes those bugs.
-  <strong>v3</strong> begins exploring enhancements, starting with ambient
-  sound. And <strong>v4</strong>, when it arrives, will be an attempt to reduce
-  guess-the-verb stress by using AI to fill in far more synonyms and multiple
-  phrasings than is normally put into your average interactive fiction.
+  Each version is a chapter in that process. <strong>v0</strong> is the
+  original ZIL &mdash; the starting point. <strong>v1</strong> is the
+  translation: everything in the original must make it here.
+  <strong>v2</strong> fixes what was broken &mdash; bugs Infocom shipped
+  and ones I introduced &mdash; and establishes the testing methodology
+  that now underpins every change going forward.
+  <strong>v3</strong> is where I start to intentionally diverge from the
+  original and lean into what Inform 7 does best.
 </p>
 
 <div class="engine-selector">
@@ -215,13 +215,13 @@ footer a {
 <h2>Version History</h2>
 
 <div class="version-entry">
-  <h3>v3 &mdash; Ambient Audio &amp; Testing</h3>
-  <p>Experimental features and developer tooling built on the v2 bug-fix base.</p>
+  <h3>v3 &mdash; Making It My Own</h3>
+  <p>v1 and v2 are bound to the original &mdash; v3 is where I start to
+    intentionally diverge, leaning into what Inform 7 does best.</p>
   <ul>
-    <li>Ambient audio: zone-based background music across 9 zones (forest, cave, house, water, rapids, loud, hades, mine, machinery) with smooth crossfades between areas</li>
+    <li>Ambient audio: zone-based background music across 10 zones (forest, cave, house, water, rapids, loud, hades, mine, machinery, silence) with smooth crossfades between areas</li>
     <li>Sound effects: 16 one-shot audio triggers for key game events &mdash; puzzle moments, creature encounters, and atmospheric touches (<a href="soundoverlay.html#sound-effects">details</a>). Audio files are CC0 placeholders, not final</li>
-    <li>Built-in Test commands for smoke-testing key puzzles (cellar, troll, cyclops, dam, exorcism, machine, boat)</li>
-    <li>RegTest infrastructure for automated walkthrough regression testing</li>
+    <li>The audio engine is a JavaScript overlay that detects room changes in the game output &mdash; it&rsquo;s independent of the Inform 7 source and could be applied to any version</li>
     <li>Inherits all v2 bug fixes and v1 content</li>
   </ul>
   <div class="version-links">
@@ -233,18 +233,28 @@ footer a {
 </div>
 
 <div class="version-entry">
-  <h3>v2 &mdash; Bug Fixes</h3>
-  <p>Fixes for original ZIL bugs and translation issues, building on the v1 faithful port.</p>
+  <h3>v2 &mdash; Bug Fixes &amp; Testing</h3>
+  <p>The first version that changes the game rather than just translating it.
+    This is also where I built the testing methodology that now underpins all
+    development &mdash; it revealed bugs hiding in plain sight, some from
+    Infocom&rsquo;s original code, others introduced during translation.
+    Every fix is tracked with a
+    <a href="https://github.com/Johnesco/zork1/issues">GitHub issue</a>
+    explaining what was wrong and why.</p>
+  <p style="font-size:0.9em; color:#998866; margin-bottom:12px;">
+    Methodology (used for all versions going forward): deterministic seed-based
+    walkthroughs, side-by-side ZIL vs. Inform 7 transcript diffing, and automated
+    regression testing to ensure changes don&rsquo;t introduce new breaks.</p>
   <ul>
-    <li>Fix: Deflating the boat no longer loses its contents (<a href="https://github.com/Johnesco/zork1/issues/2">#2</a>)</li>
-    <li>Fix: Boat puncture from sharp objects no longer loses boat contents (<a href="https://github.com/Johnesco/zork1/issues/22">#22</a>)</li>
-    <li>Fix: Explicit thief and troll location check prevents phantom combat (<a href="https://github.com/Johnesco/zork1/issues/6">#6</a>)</li>
-    <li>Fix: Lit match is properly extinguished on player death/resurrection (<a href="https://github.com/Johnesco/zork1/issues/11">#11</a>)</li>
-    <li>Fix: Grate can no longer be locked while open (<a href="https://github.com/Johnesco/zork1/issues/16">#16</a>)</li>
-    <li>Fix: Recursive container bug &mdash; putting raft in coffin and coffin in raft no longer causes both to vanish (<a href="https://github.com/Johnesco/zork1/issues/3">#3</a>)</li>
-    <li>Fix: Weapon penalty no longer applied on combat misses (<a href="https://github.com/Johnesco/zork1/issues/4">#4</a>)</li>
-    <li>Fix: Rising water no longer kills player when inside the boat (<a href="https://github.com/Johnesco/zork1/issues/15">#15</a>)</li>
-    <li>Text: Inherits all v1 content &mdash; 300+ restored responses (<a href="https://github.com/Johnesco/zork1/issues/44">#44</a>), ghost state (<a href="https://github.com/Johnesco/zork1/issues/45">#45</a>), enriched descriptions (<a href="https://github.com/Johnesco/zork1/issues/46">#46</a>)</li>
+    <li>Fix: Deflating the boat lost its contents &mdash; a &ldquo;Raft of Holding&rdquo; bug (<a href="https://github.com/Johnesco/zork1/issues/2">#2</a>)</li>
+    <li>Fix: Putting the raft in the coffin and the coffin in the raft caused both to vanish (<a href="https://github.com/Johnesco/zork1/issues/3">#3</a>)</li>
+    <li>Fix: Phantom combat &mdash; you could attack enemies after they left the room (<a href="https://github.com/Johnesco/zork1/issues/6">#6</a>)</li>
+    <li>Fix: Rising water killed the player even inside the boat (<a href="https://github.com/Johnesco/zork1/issues/15">#15</a>)</li>
+    <li>Fix: Grate could be locked while open (<a href="https://github.com/Johnesco/zork1/issues/16">#16</a>)</li>
+    <li>Fix: Sharp objects puncturing the boat also destroyed its contents (<a href="https://github.com/Johnesco/zork1/issues/22">#22</a>)</li>
+    <li>Fix: Lit match survived death and resurrection (<a href="https://github.com/Johnesco/zork1/issues/11">#11</a>)</li>
+    <li>Fix: Weapon penalty applied even on combat misses (<a href="https://github.com/Johnesco/zork1/issues/4">#4</a>)</li>
+    <li>Translation fixes: 12 behavioral differences found via transcript comparison &mdash; invisible items leaking into room listings, boat auto-boarding on inflate, cyclops double-description, thief treasure vanishing, and more (<a href="https://github.com/Johnesco/zork1/issues/63">#63</a>)</li>
   </ul>
   <div class="version-links">
     <a data-play-version="v2" href="v2/">Play</a>
@@ -255,27 +265,33 @@ footer a {
 </div>
 
 <div class="version-entry">
-  <h3>v1 &mdash; First Light</h3>
-  <p>Complete ZIL-to-Inform 7 translation of Zork I.</p>
+  <h3>v1 &mdash; The Port</h3>
+  <p>A complete, playable, and winnable ZIL-to-Inform 7 translation &mdash; 110 rooms,
+    138 objects, every puzzle faithfully reproduced. The goal was a 1:1 gameplay
+    match with the original. Some ZIL bugs naturally vanish in translation to a
+    modern engine &mdash; that&rsquo;s fine. The interesting part was discovering
+    how often &ldquo;done&rdquo; didn&rsquo;t mean correct.</p>
+  <p style="font-size:0.9em; color:#998866; margin-bottom:12px;">
+    <strong>What surprised us:</strong>
+    Inform 7&rsquo;s <code>the player is in X</code> checks direct containment only &mdash;
+    it returns false when the player is in a boat that&rsquo;s in the room, silently
+    breaking river navigation and the launch command.
+    <code>move the player to X</code> bypasses After rules entirely, so
+    the Treasure Room&rsquo;s +25 visit bonus was never awarded.
+    Defining a custom <code>visible</code>/<code>invisible</code> property
+    shadowed Inform 7&rsquo;s built-in scope system, causing items meant to be
+    hidden to appear in room listings anyway.
+    A 6-phase audit of every ZIL TELL response revealed 377 missing text outputs &mdash;
+    the game was playable but was only saying about half of what it should.
+    And the thief, despite appearing to work, never actually roamed or stole anything.</p>
   <ul>
-    <li>110+ rooms across five regions: forest and house, cellar and troll area, maze, dam and river, coal mine</li>
-    <li>All 19 treasures with trophy case scoring (350 points max) and ranked titles</li>
-    <li>NPCs: roaming Thief with combat and treasure redistribution, Troll combat, Cyclops with multiple solutions</li>
+    <li>110 rooms across five regions, all 19 treasures, 350-point scoring system with ranked titles</li>
+    <li>NPCs: roaming thief (5-turn patrol cycle, 75% steal rate, treasure redistribution), troll combat with unconscious/recovery mechanic (<a href="https://github.com/Johnesco/zork1/issues/59">#59</a>), cyclops with multiple solutions</li>
     <li>Full puzzle systems: dam and reservoir, exorcism ceremony, coal-to-diamond machine, inflatable boat and river, mirror rooms</li>
-    <li>Lamp timer (400 turns), candle timer (40 turns), match system (6 matches, 2-turn burn)</li>
-    <li>Death and resurrection system, grue darkness mechanic, sword glow proximity warning</li>
-    <li>Verbosity modes, score ranks, and diagnostic commands</li>
-    <li>Text: 300+ missing player responses restored from ZIL source &mdash; verb defaults, object-specific messages, scenery interactions, and random text tables (<a href="https://github.com/Johnesco/zork1/issues/44">#44</a>)</li>
-    <li>Dead player ghost state &mdash; explore as spirit with dimly-lit rooms, prayer resurrection at temple, ZIL-faithful action restrictions (<a href="https://github.com/Johnesco/zork1/issues/45">#45</a>)</li>
-    <li>Room descriptions enriched to match ZIL &mdash; Hades inscription, machine room, grating states, torch/dome details, Aragain Falls rainbow, mirror breakage; object fixes for painting, lantern, matchbook, torch (<a href="https://github.com/Johnesco/zork1/issues/46">#46</a>)</li>
-    <li>Object interaction responses &mdash; sceptre/rainbow, egg, skeleton, bubble, barrow door, maze diodes, machine bare-hands check, kitchen window, rug, large bag, rusty knife, chalice (<a href="https://github.com/Johnesco/zork1/issues/47">#47</a>)</li>
-    <li>Generic verb handlers &mdash; ZIL random text tables (YUKS, DUMMY, JUMPLOSS, HO-HUM), cut-with, destroy/mung, leap-over, overboard, disembark, inflate-with, push juggler, slide-to-cellar, throw &ldquo;Thrown.&rdquo;, fatal jump deaths, Dome Room conditional jump (<a href="https://github.com/Johnesco/zork1/issues/48">#48</a>)</li>
-    <li>Fix leaves/grate interaction &mdash; moving, taking, burning, cutting leaves now reveals grate; look-under gives temporary peek; burn-while-carrying is fatal (<a href="https://github.com/Johnesco/zork1/issues/50">#50</a>)</li>
-    <li>Missing object interactions &mdash; sword examine-while-glowing, trap door look-under, grate lock/unlock/pick/put-through, chalice insert, large bag unconscious-thief text, river float-vs-splash, bottle shake-spills-water, bag-of-coins/trunk close and insert handlers (<a href="https://github.com/Johnesco/zork1/issues/51">#51</a>)</li>
-    <li>Scenery objects and remaining text &mdash; boarded windows, chimney in Studio, Hades gate, mountain range, climbable cliff, skeleton kick/kiss, bat Fweep, candles count/insert-safety, dam plug variants, tool chest insert, hot bell ring-with-burnable, putty lubricant rejection, forest disembark, Canyon View death text (<a href="https://github.com/Johnesco/zork1/issues/52">#52</a>)</li>
-    <li>ZIL text accuracy &mdash; mirror examine/take/rub-with-object, thief description with stiletto, bodies guardian-of-dungeon death, basket &ldquo;securely fastened&rdquo;, cyclops 6-level agitation, match examine-when-lit, Gas Room deliberate-vs-accidental lighting variants, water leaks from non-bottle containers, V-PLAY actor death, V-FIND hands/lungs, exorcism equipment check, V-ALARM rudely-awakened, global hands/lungs backdrops (<a href="https://github.com/Johnesco/zork1/issues/53">#53</a>)</li>
-    <li>Translation fix: Troll unconscious mechanic restored &mdash; troll can now be knocked unconscious and recover, matching ZIL combat behavior (<a href="https://github.com/Johnesco/zork1/issues/59">#59</a>)</li>
-    <li>Translation fix: Sword glow now detects cyclops and scans adjacent rooms &mdash; ZIL <code>INFESTED?</code> checks all visible actors (troll, thief, cyclops) with faint glow for adjacent rooms (<a href="https://github.com/Johnesco/zork1/issues/62">#62</a>)</li>
+    <li>377 missing text responses restored from ZIL source in a 6-phase audit (<a href="https://github.com/Johnesco/zork1/issues/44">#44</a>) &mdash; verb defaults, object interactions, scenery, random text tables, combat melee messages</li>
+    <li>Dead player ghost state &mdash; explore as spirit with dimly-lit rooms and prayer resurrection (<a href="https://github.com/Johnesco/zork1/issues/45">#45</a>)</li>
+    <li>Full text parity: room descriptions (<a href="https://github.com/Johnesco/zork1/issues/46">#46</a>), object responses (<a href="https://github.com/Johnesco/zork1/issues/47">#47</a>), verb handlers (<a href="https://github.com/Johnesco/zork1/issues/48">#48</a>), scenery (<a href="https://github.com/Johnesco/zork1/issues/52">#52</a>), combat messages (<a href="https://github.com/Johnesco/zork1/issues/58">#58</a>)</li>
+    <li>Sword glow scans adjacent rooms and detects all three villains, matching ZIL <code>INFESTED?</code> logic (<a href="https://github.com/Johnesco/zork1/issues/62">#62</a>)</li>
   </ul>
   <div class="version-links">
     <a data-play-version="v1" href="v1/">Play</a>
