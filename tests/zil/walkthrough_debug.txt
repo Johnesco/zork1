@@ -1,0 +1,60 @@
+n
+n
+u
+take egg
+d
+s
+e
+open window
+w
+take sack
+take bottle
+w
+take sword
+take lantern
+open case
+put egg in case
+e
+u
+take rope
+d
+w
+move rug
+open trap door
+turn on lantern
+d
+i
+s
+drop sack
+drop bottle
+e
+take painting
+w
+n
+i
+n
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+i
+e
+e
+e
+echo
+take platinum bar
+w
+n
+ne
+nw
+e
+n
+take matchbook
+n
+i
+press yellow button
+take wrench
+i
+take tube
+take screwdriver

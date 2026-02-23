@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zork I: Inform 7 Edition — Testing Guide</title>
+<style>
+  :root {
+    --bg: #1a1a1a;
+    --surface: #242424;
+    --border: #3a3a3a;
+    --text: #d4c5a9;
+    --text-muted: #8a7e6b;
+    --heading: #e8d9b8;
+    --accent: #b89d65;
+    --code-bg: #1e1e1e;
+    --pass: #5a9a5a;
+    --fail: #c45a5a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 {
+    color: var(--heading);
+    font-size: 1.8rem;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  h2 {
+    color: var(--heading);
+    font-size: 1.3rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 0.75rem;
+  }
+  h3 {
+    color: var(--accent);
+    font-size: 1.05rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  p { margin-bottom: 0.75rem; }
+  code {
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    background: var(--code-bg);
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    font-size: 0.9em;
+    color: var(--accent);
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  th {
+    background: var(--surface);
+    color: var(--heading);
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--accent);
+  }
+  td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:hover td { background: var(--surface); }
+  .pass { color: var(--pass); font-weight: 600; }
+  .fail { color: var(--fail); font-weight: 600; }
+  .note {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .note strong { color: var(--accent); }
+  ul, ol { margin-bottom: 0.75rem; padding-left: 1.5rem; }
+  li { margin-bottom: 0.3rem; }
+  a { color: var(--accent); }
+  .tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+  }
+  .tag-infra { background: #2a3a4a; color: #7ab; }
+  .tag-game { background: #3a3a2a; color: #bb7; }
+  .tag-wsl { background: #3a2a3a; color: #b7b; }
+  footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+</style>
+</head>
+<body>
+
+<h1>Zork I: Inform 7 Edition — Testing Guide</h1>
+
+<p>This project uses a two-layer testing system: <strong>built-in Inform 7 Test commands</strong> for interactive development and <strong>RegTest</strong> (by Andrew Plotkin) for automated regression testing.</p>
+
+<div class="note">
+  <strong>Local only.</strong> The <code>tests/</code> directory is not deployed to GitHub Pages. The built-in Test commands in <code>story.ni</code> are in a "Not for release" section and are stripped from release builds.
+</div>
+
+<h2>Prerequisites</h2>
+
+<ul>
+  <li><strong>WSL (Windows Subsystem for Linux)</strong> — required to run the CheapGlk glulxe interpreter</li>
+  <li><strong>Python 3</strong> — available on both Windows and WSL (RegTest runs via WSL Python)</li>
+  <li><strong>CheapGlk glulxe binary</strong> — pre-built at <code>/home/johnesco/glulxe/glulxe</code> in WSL (also copied to <code>tools/glulxe</code>, which is gitignored)</li>
+  <li><strong>Compiled game</strong> — <code>build/zork1.ulx</code> (the Glulx story file)</li>
+</ul>
+
+<h2>Quick Start</h2>
+
+<h3>Run all tests</h3>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh'</code></pre>
+
+<h3>Run a single test</h3>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh cellar'</code></pre>
+
+<h3>Verbose mode (see full game transcript)</h3>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh -v'</code></pre>
+
+<h3>List all available tests</h3>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh -l'</code></pre>
+
+<h3>Verbose with stop-on-first-error</h3>
+<pre><code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh -v --vital cellar'</code></pre>
+
+<h2>Architecture</h2>
+
+<table>
+  <tr>
+    <th>File</th>
+    <th>Purpose</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td><code>tests/regtest.py</code></td>
+    <td>Andrew Plotkin's RegTest v1.13 — the test runner engine</td>
+    <td><span class="tag tag-infra">infrastructure</span></td>
+  </tr>
+  <tr>
+    <td><code>tests/zork1.regtest</code></td>
+    <td>Test definitions — commands, expected output, assertions</td>
+    <td><span class="tag tag-game">game tests</span></td>
+  </tr>
+  <tr>
+    <td><code>tests/run-tests.sh</code></td>
+    <td>Convenience wrapper — sets interpreter, game, and test file paths</td>
+    <td><span class="tag tag-infra">infrastructure</span></td>
+  </tr>
+  <tr>
+    <td><code>tests/testing.html</code></td>
+    <td>This documentation page</td>
+    <td><span class="tag tag-infra">infrastructure</span></td>
+  </tr>
+  <tr>
+    <td><code>tools/glulxe</code></td>
+    <td>CheapGlk-linked Glulx interpreter (ELF binary, WSL only, gitignored)</td>
+    <td><span class="tag tag-wsl">WSL binary</span></td>
+  </tr>
+  <tr>
+    <td><code>src/inform7/story.ni</code></td>
+    <td>Part 6 — built-in <code>Test</code> commands (Not for release)</td>
+    <td><span class="tag tag-game">game tests</span></td>
+  </tr>
+</table>
+
+<h3>How it works</h3>
+<ol>
+  <li><code>run-tests.sh</code> invokes <code>regtest.py</code> with the CheapGlk glulxe interpreter and the compiled <code>zork1.ulx</code></li>
+  <li>For each test in <code>zork1.regtest</code>, RegTest spawns a fresh game instance</li>
+  <li>Commands are piped to the interpreter via stdin; output is read from stdout</li>
+  <li>Each assertion line is checked against the game's output for that turn</li>
+  <li>Tests pass silently; failures report the assertion and line number</li>
+</ol>
+
+<h2>RegTest File Format</h2>
+
+<p>The <code>.regtest</code> file uses a simple line-based format:</p>
+
+<pre><code># Comment
+** game: ../build/zork1.ulx
+** interpreter: /home/johnesco/glulxe/glulxe -q
+
+* test-name
+> command to send to game
+Literal text that must appear in output
+/regex pattern that must match (NO trailing slash)
+!text that must NOT appear in output
+{vital}                    (abort test on failure)
+>{include} other-test      (include another test's commands)</code></pre>
+
+<div class="note">
+  <strong>Important:</strong> Regex lines start with <code>/</code> but do <em>not</em> have a trailing <code>/</code>. The line <code>/West of House</code> is correct. The line <code>/West of House/</code> would try to match a literal trailing slash.
+</div>
+
+<h3>Test composition with <code>{include}</code></h3>
+<p>Tests can build on each other. For example, <code>echo</code> includes <code>round-room</code>, which includes <code>troll</code>, which includes <code>cellar</code>, which includes <code>living-room</code>, and so on. This avoids duplicating navigation sequences.</p>
+
+<pre><code>* cellar
+>{include} living-room
+> push rug
+/trap door
+> open trap door
+/rickety staircase
+> down
+/Cellar
+
+* troll
+>{include} cellar
+> n
+> attack troll
+...</code></pre>
+
+<h2>Current Test Suite</h2>
+
+<table>
+  <tr>
+    <th>Test</th>
+    <th>What it verifies</th>
+    <th>Depends on</th>
+  </tr>
+  <tr><td><code>startup</code></td><td>Game boots, West of House description</td><td>—</td></tr>
+  <tr><td><code>mailbox</code></td><td>Open mailbox, take/read leaflet</td><td>startup</td></tr>
+  <tr><td><code>enter-house</code></td><td>Window entry to Kitchen</td><td>startup</td></tr>
+  <tr><td><code>living-room</code></td><td>Sword + lantern acquisition</td><td>enter-house</td></tr>
+  <tr><td><code>attic</code></td><td>Attic access, rope + knife pickup</td><td>enter-house</td></tr>
+  <tr><td><code>kitchen-items</code></td><td>Bottle, sack, lunch, garlic</td><td>enter-house</td></tr>
+  <tr><td><code>cellar</code></td><td>Rug, trap door, descent to Cellar</td><td>living-room</td></tr>
+  <tr><td><code>troll</code></td><td>Troll combat (random — may need re-runs)</td><td>cellar</td></tr>
+  <tr><td><code>round-room</code></td><td>Navigation past troll to Round Room</td><td>troll</td></tr>
+  <tr><td><code>echo</code></td><td>Loud Room echo puzzle + platinum bar</td><td>round-room</td></tr>
+  <tr><td><code>dam</code></td><td>Maintenance Room, buttons, wrench, bolt</td><td>round-room</td></tr>
+  <tr><td><code>boat</code></td><td>Dam Base has pile of plastic</td><td>dam</td></tr>
+  <tr><td><code>mirror</code></td><td>Mirror Room navigation</td><td>round-room</td></tr>
+  <tr><td><code>hades-path</code></td><td>Route to Entrance to Hades</td><td>round-room</td></tr>
+  <tr><td><code>cyclops-path</code></td><td>Full maze navigation to Cyclops Room</td><td>troll</td></tr>
+  <tr><td><code>cyclops-odysseus</code></td><td>Magic word defeats cyclops</td><td>cyclops-path</td></tr>
+  <tr><td><code>forest-loop</code></td><td>Forest navigation round trip</td><td>startup</td></tr>
+  <tr><td><code>house-circuit</code></td><td>House exterior circuit</td><td>startup</td></tr>
+</table>
+
+<h2>Built-in Test Commands (story.ni)</h2>
+
+<p>Part 6 of <code>story.ni</code> contains Inform 7 <code>Test</code> commands that work inside the game at the command prompt. These are available in debug builds only ("Not for release").</p>
+
+<pre><code>> test cellar
+> test feedcyclops
+> test odysseus
+> test echo
+> test dam
+> test exorcism
+> test diamond
+> test boat
+> test scarab
+> test rainbow
+> test mirror
+> test bauble
+> test dome</code></pre>
+
+<p>Unlike RegTest, these use Inform 7's built-in <code>holding</code> and <code>in</code> clauses to set up preconditions (starting location, held items), making them useful for quickly testing individual puzzles without navigating there manually.</p>
+
+<div class="note">
+  <strong>Note:</strong> These require the game to be recompiled with the current <code>story.ni</code>. The pre-existing <code>build/zork1.ulx</code> was compiled from an older source and will report "No test scripts exist."
+</div>
+
+<h2>Known Limitations</h2>
+
+<ul>
+  <li><strong>Troll combat is random</strong> (~70% hit rate per swing). Tests that traverse the troll may occasionally fail. Just re-run.</li>
+  <li><strong>WSL required.</strong> The CheapGlk glulxe is a Linux ELF binary. RegTest uses <code>select.select()</code> which is POSIX-only. All tests must run through WSL.</li>
+  <li><strong>Compiled .ulx may lag behind story.ni.</strong> The <code>build/zork1.ulx</code> may be compiled from an older source. Features like <code>turn bolt</code> and <code>rub mirror</code> currently give default Inform responses in the compiled game. Tests accommodate this with comments noting expected behavior after recompilation.</li>
+  <li><strong>Thief interference.</strong> The thief roams every 5 turns and can steal items or block movement. Long test sequences may encounter unexpected thief interactions.</li>
+</ul>
+
+<h2>Adding New Tests</h2>
+
+<ol>
+  <li>Open <code>tests/zork1.regtest</code></li>
+  <li>Add a new test block:
+<pre><code>* my-new-test
+# Description of what this tests
+>{include} cellar
+> go north
+/expected output text
+> do something
+!text that should NOT appear</code></pre>
+  </li>
+  <li>Run it: <code>wsl -e bash -c 'cd /mnt/c/code/zork1 && bash tests/run-tests.sh -v my-new-test'</code></li>
+  <li>If it passes, run the full suite to make sure nothing else broke</li>
+</ol>
+
+<h3>Tips</h3>
+<ul>
+  <li>Use <code>{include}</code> to build on existing navigation sequences rather than duplicating commands</li>
+  <li>Use <code>{vital}</code> before key assertions to abort early on fundamental failures</li>
+  <li>Prefer regex (<code>/pattern</code>) over literal text when the exact wording might change</li>
+  <li>Use <code>!</code> negated checks to verify unwanted behavior doesn't appear</li>
+  <li>Keep tests independent — each test starts a fresh game instance</li>
+</ul>
+
+<h2>Rebuilding the CheapGlk Glulxe</h2>
+
+<p>If the WSL binary at <code>/home/johnesco/glulxe/glulxe</code> is lost, rebuild from source:</p>
+
+<pre><code># In WSL:
+cd ~
+git clone https://github.com/erkyrath/cheapglk
+git clone https://github.com/erkyrath/glulxe
+cd glulxe
+# Edit Makefile: set GLKINCLUDEDIR and GLKLIBDIR to ../cheapglk
+cd ../cheapglk && make
+cd ../glulxe && make
+# Result: ~/glulxe/glulxe
+cp ~/glulxe/glulxe /mnt/c/code/zork1/tools/glulxe</code></pre>
+
+<div class="note">
+  <strong>Note:</strong> If <code>sudo</code> is unavailable in WSL, gcc/make can be installed via <code>apt-get download</code> + <code>dpkg-deb -x</code> into a local prefix. See the project's git history for the original build process.
+</div>
+
+<h2>References</h2>
+
+<ul>
+  <li><a href="https://eblong.com/zarf/plotex/regtest.html">RegTest documentation</a> — full format reference</li>
+  <li><a href="https://github.com/erkyrath/plotex">erkyrath/plotex</a> — RegTest source repository</li>
+  <li><a href="https://github.com/erkyrath/glulxe">erkyrath/glulxe</a> — Glulx interpreter source</li>
+  <li><a href="https://github.com/erkyrath/cheapglk">erkyrath/cheapglk</a> — CheapGlk library source</li>
+  <li><a href="https://ganelson.github.io/inform-website/book/WI_2_8.html">Inform 7 Test command (WI 2.8)</a> — built-in test syntax</li>
+</ul>
+
+<footer>
+  Zork I: Inform 7 Edition &mdash; Testing infrastructure. Not deployed to the public site.
+</footer>
+
+</body>
+</html>

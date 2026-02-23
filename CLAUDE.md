@@ -13,41 +13,42 @@ The Inform 7 source is the living document; the ZIL files are read-only referenc
 
 ## Repository Layout
 
-This repo is the **web display layer only** — it holds the GitHub Pages site and read-only ZIL reference. All Inform 7 authoring, building, and testing lives in `C:\code\inform7\`.
+This repo contains the Inform 7 source, tests, and the GitHub Pages web site — everything for the project in one place.
 
 ```
+story.ni           Current Inform 7 source (EDIT HERE)
+zork1.ulx          Compiled output (gitignored — rebuild from story.ni)
+tests/             Test scripts, walkthroughs, regtest data
 src/zil/           Original ZIL source files (read-only, NEVER modify)
+src/sharpee/       Sharpee source files
 web/               GitHub Pages site deployed to johnesco.github.io/zork1/
   index.html       Landing page — project description, version links
   v0/              Original ZIL — source browser + playable ZIL-compiled game
   v1/, v2/, ...    Inform 7 version archives (self-contained snapshots)
 ```
 
-## Inform 7 Hub (External)
+## Inform 7 Shared Tools (External)
 
-All Inform 7 source, compilation, and testing lives in the shared hub:
+Compiler conventions, shared test framework, and reference docs live in the shared hub:
 
 ```
 C:\code\inform7\
-├── CLAUDE.md                      ← Inform 7 conventions and compiler paths
+├── CLAUDE.md              ← Inform 7 conventions and compiler paths
 ├── tools/
-│   └── regtest.py                 ← Shared test runner
-├── reference/                     ← Syntax + formatting docs
-└── projects/zork1/
-    ├── story.ni                   ← Current version (EDIT HERE)
-    ├── zork1.inform/              ← IDE bundle + compilation workspace
-    ├── zork1.materials/
-    ├── zork1.ulx                  ← Compiled output
-    └── tests/                     ← All test scripts + data
+│   ├── regtest.py         ← Shared test runner
+│   └── testing/           ← Generic testing framework (walkthroughs, seed sweeps)
+└── reference/             ← Syntax + formatting docs
 ```
 
 **Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\inform7\CLAUDE.md` for CLI usage).
 
-Any `story.ni` files found inside this repo (e.g., `web/vN/story.ni`) are **frozen snapshots**. The current version lives only in the Inform 7 hub (`C:\code\inform7\projects\zork1\story.ni`) and is never published to the web directly — it is snapshotted into a numbered version when ready. Always edit the hub copy and build from there.
+Any `story.ni` files found inside `web/` (e.g., `web/vN/story.ni`) are **frozen snapshots**. The current version is `story.ni` at the repo root — it is never published to the web directly but snapshotted into a numbered version when ready.
 
 ## Version Philosophy
 
-Versions are displayed on the landing page with the **newest at top, v0 at bottom**. The original ZIL source in `src/zil/` is **sacred and must never be modified** — all changes carry forward into Inform 7 versions only.
+Each version is a **playable milestone** that tells a chapter of the project story. Together they form a portfolio trail showing design choices, testing methodology, and the evolution from faithful port to something new. Versions are displayed on the landing page with the **newest at top, v0 at bottom**.
+
+The original ZIL source in `src/zil/` is **sacred and must never be modified** — all changes carry forward into Inform 7 versions only.
 
 **The most recent version is the default work target.** If no version is specified, work on the latest version.
 
@@ -60,6 +61,12 @@ Starting with v1, every version is a **self-contained snapshot** with its own:
 
 **Binary rule**: Never edit `.ulx` or `.ulx.js` files directly. Always compile from the version's own `story.ni` source. The workflow is: edit `story.ni` → compile → base64-encode → update `zork1.ulx.js`.
 
+### Change Propagation
+
+**Changes only propagate upward, never downward.** If a fix is made in v1, it must also be applied to v2, v3, and all later versions — as if the fix had always been in v1 and was naturally inherited by everything above it. Never apply a higher version's changes to a lower version.
+
+This means each version is always a strict superset of the one below it: v2 contains everything in v1 plus its own changes, v3 contains everything in v2 plus its own, and so on.
+
 ### Past Versions Are Frozen Snapshots
 
 Once a version is published, it is **frozen**. All new work goes into the latest version only. Do not edit past versions unless explicitly asked.
@@ -68,9 +75,7 @@ In rare cases a past version may be patched (e.g., a translation bug discovered 
 1. Edit that version's own `web/vN/story.ni` directly
 2. Compile from that source to produce a new `.ulx`
 3. Base64-encode the `.ulx` into `web/vN/zork1.ulx.js`
-4. Apply the same fix to all later versions and recompile each
-
-This is exceptional — the default is always to work forward.
+4. Propagate the same fix upward to all later versions and recompile each
 
 When possible, every version should provide three buttons:
 - **Play Online** — launch the game in the browser
@@ -81,17 +86,23 @@ When possible, every version should provide three buttons:
 
 The unmodified Infocom ZIL source code, exactly as released. Includes a ZIL source browser with syntax highlighting and annotations. Also includes a playable game compiled from the original ZIL using ZILF (Z-machine format, played via Parchment). The ZIL source is **never modified** — it is the historical reference that all other versions are measured against.
 
-### v1 — Faithful Inform 7 Port
+### v1 — The Port
 
-A complete, playable, and winnable translation of Zork I from ZIL to Inform 7. This version is a **faithful port only** — it reproduces the original game as accurately as possible, including all original bugs. No bug fixes, no enhancements, no quality-of-life improvements. The goal is a 1:1 behavioral match with the ZIL version. Text parity with v0 is now complete.
+A complete, playable, and winnable translation of Zork I from ZIL to Inform 7. **Everything in the ZIL version must make it here** — every room, puzzle, text response, and behavior. No fixes, no enhancements, no quality-of-life improvements. The goal is a 1:1 gameplay match with the ZIL version. Some original ZIL bugs naturally vanish in translation to a modern engine — that's fine, don't force them back in. v1 is measured by whether the gameplay matches v0, not by whether it preserves bugs for their own sake.
 
-### v2 — Bug Fixes
+The translation revealed surprising differences between the two languages. What looked correct on the surface often failed under testing — containment semantics (`the player is in X` vs. `the location of the player`), action routing (`move the player to` bypassing After rules), property conflicts (I7's built-in `visible` clashing with custom properties), and the discovery that hundreds of ZIL text responses had no Inform 7 equivalent. Text parity with v0 is now complete after a 6-phase audit of every ZIL TELL response.
 
-Fixes bugs from the original ZIL source and any translation bugs introduced during the v1 port. Bug fixes go here (not in v1, which preserves original behavior including bugs). Each fix is tracked with a GitHub issue noting what was changed and why. Changes propagate to all higher versions.
+### v2 — Bug Fixes & Testing
 
-### v3 — Ambient Audio & Testing (Current)
+The first version that changes the game rather than just translating it — but still within ZIL's intent. Fixes bugs from the original ZIL source (things Infocom shipped broken) and translation bugs introduced during the v1 port. Behavior still aims to match what ZIL *meant* to do, not what Inform 7 might do differently.
 
-Experimental features and developer tooling. Includes ambient audio system (zone-based background music using CC0 audio loops), built-in Test commands for smoke-testing key puzzles, and RegTest infrastructure for automated regression testing. Linked from the landing page with its own compiled binary and source snapshot.
+This is also where the testing methodology was established — it now underpins all development across every version. Each fix is tracked with a GitHub issue noting what was changed and why. Changes propagate to all higher versions.
+
+### v3 — Making It My Own (Current)
+
+Where it intentionally diverges from ZIL-faithful behavior and starts leaning into what Inform 7 does best. v1 and v2 are bound to the original; v3 and beyond are not. The first enhancement is ambient audio — zone-based background music and sound effects that respond to room changes. Future additions may include AI-powered synonym expansion, richer world modeling, and new content that takes advantage of Inform 7's natural-language authoring.
+
+Audio architecture: the engine (`ambient-audio.js`) is a generic JavaScript overlay using MutationObserver for room detection. The zone map (room-to-audio assignments) is version-specific since it depends on room names in the game output.
 
 ## Web Version Architecture
 
@@ -138,10 +149,10 @@ web/vN/
 
 ### Versioning Workflow
 
-The **current version** (`C:\code\inform7\projects\zork1\story.ni`) is the working copy where all new development happens. It is snapshotted into numbered versions when ready. The **latest numbered version** (currently v3) may be updated many times — it is republished from the current version as development progresses.
+The **current version** (`story.ni` at the repo root) is the working copy where all new development happens. It is snapshotted into numbered versions when ready. The **latest numbered version** (currently v3) may be updated many times — it is republished from the current version as development progresses.
 
 **Updating the latest version** (routine — happens frequently):
-1. Make changes in the hub (`C:\code\inform7\projects\zork1\story.ni`)
+1. Make changes in `story.ni` (repo root)
 2. Build and test (see "Building the Game" and "Testing Policy" below)
 3. Copy `story.ni` → `web/vN/story.ni`
 4. Base64-encode `.ulx` → `web/vN/zork1.ulx.js`
@@ -167,15 +178,24 @@ GitHub Actions (`.github/workflows/deploy-pages.yml`) deploys the entire `web/` 
 - Landing page: `johnesco.github.io/zork1/`
 - Version N: `johnesco.github.io/zork1/vN/`
 
-## Testing Policy
+## Testing
 
-All testing happens in `C:\code\inform7\projects\zork1\`. See `C:\code\inform7\CLAUDE.md` and the project's `tests/` folder for scripts and data.
+Testing is a **project-wide process**, not a version feature. The same methodology applies to every version.
 
-**Policy**: Report failures, don't fix unless explicitly instructed.
+All testing happens in `tests/` at the repo root. The test wrapper scripts delegate to the shared framework at `C:\code\inform7\tools\testing\`. See `C:\code\inform7\CLAUDE.md` for interpreter paths and framework details.
+
+### Methodology
+- **Deterministic walkthroughs**: Seed-based RNG (`glulxe --rngseed N`) ensures reproducible runs. Golden seeds stored in `seeds.conf`.
+- **Transcript comparison**: Side-by-side diffing of ZIL (v0, dfrotz) vs. I7 (glulxe) walkthrough output to catch behavioral differences.
+- **Automated regression**: `run-walkthrough.sh` verifies 350/350 completion. `find-seeds.sh` discovers working seeds after code changes.
+- **RegTest**: `regtest.py` for targeted scenario testing of specific puzzles and mechanics.
+
+### Policy
+Report failures, don't fix unless explicitly instructed. Test all versions when propagating fixes.
 
 ## Building the Game
 
-All building happens in `C:\code\inform7\projects\zork1\`. See `C:\code\inform7\CLAUDE.md` for compiler paths, build steps, and interpreter usage.
+Building happens in this repo. The `.inform/` IDE bundle is created alongside `story.ni` when needed. See `C:\code\inform7\CLAUDE.md` for compiler paths, build steps, and interpreter usage.
 
 ZIL (v0) is compiled separately from `C:\code\zork1-zil\` using ZILF.
 

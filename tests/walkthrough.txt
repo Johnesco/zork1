@@ -1,0 +1,372 @@
+open mailbox
+take leaflet
+read leaflet
+drop leaflet
+s
+e
+open window
+enter
+take bottle
+take sack
+open sack
+take garlic
+take lunch
+w
+take lamp
+take sword
+open case
+move rug
+open trap door
+turn on lamp
+down
+s
+e
+take painting
+n
+up
+up
+take knife
+take rope
+down
+down
+w
+put painting in case
+drop knife
+drop bottle
+drop lunch
+drop sack
+open trap door
+down
+n
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+drop sword
+e
+e
+se
+e
+tie rope to railing
+down
+take torch
+s
+down
+take coffin
+up
+s
+pray
+turn off lamp
+s
+n
+e
+down
+down
+n
+drop coffin
+open coffin
+take sceptre
+wave sceptre
+take pot of gold
+take coffin
+sw
+up
+up
+nw
+w
+in
+w
+put coffin in case
+put pot of gold in case
+put sceptre in case
+open trap door
+turn on lamp
+down
+n
+e
+e
+n
+ne
+e
+n
+take matchbook
+n
+take wrench
+take screwdriver
+push yellow button
+s
+s
+turn bolt with wrench
+drop wrench
+s
+sw
+s
+se
+e
+down
+turn off lamp
+s
+take bell
+s
+take book
+take candles
+down
+down
+ring bell
+take candles
+light match
+light candles with match
+read book
+drop book
+s
+take skull
+n
+up
+n
+put out candles
+drop candles
+drop matchbook
+rub mirror
+n
+w
+n
+w
+n
+e
+put torch in basket
+turn on lamp
+n
+down
+take bracelet
+e
+ne
+se
+sw
+down
+down
+s
+take coal
+n
+up
+up
+n
+e
+s
+n
+up
+s
+put coal in basket
+put screwdriver in basket
+lower basket
+n
+down
+e
+ne
+se
+sw
+down
+down
+w
+drop all
+w
+take coal
+take screwdriver
+take torch
+s
+open lid
+put coal in machine
+close lid
+turn switch with screwdriver
+drop screwdriver
+open lid
+take diamond
+n
+put diamond in basket
+put torch in basket
+e
+take all
+e
+up
+up
+n
+e
+s
+n
+up
+s
+raise basket
+take diamond
+take torch
+turn off lamp
+w
+take jade
+s
+e
+s
+down
+up
+put jade in case
+put skull in case
+put bracelet in case
+put torch in case
+put diamond in case
+turn on lamp
+down
+n
+e
+e
+n
+ne
+nw
+n
+n
+take pump
+n
+take trident
+s
+s
+take trunk
+s
+e
+down
+inflate plastic with pump
+drop pump
+enter boat
+launch
+wait
+wait
+wait
+wait
+wait
+wait
+wait
+wait
+wait
+wait
+wait
+take buoy
+east
+exit
+take shovel
+ne
+dig sand
+dig sand
+dig sand
+dig sand
+take scarab
+drop shovel
+sw
+drop buoy
+open buoy
+take emerald
+s
+s
+cross rainbow
+turn off lamp
+sw
+up
+up
+nw
+w
+in
+w
+put emerald in case
+put scarab in case
+put trident in case
+put trunk in case
+e
+e
+n
+n
+climb tree
+take egg
+climb down
+s
+e
+in
+w
+turn on lamp
+down
+n
+w
+s
+e
+up
+take coins
+take key
+sw
+e
+s
+se
+odysseus
+up
+give egg to thief
+down
+e
+e
+put coins in case
+take knife
+down
+n
+w
+s
+e
+up
+sw
+e
+s
+se
+up
+kill thief with knife
+kill thief with knife
+kill thief with knife
+kill thief with knife
+kill thief with knife
+kill thief with knife
+take all
+drop stiletto
+down
+nw
+s
+w
+up
+down
+ne
+unlock grate with key
+open grate
+up
+s
+wind canary
+take bauble
+s
+e
+in
+w
+put bauble in case
+put canary in case
+put egg in case
+put chalice in case
+down
+n
+e
+e
+e
+echo
+take bar
+w
+w
+w
+s
+up
+put bar in case
+look
+take map
+read map
+e
+e
+n
+w
+sw
+enter barrow
