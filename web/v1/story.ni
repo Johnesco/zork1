@@ -2700,7 +2700,7 @@ Every turn when the hot-bell-timer > 0 (this is the hot bell cooling rule):
 		if the player is in Entrance to Hades:
 			say "The bell appears to have cooled down.[line break]".
 
-Instead of reading the black book:
+Instead of reading or examining the black book:
 	if the xc-flag is true and the player is in Entrance to Hades and the lld-flag is false:
 		now the lld-flag is true;
 		remove the ghosts from play;
@@ -4021,7 +4021,7 @@ Instead of searching a door:
 		say "The [noun] is open, but I can[apostrophe]t tell what[apostrophe]s beyond it.";
 	otherwise:
 		say "The [noun] is closed."
-Instead of searching something: say "You find nothing unusual."
+Instead of searching something that is not a container: say "You find nothing unusual."
 
 Spinning is an action applying to one thing. Understand "spin [something]" as spinning.
 Carry out spinning: say "You can't spin that!"
