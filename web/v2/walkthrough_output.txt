@@ -1,18 +1,16 @@
-Welcome to the Cheap Glk Implementation, library version 1.0.7.
-
 
 
 
 
 ZORK I: The Great Underground Empire
-Infocom interactive fiction - a fantasy story
-Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.
-ZORK is a registered trademark of Infocom, Inc.
-Release 88 / Serial number 840726
+v2: Bug Fixes & Testing
+An Inform 7 translation by John Escobedo
+Based on the original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
+ZIL source released under the MIT License by Activision
 
 Zork I: The Great Underground Empire
-An Interactive Fiction by Infocom (translated to Inform 7)
-Release 1 / Serial number 260222 / Inform 7 v10.1.2 / D
+An Interactive Fiction by John Escobedo (after Infocom)
+Release 2 / Serial number 260224 / Inform 7 v10.1.2 / D
 
 West of House
 You are standing in an open field west of a white house, with a boarded front door.
@@ -1777,6 +1775,9 @@ In that game you scored 350 out of a possible 350, in 420 turns, earning you the
 Your score is 350 (total of 350 points), in 420 moves.
 This gives you the rank of Master Adventurer.
 
+
+Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?
+> Please give one of the answers above.
 
 Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?
 > 

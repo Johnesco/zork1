@@ -1,4 +1,4 @@
-"Zork I: The Great Underground Empire" by "Infocom (translated to Inform 7)"
+"Zork I: The Great Underground Empire" by "John Escobedo (after Infocom)"
 
 The story headline is "An Interactive Fiction".
 The story genre is "Fantasy".
@@ -19,7 +19,7 @@ The player is in West-of-House.
 When play begins:
 	now the left hand status line is "[the player's surroundings] [if in darkness]   [otherwise]   Score: [score]/[turn count][end if]";
 	now the right hand status line is "";
-	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Infocom interactive fiction - a fantasy story[line break]Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Release 88 / Serial number 840726[paragraph break]".
+	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]v1: The Port[line break]An Inform 7 translation by John Escobedo[line break]Based on the original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson[line break]ZIL source released under the MIT License by Activision[paragraph break]".
 
 Chapter 2 - Verbosity Modes
 
