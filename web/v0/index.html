@@ -350,9 +350,28 @@ tr.subtitle-line td.ln {
   outline: 1px solid #aa9930;
 }
 
+/* --- File select dropdown (narrow screens) --- */
+.file-select {
+  display: none;
+  background: #111;
+  border: 1px solid #2a2418;
+  border-radius: 4px;
+  color: #aa9966;
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+  padding: 3px 8px;
+  outline: none;
+  max-width: 200px;
+}
+
+.file-select:focus {
+  border-color: #4a3a20;
+}
+
 /* --- Responsive --- */
 @media (max-width: 700px) {
   .sidebar { display: none; }
+  .file-select { display: inline; }
 }
 </style>
 </head>
@@ -369,6 +388,7 @@ tr.subtitle-line td.ln {
   </div>
   <div class="main">
     <div class="toolbar">
+      <select class="file-select" id="file-select"></select>
       <span class="file-path" id="file-path">Select a file</span>
       <button class="ann-toggle" id="ann-toggle" title="Toggle annotations" style="display:none">@@</button>
       <input type="text" class="search-box" id="search" placeholder="Search... (Ctrl+F)">
@@ -418,18 +438,22 @@ var filePathEl = document.getElementById('file-path');
 var lineCountEl = document.getElementById('line-count');
 var annToggle = document.getElementById('ann-toggle');
 var searchInput = document.getElementById('search');
+var fileSelectEl = document.getElementById('file-select');
 
 /* ---- Build file list ---- */
 function buildFileList() {
   var html = '';
+  var opts = '';
   for (var i = 0; i < FILES.length; i++) {
     var f = FILES[i];
     html += '<div class="file-item" data-file="' + f.name + '">' +
             '<div class="file-name">' + esc(f.name) + '</div>' +
             '<div class="file-desc">' + esc(f.desc) + ' &mdash; ' + f.lines + ' lines</div>' +
             '</div>';
+    opts += '<option value="' + f.name + '">' + f.name + ' — ' + f.desc + '</option>';
   }
   fileListEl.innerHTML = html;
+  fileSelectEl.innerHTML = opts;
 }
 
 /* ---- File loading ---- */
@@ -456,6 +480,7 @@ function loadFile(filename) {
   }
 
   filePathEl.textContent = 'src/zil/' + filename;
+  fileSelectEl.value = filename;
 
   // Check caches
   if (origCache[filename] !== undefined) {
@@ -808,6 +833,11 @@ fileListEl.addEventListener('click', function(e) {
   if (!item) return;
   var filename = item.getAttribute('data-file');
   loadFile(filename);
+});
+
+/* ---- File select dropdown handler (narrow screens) ---- */
+fileSelectEl.addEventListener('change', function() {
+  loadFile(this.value);
 });
 
 /* ---- Search ---- */
