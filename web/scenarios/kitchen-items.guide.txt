@@ -1,0 +1,21 @@
+## Starting the Game -- West of House
+
+# Verify the game starts correctly at the opening location.
+> look
+
+## Entering the House -- Kitchen via Back Window
+
+# Go around to the back of the house, open the kitchen window, and climb in.
+> n
+> e
+> open window
+> w
+
+## Kitchen Items -- Kitchen
+
+# Collect the bottle and brown sack, then inspect the sack's contents.
+# The sack contains a lunch and clove of garlic — both useful later.
+> take bottle
+> take sack
+> open sack
+> look in sack

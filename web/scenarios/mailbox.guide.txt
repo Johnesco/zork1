@@ -1,0 +1,11 @@
+## Starting the Game -- West of House
+
+# Verify the game starts correctly at the opening location.
+> look
+
+## Mailbox and Leaflet -- West of House
+
+# The mailbox contains the iconic leaflet — the first interactive object.
+> open mailbox
+> take leaflet
+> read leaflet

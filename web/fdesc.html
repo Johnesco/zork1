@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FDESC Deep Dive &mdash; Zork I: Inform 7 Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  height: 100%;
+  background: #0a0a0a;
+  color: #d4c5a9;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+body {
+  min-height: 100%;
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  line-height: 1.7;
+}
+
+h1 {
+  font-size: 1.8em;
+  color: #e8d8b0;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-style: italic;
+  color: #aa9966;
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 1.2em;
+  color: #c4b48a;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a2418;
+}
+
+h3 {
+  font-size: 1.05em;
+  color: #c4b48a;
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+a {
+  color: #e8d090;
+  text-decoration: none;
+  border-bottom: 1px solid #5a4a30;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+a:hover {
+  color: #ffe8a0;
+  border-bottom-color: #aa9966;
+}
+
+ul, ol {
+  margin: 8px 0 16px 24px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+code {
+  font-family: "Consolas", "Courier New", monospace;
+  background: #1a1810;
+  color: #c4b48a;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: #111;
+  border: 1px solid #1e1a14;
+  border-radius: 6px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  margin: 12px 0 20px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.85em;
+  line-height: 1.6;
+  color: #b0a080;
+}
+
+.info-box {
+  margin: 16px 0 24px;
+  padding: 16px 20px;
+  background: #111;
+  border: 1px solid #1e1a14;
+  border-radius: 6px;
+}
+
+.info-box h4 {
+  color: #c4b48a;
+  font-size: 0.95em;
+  margin-bottom: 8px;
+}
+
+.info-box p {
+  font-size: 0.92em;
+  color: #b0a080;
+  margin-bottom: 8px;
+}
+
+.info-box p:last-child {
+  margin-bottom: 0;
+}
+
+.transcript-box {
+  background: #0d0d0a;
+  border: 1px solid #1e1a14;
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 12px 0 20px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+.transcript-box .prompt {
+  color: #e8d090;
+  font-weight: bold;
+}
+
+.transcript-box .response {
+  color: #b8a888;
+}
+
+.transcript-box .highlight {
+  color: #8bab6e;
+  font-weight: bold;
+}
+
+.transcript-box .label {
+  display: block;
+  font-size: 0.8em;
+  color: #665a40;
+  margin-bottom: 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.before-after {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 12px 0 20px;
+}
+
+@media (max-width: 600px) {
+  .before-after { grid-template-columns: 1fr; }
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  font-size: 0.9em;
+}
+
+footer {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid #1e1a14;
+  font-size: 0.85em;
+  color: #665a40;
+}
+</style>
+</head>
+<body>
+
+<a class="back-link" href="translation-challenges.html">&larr; Translation Challenges</a>
+
+<h1>FDESC: First Descriptions in Containers</h1>
+<p class="subtitle">A deep dive into ZIL&rsquo;s FDESC property and why Inform 7 can&rsquo;t replicate it for contained objects.</p>
+
+<h2>1. What is FDESC?</h2>
+
+<p>
+  In ZIL (the Zork Implementation Language), every object can have an <code>FDESC</code>
+  property &mdash; a &ldquo;first description&rdquo; that prints the first time a player
+  encounters the object. After the player picks it up (or otherwise interacts with it),
+  subsequent visits show the shorter <code>LDESC</code> instead.
+</p>
+
+<p>
+  FDESC serves a narrative purpose: it introduces objects with rich, atmospheric prose
+  on first encounter, then steps back to brief, functional text on repeat visits. The
+  egg isn&rsquo;t just &ldquo;a jewel-encrusted egg&rdquo; &mdash; it&rsquo;s a
+  lovingly described treasure scavenged by a childless songbird.
+</p>
+
+<pre>&lt;OBJECT EGG
+  (IN NEST)
+  (FDESC
+"In the bird's nest is a large egg encrusted with precious
+jewels, apparently scavenged by a childless songbird. The egg
+is covered with fine gold inlay, and ornamented in lapis lazuli
+and mother-of-pearl. Unlike most eggs, this one is hinged and
+closed with a delicate looking clasp. The egg appears
+extremely fragile.")
+  (LDESC "There is a jewel-encrusted egg here.")&gt;</pre>
+
+<p>
+  ZIL&rsquo;s object printer checks a global <code>TOUCHED</code> flag: if the object
+  has never been picked up, print <code>FDESC</code>; otherwise, print <code>LDESC</code>.
+  This applies to <em>all</em> objects, regardless of whether they&rsquo;re sitting in a
+  room, inside a container, or on a supporter.
+</p>
+
+<h2>2. The Inform 7 Gap</h2>
+
+<p>
+  Inform 7 has an equivalent concept: the <code>"initial appearance"</code> string
+  (the text in quotes after an object declaration). This works perfectly for objects
+  sitting directly in a room.
+</p>
+
+<pre>The jewel-encrusted egg is in the bird's nest. "In the bird's
+nest is a large egg encrusted with precious jewels..."</pre>
+
+<p>
+  But here&rsquo;s the problem: <strong>Inform 7&rsquo;s initial appearance only fires
+  for top-level room objects.</strong> If an object is inside a container (even an open
+  one), Inform 7 silently suppresses its initial appearance and falls back to a generic
+  contents listing:
+</p>
+
+<div class="before-after">
+  <div class="transcript-box">
+    <span class="label">ZIL (v0)</span>
+    <span class="prompt">&gt;look</span><br>
+    <span class="response">Up a Tree</span><br>
+    <span class="response">You are about 10 feet above the ground nestled
+    among some large branches. The nearest branch above you is above
+    your reach.</span><br>
+    <span class="response">Beside you on the branch is a small bird's nest.</span><br>
+    <span class="highlight">In the bird's nest is a large egg encrusted with
+    precious jewels, apparently scavenged by a childless songbird...</span>
+  </div>
+  <div class="transcript-box">
+    <span class="label">Inform 7 (before fix)</span>
+    <span class="prompt">&gt;look</span><br>
+    <span class="response">Up a Tree</span><br>
+    <span class="response">You are about 10 feet above the ground nestled
+    among some large branches. The nearest branch above you is above
+    your reach.</span><br>
+    <span class="response">Beside you on the branch is a small bird's nest.
+    In the bird's nest is a jewel-encrusted egg.</span>
+  </div>
+</div>
+
+<p>
+  The ZIL version prints the egg&rsquo;s full four-line FDESC. The Inform 7 version
+  prints a flat inventory-style listing. The atmospheric introduction is completely
+  lost.
+</p>
+
+<h2>3. Case Studies</h2>
+
+<h3>Case 1: Egg in Bird&rsquo;s Nest
+  (<a href="https://github.com/Johnesco/zork1/issues/79">#79</a>)</h3>
+
+<p>
+  The bird&rsquo;s nest sits in Up a Tree. Inside it is the jewel-encrusted egg &mdash;
+  one of Zork&rsquo;s most memorable treasures. On first visit, ZIL prints the egg&rsquo;s
+  full FDESC as a separate paragraph below the nest&rsquo;s description.
+</p>
+
+<pre># ZIL source (dungeon.zil)
+&lt;OBJECT EGG
+  (IN NEST)
+  (FDESC
+"In the bird's nest is a large egg encrusted with precious
+jewels, apparently scavenged by a childless songbird. The egg
+is covered with fine gold inlay, and ornamented in lapis
+lazuli and mother-of-pearl. Unlike most eggs, this one is
+hinged and closed with a delicate looking clasp. The egg
+appears extremely fragile.")&gt;</pre>
+
+<p><strong>The fix:</strong> A <code>Rule for writing a paragraph about</code> the nest
+  that manually prints the egg&rsquo;s FDESC when the egg is present and unhandled,
+  then marks it as <code>mentioned</code> so Inform 7 doesn&rsquo;t also list it.</p>
+
+<pre>Rule for writing a paragraph about the bird's nest:
+  say "Beside you on the branch is a small bird's nest.
+    [line break]";
+  if the jewel-encrusted egg is in the bird's nest and
+    the jewel-encrusted egg is not handled:
+    say "In the bird's nest is a large egg encrusted
+      with precious jewels...[line break]";
+    now the jewel-encrusted egg is mentioned.</pre>
+
+<h3>Case 2: Canary in Egg
+  (<a href="https://github.com/Johnesco/zork1/issues/81">#81</a>)</h3>
+
+<p>
+  The egg contains a golden clockwork canary. If the thief opens the egg (which happens
+  when you encounter him with the egg in your inventory), the canary&rsquo;s FDESC should
+  appear when you look at the opened egg on the ground. Two sub-issues:
+</p>
+
+<ul>
+  <li><strong>FDESC suppression:</strong> Same container problem &mdash; the canary is
+    inside the egg, so its initial appearance never fires.</li>
+  <li><strong>Missing broken-canary text:</strong> The <code>break-the-egg</code> routine
+    was silently swapping the golden canary for the broken one without printing the
+    broken canary&rsquo;s description text. In ZIL, the broken canary&rsquo;s FDESC
+    handles this automatically.</li>
+</ul>
+
+<pre># ZIL: broken canary FDESC (dungeon.zil)
+&lt;OBJECT BROKEN-CANARY
+  (FDESC
+"There is a golden clockwork canary nestled in the egg.
+It seems to have recently had a bad experience. The mountings
+for its jewel-like eyes are empty, and its silver beak is
+crumpled...")&gt;</pre>
+
+<p><strong>The fix:</strong> Two changes &mdash; a paragraph rule for the open egg
+  that prints the canary FDESC, and an explicit <code>say</code> in the
+  <code>break-the-egg</code> routine for the broken canary text.</p>
+
+<pre>Rule for writing a paragraph about the jewel-encrusted egg
+  when the jewel-encrusted egg is open:
+  if the golden clockwork canary is in the jewel-encrusted
+    egg and the golden clockwork canary is not handled:
+    say "There is a golden clockwork canary nestled in
+      the egg...[line break]";
+    now the golden clockwork canary is mentioned.</pre>
+
+<h3>Case 3: Sceptre in Gold Coffin
+  (<a href="https://github.com/Johnesco/zork1/issues/80">#80</a>)</h3>
+
+<p>
+  The gold coffin in the Egypt Room contains a sceptre. When the player opens the
+  coffin, ZIL prints the sceptre&rsquo;s FDESC. In Inform 7, opening the coffin
+  just said &ldquo;You open the gold coffin, revealing a sceptre.&rdquo;
+</p>
+
+<pre># ZIL source (dungeon.zil)
+&lt;OBJECT SCEPTRE
+  (IN COFFIN)
+  (FDESC
+"A sceptre, possibly that of ancient Egypt itself, is in the
+coffin. The sceptre is ornamented with colored enamel, and
+tapers to a sharp point.")&gt;</pre>
+
+<p><strong>The fix:</strong> Two rules &mdash; an <code>After opening</code> rule for
+  the reveal moment, and a paragraph rule for subsequent room descriptions.</p>
+
+<pre>After opening the gold coffin when the sceptre is in the gold
+  coffin and the sceptre is not handled:
+  say "The gold coffin opens.[line break]";
+  say "A sceptre, possibly that of ancient Egypt itself, is
+    in the coffin..." instead.
+
+Rule for writing a paragraph about the gold coffin when the
+  gold coffin is open:
+  say "The solid-gold coffin used for the burial of Ramses II
+    is here.[line break]";
+  if the sceptre is in the gold coffin and the sceptre
+    is not handled:
+    say "A sceptre, possibly that of ancient Egypt itself,
+      is in the coffin...[line break]";
+    now the sceptre is mentioned.</pre>
+
+<h3>Case 4: Thief Treasure Contents
+  (<a href="https://github.com/Johnesco/zork1/issues/82">#82</a>)</h3>
+
+<p>
+  When you kill the thief, the game lists all the treasures that reappear. In ZIL,
+  this list includes the contents of open containers &mdash; &ldquo;A gold coffin,
+  with a sceptre&rdquo;. The Inform 7 version just listed the containers without
+  mentioning what was inside them.
+</p>
+
+<p><strong>The fix:</strong> A nested loop in the treasure listing that checks each
+  open container for contents and appends them with natural-language formatting
+  (&ldquo;, with a sceptre&rdquo; or &ldquo;, with a canary, and a bauble&rdquo;).</p>
+
+<pre>repeat with item running through things in the location:
+  if the treasure-value of item > 0:
+    say "[line break]  A [item]";
+    if item is an open container and something is in item:
+      say ", with ";
+      [... enumerate contents with comma/and formatting ...]</pre>
+
+<h2>4. The Solution Pattern</h2>
+
+<p>
+  The general pattern for fixing FDESC in Inform 7 containers:
+</p>
+
+<ol>
+  <li><strong>Write a <code>Rule for writing a paragraph about [container]</code></strong>
+    that prints the container&rsquo;s own description.</li>
+  <li><strong>Check for the contained object</strong> &mdash; if present and
+    <code>not handled</code>, print its FDESC text.</li>
+  <li><strong>Mark it as <code>mentioned</code></strong> so Inform 7&rsquo;s
+    standard contents listing doesn&rsquo;t also print it.</li>
+  <li>For <strong>reveal moments</strong> (opening a closed container), add an
+    <code>After opening</code> rule that prints the FDESC instead of the default
+    &ldquo;revealing a [thing]&rdquo; message.</li>
+</ol>
+
+<div class="info-box">
+  <h4>Why &ldquo;not handled&rdquo; instead of a custom flag?</h4>
+  <p>
+    Inform 7&rsquo;s built-in <code>handled</code> property tracks whether the
+    player has ever picked up an object. This maps directly to ZIL&rsquo;s
+    <code>TOUCHED</code> flag that controls the FDESC/LDESC switch. Using the
+    existing property avoids introducing redundant state.
+  </p>
+</div>
+
+<h2>5. Related Issues</h2>
+
+<ul>
+  <li><a href="https://github.com/Johnesco/zork1/issues/79">#79</a> &mdash;
+    Egg in bird&rsquo;s nest missing FDESC</li>
+  <li><a href="https://github.com/Johnesco/zork1/issues/80">#80</a> &mdash;
+    Sceptre in coffin missing FDESC</li>
+  <li><a href="https://github.com/Johnesco/zork1/issues/81">#81</a> &mdash;
+    Canary in egg missing FDESC + broken canary text</li>
+  <li><a href="https://github.com/Johnesco/zork1/issues/82">#82</a> &mdash;
+    Thief treasure listing missing container contents</li>
+</ul>
+
+<footer>
+  <p>
+    <a href="translation-challenges.html">&larr; Translation Challenges</a>
+    &ensp;|&ensp;
+    <a href="./">&larr; Back to Zork I</a>
+  </p>
+</footer>
+
+</body>
+</html>
