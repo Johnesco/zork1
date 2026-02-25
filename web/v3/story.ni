@@ -1,8 +1,8 @@
-"Zork I: The Great Underground Empire" by "John Escobedo (after Infocom)"
+"Zork I: The Great Underground Empire" by "Infocom (translated to Inform 7)"
 
 The story headline is "An Interactive Fiction".
 The story genre is "Fantasy".
-The release number is 3.
+The release number is 1.
 The story creation year is 1980.
 The story description is "ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!"
 
@@ -19,7 +19,7 @@ The player is in West-of-House.
 When play begins:
 	now the left hand status line is "[the player's surroundings] [if in darkness]   [otherwise]   Score: [score]/[turn count][end if]";
 	now the right hand status line is "";
-	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]v3: Ambient Audio[line break]An Inform 7 translation by John Escobedo[line break]Based on the original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson[line break]ZIL source released under the MIT License by Activision[paragraph break]".
+	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Infocom interactive fiction - a fantasy story[line break]Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Release 88 / Serial number 840726[paragraph break]".
 
 Chapter 2 - Verbosity Modes
 
@@ -1004,10 +1004,21 @@ The bird's nest is an open container. The carrying capacity of the bird's nest i
 The description of the bird's nest is "The bird's nest is a rough collection of twigs and grass."
 
 The jewel-encrusted egg is in the bird's nest. "In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. The egg appears extremely fragile."
+
+Rule for writing a paragraph about the bird's nest:
+	say "Beside you on the branch is a small bird's nest.[line break]";
+	if the jewel-encrusted egg is in the bird's nest and the jewel-encrusted egg is not handled:
+		say "In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. The egg appears extremely fragile.[line break]";
+		now the jewel-encrusted egg is mentioned.
 Understand "egg" and "jewel" and "encrusted" and "jeweled" and "bird's" as the jewel-encrusted egg.
 The jewel-encrusted egg is a closed openable container. The carrying capacity of the jewel-encrusted egg is 1.
 The treasure-value of the jewel-encrusted egg is 5.
 The point-value of the jewel-encrusted egg is 5.
+
+Rule for writing a paragraph about the jewel-encrusted egg when the jewel-encrusted egg is open:
+	if the golden clockwork canary is in the jewel-encrusted egg and the golden clockwork canary is not handled:
+		say "There is a golden clockwork canary nestled in the egg. It has ruby eyes and a silver beak. Through a crystal window below its left wing you can see intricate machinery inside. It appears to have wound down.[line break]";
+		now the golden clockwork canary is mentioned.
 
 The golden clockwork canary is in the jewel-encrusted egg. "There is a golden clockwork canary nestled in the egg. It has ruby eyes and a silver beak. Through a crystal window below its left wing you can see intricate machinery inside. It appears to have wound down."
 Understand "canary" and "clockwork" and "gold" and "golden" as the golden clockwork canary.
@@ -1037,6 +1048,7 @@ To break-the-egg:
 	if the egg-broken is true, stop;
 	now the egg-broken is true;
 	if the golden clockwork canary is in the jewel-encrusted egg:
+		say " There is a golden clockwork canary nestled in the egg. It seems to have recently had a bad experience. The mountings for its jewel-like eyes are empty, and its silver beak is crumpled. Through a cracked crystal window below its left wing you can see the remains of intricate machinery. It is not clear what result winding it would have, as the mainspring seems sprung.";
 		now the broken clockwork canary is in the broken jewel-encrusted egg;
 		remove the golden clockwork canary from play;
 	otherwise:
@@ -2524,6 +2536,16 @@ The treasure-value of the gold coffin is 15.
 The point-value of the gold coffin is 10.
 The carrying capacity of the gold coffin is 5.
 
+After opening the gold coffin when the sceptre is in the gold coffin and the sceptre is not handled:
+	say "The gold coffin opens.[line break]";
+	say "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point." instead.
+
+Rule for writing a paragraph about the gold coffin when the gold coffin is open:
+	say "The solid-gold coffin used for the burial of Ramses II is here.[line break]";
+	if the sceptre is in the gold coffin and the sceptre is not handled:
+		say "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point.[line break]";
+		now the sceptre is mentioned.
+
 The sceptre is in the gold coffin. "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point."
 Understand "sceptre" and "scepter" and "sharp" and "egyptian" and "ancient" and "enameled" as the sceptre.
 The sceptre is a weapon.
@@ -3570,6 +3592,19 @@ Instead of attacking the thief:
 						repeat with item running through things in the location of the player:
 							if the treasure-value of item > 0:
 								say "[line break]  A [item]";
+								if item is an open container and something is in item:
+									say ", with ";
+									let contents-count be 0;
+									repeat with sub-item running through things in item:
+										increase contents-count by 1;
+									let printed be 0;
+									repeat with sub-item running through things in item:
+										increase printed by 1;
+										if printed > 1 and printed is contents-count:
+											say ", and ";
+										otherwise if printed > 1:
+											say ", ";
+										say "a [sub-item]";
 						say "[paragraph break]The chalice is now safe to take.";
 					otherwise:
 						print hero melee for "kill";
