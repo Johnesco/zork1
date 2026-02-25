@@ -1,0 +1,14 @@
+## Starting the Game -- West of House
+
+# Verify the game starts correctly at the opening location.
+> look
+
+## Forest Navigation -- North of House to Clearing and Back
+
+# Walk north through the forest path to the clearing, then retrace the route.
+# Confirms the forest loop connects properly back to the house.
+> n
+> n
+> n
+> s
+> s

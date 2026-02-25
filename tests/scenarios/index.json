@@ -1,0 +1,25 @@
+{
+  "scenarios": [
+    { "name": "startup", "title": "Starting the Game", "category": "Smoke Tests" },
+    { "name": "mailbox", "title": "Mailbox and Leaflet", "category": "Smoke Tests" },
+    { "name": "forest-loop", "title": "Forest Navigation", "category": "Smoke Tests" },
+    { "name": "house-circuit", "title": "House Perimeter", "category": "Smoke Tests" },
+    { "name": "enter-house", "title": "Entering the House", "category": "House Navigation" },
+    { "name": "living-room", "title": "Living Room Gear", "category": "House Navigation" },
+    { "name": "attic", "title": "The Attic", "category": "House Navigation" },
+    { "name": "kitchen-items", "title": "Kitchen Items", "category": "House Navigation" },
+    { "name": "cellar", "title": "Into the Cellar", "category": "House Navigation" },
+    { "name": "troll", "title": "Troll Combat", "category": "Combat" },
+    { "name": "round-room", "title": "Round Room", "category": "Underground Navigation" },
+    { "name": "hades-path", "title": "Path to Hades", "category": "Underground Navigation" },
+    { "name": "cyclops-path", "title": "Maze to Cyclops", "category": "Underground Navigation" },
+    { "name": "echo", "title": "Echo Room Puzzle", "category": "Puzzles" },
+    { "name": "dam", "title": "Flood Control Dam", "category": "Puzzles" },
+    { "name": "boat", "title": "Boat Inflation", "category": "Puzzles" },
+    { "name": "mirror", "title": "Mirror Teleportation", "category": "Puzzles" },
+    { "name": "cyclops-odysseus", "title": "The Cyclops Solution", "category": "Puzzles" },
+    { "name": "fdesc-egg", "title": "Egg in Bird's Nest", "category": "FDESC Tests" },
+    { "name": "fdesc-sceptre", "title": "Sceptre in Coffin", "category": "FDESC Tests" },
+    { "name": "fdesc-canary", "title": "Canary in Egg", "category": "FDESC Tests" }
+  ]
+}

@@ -1,0 +1,53 @@
+## Starting the Game -- West of House
+
+# Verify the game starts correctly at the opening location.
+> look
+
+## Entering the House -- Kitchen via Back Window
+
+# Go around to the back of the house, open the kitchen window, and climb in.
+> n
+> e
+> open window
+> w
+
+## Living Room Gear -- Living Room
+
+# Collect the adventurer's essential equipment: sword and lantern.
+> w
+> take sword
+> take lantern
+> turn on lantern
+
+## Into the Cellar -- Cellar
+
+# Move the rug to reveal the trap door, open it, and descend.
+> push rug
+> open trap door
+> down
+
+## Troll Combat -- Troll Room
+
+# Head north to the Troll Room and fight the troll with the sword.
+# Combat is random (~70% hit rate) — may need multiple attempts.
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+
+## Round Room Navigation -- Round Room
+
+# Proceed east through the East-West Passage to the Round Room.
+> e
+> e
+
+## Mirror Teleportation -- Mirror Room
+
+# Go south from the Round Room through the Narrow Passage to the Mirror Room.
+# Rubbing the mirror triggers a rumble and teleports the player.
+> s
+> s
+> rub mirror

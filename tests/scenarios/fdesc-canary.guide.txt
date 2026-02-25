@@ -1,0 +1,61 @@
+## Starting the Game -- West of House
+
+# Begin at the starting location.
+> look
+
+## Entering the House -- Kitchen via Back Window
+
+# Go around to the back of the house and enter through the kitchen window.
+> n
+> e
+> open window
+> w
+
+## Living Room Gear -- Living Room
+
+# Collect the sword and lantern from the Living Room.
+> w
+> take sword
+> take lantern
+> turn on lantern
+
+## Into the Cellar -- Cellar
+
+# Move the rug to reveal the trap door, open it, and descend.
+> push rug
+> open trap door
+> down
+
+## Troll Combat -- Troll Room
+
+# Fight past the troll with the sword.
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+
+## Round Room Navigation -- Round Room
+
+# Proceed east through the East-West Passage to the Round Room.
+> e
+> e
+
+## Reaching the Tree -- Up a Tree
+
+# Navigate to Up a Tree and take the bird's nest with egg inside.
+> se
+> e
+> e
+> s
+> se
+
+## Breaking the Egg -- Testing Canary FDESC
+
+# Take the nest, climb down, and force open the egg with the sword.
+# The broken canary text should appear.
+> take nest
+> d
+> open egg with sword

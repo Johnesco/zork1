@@ -1,0 +1,4 @@
+## Starting the Game -- West of House
+
+# Verify the game starts correctly at the opening location.
+> look

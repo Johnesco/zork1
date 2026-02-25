@@ -1,0 +1,20 @@
+## Starting the Game -- West of House
+
+# Verify the game starts correctly at the opening location.
+> look
+
+## Entering the House -- Kitchen via Back Window
+
+# Go around to the back of the house, open the kitchen window, and climb in.
+> n
+> e
+> open window
+> w
+
+## Living Room Gear -- Living Room
+
+# Collect the adventurer's essential equipment: sword and lantern.
+> w
+> take sword
+> take lantern
+> turn on lantern

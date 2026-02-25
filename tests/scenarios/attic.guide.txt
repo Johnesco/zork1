@@ -1,0 +1,24 @@
+## Starting the Game -- West of House
+
+# Verify the game starts correctly at the opening location.
+> look
+
+## Entering the House -- Kitchen via Back Window
+
+# Go around to the back of the house, open the kitchen window, and climb in.
+> n
+> e
+> open window
+> w
+
+## The Attic -- Attic
+
+# Get the lantern from the living room, return to kitchen, then go up to the attic.
+# The attic contains rope and a nasty knife.
+> w
+> take lantern
+> turn on lantern
+> e
+> up
+> take rope
+> take knife

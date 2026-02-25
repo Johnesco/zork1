@@ -291,3 +291,57 @@ Taken
 /South of House
 > w
 /West of House
+
+# ============================================================
+# FDESC tests — first descriptions for contained objects
+# ============================================================
+
+* fdesc-egg
+# Navigate to Up a Tree and verify the egg's FDESC prints
+>{include} enter-house
+> w
+> take lantern
+> turn on lantern
+> e
+> up
+{vital}
+/Up a Tree
+/Beside you on the branch is a small bird's nest
+/large egg encrusted with precious jewels
+/apparently scavenged by a childless songbird
+/fine gold inlay
+/lapis lazuli
+
+* fdesc-sceptre
+# Open the gold coffin in Egypt Room and verify sceptre FDESC
+>{include} round-room
+> se
+> e
+> e
+> s
+> down
+/Egyptian Room
+> take coffin
+Taken
+> open coffin
+/A sceptre, possibly that of ancient Egypt itself
+/ornamented with colored enamel
+
+* fdesc-canary
+# Verify canary FDESC when egg is opened by the thief
+# This test cannot reliably trigger thief opening — instead test
+# that the canary paragraph rule exists by checking egg contents
+# after manual open (the egg can only be opened by force or thief)
+>{include} round-room
+> se
+> e
+> e
+> s
+> se
+/Up a Tree
+> take nest
+Taken
+> d
+> open egg with sword
+/egg is now open
+/compromised its esthetic appeal

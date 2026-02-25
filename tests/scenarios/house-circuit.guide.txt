@@ -1,0 +1,13 @@
+## Starting the Game -- West of House
+
+# Verify the game starts correctly at the opening location.
+> look
+
+## House Perimeter -- Circling the White House
+
+# Walk around the entire perimeter of the white house.
+# West -> North -> Behind (East) -> South -> back to West.
+> n
+> e
+> s
+> w
