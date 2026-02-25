@@ -1,0 +1,25 @@
+
+
+
+
+ZORK I: The Great Underground Empire
+Infocom interactive fiction - a fantasy story
+Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 88 / Serial number 840726
+
+Zork I: The Great Underground Empire
+An Interactive Fiction by Infocom (translated to Inform 7)
+Release 1 / Serial number 260225 / Inform 7 v10.1.2 / D
+
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+>West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+>Are you sure you want to quit? 

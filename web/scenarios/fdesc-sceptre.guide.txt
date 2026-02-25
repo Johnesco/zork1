@@ -19,9 +19,18 @@
 > take lantern
 > turn on lantern
 
+## Attic -- Get the Rope
+
+# Go to the attic to collect the rope needed for Dome Room.
+> e
+> up
+> take rope
+> d
+
 ## Into the Cellar -- Cellar
 
-# Move the rug to reveal the trap door, open it, and descend.
+# Return to Living Room, move the rug, open trap door, and descend.
+> w
 > push rug
 > open trap door
 > down
@@ -43,13 +52,18 @@
 > e
 > e
 
-## Egypt Room -- Finding the Coffin
+## Dome Room -- Tie Rope and Descend
 
-# Navigate to the Egyptian Room and open the gold coffin.
+# Navigate to Dome Room via Engravings Cave, tie the rope, descend.
 > se
 > e
-> e
+> tie rope to railing
+> d
+
+## Egypt Room -- Finding the Coffin
+
+# Go south to Temple, then down to Egyptian Room and open the coffin.
 > s
-> down
+> d
 > take coffin
 > open coffin

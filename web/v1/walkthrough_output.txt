@@ -12,7 +12,7 @@ ZIL source released under the MIT License by Activision
 
 Zork I: The Great Underground Empire
 An Interactive Fiction by John Escobedo (after Infocom)
-Release 1 / Serial number 260224 / Inform 7 v10.1.2 / D
+Release 1 / Serial number 260225 / Inform 7 v10.1.2 / D
 
 West of House
 You are standing in an open field west of a white house, with a boarded front door.
@@ -32,6 +32,7 @@ Up a Tree
 You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.
 
 Beside you on the branch is a small bird's nest.
+In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. The egg appears extremely fragile.
 
 >Taken.
 
@@ -638,7 +639,8 @@ The solid-gold coffin used for the burial of Ramses II is here.
 
 [Your score has just gone up by ten points.]
 
->You open the gold coffin, revealing a sceptre.
+>The gold coffin opens.
+A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point.
 
 >Taken.
 
@@ -1608,7 +1610,7 @@ Almost as soon as the thief breathes his last breath, a cloud of sinister black 
 
 
 As the thief dies, the power of his magic decreases, and his treasures reappear:
-  A jewel-encrusted egg
+  A jewel-encrusted egg, with a golden clockwork canary
   A chalice
 
 The chalice is now safe to take.

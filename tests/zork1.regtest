@@ -298,11 +298,12 @@ Taken
 
 * fdesc-egg
 # Navigate to Up a Tree and verify the egg's FDESC prints
->{include} enter-house
-> w
-> take lantern
-> turn on lantern
-> e
+# West of House → N → North of House → N → Forest Path → Up → Up a Tree
+>{include} startup
+> n
+/North of House
+> n
+/Forest Path
 > up
 {vital}
 /Up a Tree
@@ -314,12 +315,39 @@ Taken
 
 * fdesc-sceptre
 # Open the gold coffin in Egypt Room and verify sceptre FDESC
->{include} round-room
+# Need rope from Attic to descend Dome Room → Torch Room → Temple → Egypt
+>{include} living-room
+> e
+> up
+> take rope
+> d
+> w
+> push rug
+/trap door
+> open trap door
+> down
+{vital}
+/Cellar
+> n
+/Troll Room
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> e
+> e
+/Round Room
 > se
 > e
-> e
+/Dome Room
+> tie rope to railing
+> d
+/Torch Room
 > s
-> down
+> d
+{vital}
 /Egyptian Room
 > take coffin
 Taken
@@ -328,20 +356,20 @@ Taken
 /ornamented with colored enamel
 
 * fdesc-canary
-# Verify canary FDESC when egg is opened by the thief
-# This test cannot reliably trigger thief opening — instead test
-# that the canary paragraph rule exists by checking egg contents
-# after manual open (the egg can only be opened by force or thief)
->{include} round-room
-> se
-> e
-> e
-> s
-> se
+# Verify canary appears when egg is broken open (attack or drop from tree)
+# The pristine canary FDESC requires thief-opening which is RNG-dependent
+# and cannot be tested deterministically. This tests the broken-egg path.
+>{include} startup
+> n
+> n
+/Forest Path
+> up
+{vital}
 /Up a Tree
 > take nest
-Taken
+> take egg
 > d
-> open egg with sword
-/egg is now open
-/compromised its esthetic appeal
+> attack egg
+/succeeded in opening
+/golden clockwork canary
+/bad experience

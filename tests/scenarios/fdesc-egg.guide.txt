@@ -3,19 +3,9 @@
 # Begin at the starting location.
 > look
 
-## Entering the House -- Kitchen via Back Window
+## Reaching the Tree -- Up a Tree
 
-# Go around to the back of the house and enter through the kitchen window.
+# Navigate north to Forest Path, then climb the tree.
 > n
-> e
-> open window
-> w
-
-## Climbing to the Tree -- Up a Tree
-
-# Collect the lantern, return to the kitchen, then climb the tree.
-> w
-> take lantern
-> turn on lantern
-> e
+> n
 > up

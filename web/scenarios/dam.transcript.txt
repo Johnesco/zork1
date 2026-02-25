@@ -1,0 +1,163 @@
+
+
+
+
+ZORK I: The Great Underground Empire
+Infocom interactive fiction - a fantasy story
+Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 88 / Serial number 840726
+
+Zork I: The Great Underground Empire
+An Interactive Fiction by Infocom (translated to Inform 7)
+Release 1 / Serial number 260225 / Inform 7 v10.1.2 / D
+
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+>West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+>
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+>
+Behind House
+You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar.
+
+>With great effort, you open the window far enough to allow entry.
+
+>
+Kitchen
+You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.
+
+A bottle is sitting on the table.
+
+On the table is an elongated brown sack, smelling of hot peppers.
+
+[Your score has just gone up by ten points.]
+
+>
+Living Room
+You are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.
+
+Above the trophy case hangs an elvish sword of great antiquity.
+
+A battery-powered brass lantern is on the trophy case.
+
+>Taken.
+
+>Taken.
+
+>The brass lantern is now on.
+
+>With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.
+
+>The door reluctantly opens to reveal a rickety staircase descending into darkness.
+
+>The trap door crashes shut, and you hear someone barring it.
+
+Cellar
+You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
+
+Your sword is glowing with a faint blue glow.
+
+[Your score has just gone up by twenty-five points.]
+
+>
+The Troll Room
+This is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
+
+A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
+
+The troll swings his axe, but it misses.
+Your sword has begun to glow very brightly.
+
+>A furious exchange, and the troll is knocked out!
+>The unconscious troll cannot defend himself: He dies.
+
+Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
+
+Your sword is no longer glowing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>East-West Passage
+This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
+
+>
+Round Room
+This is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.
+
+>
+North-South Passage
+This is a high north-south passage, which forks to the northeast.
+
+>
+Deep Canyon
+You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. You can hear the sound of flowing water from below.
+
+>
+Reservoir South
+You are in a long room on the south shore of a large lake, far too deep and wide for crossing.
+
+There is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast.
+
+>
+Dam
+You are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.
+
+The sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over the top of the now abandoned dam.
+
+There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green plastic bubble.
+
+>
+Dam Lobby
+This room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked "Private", and there is a path leading south over the top of the dam.
+
+Some guidebooks entitled "Flood Control Dam #3" are on the reception desk.
+
+There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
+
+>
+Maintenance Room
+This is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways to the west and south.
+
+There is an object which looks like a tube of toothpaste here.
+
+You can also see a wrench and a screwdriver here.
+
+>Click.
+
+>Taken.
+
+>
+Dam Lobby
+This room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked "Private", and there is a path leading south over the top of the dam.
+
+Some guidebooks entitled "Flood Control Dam #3" are on the reception desk.
+
+There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
+
+>
+Dam
+You are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.
+
+The sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over the top of the now abandoned dam.
+
+There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green plastic bubble which is glowing serenely.
+
+>The sluice gates open and water pours through the dam.
+
+>Are you sure you want to quit? 
