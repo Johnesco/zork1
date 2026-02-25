@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Translation Challenges &mdash; Zork I: Inform 7 Edition</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  height: 100%;
+  background: #0a0a0a;
+  color: #d4c5a9;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+body {
+  min-height: 100%;
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+  line-height: 1.7;
+}
+
+h1 {
+  font-size: 1.8em;
+  color: #e8d8b0;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-style: italic;
+  color: #aa9966;
+  margin-bottom: 40px;
+}
+
+h2 {
+  font-size: 1.2em;
+  color: #c4b48a;
+  margin-top: 48px;
+  margin-bottom: 16px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a2418;
+}
+
+h3 {
+  font-size: 1.05em;
+  color: #c4b48a;
+  margin-top: 24px;
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 16px;
+}
+
+a {
+  color: #e8d090;
+  text-decoration: none;
+  border-bottom: 1px solid #5a4a30;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+a:hover {
+  color: #ffe8a0;
+  border-bottom-color: #aa9966;
+}
+
+ul, ol {
+  margin: 8px 0 16px 24px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+code {
+  font-family: "Consolas", "Courier New", monospace;
+  background: #1a1810;
+  color: #c4b48a;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: #111;
+  border: 1px solid #1e1a14;
+  border-radius: 6px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  margin: 12px 0 20px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.85em;
+  line-height: 1.6;
+  color: #b0a080;
+}
+
+.info-box {
+  margin: 16px 0 24px;
+  padding: 16px 20px;
+  background: #111;
+  border: 1px solid #1e1a14;
+  border-radius: 6px;
+}
+
+.info-box h4 {
+  color: #c4b48a;
+  font-size: 0.95em;
+  margin-bottom: 8px;
+}
+
+.info-box p {
+  font-size: 0.92em;
+  color: #b0a080;
+  margin-bottom: 8px;
+}
+
+.info-box p:last-child {
+  margin-bottom: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0 20px;
+  font-size: 0.9em;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid #1e1a14;
+}
+
+th {
+  color: #c4b48a;
+  font-weight: normal;
+  font-style: italic;
+}
+
+td {
+  color: #b0a080;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  font-size: 0.9em;
+}
+
+footer {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid #1e1a14;
+  font-size: 0.85em;
+  color: #665a40;
+}
+
+footer a {
+  color: #887755;
+  border-bottom-color: #3a3020;
+}
+</style>
+</head>
+<body>
+
+<a class="back-link" href="./">&larr; Back to Zork I</a>
+
+<h1>Translation Challenges</h1>
+<p class="subtitle">ZIL to Inform&nbsp;7 &mdash; what looked straightforward wasn&rsquo;t</p>
+
+<p>
+  Translating Zork I from ZIL to Inform 7 looked like a straightforward port.
+  Both languages describe rooms, objects, and rules. The map is the same. The
+  puzzles are the same. How hard could it be?
+</p>
+
+<p>
+  It turned into an archaeology project. ZIL and Inform 7 don&rsquo;t just have
+  different syntax &mdash; they have different assumptions about how a world model
+  works. Containment, scope, action routing, property namespaces, text output, and
+  NPC behavior all operate under fundamentally different rules. The game compiled.
+  It ran. It looked right. And then testing revealed that half of it was quietly broken.
+</p>
+
+<p>
+  These are the six biggest surprises &mdash; the problems that took the most time
+  to find, understand, and fix.
+</p>
+
+<h2>1. The Leaf Count: 377 Missing Text Responses</h2>
+
+<p>
+  ZIL routines are built from nested <code>COND</code> trees &mdash; cascading
+  conditional branches where each terminal node (or &ldquo;leaf&rdquo;) produces a
+  different text response via <code>TELL</code>. A single routine like
+  <code>V-FIND</code> might have eight or more conditional branches, each printing
+  unique text depending on context: what the player is holding, where they are,
+  whether an object is visible, and so on.
+</p>
+
+<p>
+  The initial translation handled the main paths through each routine &mdash;
+  the ones the walkthrough exercised. But ZIL&rsquo;s branching structures have
+  many alternate leaves for edge cases, unusual inputs, and specific object
+  combinations. These are easy to miss because the code compiles fine without them;
+  you just get silence where the original game would have said something.
+</p>
+
+<p>
+  Systematically counting every leaf in every ZIL routine revealed
+  <strong>377 missing text responses</strong>. The game was playable and winnable,
+  but it was only saying about half of what it should. A player who tried anything
+  off the critical path would get no response instead of the original&rsquo;s
+  carefully written text.
+</p>
+
+<p>
+  Restoring them required a 6-phase audit:
+</p>
+
+<table>
+  <tr>
+    <th>Phase</th>
+    <th>Scope</th>
+    <th>Issue</th>
+  </tr>
+  <tr>
+    <td>1. Game systems</td>
+    <td>Scoring, death, movement, inventory, lamp, combat framework</td>
+    <td><a href="https://github.com/Johnesco/zork1/issues/45">#45</a></td>
+  </tr>
+  <tr>
+    <td>2. Rooms &amp; objects</td>
+    <td>Room descriptions, object first-descriptions, container text</td>
+    <td><a href="https://github.com/Johnesco/zork1/issues/46">#46</a></td>
+  </tr>
+  <tr>
+    <td>3. Object interactions</td>
+    <td>Taking, dropping, opening, closing, inserting, removing</td>
+    <td><a href="https://github.com/Johnesco/zork1/issues/47">#47</a></td>
+  </tr>
+  <tr>
+    <td>4. Verb handlers</td>
+    <td>Read, find, pour, fill, dig, climb, wave, burn, and 30+ others</td>
+    <td><a href="https://github.com/Johnesco/zork1/issues/48">#48</a></td>
+  </tr>
+  <tr>
+    <td>5. Scenery</td>
+    <td>Trees, water, walls, doors, stairs, and other examinable scenery</td>
+    <td><a href="https://github.com/Johnesco/zork1/issues/52">#52</a></td>
+  </tr>
+  <tr>
+    <td>6. Combat messages</td>
+    <td>88 distinct melee messages across 7 outcome categories</td>
+    <td><a href="https://github.com/Johnesco/zork1/issues/58">#58</a></td>
+  </tr>
+</table>
+
+<div class="info-box">
+  <h4>Why this was hard to catch</h4>
+  <p>
+    A missing text response doesn&rsquo;t cause an error. The game just says nothing.
+    During normal play, you might assume the parser didn&rsquo;t understand your
+    input. Only by reading the ZIL source line by line and counting every
+    <code>TELL</code> statement could we confirm what was supposed to be there.
+  </p>
+</div>
+
+<h2>2. The Parser Conflict: Reading vs. Examining</h2>
+
+<p>
+  Zork I has a <code>read</code> command. You read the matchbook. You read the
+  engravings. And in the exorcism ritual, you read a black book to banish the
+  spirits of Hades &mdash; it&rsquo;s how you trigger the climactic
+  &ldquo;Begone, fiends!&rdquo; moment.
+</p>
+
+<p>
+  Inform 7&rsquo;s Standard Rules define <code>read</code> as a synonym for
+  <code>examining</code>. This is hardcoded in the library. When the game defines
+  a custom <code>reading</code> action for objects like the book, the parser has
+  two competing interpretations of the word &ldquo;read.&rdquo;
+</p>
+
+<p>
+  It silently chose the built-in one. <code>READ BOOK</code> triggered
+  <code>examining</code>, not <code>reading</code>. The player saw the
+  book&rsquo;s description (&ldquo;Each page contains a Commandment&rdquo;)
+  instead of the exorcism text (&ldquo;Begone, fiends!&rdquo;). The ritual
+  never completed. The game couldn&rsquo;t be won through that puzzle path.
+</p>
+
+<pre>ZIL:
+&gt; read book
+The prayer seems to protect you as the spirits in this room change
+their form. As the words of the prayer continue, the spirits fade
+and the room is filled with bright light. "Begone, fiends!" ...
+
+I7 (before fix):
+&gt; read book
+This book is large and bound in leather. Each page contains a single
+Commandment of the Great Underground Empire.</pre>
+
+<p>
+  The fix required intercepting the parser before it could route to the
+  built-in action, explicitly redirecting <code>read [something]</code> to the
+  custom reading action when a readable object is involved.
+  (<a href="https://github.com/Johnesco/zork1/issues/67">#67</a>)
+</p>
+
+<h2>3. Containment Semantics: Where Is the Player?</h2>
+
+<p>
+  Inform 7&rsquo;s containment model is hierarchical: the player is in a boat,
+  the boat is in a room. This seems natural. But
+  <code>the player is in the River</code> checks <em>direct</em> containment
+  only &mdash; it returns false when the player is in a boat that&rsquo;s in the
+  River. The player is in the boat, not in the room.
+</p>
+
+<p>
+  This broke river navigation, the launch command, and any rule that checked
+  the player&rsquo;s location by room rather than by containment chain.
+  The fix was to use <code>the location of the player</code> (which walks up
+  the containment tree) instead of direct <code>is in</code> checks.
+</p>
+
+<p>
+  A related problem: <code>move the player to X</code> is Inform 7&rsquo;s
+  low-level teleportation. It bypasses After rules entirely. The Treasure
+  Room awards a +25 bonus on first visit via an After rule &mdash; but because
+  the player was <em>moved</em> there rather than <em>going</em> there, the
+  After rule never fired. The bonus was never awarded.
+</p>
+
+<pre>Broken:
+  if the player is in the Frigid River: [false when in boat!]
+  move the player to the Treasure Room; [bypasses After rules!]
+
+Fixed:
+  if the location of the player is the Frigid River: [works]
+  now the player is in the Treasure Room; [fires After rules]</pre>
+
+<p>
+  These two patterns &mdash; direct containment checks and low-level movement
+  &mdash; affected river navigation
+  (<a href="https://github.com/Johnesco/zork1/issues/15">#15</a>),
+  the launch command, visit bonuses
+  (<a href="https://github.com/Johnesco/zork1/issues/28">#28</a>),
+  and any rule testing the player&rsquo;s room when a vehicle was involved.
+</p>
+
+<div class="info-box">
+  <h4>The subtlety</h4>
+  <p>
+    ZIL doesn&rsquo;t have this distinction. <code>LOC</code> in ZIL always
+    returns the room, regardless of intermediate containers. The translation
+    looked correct because the Inform 7 code read naturally &mdash;
+    &ldquo;if the player is in the River&rdquo; sounds right. It just doesn&rsquo;t
+    mean what you think it means.
+  </p>
+</div>
+
+<h2>4. Property Shadowing: The Invisible Problem</h2>
+
+<p>
+  ZIL uses a <code>FSET</code>/<code>FCLEAR</code> system for object flags.
+  Objects can be <code>INVISIBLE</code> (hidden from room listings) or have
+  the flag cleared to become visible. The Inform 7 translation defined custom
+  properties:
+</p>
+
+<pre>A thing can be visible or invisible.</pre>
+
+<p>
+  This compiled without error. It appeared to work. But &ldquo;visible&rdquo;
+  is a word Inform 7 uses internally for its scope system &mdash; the mechanism
+  that determines which objects the player can see and interact with. Defining
+  a custom property with the same name <em>shadowed</em> the built-in concept.
+</p>
+
+<p>
+  The result: items that were supposed to be hidden from room listings appeared
+  anyway. The custom <code>invisible</code> flag was being set, but the engine&rsquo;s
+  own scope system didn&rsquo;t respect it because it was checking a different
+  &ldquo;visible.&rdquo; There was no error, no warning. The property just
+  silently didn&rsquo;t do what it was supposed to.
+</p>
+
+<p>
+  The fix was straightforward once diagnosed: rename to <code>zil-visible</code>
+  and <code>zil-invisible</code> to avoid the namespace collision. But diagnosing
+  it took much longer than fixing it &mdash; the symptom (extra items in room
+  listings) didn&rsquo;t obviously point to a property name conflict.
+  (<a href="https://github.com/Johnesco/zork1/issues/63">#63</a>)
+</p>
+
+<div class="info-box">
+  <h4>The lesson</h4>
+  <p>
+    Inform 7&rsquo;s natural-language syntax makes it easy to accidentally use
+    a word the engine already claims. There is no reserved-word list for
+    properties. If your custom property name overlaps an internal concept,
+    the compiler won&rsquo;t tell you. You&rsquo;ll find out at runtime, if
+    you&rsquo;re lucky.
+  </p>
+</div>
+
+<h2>5. FDESC and Container Visibility</h2>
+
+<p>
+  In ZIL, objects inside containers can have an <code>FDESC</code> (first
+  description) &mdash; rich text that prints automatically when the player
+  first encounters the container&rsquo;s room. The jewel-encrusted egg is
+  the iconic example:
+</p>
+
+<pre>ZIL (on entering the Bird Room for the first time):
+In the bird's nest is a large egg encrusted with precious jewels,
+apparently scavenged by a childless songbird. The egg is covered
+with fine gold inlay, and ornamented with lapis lazuli and
+mother-of-pearl.</pre>
+
+<p>
+  Inform 7 doesn&rsquo;t do this. When describing a room, it mentions containers
+  and what&rsquo;s inside them, but it doesn&rsquo;t print the contained
+  object&rsquo;s own description text. The egg&rsquo;s lovingly written first
+  description was invisible &mdash; the player just saw
+  &ldquo;In the bird&rsquo;s nest is a jewel-encrusted egg.&rdquo;
+</p>
+
+<p>
+  The same pattern affected every object introduced via its container:
+</p>
+
+<ul>
+  <li>The jewel-encrusted egg in the bird&rsquo;s nest
+    (<a href="https://github.com/Johnesco/zork1/issues/79">#79</a>)</li>
+  <li>The sceptre in the coffin
+    (<a href="https://github.com/Johnesco/zork1/issues/80">#80</a>)</li>
+  <li>The canary in the egg
+    (<a href="https://github.com/Johnesco/zork1/issues/81">#81</a>)</li>
+</ul>
+
+<p>
+  Each required a custom &ldquo;after examining the container&rdquo; rule
+  or a writing-paragraph-about rule to inject the contained object&rsquo;s
+  first description into the room text at the right moment. It&rsquo;s one
+  of those cases where ZIL&rsquo;s simpler model (just print the text) was
+  actually more flexible than Inform 7&rsquo;s more structured approach.
+</p>
+
+<h2>6. The Ghost That Wasn&rsquo;t There: NPCs and State Machines</h2>
+
+<p>
+  Zork I has three NPCs: a troll guarding a bridge, a thief who roams the
+  dungeon stealing treasures, and a cyclops blocking a passage. Each has a
+  multi-state behavior model in ZIL &mdash; the troll can be conscious,
+  unconscious, or dead; the thief patrols on a timer and decides whether to
+  steal, fight, or flee; the cyclops responds to feeding, watering, and
+  specific words.
+</p>
+
+<h3>The thief</h3>
+
+<p>
+  The thief is the most complex NPC in the game. Every 5 turns, he evaluates
+  whether to enter the player&rsquo;s room, steal a valuable item, engage in
+  combat, or move on. He redistributes stolen treasures to random rooms. He&rsquo;s
+  repelled by garlic. He has his own combat table with unique messages.
+</p>
+
+<p>
+  After the initial translation, the thief &ldquo;appeared to work&rdquo; &mdash;
+  he was defined, he had rules, the game compiled. But he never actually roamed.
+  His every-turn patrol rule wasn&rsquo;t firing because of how Inform 7 schedules
+  timed events versus ZIL&rsquo;s turn-based routine calls. The thief sat in his
+  lair for the entire game, a ghost NPC.
+  (<a href="https://github.com/Johnesco/zork1/issues/7">#7</a>,
+   <a href="https://github.com/Johnesco/zork1/issues/8">#8</a>)
+</p>
+
+<h3>The troll</h3>
+
+<p>
+  The troll&rsquo;s state machine has subtle transitions: unconscious trolls
+  recover after a set number of turns, dead trolls stay dead, and the troll&rsquo;s
+  weapon status affects combat. Flag bugs in the translation meant the troll
+  could get stuck in impossible states &mdash; unconscious but still fighting,
+  or dead but blocking the bridge.
+  (<a href="https://github.com/Johnesco/zork1/issues/6">#6</a>,
+   <a href="https://github.com/Johnesco/zork1/issues/59">#59</a>)
+</p>
+
+<h3>Combat messages</h3>
+
+<p>
+  ZIL&rsquo;s combat system uses 88 distinct text messages across 7 outcome
+  categories: attacker hits, attacker misses, defender staggers, weapon
+  knocked away, light wound, serious wound, and killing blow. Each category
+  has multiple variants selected randomly for variety. These were among the
+  377 missing text responses discovered in the leaf count audit.
+  (<a href="https://github.com/Johnesco/zork1/issues/56">#56</a>,
+   <a href="https://github.com/Johnesco/zork1/issues/58">#58</a>)
+</p>
+
+<div class="info-box">
+  <h4>Why NPCs are the hardest part</h4>
+  <p>
+    Room descriptions and puzzle mechanics are static &mdash; they either work
+    or they don&rsquo;t. NPCs are dynamic: their behavior depends on game state,
+    turn counters, random rolls, and interactions between multiple systems.
+    A broken room is immediately obvious. A broken NPC can silently fail for
+    an entire playthrough, and you won&rsquo;t notice unless you know exactly
+    what it was supposed to do.
+  </p>
+</div>
+
+<h2>Closing Thoughts</h2>
+
+<p>
+  What looked like a translation turned out to be an archaeology project.
+  Understanding not just what the ZIL code <em>does</em>, but what it
+  <em>meant</em> to do, required reading every routine, counting every branch,
+  and testing every edge case. The two languages agree on the surface &mdash;
+  rooms, objects, rules &mdash; but disagree on almost everything underneath.
+</p>
+
+<p>
+  The full source code, issues, and commit history are on
+  <a href="https://github.com/Johnesco/zork1">GitHub</a>. Each issue linked
+  above includes the diagnosis, the fix, and (where applicable) before/after
+  transcripts showing the behavioral difference.
+</p>
+
+<footer>
+  <p>
+    <a href="./">&larr; Back to Zork I</a>
+  </p>
+</footer>
+
+</body>
+</html>
