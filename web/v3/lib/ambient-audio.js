@@ -11,17 +11,22 @@
 (function () {
   'use strict';
 
+  // ── ifhub integration ─────────────────────────────────────────────
+  var audioBase = window.SOUND_AUDIO_BASE || '';
+  var ifhubMode = !!audioBase;
+  var masterVolume = 1.0;
+
   // ── Zone audio config ───────────────────────────────────────────────
   var ZONES = {
-    forest:    { src: 'audio/forest.mp3',    volume: 0.04  },
-    house:     { src: 'audio/house.mp3',     volume: 0.02  },
-    cave:      { src: 'audio/cave.mp3',      volume: 0.03  },
-    water:     { src: 'audio/water.mp3',     volume: 0.04  },
-    rapids:    { src: 'audio/rapids.mp3',    volume: 0.05  },
-    loud:      { src: 'audio/loud.mp3',      volume: 0.07  },
-    hades:     { src: 'audio/hades.mp3',     volume: 0.05  },
-    mine:      { src: 'audio/mine.mp3',      volume: 0.03  },
-    machinery: { src: 'audio/machinery.mp3', volume: 0.035 },
+    forest:    { src: audioBase + 'audio/forest.mp3',    volume: 0.04  },
+    house:     { src: audioBase + 'audio/house.mp3',     volume: 0.02  },
+    cave:      { src: audioBase + 'audio/cave.mp3',      volume: 0.03  },
+    water:     { src: audioBase + 'audio/water.mp3',     volume: 0.04  },
+    rapids:    { src: audioBase + 'audio/rapids.mp3',    volume: 0.05  },
+    loud:      { src: audioBase + 'audio/loud.mp3',      volume: 0.07  },
+    hades:     { src: audioBase + 'audio/hades.mp3',     volume: 0.05  },
+    mine:      { src: audioBase + 'audio/mine.mp3',      volume: 0.03  },
+    machinery: { src: audioBase + 'audio/machinery.mp3', volume: 0.035 },
     // silence — no audio element, handled as null
   };
 
@@ -134,7 +139,7 @@
   var STORAGE_KEY    = 'zork1-audio-muted';
   var currentRoom    = null;
   var currentZone    = null;
-  var muted          = localStorage.getItem(STORAGE_KEY) === '1';
+  var muted          = ifhubMode ? false : localStorage.getItem(STORAGE_KEY) === '1';
 
   var audioA         = null;
 
@@ -173,7 +178,7 @@
 
   function crossfadeTo(zone) {
     var cfg = ZONES[zone];
-    var targetVol = (cfg && !muted) ? cfg.volume : 0;
+    var targetVol = (cfg && !muted) ? cfg.volume * masterVolume : 0;
     var hadPreviousAudio = !!audioA;
     var fadeInMs = hadPreviousAudio ? FADE_MS : SLOW_FADE_MS;
 
@@ -202,7 +207,7 @@
         var resume = function () {
           newAudio.play().then(function () {
             console.log('[ambient] Resumed: ' + cfg.src);
-            fadeAudio(newAudio, muted ? 0 : cfg.volume);
+            fadeAudio(newAudio, muted ? 0 : cfg.volume * masterVolume);
           }).catch(function (e) {
             console.log('[ambient] Retry failed: ' + e);
           });
@@ -342,7 +347,7 @@
           fadeAudio(audioA, 0);
         } else {
           var cfg = ZONES[currentZone];
-          if (cfg) fadeAudio(audioA, cfg.volume);
+          if (cfg) fadeAudio(audioA, cfg.volume * masterVolume);
         }
       }
     });
@@ -356,15 +361,41 @@
   // from the status bar alone. Default to "water"; players near the falls
   // will hear rapids from Aragain Falls / Canyon Bottom entries.
 
+  // ── ifhub API (only in ifhub mode) ─────────────────────────────────
+
+  if (ifhubMode) {
+    window.ifhubAmbient = {
+      setMuted: function (val) {
+        muted = !!val;
+        if (audioA) {
+          if (muted) {
+            fadeAudio(audioA, 0);
+          } else {
+            var cfg = ZONES[currentZone];
+            if (cfg) fadeAudio(audioA, cfg.volume * masterVolume);
+          }
+        }
+      },
+      setMasterVolume: function (v) {
+        masterVolume = Math.max(0, Math.min(1, v));
+        if (audioA && !muted) {
+          var cfg = ZONES[currentZone];
+          if (cfg) fadeAudio(audioA, cfg.volume * masterVolume);
+        }
+      },
+      isMuted: function () { return muted; }
+    };
+  }
+
   // ── Init ────────────────────────────────────────────────────────────
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
-      createMuteButton();
+      if (!ifhubMode) createMuteButton();
       startObserving();
     });
   } else {
-    createMuteButton();
+    if (!ifhubMode) createMuteButton();
     startObserving();
   }
 
