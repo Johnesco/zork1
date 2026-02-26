@@ -184,17 +184,11 @@ footer a {
   games with NO graphics. As a kid I stared into a CRT monitor hooked to an
   Atari 800 computer and marveled at the description: &ldquo;You are standing
   in an open field west of a white house, with a boarded front door.&rdquo;
-</p>
-
-<p>
   I&rsquo;d type in short phrases &mdash; pure text. Type &ldquo;open
-  mailbox&rdquo; and the game would do it &mdash; all in text.
-</p>
-
-<p>
-  I saw so many advancements from that point. Sounds, graphics, 2D and 3D.
-  From a few pixels on the screen to ultra-real worlds. And yet, I often
-  still thought of that white house.
+  mailbox&rdquo; and the game would do it &mdash; all in text. I saw so many
+  advancements from that point. Sounds, graphics, 2D and 3D. From a few
+  pixels on the screen to ultra-real worlds. And yet, I often still thought
+  of that white house.
 </p>
 
 <p>
@@ -202,9 +196,6 @@ footer a {
   <a href="https://en.wikipedia.org/wiki/Zork">Zork</a> &mdash; a game of
   adventure, danger, and low cunning &mdash; and it&rsquo;s now
   <a href="https://github.com/historicalsource/zork1">open source</a>.
-</p>
-
-<p>
   These games, in a genre sometimes called &ldquo;Text-Adventures&rdquo;
   and sometimes &ldquo;Interactive Fiction&rdquo; (or IF), just gave you a
   text prompt (hey there&rsquo;s a switch) and you responded.
@@ -213,22 +204,12 @@ footer a {
 <p>
   Among so many computer advances, along came AI. Love it or hate it, I
   had to try it, and set out to see if I could code beyond my current scope
-  without making a mess (well a mess, sure, but that compiles).
-</p>
-
-<p>
-  I figured, &ldquo;it&rsquo;s just text,&rdquo; and set Claude Code to
-  translate from the <a href="v0/">ZIL source</a> to Inform 7 syntax (an
-  engine descended from Infocom architecture). The result was
-  <a href="v3/source.html">much more readable</a>.
-</p>
-
-<p>
-  And BOOM! It did it in one go and it compiled! Huzzah! But&hellip;
-  it&rsquo;s missing something.
-</p>
-
-<p>
+  without making a mess (well a mess, sure, but that compiles). I figured,
+  &ldquo;it&rsquo;s just text,&rdquo; and set Claude Code to translate from
+  the <a href="v0/">ZIL source</a> to Inform 7 syntax (an engine descended
+  from Infocom architecture). The result was
+  <a href="v3/source.html">much more readable</a>. And BOOM! It did it in
+  one go and it compiled! Huzzah! But&hellip; it&rsquo;s missing something.
   Why did I notice something was missing? I&rsquo;m a tester at heart and
   always have a keen eye for little changes.
 </p>
@@ -238,37 +219,23 @@ footer a {
   this detail in ZIL but not in the translation?&rdquo; And so began a long
   introduction into the ZIL code format. There are shortcuts being taken
   here for sure, but using AI will force you to realize you&rsquo;ve got to
-  be in the driver&rsquo;s seat, at least for now.
-</p>
-
-<p>
-  We began to look at all text, piece by piece, every bit, discovering
-  together the odd format of the old engine, bound by such tight
-  limitations, and the loose translation we began to refine.
+  be in the driver&rsquo;s seat, at least for now. We began to look at all
+  text, piece by piece, every bit, discovering together the odd format of
+  the old engine, bound by such tight limitations, and the loose translation
+  we began to refine.
 </p>
 
 <p>
   Using <a href="https://foss.heptapod.net/zilf/zilf">ZILF</a>, we
   compiled the ZIL to the .z5 format and ran it online. We had a working
-  version of the original, warts and all.
-</p>
-
-<p>
-  Claude began to suggest trying to test outcomes deterministically.
-  I reminded Claude about the random aspects of Zork. Claude mentioned we
-  could compile with a specific seed to mitigate randomness and produce
-  expected results (as it compared transcripts).
-</p>
-
-<p>
-  Transcripts. I mean &mdash; it is text after all.
-</p>
-
-<p>
-  Every playthrough, we stored the transcripts. We&rsquo;d compare
-  transcripts of the original and the translation side by side. That
-  developed into a testing system that I&rsquo;m now expanding to test the
-  games.
+  version of the original, warts and all. Claude began to suggest trying to
+  test outcomes deterministically. I reminded Claude about the random aspects
+  of Zork. Claude mentioned we could compile with a specific seed to mitigate
+  randomness and produce expected results (as it compared transcripts).
+  Transcripts. I mean &mdash; it is text after all. Every playthrough, we
+  stored the transcripts. We&rsquo;d compare transcripts of the original and
+  the translation side by side. That developed into a testing system that
+  I&rsquo;m now expanding to test the games.
 </p>
 
 <p>
