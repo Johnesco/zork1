@@ -180,29 +180,112 @@ footer a {
 <p class="subtitle">Inform 7 Edition</p>
 
 <p>
-  I first played Zork on an Atari 800. I was too young to get very far &mdash;
-  the game was a mystery that lay hidden behind puzzles too twisty for little
-  kid me to figure out. But it stuck with me. The darkness, the mailbox, the
-  feeling that there was something enormous just out of reach.
+  I&rsquo;ve played video games for a long time. Video? I&rsquo;ve played
+  games with NO graphics. As a kid I stared into a CRT monitor hooked to an
+  Atari 800 computer and marveled at the description: &ldquo;You are standing
+  in an open field west of a white house, with a boarded front door.&rdquo;
 </p>
 
 <p>
-  Decades later, Activision released the original source code under the MIT
-  License. For the first time, I could read the code behind the curtain. And
-  it felt like I could finally try making it my own &mdash; translating the
-  game from its original ZIL into Inform 7, the modern natural-language
-  interactive fiction system, and seeing how far I could take it.
+  I&rsquo;d type in short phrases &mdash; pure text. Type &ldquo;open
+  mailbox&rdquo; and the game would do it &mdash; all in text.
 </p>
 
 <p>
-  Each version is a chapter in that process. <strong>v0</strong> is the
-  original ZIL &mdash; the starting point. <strong>v1</strong> is the
-  translation: everything in the original must make it here.
-  <strong>v2</strong> fixes what was broken &mdash; bugs Infocom shipped
-  and ones I introduced &mdash; and establishes the testing methodology
-  that now underpins every change going forward.
-  <strong>v3</strong> is where I start to intentionally diverge from the
-  original and lean into what Inform 7 does best.
+  I saw so many advancements from that point. Sounds, graphics, 2D and 3D.
+  From a few pixels on the screen to ultra-real worlds. And yet, I often
+  still thought of that white house.
+</p>
+
+<p>
+  The game in question is
+  <a href="https://en.wikipedia.org/wiki/Zork">Zork</a> &mdash; a game of
+  adventure, danger, and low cunning &mdash; and it&rsquo;s now
+  <a href="https://github.com/historicalsource/zork1">open source</a>.
+</p>
+
+<p>
+  These games, in a genre sometimes called &ldquo;Text-Adventures&rdquo;
+  and sometimes &ldquo;Interactive Fiction&rdquo; (or IF), just gave you a
+  text prompt (hey there&rsquo;s a switch) and you responded.
+</p>
+
+<p>
+  Among so many computer advances, along came AI. Love it or hate it, I
+  had to try it, and set out to see if I could code beyond my current scope
+  without making a mess (well a mess, sure, but that compiles).
+</p>
+
+<p>
+  I figured, &ldquo;it&rsquo;s just text,&rdquo; and set Claude Code to
+  translate from the <a href="v0/">ZIL source</a> to Inform 7 syntax (an
+  engine descended from Infocom architecture). The result was
+  <a href="v3/source.html">much more readable</a>.
+</p>
+
+<p>
+  And BOOM! It did it in one go and it compiled! Huzzah! But&hellip;
+  it&rsquo;s missing something.
+</p>
+
+<p>
+  Why did I notice something was missing? I&rsquo;m a tester at heart and
+  always have a keen eye for little changes.
+</p>
+
+<p>
+  I got into a dialogue with Claude, something like, &ldquo;hey, why is
+  this detail in ZIL but not in the translation?&rdquo; And so began a long
+  introduction into the ZIL code format. There are shortcuts being taken
+  here for sure, but using AI will force you to realize you&rsquo;ve got to
+  be in the driver&rsquo;s seat, at least for now.
+</p>
+
+<p>
+  We began to look at all text, piece by piece, every bit, discovering
+  together the odd format of the old engine, bound by such tight
+  limitations, and the loose translation we began to refine.
+</p>
+
+<p>
+  Using <a href="https://foss.heptapod.net/zilf/zilf">ZILF</a>, we
+  compiled the ZIL to the .z5 format and ran it online. We had a working
+  version of the original, warts and all.
+</p>
+
+<p>
+  Claude began to suggest trying to test outcomes deterministically.
+  I reminded Claude about the random aspects of Zork. Claude mentioned we
+  could compile with a specific seed to mitigate randomness and produce
+  expected results (as it compared transcripts).
+</p>
+
+<p>
+  Transcripts. I mean &mdash; it is text after all.
+</p>
+
+<p>
+  Every playthrough, we stored the transcripts. We&rsquo;d compare
+  transcripts of the original and the translation side by side. That
+  developed into a testing system that I&rsquo;m now expanding to test the
+  games.
+</p>
+
+<p>
+  This wasn&rsquo;t a one-shot vibe code. It was a deep dive into AI and IF.
+</p>
+
+<p>
+  Below I&rsquo;m highlighting some snapshots.
+  <strong>v0</strong> is the purest version of the original Zork I
+  commercial release.
+  <strong>v1</strong> attempts to translate it into Inform 7 &mdash; if
+  it&rsquo;s in the ZIL code, it&rsquo;s in v1 (any bugs naturally fixed
+  by the move to a modern engine have been forced to still occur).
+  <strong>v2</strong> is where real improvement begins &mdash; only here do
+  I allow myself so actually fix anything that was ever a bug in the
+  original ZIL. Beyond that is just ideas &mdash; even with an idea for v3
+  (sound), it&rsquo;s really v0 to v1 being given huge attention.
 </p>
 
 <div class="engine-selector">
@@ -216,8 +299,8 @@ footer a {
 
 <div class="version-entry">
   <h3>v3 &mdash; Making It My Own</h3>
-  <p>v1 and v2 are bound to the original &mdash; v3 is where I start to
-    intentionally diverge, leaning into what Inform 7 does best.</p>
+  <p>Intentionally diverging from the original, leaning into what
+    Inform 7 does best.</p>
   <ul>
     <li>Ambient audio: zone-based background music across 10 zones (forest, cave, house, water, rapids, loud, hades, mine, machinery, silence) with smooth crossfades between areas</li>
     <li>Sound effects: 16 one-shot audio triggers for key game events &mdash; puzzle moments, creature encounters, and atmospheric touches (<a href="soundoverlay.html#sound-effects">details</a>). Audio files are CC0 placeholders, not final</li>
