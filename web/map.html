@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zork I &mdash; Interactive Map</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#1a1a2e;color:#e0e0e0;font-family:'Segoe UI',Arial,sans-serif;overflow:hidden;height:100vh}
+#controls{background:#16213e;padding:8px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #333;z-index:10;position:relative;flex-wrap:wrap}
+#controls label{font-size:13px;color:#aaa}
+#controls select,#controls input,#controls button{background:#0f3460;color:#e0e0e0;border:1px solid #444;padding:4px 8px;border-radius:4px;font-size:13px;cursor:pointer}
+#controls button:hover{background:#1a4a7a}
+#controls input{width:160px;cursor:text}
+.title{font-size:15px;font-weight:600;color:#e0c080;margin-right:16px}
+#status{margin-left:auto;font-size:12px;color:#888}
+#graph-container{width:100%;height:calc(100vh - 44px);overflow:hidden;cursor:grab;position:relative}
+#graph-container.dragging{cursor:grabbing}
+#graph-container svg{position:absolute;transform-origin:0 0}
+#loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:18px;color:#666}
+#legend{position:absolute;bottom:12px;left:12px;background:rgba(22,33,62,0.92);padding:10px 14px;border-radius:6px;font-size:11px;line-height:1.9;border:1px solid #333}
+.leg{display:flex;align-items:center;gap:6px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:2px;border:1px solid #666}
+</style>
+</head>
+<body>
+<div id="controls">
+ <span class="title">Zork I Map</span>
+ <label for="engine">Engine:</label>
+ <select id="engine">
+  <option value="neato" selected>neato (compass-accurate)</option>
+  <option value="fdp">fdp (force-directed)</option>
+  <option value="sfdp">sfdp (scaled force)</option>
+  <option value="dot">dot (hierarchical)</option>
+ </select>
+ <label for="search">Search:</label>
+ <input id="search" type="text" placeholder="Room name...">
+ <button id="fit-btn">Fit</button>
+ <button id="reset-btn">Reset</button>
+ <span id="status">Loading engine&hellip;</span>
+</div>
+<div id="graph-container"><div id="loading">Loading Graphviz engine&hellip;</div></div>
+<div id="legend">
+ <div class="leg"><span class="sw" style="background:#2a2a3d"></span> Dark room</div>
+ <div class="leg"><span class="sw" style="background:#f5f0e1"></span> Light room</div>
+ <div class="leg"><span class="sw" style="background:#4caf50;border-color:#4caf50"></span> Start room</div>
+ <div class="leg"><span style="color:#888;font-size:13px">&#x25C0;&#x2500;&#x25B6;</span> Bidirectional <span style="color:#aaa;font-size:10px">(N/S/E/W labels)</span></div>
+ <div class="leg"><span style="color:#e6a23c;font-size:13px">&#x2500;&#x2500;&#x25B6;</span> Asymmetric <span style="color:#e6a23c;font-size:10px">(return blocked &#x2717;)</span></div>
+ <div class="leg"><span style="color:#cc6666;font-size:13px">&#x2500;&#x2500;&#x25B6;</span> One-way <span style="color:#cc6666;font-size:10px">(no return)</span></div>
+ <div class="leg"><span style="color:#e6882a;font-size:13px">&#x21BA;</span> Self-loop</div>
+ <div class="leg"><span style="color:#888">- - -</span> Conditional</div>
+</div>
+
+<script src="https://unpkg.com/@viz-js/viz@3.4.0/lib/viz-standalone.js"></script>
+<script>
+const DOT = `digraph ZorkI {
+    graph [splines=curved, sep="+15", esep="+8",
+           outputorder=edgesfirst, bgcolor="transparent",
+           nodesep=0.8, ranksep=1.0];
+    node [shape=box, style="rounded,filled",
+          fontname="Segoe UI, Arial, sans-serif", fontsize=9,
+          fixedsize=false, margin="0.11,0.055"];
+    edge [fontname="Segoe UI, Arial, sans-serif", fontsize=7,
+          color="#888888", penwidth=1.2, labeldistance=2.0,
+          labelfontsize=7];
+
+    "Stone Barrow" [label="Stone Barrow", fillcolor="#f5f0e1", fontcolor="#333333", color="#ef5350", penwidth=2, pos="10.8,7.2!"];
+    "Loud Room" [label="Loud Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="12.6,-12.6!"];
+    "Damp Cave" [label="Damp Cave", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="14.4,-12.6!"];
+    "North-South Passage" [label="North South Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-7.2!"];
+    "Chasm" [label="Chasm", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-9.0!"];
+    "Cellar" [label="Cellar", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-7.2!"];
+    "Troll-Room" [label="The Troll Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-5.4!"];
+    "East-of-Chasm" [label="East of Chasm", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-9.0!"];
+    "Gallery" [label="Gallery", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,-9.0!"];
+    "Studio" [label="Studio", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,-7.2!"];
+    "East-West Passage" [label="East West Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,-5.4!"];
+    "Round Room" [label="Round Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-5.4!"];
+    "Mine Entrance" [label="Mine Entrance", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="0.0,-23.4!"];
+    "Squeaky Room" [label="Squeaky Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="-1.8,-23.4!"];
+    "Bat-Room" [label="Bat Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="-1.8,-21.6!"];
+    "Shaft Room" [label="Shaft Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="0.0,-21.6!"];
+    "Smelly Room" [label="Smelly Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-21.6!"];
+    "Gas Room" [label="Gas Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-19.8!"];
+    "Mine1" [label="Coal Mine", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-19.8!"];
+    "Mine2" [label="Coal Mine", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-18.0!"];
+    "Mine3" [label="Coal Mine", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-18.0!"];
+    "Mine4" [label="Coal Mine", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-19.8!"];
+    "Ladder Top" [label="Ladder Top", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-21.6!"];
+    "Ladder Bottom" [label="Ladder Bottom", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-23.4!"];
+    "Dead End 5" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-25.2!"];
+    "Timber Room" [label="Timber Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-23.4!"];
+    "Drafty Room" [label="Drafty Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-23.4!"];
+    "Machine-Room" [label="Machine Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-25.2!"];
+    "Slide Room" [label="Slide Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="0.0,-25.2!"];
+    "Cyclops-Room" [label="Cyclops Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="39.6,-7.2!"];
+    "Strange Passage" [label="Strange Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="41.4,-7.2!"];
+    "Treasure Room" [label="Treasure Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="39.6,-5.4!"];
+    "Deep Canyon" [label="Deep Canyon", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,-14.4!"];
+    "Reservoir-South" [label="Reservoir South", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-12.6!"];
+    "Dam-Room" [label="Dam", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-14.4!"];
+    "Dam-Lobby" [label="Dam Lobby", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-12.6!"];
+    "Maintenance Room" [label="Maintenance Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-10.8!"];
+    "Reservoir" [label="Reservoir", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-10.8!"];
+    "Reservoir-North" [label="Reservoir North", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="16.2,-7.2!"];
+    "Stream View" [label="Stream View", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="16.2,-12.6!"];
+    "Dam-Base" [label="Dam Base", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="23.4,-14.4!"];
+    "In-Stream" [label="Stream", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="16.2,-10.8!"];
+    "Aragain Falls" [label="Aragain Falls", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="5.4,-3.6!"];
+    "On-the-Rainbow" [label="On the Rainbow", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="3.6,-3.6!"];
+    "End of Rainbow" [label="End of Rainbow", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="1.8,-3.6!"];
+    "Canyon Bottom" [label="Canyon Bottom", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="0.0,-5.4!"];
+    "Rocky Ledge" [label="Rocky Ledge", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="0.0,-3.6!"];
+    "Forest1" [label="Forest", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="7.2,3.6!"];
+    "Forest2" [label="Forest", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="10.8,3.6!"];
+    "Mountains" [label="Forest", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="12.6,3.6!"];
+    "Forest3" [label="Forest", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="7.2,5.4!"];
+    "Forest Path" [label="Forest Path", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="9.0,3.6!"];
+    "Up a Tree" [label="Up a Tree", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="7.2,7.2!"];
+    "Clearing" [label="Clearing", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="10.8,1.8!"];
+    "Grating Clearing" [label="Clearing", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="9.0,5.4!"];
+    "Canyon View" [label="Canyon View", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="12.6,0.0!"];
+    "West-of-House" [label="West of House", fillcolor="#f5f0e1", fontcolor="#333333", color="#4caf50", penwidth=3, pos="14.4,0.0!"];
+    "North-of-House" [label="North of House", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="16.2,1.8!"];
+    "South-of-House" [label="South of House", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="16.2,-1.8!"];
+    "Behind House" [label="Behind House", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="16.2,0.0!"];
+    "Kitchen" [label="Kitchen", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="19.8,0.0!"];
+    "Attic" [label="Attic", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,1.8!"];
+    "Living Room" [label="Living Room", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="18.0,0.0!"];
+    "Maze1" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-7.2!"];
+    "Maze2" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-9.0!"];
+    "Maze3" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-9.0!"];
+    "Maze4" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-7.2!"];
+    "Dead End 1" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="32.4,-7.2!"];
+    "Maze5" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-10.8!"];
+    "Dead End 2" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="32.4,-10.8!"];
+    "Maze6" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-12.6!"];
+    "Maze7" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-12.6!"];
+    "Maze8" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="32.4,-12.6!"];
+    "Dead End 3" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="34.2,-14.4!"];
+    "Maze9" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-14.4!"];
+    "Maze10" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-14.4!"];
+    "Maze11" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="27.0,-14.4!"];
+    "Grating Room" [label="Grating Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="27.0,-12.6!"];
+    "Maze12" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="27.0,-16.2!"];
+    "Dead End 4" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="27.0,-18.0!"];
+    "Maze13" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-16.2!"];
+    "Maze14" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-16.2!"];
+    "Maze15" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-18.0!"];
+    "Mirror Room 1" [label="Mirror Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="9.0,-19.8!"];
+    "Mirror Room 2" [label="Mirror Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="25.2,-27.0!"];
+    "Small Cave" [label="Cave", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="10.8,-19.8!"];
+    "Tiny Cave" [label="Cave", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="23.4,-27.0!"];
+    "Cold Passage" [label="Cold Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="9.0,-18.0!"];
+    "Narrow Passage" [label="Narrow Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-3.6!"];
+    "Winding-Passage" [label="Winding Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="25.2,-28.8!"];
+    "Twisting Passage" [label="Twisting Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="7.2,-19.8!"];
+    "Atlantis Room" [label="Atlantis Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="10.8,-21.6!"];
+    "River1" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-19.8!"];
+    "River2" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-21.6!"];
+    "River3" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-23.4!"];
+    "White Cliffs North" [label="White Cliffs Beach", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="25.2,-23.4!"];
+    "White Cliffs South" [label="White Cliffs Beach", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="25.2,-25.2!"];
+    "River4" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-25.2!"];
+    "River5" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-27.0!"];
+    "Shore" [label="Shore", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="28.8,-27.0!"];
+    "Sandy Beach" [label="Sandy Beach", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="28.8,-25.2!"];
+    "Sandy Cave" [label="Sandy Cave", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="30.6,-23.4!"];
+    "Engravings Cave" [label="Engravings Cave", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-14.4!"];
+    "Dome Room" [label="Dome Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-14.4!"];
+    "Torch-Room" [label="Torch Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-16.2!"];
+    "North Temple" [label="Temple", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-16.2!"];
+    "South Temple" [label="Altar", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="0.0,-16.2!"];
+    "Egypt Room" [label="Egyptian Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-18.0!"];
+    "Entrance to Hades" [label="Entrance to Hades", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="23.4,-25.2!"];
+    "Land of the Dead" [label="Land of the Dead", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#ef5350", penwidth=2, pos="23.4,-23.4!"];
+
+    // Connections
+    "West-of-House":ne -> "North-of-House":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
+    "West-of-House":se -> "South-of-House":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=5, len=1.5];
+    "Behind House":n -> "North-of-House":s [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="N", labelfontcolor="#e6a23c", headlabel="S✗", weight=5, len=1.5];
+    "Behind House":s -> "South-of-House":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="S", labelfontcolor="#e6a23c", headlabel="N✗", weight=5, len=1.5];
+    "Behind House":sw -> "South-of-House":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
+    "Behind House":nw -> "North-of-House":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=5, len=1.5];
+    "South-of-House":e -> "Behind House":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "South-of-House":w -> "West-of-House":e [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="W", labelfontcolor="#e6a23c", headlabel="E✗", weight=5, len=1.5];
+    "North-of-House":e -> "Behind House":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "North-of-House":w -> "West-of-House":e [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="W", labelfontcolor="#e6a23c", headlabel="E✗", weight=5, len=1.5];
+    "Behind House":e -> "Clearing":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
+    "Forest3":nw -> "South-of-House":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=1, len=3.0];
+    "Forest3":w -> "Forest1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Forest1":s -> "Forest3":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "North-of-House":n -> "Forest Path":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=1, len=3.0];
+    "Forest Path":e -> "Forest2":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Forest Path":w -> "Forest1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Forest1":n -> "Grating Clearing":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Forest2":s -> "Clearing":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Forest2":e -> "Mountains":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Forest3":n -> "Clearing":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Forest Path":n -> "Grating Clearing":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Grating Clearing":e -> "Forest2":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Grating Clearing":w -> "Forest1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Kitchen":w -> "Living Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Cellar":n -> "Troll-Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Cellar":s -> "East-of-Chasm":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "East-of-Chasm":e -> "Gallery":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Gallery":n -> "Studio":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Maze1":n -> "Maze1" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="N", labelfontcolor="#e6882a"];
+    "Maze1":s -> "Maze2":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Maze1":w -> "Maze4":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Maze2":e -> "Maze3":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Maze3":n -> "Maze4":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Maze4":w -> "Maze3":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Maze4":n -> "Maze1":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Maze4":e -> "Dead End 1":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Dead End 1":s -> "Maze4":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Maze5":e -> "Dead End 2":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Maze5":n -> "Maze3":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Maze5":sw -> "Maze6":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
+    "Maze6":e -> "Maze7":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Maze6":w -> "Maze6" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="W", labelfontcolor="#e6882a"];
+    "Maze7":e -> "Maze8":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Maze7":s -> "Maze15":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Maze8":ne -> "Maze7":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
+    "Maze8":w -> "Maze8" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="W", labelfontcolor="#e6882a"];
+    "Maze8":se -> "Dead End 3":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=5, len=1.5];
+    "Dead End 3":n -> "Maze8":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Maze9":n -> "Maze6":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Maze9":e -> "Maze10":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Maze9":s -> "Maze13":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Maze9":w -> "Maze12":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Maze9":nw -> "Maze9" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="NW", labelfontcolor="#e6882a"];
+    "Maze10":w -> "Maze13":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Maze11":ne -> "Grating Room":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
+    "Maze11":nw -> "Maze13":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=5, len=1.5];
+    "Maze11":sw -> "Maze12":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
+    "Maze12":e -> "Maze13":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Maze12":n -> "Dead End 4":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Maze13":e -> "Maze9":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Maze13":s -> "Maze10":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Maze13":w -> "Maze11":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Maze14":w -> "Maze15":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Maze14":nw -> "Maze14" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="NW", labelfontcolor="#e6882a"];
+    "Maze14":ne -> "Maze7":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
+    "Maze14":s -> "Maze7":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Maze15":se -> "Cyclops-Room":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=1, len=3.0];
+    "Strange Passage":w -> "Cyclops-Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Strange Passage":e -> "Living Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
+    "East-West Passage":e -> "Round Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "East-West Passage":w -> "Troll-Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "East-West Passage":n -> "Chasm":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=1, len=3.0];
+    "Round Room":e -> "Loud Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
+    "Round Room":n -> "North-South Passage":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=1, len=3.0];
+    "Round Room":s -> "Narrow Passage":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=1, len=3.0];
+    "Round Room":se -> "Engravings Cave":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=1, len=3.0];
+    "Deep Canyon":nw -> "Reservoir-South":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=5, len=1.5];
+    "Deep Canyon":e -> "Dam-Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Deep Canyon":sw -> "North-South Passage":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=1, len=3.0];
+    "Loud Room":e -> "Damp Cave":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "North-South Passage":n -> "Chasm":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Chasm":ne -> "Reservoir-South":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=1, len=3.0];
+    "Chasm":sw -> "East-West Passage":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=1, len=3.0];
+    "Reservoir-South":e -> "Dam-Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Reservoir-South":w -> "Stream View":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Dam-Room":s -> "Deep Canyon":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Dam-Room":e -> "Dam-Base":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Dam-Room":n -> "Dam-Lobby":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Dam-Lobby":n -> "Maintenance Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Dam-Lobby":e -> "Maintenance Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Reservoir":n -> "Reservoir-North":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Reservoir":s -> "Reservoir-South":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Reservoir-North":n -> "Atlantis Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=1, len=3.0];
+    "Dam-Base":n -> "Dam-Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Mirror Room 1":n -> "Cold Passage":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Mirror Room 1":w -> "Twisting Passage":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Mirror Room 1":e -> "Small Cave":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Mirror Room 2":w -> "Winding-Passage":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Mirror Room 2":n -> "Narrow Passage":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Mirror Room 2":e -> "Tiny Cave":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Small Cave":n -> "Mirror Room 1":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Small Cave":s -> "Atlantis Room":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Small Cave":w -> "Twisting Passage":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Tiny Cave":n -> "Mirror Room 2":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Tiny Cave":w -> "Winding-Passage":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Cold Passage":w -> "Slide Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=1, len=3.0];
+    "Winding-Passage":n -> "Mirror Room 2":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Twisting Passage":n -> "Mirror Room 1":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Engravings Cave":e -> "Dome Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Torch-Room":s -> "North Temple":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "North Temple":e -> "Egypt Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "North Temple":s -> "South Temple":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Land of the Dead":n -> "Entrance to Hades":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "River1":w -> "Dam-Base":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=1, len=3.0];
+    "River3":w -> "White Cliffs North":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Damp Cave":e -> "White Cliffs North":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
+    "River4":w -> "White Cliffs South":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "River4":e -> "Sandy Beach":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "River5":e -> "Shore":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Shore":n -> "Sandy Beach":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Shore":s -> "Aragain Falls":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=1, len=3.0];
+    "Sandy Beach":ne -> "Sandy Cave":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
+    "On-the-Rainbow":w -> "End of Rainbow":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "On-the-Rainbow":e -> "Aragain Falls":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "End of Rainbow":sw -> "Canyon Bottom":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
+    "Canyon Bottom":n -> "End of Rainbow":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Canyon View":e -> "Rocky Ledge":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
+    "Canyon View":nw -> "Clearing":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=5, len=1.5];
+    "Canyon View":w -> "Forest3":e [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="W", labelfontcolor="#e6a23c", headlabel="E✗", weight=5, len=1.5];
+    "Clearing":e -> "Canyon View":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Mine Entrance":s -> "Slide Room":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Mine Entrance":w -> "Squeaky Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Squeaky Room":n -> "Bat-Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Bat-Room":e -> "Shaft Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Shaft Room":n -> "Smelly Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Gas Room":e -> "Mine1":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Mine1":n -> "Gas Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Mine1":e -> "Mine1" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="E", labelfontcolor="#e6882a"];
+    "Mine1":ne -> "Mine2":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
+    "Mine2":n -> "Mine2" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="N", labelfontcolor="#e6882a"];
+    "Mine2":s -> "Mine1":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Mine2":se -> "Mine3":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=5, len=1.5];
+    "Mine3":s -> "Mine3" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="S", labelfontcolor="#e6882a"];
+    "Mine3":sw -> "Mine4":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
+    "Mine3":e -> "Mine2":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
+    "Mine4":n -> "Mine3":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Mine4":w -> "Mine4" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="W", labelfontcolor="#e6882a"];
+    "Ladder Bottom":s -> "Dead End 5":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Ladder Bottom":w -> "Timber Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "Drafty Room":s -> "Machine-Room":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
+    "Stone Barrow":ne -> "West-of-House":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=1, len=3.0];
+    "Reservoir":w -> "In-Stream":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
+    "West-of-House":n -> "North-of-House":s [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="N", labelfontcolor="#e6a23c", headlabel="S✗", weight=5, len=1.5];
+    "West-of-House":s -> "South-of-House":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="S", labelfontcolor="#e6a23c", headlabel="N✗", weight=5, len=1.5];
+    "West-of-House":w -> "Forest1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=1, len=3.0];
+    "South-of-House":s -> "Forest3":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=1, len=3.0];
+    "Mountains":n -> "Forest2":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
+    "Kitchen":n -> "Attic":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Maze3":n -> "Maze5":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Maze6":s -> "Maze5":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "Maze6":n -> "Maze9":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Maze7":n -> "Maze14":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Maze10":n -> "Maze11":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Maze12":n -> "Maze9":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Maze13":s -> "Maze12":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "Treasure Room":s -> "Cyclops-Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "East-West Passage":s -> "Chasm":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=1, len=3.0];
+    "Deep Canyon":s -> "Loud Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=1, len=3.0];
+    "Dam-Room":s -> "Dam-Base":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "Small Cave":s -> "Atlantis Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "Tiny Cave":s -> "Entrance to Hades":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=1, len=3.0];
+    "Torch-Room":s -> "North Temple":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "North Temple":s -> "Egypt Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "River1":s -> "River2":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="D", labelfontcolor="#e6a23c", headlabel="U✗", weight=5, len=1.5];
+    "River2":s -> "River3":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="D", labelfontcolor="#e6a23c", headlabel="U✗", weight=5, len=1.5];
+    "River3":s -> "River4":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="D", labelfontcolor="#e6a23c", headlabel="U✗", weight=5, len=1.5];
+    "River4":s -> "River5":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="D", labelfontcolor="#e6a23c", headlabel="U✗", weight=5, len=1.5];
+    "Canyon Bottom":n -> "Rocky Ledge":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Rocky Ledge":n -> "Canyon View":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=1, len=3.0];
+    "Smelly Room":s -> "Gas Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "Mine4":s -> "Ladder Top":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "Ladder Top":s -> "Ladder Bottom":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
+    "Reservoir":n -> "In-Stream":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Forest Path":n -> "Up a Tree":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
+    "Behind House":w -> "Kitchen":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=1, len=3.0];
+    "Grating Clearing":s -> "Grating Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", style="dashed", weight=1, len=3.0];
+    "Troll-Room":w -> "Maze1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", style="dashed", weight=1, len=3.0];
+    "Maze2":s -> "Maze4":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=5, len=1.5];
+    "Maze7":s -> "Dead End 1":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=5, len=1.5];
+    "Maze9":s -> "Maze11":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=5, len=1.5];
+    "Maze12":s -> "Maze5":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=5, len=1.5];
+    "Dome Room":s -> "Torch-Room":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", style="dashed", weight=5, len=1.5];
+    "South Temple":s -> "Tiny Cave":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", style="dashed", weight=1, len=3.0];
+    "White Cliffs North":s -> "White Cliffs South":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", style="dashed", weight=5, len=1.5];
+    "Bat-Room":n -> "Mine1":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
+    "Bat-Room":n -> "Mine2":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
+    "Bat-Room":n -> "Mine3":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
+    "Bat-Room":n -> "Mine4":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
+    "Bat-Room":n -> "Ladder Top":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
+    "Bat-Room":n -> "Ladder Bottom":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
+    "Bat-Room":n -> "Mine Entrance":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
+    "Timber Room":w -> "Drafty Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", style="dashed", weight=5, len=1.5];
+    "Slide Room":s -> "Cellar":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=1, len=3.0];
+    "Studio":n -> "Kitchen":s [dir=forward, color="#cc6666", penwidth=1.5, taillabel="U", labelfontcolor="#cc6666", style="dashed", weight=1, len=3.0];
+}`;
+
+let scale = 1, tx = 0, ty = 0;
+let dragging = false, sx = 0, sy = 0;
+let curSvg = null;
+const ctr = document.getElementById('graph-container');
+const stat = document.getElementById('status');
+
+async function render(engine) {
+    stat.textContent = 'Rendering (' + engine + ')...';
+    document.getElementById('loading').style.display = 'block';
+    try {
+        const viz = await Viz.instance();
+        const str = viz.renderString(DOT, {engine: engine, format: 'svg'});
+        if (curSvg) curSvg.remove();
+        const d = new DOMParser().parseFromString(str, 'image/svg+xml');
+        const svg = d.documentElement;
+        svg.style.position = 'absolute';
+        svg.style.transformOrigin = '0 0';
+        // force transparent bg so page bg shows through
+        svg.removeAttribute('style');
+        svg.style.position = 'absolute';
+        svg.style.transformOrigin = '0 0';
+        const pg = svg.querySelector('polygon');
+        if (pg) pg.setAttribute('fill', 'transparent');
+        ctr.appendChild(svg);
+        curSvg = svg;
+        document.getElementById('loading').style.display = 'none';
+        fitView();
+        const nn = svg.querySelectorAll('.node').length;
+        const ne = svg.querySelectorAll('.edge').length;
+        stat.textContent = nn + ' rooms, ' + ne + ' connections (' + engine + ')';
+    } catch(e) {
+        stat.textContent = 'Error: ' + e.message;
+        document.getElementById('loading').textContent = 'Error: ' + e.message;
+        console.error(e);
+    }
+}
+
+function upXf() {
+    if (curSvg) curSvg.style.transform = 'translate('+tx+'px,'+ty+'px) scale('+scale+')';
+}
+
+function fitView() {
+    if (!curSvg) return;
+    // get SVG dimensions from viewBox or width/height attributes
+    let svgW, svgH;
+    const vb = curSvg.getAttribute('viewBox');
+    if (vb) {
+        const p = vb.split(/[\s,]+/).map(Number);
+        svgW = p[2]; svgH = p[3];
+    } else {
+        svgW = parseFloat(curSvg.getAttribute('width')) || 1000;
+        svgH = parseFloat(curSvg.getAttribute('height')) || 800;
+    }
+    // remove fixed width/height so SVG scales via transform
+    curSvg.removeAttribute('width');
+    curSvg.removeAttribute('height');
+    curSvg.setAttribute('width', svgW);
+    curSvg.setAttribute('height', svgH);
+    const cw = ctr.clientWidth, ch = ctr.clientHeight;
+    scale = Math.min(cw / svgW, ch / svgH) * 0.95;
+    tx = (cw - svgW * scale) / 2;
+    ty = (ch - svgH * scale) / 2;
+    upXf();
+}
+
+// Pan
+ctr.addEventListener('mousedown', e => { dragging=true; sx=e.clientX-tx; sy=e.clientY-ty; ctr.classList.add('dragging'); });
+ctr.addEventListener('mousemove', e => { if(!dragging)return; tx=e.clientX-sx; ty=e.clientY-sy; upXf(); });
+ctr.addEventListener('mouseup', ()=>{ dragging=false; ctr.classList.remove('dragging'); });
+ctr.addEventListener('mouseleave', ()=>{ dragging=false; ctr.classList.remove('dragging'); });
+
+// Zoom toward cursor
+ctr.addEventListener('wheel', e => {
+    e.preventDefault();
+    const r = ctr.getBoundingClientRect();
+    const mx = e.clientX - r.left, my = e.clientY - r.top;
+    const f = e.deltaY > 0 ? 0.9 : 1.1;
+    const ns = scale * f;
+    tx = mx - (mx - tx) * (ns / scale);
+    ty = my - (my - ty) * (ns / scale);
+    scale = ns;
+    upXf();
+}, {passive:false});
+
+// Controls
+document.getElementById('engine').onchange = e => render(e.target.value);
+document.getElementById('fit-btn').onclick = fitView;
+document.getElementById('reset-btn').onclick = () => { scale=1; tx=0; ty=0; upXf(); };
+
+// Search highlight
+document.getElementById('search').oninput = e => {
+    const q = e.target.value.toLowerCase();
+    if (!curSvg) return;
+    curSvg.querySelectorAll('.node').forEach(nd => {
+        const t = nd.querySelector('title');
+        const nm = (t ? t.textContent : '').toLowerCase();
+        // find the shape element (polygon for box nodes in graphviz SVG)
+        const sh = nd.querySelector('polygon') || nd.querySelector('ellipse') || nd.querySelector('rect') || nd.querySelector('path');
+        if (q && nm.includes(q)) {
+            if (sh) { sh.setAttribute('stroke', '#ffeb3b'); sh.setAttribute('stroke-width', '3'); }
+        } else {
+            if (sh) { sh.removeAttribute('stroke'); sh.removeAttribute('stroke-width'); }
+        }
+    });
+};
+
+render('neato');
+</script>
+</body>
+</html>
