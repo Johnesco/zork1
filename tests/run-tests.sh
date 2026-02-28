@@ -11,7 +11,7 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-INFORM7_ROOT="/mnt/c/code/i7/inform7"
+I7_ROOT="/mnt/c/code/ifhub"
 CONFIG="$SCRIPT_DIR/project.conf"
 
-exec bash "$INFORM7_ROOT/tools/testing/run-tests.sh" --config "$CONFIG" "$@"
+exec bash "$I7_ROOT/tools/testing/run-tests.sh" --config "$CONFIG" "$@"

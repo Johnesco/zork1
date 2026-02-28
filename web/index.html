@@ -231,7 +231,7 @@ footer a {
   &ldquo;it&rsquo;s just text,&rdquo; and set Claude Code to translate from
   the <a href="v0/">ZIL source</a> to Inform 7 syntax (an engine descended
   from Infocom architecture). The result was
-  <a href="v3/source.html">much more readable</a>. And BOOM! It did it in
+  <a href="v2/source.html">much more readable</a>. And BOOM! It did it in
   one go and it compiled! Huzzah! But&hellip; it&rsquo;s missing something.
   Why did I notice something was missing? I&rsquo;m a tester at heart and
   always have a keen eye for little changes.
@@ -273,9 +273,10 @@ footer a {
   it&rsquo;s in the ZIL code, it&rsquo;s in v1 (any bugs naturally fixed
   by the move to a modern engine will remain fixed, we won't force bugs to remain).
   <strong>v2</strong> is where real improvement begins &mdash; only here do
-  I allow myself so actually fix anything that was ever a bug in the
-  original ZIL. Beyond that is just ideas &mdash; even with an idea for v3
-  (sound), it&rsquo;s really v0 to v1 being given huge attention.
+  I allow myself to actually fix anything that was ever a bug in the
+  original ZIL. The latest version builds on all of that &mdash; now with
+  ambient audio and sound effects &mdash; but it&rsquo;s really v0 to v1
+  being given huge attention.
 </p>
 
 <div class="engine-selector">
@@ -288,12 +289,11 @@ footer a {
 <h2>Version History</h2>
 
 <div class="version-entry">
-  <h3>v3 &mdash; Making It My Own</h3>
-  <p>Intentionally diverging from the original, leaning into what
-    Inform 7 does best.</p>
+  <h3>v3 &mdash; Making It My Own (Current Version)</h3>
+  <p>Intentionally diverging from the original, leaning into what Inform 7 does best.</p>
   <ul>
-    <li>Ambient audio: zone-based background music across 10 zones (forest, cave, house, water, rapids, loud, hades, mine, machinery, silence) with smooth crossfades between areas</li>
-    <li>Sound effects: 16 one-shot audio triggers for key game events &mdash; puzzle moments, creature encounters, and atmospheric touches (<a href="soundoverlay.html#sound-effects">details</a>). Audio files are CC0 placeholders, not final</li>
+    <li><strong>Ambient audio</strong>: zone-based background music across 10 zones (forest, cave, house, water, rapids, loud, hades, mine, machinery, silence) with smooth crossfades between areas</li>
+    <li><strong>Sound effects</strong>: 16 one-shot audio triggers for key game events &mdash; puzzle moments, creature encounters, and atmospheric touches (<a href="soundoverlay.html">details</a>). Audio files are CC0 placeholders, not final</li>
     <li>The audio engine is a JavaScript overlay that detects room changes in the game output &mdash; it&rsquo;s independent of the Inform 7 source and could be applied to any version</li>
     <li>Inherits all v2 bug fixes and v1 content</li>
   </ul>

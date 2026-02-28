@@ -36,7 +36,7 @@ _site/             Assembled deploy directory (gitignored, built by CI)
 Compiler conventions, shared test framework, and reference docs live in the shared hub:
 
 ```
-C:\code\i7\
+C:\code\ifhub\
 ├── CLAUDE.md              ← Inform 7 conventions and compiler paths
 ├── tools/
 │   ├── regtest.py         ← Shared test runner
@@ -44,7 +44,7 @@ C:\code\i7\
 └── reference/             ← Syntax + formatting docs
 ```
 
-**Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\i7\CLAUDE.md` for CLI usage).
+**Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\ifhub\CLAUDE.md` for CLI usage).
 
 Any `story.ni` files found inside `versions/` (e.g., `versions/vN/story.ni`) are **frozen snapshots**. The current version is `story.ni` at the repo root — it is never published to the web directly but snapshotted into a numbered version when ready.
 
@@ -164,14 +164,14 @@ The **current version** (`story.ni` at the repo root) is the working copy where 
 **Updating the latest version** (routine — happens frequently):
 1. Make changes in `story.ni` (repo root)
 2. Build and test (see "Building the Game" and "Testing Policy" below)
-3. Run: `bash /c/code/i7/tools/snapshot.sh zork1 vN --update`
+3. Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
    (Or manually: copy `story.ni` → `versions/vN/story.ni`, base64-encode `.ulx` → `versions/vN/lib/parchment/zork1.ulx.js`)
 
 **Creating a new version** (vN+1):
 1. Finish all code changes in the current version
 2. Build and run tests (RegTest + walkthrough)
 3. Only after tests pass:
-   - Run: `bash /c/code/i7/tools/snapshot.sh zork1 vN+1`
+   - Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN+1`
    - Update `source.html` RAW_URL and sidebar header
    - Update `walkthrough.html` title/header/back link
 4. Update `web/index.html`: add new version entry
@@ -187,7 +187,7 @@ These do NOT need to happen after every edit. During active development, treat t
 
 ### Deployment
 
-GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from `web/` (site-level pages) + `versions/` (frozen snapshots), then deploys to GitHub Pages on push to `main`. Locally, run `bash /c/code/i7/tools/build-site.sh zork1` to assemble for preview.
+GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from `web/` (site-level pages) + `versions/` (frozen snapshots), then deploys to GitHub Pages on push to `main`. Locally, run `bash /c/code/ifhub/tools/build-site.sh zork1` to assemble for preview.
 
 - Landing page: `johnesco.github.io/zork1/`
 - Version N: `johnesco.github.io/zork1/vN/`
@@ -196,7 +196,7 @@ GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from `w
 
 Testing is a **project-wide process**, not a version feature. The same methodology applies to every version.
 
-All testing happens in `tests/` at the repo root. The test wrapper scripts delegate to the shared framework at `C:\code\i7\tools\testing\`. See `C:\code\i7\CLAUDE.md` for interpreter paths and framework details.
+All testing happens in `tests/` at the repo root. The test wrapper scripts delegate to the shared framework at `C:\code\ifhub\tools\testing\`. See `C:\code\ifhub\CLAUDE.md` for interpreter paths and framework details.
 
 ### Methodology
 - **Deterministic walkthroughs**: Seed-based RNG (`glulxe --rngseed N`) ensures reproducible runs. Golden seeds stored in `seeds.conf`.
@@ -209,7 +209,7 @@ Report failures, don't fix unless explicitly instructed. Test all versions when 
 
 ## Building the Game
 
-Building happens in this repo. See `C:\code\i7\CLAUDE.md` for compiler paths, build steps, and interpreter usage. Do NOT create `.inform/` IDE bundles in this repo.
+Building happens in this repo. See `C:\code\ifhub\CLAUDE.md` for compiler paths, build steps, and interpreter usage. Do NOT create `.inform/` IDE bundles in this repo.
 
 ZIL (v0) is compiled separately from `C:\code\zork1-zil\` using ZILF.
 

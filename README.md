@@ -40,12 +40,13 @@ The unmodified Infocom source code with a ZIL source browser, syntax highlightin
 story.ni           Inform 7 source (current working version)
 tests/             Test suites, walkthroughs, seed configs
 src/zil/           Original ZIL source files (read-only reference)
-web/               GitHub Pages site
-  index.html       Landing page with version history and engine selector
+web/               Site-level pages (landing, map, scenarios)
+versions/          Frozen version snapshots
   v0/              Original ZIL — source browser + playable game
   v1/              Inform 7 port — 1:1 translation
   v2/              Bug fixes and testing
   v3/              New features (ambient audio)
+_site/             Assembled deploy directory (gitignored)
 ```
 
 ## Building
