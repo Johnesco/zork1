@@ -21,7 +21,9 @@ zork1.ulx          Compiled output (gitignored — rebuild from story.ni)
 tests/             Test scripts, walkthroughs, regtest data
 src/zil/           Original ZIL source files (read-only, NEVER modify)
 src/sharpee/       Sharpee source files
-web/               Site-level pages (landing, map, scenarios)
+web/               Web player and site-level pages
+  play.html        Standard Parchment player for latest version (local dev entry point)
+  lib/parchment/   7 engine files + zork1.ulx.js (created by setup-web.sh)
   index.html       Landing page — project description, version links
 versions/          Frozen version snapshots
   v0/              Original ZIL — source browser + playable ZIL-compiled game
@@ -142,12 +144,18 @@ versions/vN/
 - **Per-version** (`versions/vN/source.html`) — Shows the frozen source for that version (fetches local `story.ni`)
 - **v0** (`versions/v0/index.html`) — ZIL source browser with annotations (already exists)
 
+### Standard Player (`web/play.html`)
+
+`web/play.html` is the standard Parchment player for the latest compiled version — the same pattern used by all other projects (sample, dracula, feverdream). Created by `compile.sh` / `setup-web.sh`. This is the **local development entry point**: `python -m http.server 8000 --directory projects/zork1/web` → open `play.html`.
+
 ### Landing Page (`web/index.html`)
 
 - Dark/parchment aesthetic matching the game player
+- "Play Latest Version" link at top pointing to `play.html`
 - Engine selector (Quixe/Parchment/Glulxe) with `localStorage` persistence
 - Reverse-chronological order: newest version at top, v0 at bottom
 - Each version entry shows: Play Online, Download Source, Browse Source buttons (where applicable)
+- Version links (`v0/`, `v1/`, etc.) resolve only in `_site/` after `build-site.sh` assembles versions — they won't work from `web/` alone
 
 ### Versioning Workflow
 
