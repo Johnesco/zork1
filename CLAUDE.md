@@ -21,10 +21,12 @@ zork1.ulx          Compiled output (gitignored — rebuild from story.ni)
 tests/             Test scripts, walkthroughs, regtest data
 src/zil/           Original ZIL source files (read-only, NEVER modify)
 src/sharpee/       Sharpee source files
-web/               GitHub Pages site deployed to johnesco.github.io/zork1/
+web/               Site-level pages (landing, map, scenarios)
   index.html       Landing page — project description, version links
+versions/          Frozen version snapshots
   v0/              Original ZIL — source browser + playable ZIL-compiled game
   v1/, v2/, ...    Inform 7 version archives (self-contained snapshots)
+_site/             Assembled deploy directory (gitignored, built by CI)
 ```
 
 ## Inform 7 Shared Tools (External)
@@ -32,7 +34,7 @@ web/               GitHub Pages site deployed to johnesco.github.io/zork1/
 Compiler conventions, shared test framework, and reference docs live in the shared hub:
 
 ```
-C:\code\i7\inform7\
+C:\code\i7\
 ├── CLAUDE.md              ← Inform 7 conventions and compiler paths
 ├── tools/
 │   ├── regtest.py         ← Shared test runner
@@ -40,9 +42,9 @@ C:\code\i7\inform7\
 └── reference/             ← Syntax + formatting docs
 ```
 
-**Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\i7\inform7\CLAUDE.md` for CLI usage).
+**Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\i7\CLAUDE.md` for CLI usage).
 
-Any `story.ni` files found inside `web/` (e.g., `web/vN/story.ni`) are **frozen snapshots**. The current version is `story.ni` at the repo root — it is never published to the web directly but snapshotted into a numbered version when ready.
+Any `story.ni` files found inside `versions/` (e.g., `versions/vN/story.ni`) are **frozen snapshots**. The current version is `story.ni` at the repo root — it is never published to the web directly but snapshotted into a numbered version when ready.
 
 ## Version Philosophy
 
@@ -72,9 +74,9 @@ This means each version is always a strict superset of the one below it: v2 cont
 Once a version is published, it is **frozen**. All new work goes into the latest version only. Do not edit past versions unless explicitly asked.
 
 In rare cases a past version may be patched (e.g., a translation bug discovered in v1). If that happens:
-1. Edit that version's own `web/vN/story.ni` directly
+1. Edit that version's own `versions/vN/story.ni` directly
 2. Compile from that source to produce a new `.ulx`
-3. Base64-encode the `.ulx` into `web/vN/zork1.ulx.js`
+3. Base64-encode the `.ulx` into `versions/vN/lib/parchment/zork1.ulx.js`
 4. Propagate the same fix upward to all later versions and recompile each
 
 When possible, every version should provide three buttons:
@@ -110,7 +112,7 @@ Audio architecture: the engine (`ambient-audio.js`) is a generic JavaScript over
 
 **v0** (ZIL):
 ```
-web/v0/
+versions/v0/
   index.html            ZIL source browser with syntax highlighting and annotations
   parchment.html        Parchment player page (plays ZIL-compiled .z3)
   zork1.z3.js           Compiled ZIL game (base64 Z-machine, built from original ZIL)
@@ -121,7 +123,7 @@ web/v0/
 
 **v1+** (Inform 7):
 ```
-web/vN/
+versions/vN/
   index.html            Quixe player page
   parchment.html        Parchment player page
   glulxe.html           Glulxe (WASM) player page
@@ -137,8 +139,8 @@ web/vN/
 
 ### Source Browsers
 
-- **Per-version** (`web/vN/source.html`) — Shows the frozen source for that version (fetches local `story.ni`)
-- **v0** (`web/v0/index.html`) — ZIL source browser with annotations (already exists)
+- **Per-version** (`versions/vN/source.html`) — Shows the frozen source for that version (fetches local `story.ni`)
+- **v0** (`versions/v0/index.html`) — ZIL source browser with annotations (already exists)
 
 ### Landing Page (`web/index.html`)
 
@@ -154,33 +156,30 @@ The **current version** (`story.ni` at the repo root) is the working copy where 
 **Updating the latest version** (routine — happens frequently):
 1. Make changes in `story.ni` (repo root)
 2. Build and test (see "Building the Game" and "Testing Policy" below)
-3. Copy `story.ni` → `web/vN/story.ni`
-4. Base64-encode `.ulx` → `web/vN/zork1.ulx.js`
+3. Run: `bash /c/code/i7/tools/snapshot.sh zork1 vN --update`
+   (Or manually: copy `story.ni` → `versions/vN/story.ni`, base64-encode `.ulx` → `versions/vN/lib/parchment/zork1.ulx.js`)
 
 **Creating a new version** (vN+1):
 1. Finish all code changes in the current version
 2. Build and run tests (RegTest + walkthrough)
 3. Only after tests pass:
-   - Copy `story.ni` → `web/vN+1/story.ni`
-   - Base64-encode `.ulx` → `web/vN+1/zork1.ulx.js`
-   - Copy `source.html` from the previous version, update `RAW_URL` and sidebar header
-   - Copy `walkthrough.html` from the previous version, update title/header/back link
-   - Copy walkthrough data files from `tests/inform7/`
-   - Copy player pages and `lib/` from previous version (or rebuild)
+   - Run: `bash /c/code/i7/tools/snapshot.sh zork1 vN+1`
+   - Update `source.html` RAW_URL and sidebar header
+   - Update `walkthrough.html` title/header/back link
 4. Update `web/index.html`: add new version entry
 
-**Critical rule**: Every `web/vN/` (v1+) must contain a `story.ni` and `zork1.ulx.js` compiled from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
+**Critical rule**: Every `versions/vN/` (v1+) must contain a `story.ni` and `zork1.ulx.js` compiled from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
 
-**Cascade rule**: When any `story.ni` is modified (repo root or `web/vN/`), three artifacts eventually need updating for each affected version:
-1. `web/vN/story.ni` — frozen snapshot synced from source
-2. `web/vN/zork1.ulx.js` — recompiled and base64-encoded from that `story.ni`
-3. `web/vN/walkthrough_output.txt` — regenerated transcript from that binary
+**Cascade rule**: When any `story.ni` is modified (repo root or `versions/vN/`), three artifacts eventually need updating for each affected version:
+1. `versions/vN/story.ni` — frozen snapshot synced from source
+2. `versions/vN/lib/parchment/zork1.ulx.js` — recompiled and base64-encoded from that `story.ni`
+3. `versions/vN/walkthrough_output.txt` — regenerated transcript from that binary
 
 These do NOT need to happen after every edit. During active development, treat the cascade as a **known outstanding task** — note that artifacts are stale and batch the rebuild once changes stabilize. Do not silently forget it.
 
 ### Deployment
 
-GitHub Actions (`.github/workflows/deploy-pages.yml`) deploys the entire `web/` directory to GitHub Pages on push to `main`. No build step — the `web/` directory is uploaded as-is.
+GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from `web/` (site-level pages) + `versions/` (frozen snapshots), then deploys to GitHub Pages on push to `main`. Locally, run `bash /c/code/i7/tools/build-site.sh zork1` to assemble for preview.
 
 - Landing page: `johnesco.github.io/zork1/`
 - Version N: `johnesco.github.io/zork1/vN/`
@@ -189,7 +188,7 @@ GitHub Actions (`.github/workflows/deploy-pages.yml`) deploys the entire `web/` 
 
 Testing is a **project-wide process**, not a version feature. The same methodology applies to every version.
 
-All testing happens in `tests/` at the repo root. The test wrapper scripts delegate to the shared framework at `C:\code\i7\inform7\tools\testing\`. See `C:\code\i7\inform7\CLAUDE.md` for interpreter paths and framework details.
+All testing happens in `tests/` at the repo root. The test wrapper scripts delegate to the shared framework at `C:\code\i7\tools\testing\`. See `C:\code\i7\CLAUDE.md` for interpreter paths and framework details.
 
 ### Methodology
 - **Deterministic walkthroughs**: Seed-based RNG (`glulxe --rngseed N`) ensures reproducible runs. Golden seeds stored in `seeds.conf`.
@@ -202,7 +201,7 @@ Report failures, don't fix unless explicitly instructed. Test all versions when 
 
 ## Building the Game
 
-Building happens in this repo. See `C:\code\i7\inform7\CLAUDE.md` for compiler paths, build steps, and interpreter usage. Do NOT create `.inform/` IDE bundles in this repo.
+Building happens in this repo. See `C:\code\i7\CLAUDE.md` for compiler paths, build steps, and interpreter usage. Do NOT create `.inform/` IDE bundles in this repo.
 
 ZIL (v0) is compiled separately from `C:\code\zork1-zil\` using ZILF.
 

@@ -23,8 +23,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp -r web/* _site/
+          if [ -d versions ]; then
+            for v in versions/*/; do
+              cp -r "$v" "_site/$(basename "$v")"
+            done
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: web
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
