@@ -485,16 +485,16 @@ Instead of going north in South-of-House:
 
 Section 4 - Forest Rooms
 
-Forest1 is a room. The printed name of Forest1 is "Forest". "This is a forest, with trees in all directions. To the east, there appears to be sunlight."
+Forest1 is a room. The printed name of Forest1 is "Forest". "This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss."
 Forest1 is in Forest Area.
 Forest1 is west of West-of-House.
 
-Forest2 is a room. The printed name of Forest2 is "Forest". "This is a dimly lit forest, with large trees all around."
+Forest2 is a room. The printed name of Forest2 is "Forest". "This is a dimly lit forest, with large trees all around. The canopy here is thick, allowing only thin shafts of light to reach the forest floor. A carpet of pine needles muffles your footsteps."
 Forest2 is in Forest Area.
 
 Mountains is a room. The printed name of Mountains is "Forest". "The forest thins out, revealing impassable mountains."
 
-Forest3 is a room. The printed name of Forest3 is "Forest". "This is a dimly lit forest, with large trees all around."
+Forest3 is a room. The printed name of Forest3 is "Forest". "This is a dimly lit forest, with large trees all around. Gnarled roots break through the soil underfoot, and the air is heavy with the smell of wet bark. Somewhere nearby, water drips steadily from the leaves."
 Forest3 is in Forest Area.
 Forest3 is south of South-of-House.
 Northwest of Forest3 is South-of-House.
@@ -843,7 +843,7 @@ Instead of eating the clove of garlic:
 
 Section 2 - Attic
 
-Attic is a room. "This is the attic. The only exit is a stairway leading down."
+Attic is a room. "This is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down."
 Attic is in House Interior. Attic is a dark room.
 
 The attic table is a supporter in Attic. The attic table is scenery.
@@ -2921,7 +2921,7 @@ Northeast of Sandy Beach is Sandy Cave. South of Sandy Beach is Shore.
 The shovel is in Sandy Beach. Understand "shovel" and "tool" as the shovel.
 The description of the shovel is "It's a sturdy shovel."
 
-Sandy Cave is a room. "This is a sand-filled cave whose exit is to the southwest."
+Sandy Cave is a room. "This is a small, low-ceilinged cave nearly filled with fine white sand. The walls are rough limestone, worn smooth in places by ancient water. The only exit is a narrow passage to the southwest."
 Sandy Cave is in the Underground.
 Southwest of Sandy Cave is Sandy Beach.
 
