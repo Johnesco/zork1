@@ -231,7 +231,7 @@ ZIL (v0) is compiled separately from `C:\code\zork1-zil\` using ZILF.
 | Role | Owner | Board Columns | Key Rule |
 |------|-------|---------------|----------|
 | **PO** (Product Owner) | Human | Backlog, Done | Decides priority, accepts work |
-| **BA** (Business Analyst) | Human or Claude | Refining, Ready | Scopes tickets, writes acceptance criteria |
+| **BA** (Business Analyst) | Human or Claude | Backlog, Ready | Scopes tickets, writes acceptance criteria |
 | **Dev** (Developer) | Claude (primary) | In Progress | Writes code, follows conventions |
 | **Documenter** | Claude (bundled with Dev) | In Progress | Updates CLAUDE.md, README |
 | **QA** (Quality Assurance) | Human or Claude | **Verify** | Verifies completed work |
@@ -273,9 +273,9 @@ Every change — feature, bug fix, refactor, or data update — follows this seq
 
 All work is tracked in **GitHub Issues** with a **GitHub Projects** kanban board (Project #2).
 
-- **Labels** = Type (`feature`, `bug`, `chore`, `docs`) + Area (`area:combat`, `area:objects`, etc.) + Priority (`priority:high`, `priority:low`) + Version (`v1`, `v2`)
-- **Board columns**: Backlog → Refining → Ready → In Progress → Verify → Done
-- **Board automations**: Item added → Backlog; Item closed → Done; Item reopened → In Progress
+- **Labels** = Type (`feature`, `bug`, `task`, `spike`, `docs`) + Area (`area:combat`, `area:objects`, etc.) + Priority (`priority:high`, `priority:low`) + Version (`v1`, `v2`, `v4`) + Resolution (`resolution:wontfix`, `resolution:duplicate`, `resolution:cannot-reproduce`, `resolution:by-design`, `resolution:stale`, `resolution:superseded`)
+- **Board columns**: Backlog → Ready → In Progress → Verify → Done
+- **Board automations**: Item added → Backlog; Item closed → Done; Item reopened → In Progress; PR merged → Done
 
 ### Commit Convention
 
@@ -296,9 +296,73 @@ Where `XX` is the GitHub Issue number. Use `Fixes #XX` in PR body for auto-close
 | `feature/` | New features |
 | `fix/` | Bug fixes |
 | `docs/` | Documentation changes |
-| `chore/` | Refactors, tooling, infrastructure |
+| `task/` | Refactors, tooling, infrastructure |
+| `spike/` | Research, investigation |
 
 Solo work can commit to `main` directly. Branch when changes need review or span multiple sessions.
+
+### Definition of Done
+
+Exit criteria for moving an issue from **In Progress** to **Verify**:
+
+**Feature:**
+- [ ] Code complete per acceptance criteria
+- [ ] RegTest / walkthrough still passes
+- [ ] Follows existing patterns
+- [ ] CLAUDE.md updated (if architecture changed)
+- [ ] Change propagated to all later versions (if applicable)
+- [ ] Commits reference ticket (`#XX`)
+
+**Bug Fix:**
+- [ ] Bug fixed — reported behavior no longer occurs
+- [ ] Root cause understood
+- [ ] RegTest / walkthrough still passes
+- [ ] Fix propagated to all later versions
+- [ ] Commits reference ticket (`#XX`)
+
+**Documentation:**
+- [ ] Content accurate and matches current code
+- [ ] Consistent across CLAUDE.md, README, web/index.html
+- [ ] No broken links or references
+- [ ] Commits reference ticket (`#XX`)
+
+**Task:**
+- [ ] Change implemented, no regressions
+- [ ] No unintended behavior changes
+- [ ] Documentation updated (if applicable)
+- [ ] Commits reference ticket (`#XX`)
+
+**Spike:**
+- [ ] Question answered (or marked unanswerable)
+- [ ] Findings documented in issue comments
+- [ ] Recommendation provided with tradeoffs
+- [ ] Follow-up tickets created (if any)
+
+### Bug Severity & Priority
+
+| Severity | Description | Default Priority |
+|----------|-------------|------------------|
+| **Critical** | Game unwinnable or crashes | `priority:high` — fix immediately |
+| **High** | Puzzle or mechanic broken, no workaround | `priority:high` — fix before new features |
+| **Medium** | Works but with issues (wrong text, minor logic) | *(no label)* — normal backlog order |
+| **Low** | Cosmetic or minor text difference | `priority:low` — fix when convenient |
+
+PO can override: a typo on the landing page may be `priority:high` despite low severity.
+
+### Resolution Labels
+
+When closing an issue without completing the work, apply a resolution label:
+
+| Label | When to use |
+|-------|-------------|
+| `resolution:wontfix` | Deliberately declined |
+| `resolution:duplicate` | Already covered elsewhere |
+| `resolution:cannot-reproduce` | Bug can't be replicated |
+| `resolution:by-design` | Reported behavior is intentional |
+| `resolution:stale` | Issue went inactive |
+| `resolution:superseded` | Replaced by a different ticket |
+
+No resolution label = completed normally.
 
 <!-- ============================================================
      END SDLC WORKFLOW

@@ -1,6 +1,6 @@
-name: Chore
-description: Refactors, tooling, infrastructure, or research tasks
-labels: ["chore"]
+name: Task
+description: Refactors, dependency updates, tooling, or infrastructure changes
+labels: ["task"]
 body:
   - type: textarea
     id: description

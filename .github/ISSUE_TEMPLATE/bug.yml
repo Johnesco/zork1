@@ -51,6 +51,7 @@ body:
         - v1
         - v2
         - v3
+        - v4
         - All versions
   - type: textarea
     id: done

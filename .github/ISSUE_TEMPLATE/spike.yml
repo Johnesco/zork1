@@ -1,0 +1,31 @@
+name: Spike / Research
+description: Research, investigation, or proof-of-concept to answer a question
+labels: ["spike"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question to Answer
+      description: What do we need to learn? Be specific about what decision this will inform.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Why do we need this answered now? What's blocked without it?
+  - type: textarea
+    id: timebox
+    attributes:
+      label: Timebox
+      description: How much time should be spent before reporting back, even if incomplete?
+      placeholder: "e.g., 2 hours, 1 day"
+  - type: textarea
+    id: done
+    attributes:
+      label: Definition of Done
+      value: |
+        - [ ] Question answered (or explicitly marked unanswerable with current info)
+        - [ ] Findings documented in issue comments or linked doc
+        - [ ] Recommendation provided with tradeoffs
+        - [ ] Follow-up tickets created (if any)

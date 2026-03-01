@@ -48,7 +48,7 @@ body:
       label: Target Version
       description: Which version does this apply to?
       options:
-        - v3 (current)
+        - v4 (current)
         - Future version
   - type: textarea
     id: doc-impact
