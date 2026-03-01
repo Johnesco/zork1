@@ -910,6 +910,14 @@ The old wooden door is scenery in Living Room. Understand "door" and "wooden" an
 The description of the old wooden door is "[if the magic-flag is true]The door has a cyclops-shaped opening in it.[otherwise]The engravings translate to 'This space intentionally left blank.'[end if]".
 
 Instead of opening the old wooden door:
+	if the magic-flag is true:
+		say "The door is already open -- the cyclops saw to that.";
+	otherwise:
+		say "The door is nailed shut."
+
+Instead of going west in Living Room:
+	if the magic-flag is true:
+		continue the action;
 	say "The door is nailed shut."
 
 Section 4 - Rug and Trap Door Puzzle

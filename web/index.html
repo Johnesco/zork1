@@ -373,7 +373,11 @@ footer a {
     hidden to appear in room listings anyway.
     A 6-phase audit of every ZIL TELL response revealed 377 missing text outputs &mdash;
     the game was playable but was only saying about half of what it should.
-    And the thief, despite appearing to work, never actually roamed or stole anything.</p>
+    And the thief, despite appearing to work, never actually roamed or stole anything.
+    Inform 7&rsquo;s auto-bidirectional map connections bit us too &mdash;
+    <code>East of Strange Passage is Living Room</code> silently created a west exit
+    from the Living Room, letting players walk through a door that&rsquo;s supposed
+    to be nailed shut until the cyclops flees.</p>
   <p style="font-size:0.9em; color:#998866; margin-bottom:12px;">
     For a deeper look at what made this translation hard, see
     <a href="translation-challenges.html">Translation Challenges: ZIL to Inform&nbsp;7</a>.
@@ -386,6 +390,7 @@ footer a {
     <li>Dead player ghost state &mdash; explore as spirit with dimly-lit rooms and prayer resurrection (<a href="https://github.com/Johnesco/zork1/issues/45">#45</a>)</li>
     <li>Full text parity: room descriptions (<a href="https://github.com/Johnesco/zork1/issues/46">#46</a>), object responses (<a href="https://github.com/Johnesco/zork1/issues/47">#47</a>), verb handlers (<a href="https://github.com/Johnesco/zork1/issues/48">#48</a>), scenery (<a href="https://github.com/Johnesco/zork1/issues/52">#52</a>), combat messages (<a href="https://github.com/Johnesco/zork1/issues/58">#58</a>)</li>
     <li>Sword glow scans adjacent rooms and detects all three villains, matching ZIL <code>INFESTED?</code> logic (<a href="https://github.com/Johnesco/zork1/issues/62">#62</a>)</li>
+    <li>Living Room west exit blocked until cyclops flees &mdash; Inform 7&rsquo;s auto-bidirectional map had silently bypassed the nailed door (<a href="https://github.com/Johnesco/zork1/issues/124">#124</a>)</li>
   </ul>
   <div class="version-links">
     <a data-play-version="v1" href="v1/">Play</a>
