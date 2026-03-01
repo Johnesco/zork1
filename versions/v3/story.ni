@@ -2072,7 +2072,7 @@ The description of Dam-Room is "You are standing on the top of Flood Control Dam
 South of Dam-Room is Deep Canyon. Down from Dam-Room is Dam-Base. East of Dam-Room is Dam-Base. North of Dam-Room is Dam-Lobby.
 West of Dam-Room is Reservoir-South.
 
-The dam is scenery in Dam-Room. Understand "dam" and "gate" and "gates" and "fcd" as the dam.
+The dam is scenery in Dam-Room. Understand "dam" and "gate" and "gates" and "fcd" and "fcd#3" and "fcd3" as the dam.
 The description of the dam is "This is Flood Control Dam #3, quite an impressive engineering feat."
 Instead of opening or closing the dam: say "Sounds reasonable, but this isn't how."
 Instead of plugging the dam with something:

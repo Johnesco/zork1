@@ -12,7 +12,7 @@ ZIL source released under the MIT License by Activision
 
 Zork I: The Great Underground Empire
 An Interactive Fiction by John Escobedo (after Infocom)
-Release 1 / Serial number 260225 / Inform 7 v10.1.2 / D
+Release 1 / Serial number 260301 / Inform 7 v10.1.2 / D
 
 West of House
 You are standing in an open field west of a white house, with a boarded front door.
