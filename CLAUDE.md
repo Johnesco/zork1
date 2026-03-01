@@ -106,7 +106,9 @@ This is also where the testing methodology was established — it now underpins 
 
 Where it intentionally diverges from ZIL-faithful behavior and starts leaning into what Inform 7 does best. v1 and v2 are bound to the original; v3 and beyond are not. The first enhancement is ambient audio — zone-based background music and sound effects that respond to room changes. Future additions may include AI-powered synonym expansion, richer world modeling, and new content that takes advantage of Inform 7's natural-language authoring.
 
-Audio architecture: the engine (`ambient-audio.js`) is a generic JavaScript overlay using MutationObserver for room detection. The zone map (room-to-audio assignments) is version-specific since it depends on room names in the game output.
+Audio architecture: two layers, both using MutationObserver on the Parchment DOM.
+- **Ambient audio** (`ambient-audio.js`): Watches `.GridWindow` for room name changes, crossfades zone-based background loops. Zone map is version-specific.
+- **Sound effects** (`sound-engine.js` + `sound-config.js`): Shared engine from `ifhub/tools/web/sound-engine.js`. Matches text patterns in `.BufferWindow` to trigger one-shot effects. `sound-config.js` defines all 16 triggers (bird, mailbox, trapdoor, bell, etc.).
 
 ## Web Version Architecture
 
