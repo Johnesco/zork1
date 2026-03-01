@@ -102,13 +102,17 @@ The first version that changes the game rather than just translating it — but 
 
 This is also where the testing methodology was established — it now underpins all development across every version. Each fix is tracked with a GitHub issue noting what was changed and why. Changes propagate to all higher versions.
 
-### v3 — Making It My Own (Current)
+### v3 — Making It My Own
 
-Where it intentionally diverges from ZIL-faithful behavior and starts leaning into what Inform 7 does best. v1 and v2 are bound to the original; v3 and beyond are not. The first enhancement is ambient audio — zone-based background music and sound effects that respond to room changes. Future additions may include AI-powered synonym expansion, richer world modeling, and new content that takes advantage of Inform 7's natural-language authoring.
+Where it intentionally diverges from ZIL-faithful behavior and starts leaning into what Inform 7 does best. v1 and v2 are bound to the original; v3 and beyond are not. The first enhancement is ambient audio — zone-based background music and sound effects that respond to room changes.
 
 Audio architecture: two layers, both using MutationObserver on the Parchment DOM.
 - **Ambient audio** (`ambient-audio.js`): Watches `.GridWindow` for room name changes, crossfades zone-based background loops. Zone map is version-specific.
 - **Sound effects** (`sound-engine.js` + `sound-config.js`): Shared engine from `ifhub/tools/web/sound-engine.js`. Matches text patterns in `.BufferWindow` to trigger one-shot effects. `sound-config.js` defines all 16 triggers (bird, mailbox, trapdoor, bell, etc.).
+
+### v4 — Modern IF (Current)
+
+Applying modern interactive fiction writing best practices for fluid, fun gameplay. Focuses on richer parser responses, smoother player interactions, better default messages, and more helpful feedback. Inherits all v3 audio enhancements.
 
 ## Web Version Architecture
 
@@ -161,7 +165,7 @@ versions/vN/
 
 ### Versioning Workflow
 
-The **current version** (`story.ni` at the repo root) is the working copy where all new development happens. It is snapshotted into numbered versions when ready. The **latest numbered version** (currently v3) may be updated many times — it is republished from the current version as development progresses.
+The **current version** (`story.ni` at the repo root) is the working copy where all new development happens. It is snapshotted into numbered versions when ready. The **latest numbered version** (currently v4) may be updated many times — it is republished from the current version as development progresses.
 
 **Updating the latest version** (routine — happens frequently):
 1. Make changes in `story.ni` (repo root)

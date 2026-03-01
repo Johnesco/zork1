@@ -1,0 +1,627 @@
+## Getting Started -- West of House
+
+# You begin in an open field west of a white house. Head north to find the jeweled egg.
+
+> n
+> n
+> u
+
+# Up the tree is a small bird's nest containing a jeweled egg — the first treasure.
+
+> take egg
+> d
+> s
+> e
+
+## Entering the House
+
+# The front door is boarded up. Circle around to find a window you can open.
+
+> open window
+> w
+
+# Inside the kitchen. Take the sack — it has food and water for later.
+
+> take sack
+> w
+
+# The living room has the elvish sword, the brass lantern, and the trophy case where you'll deposit all 19 treasures.
+
+> take sword
+> take lantern
+> put egg in case
+> e
+
+## Exploring the House
+
+# Turn on the lantern and grab the rope from the attic.
+
+> turn on lantern
+> u
+> take rope
+> d
+
+# Turn off the lantern to conserve fuel above ground. The sack has garlic — essential for the bat cave later.
+
+> turn off lantern
+> open sack
+> take garlic
+
+## Into the Cellar
+
+# Under the rug in the living room is a hidden trap door.
+
+> w
+> move rug
+> open trap door
+> turn on lantern
+> d
+
+# The trap door slams shut behind you. You're now underground. Your sword begins to glow with a faint blue glow — a monster is nearby.
+
+> s
+> e
+
+# The sword stops glowing as you move away from the troll. The Gallery has a valuable painting.
+
+> take painting
+> w
+> n
+
+## The Troll
+
+# Back in the Cellar, the sword glows again. The troll blocks the way north. As you enter the Troll Room, the sword glows very brightly. Attack repeatedly — combat is random, so the number of hits needed varies.
+
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> drop sword
+
+## Echo Room and Dam
+
+# East of the troll, through the passages, is the Echo Room. Say "echo" to claim the platinum bar.
+
+> e
+> e
+> e
+> echo
+> take platinum bar
+> w
+
+# Navigate north toward the Flood Control Dam.
+
+> n
+> n
+> ne
+> e
+> n
+
+# The Dam Lobby has a matchbook — take it for the exorcism later.
+
+> take matchbook
+> n
+
+# The Maintenance Room has the dam controls. Press the yellow button to power up, then grab tools.
+
+> press yellow button
+> take wrench
+> take screwdriver
+> s
+> s
+
+# Turn the bolt to open the sluice gates. This starts draining the reservoir (takes 8 turns).
+
+> turn bolt
+> drop wrench
+
+## Journey to the Cyclops Room
+
+# Navigate through the underground passages to reach the Cyclops Room.
+
+> w
+> sw
+> sw
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+
+# Say the name of the Greek hero who blinded the Cyclops's ancestor.
+
+> odysseus
+
+## Return to the House — First Drop-off
+
+# The Cyclops flees, revealing a passage east into the living room.
+
+> e
+> e
+> turn off lantern
+> put painting in case
+> put platinum bar in case
+
+## Second Underground Trip — Dome and Exorcism
+
+# Head back underground for the torch, bell, and exorcism ritual.
+
+> open trap door
+> turn on lantern
+> d
+> n
+> e
+> e
+> se
+> e
+
+# Tie the rope to the railing at the Dome Room to climb down.
+
+> tie rope to railing
+> d
+
+# Take the ivory torch — both a treasure and a backup light source.
+
+> take torch
+
+# Turn off the lantern to conserve fuel while carrying the torch.
+
+> turn off lantern
+> s
+
+# Take the brass bell for the exorcism.
+
+> take bell
+
+# South from the Temple leads to the Egyptian Room and the coffin.
+
+> d
+
+# The coffin contains a golden sceptre.
+
+> take coffin
+> open coffin
+> take sceptre
+> u
+> s
+
+# The Altar Room has the candles and black book needed for the exorcism.
+
+> take candles
+> take book
+
+## The Exorcism — Entrance to Hades
+
+# Descend to the entrance of Hades.
+
+> d
+> d
+
+# The ritual: ring the bell (it becomes red hot — you drop it), light a match, light the candles, then read the book to banish the spirits.
+
+> ring bell
+> take candles
+> light match
+> light candles with match
+> read book
+> drop book
+> drop candles
+
+# With the spirits banished, enter the Land of the Dead.
+
+> s
+
+# The crystal skull is here.
+
+> take skull
+
+## Return to the House — Second Drop-off
+
+> n
+> u
+> n
+> n
+> n
+> w
+> w
+> s
+> u
+
+# Store the torch, skull, and coffin in the trophy case.
+
+> put torch in case
+> put skull in case
+> put coffin in case
+
+## Third Trip — Rainbow and Pot of Gold
+
+> e
+> e
+> e
+> se
+> d
+> d
+> n
+
+# Wave the sceptre at the rainbow to solidify it and reveal the pot of gold.
+
+> wave sceptre
+> take pot of gold
+
+# Navigate back up through the canyon.
+
+> sw
+> u
+> u
+> nw
+> w
+> w
+> w
+
+# Store the pot of gold and sceptre. Take the torch back — you'll need it in the mine.
+
+> put pot of gold in case
+> put sceptre in case
+> take torch from case
+
+## Fourth Trip — Reservoir and Mine
+
+# Head to the reservoir area (now drained from opening the dam).
+
+> d
+> n
+> e
+> n
+> ne
+
+# Through the reservoir to the north side.
+
+> n
+> take trunk
+> n
+> take pump
+> n
+> take trident
+
+# Continue north through the underground passages.
+
+> n
+> n
+> n
+
+# West to the Jade Room area.
+
+> w
+> n
+> w
+> n
+
+# The jade figurine is here.
+
+> take figurine
+> e
+
+# The Shaft Room has a basket on a chain. Put items in it to send down.
+
+> turn on lantern
+> put torch in basket
+> n
+
+# Head into the mine.
+
+> d
+
+# The sapphire bracelet is here.
+
+> take bracelet
+> e
+
+# Navigate the mine passages.
+
+> ne
+> se
+> sw
+> d
+> d
+
+# The coal room. Coal is the key ingredient for making a diamond.
+
+> s
+> take coal
+> n
+> u
+> u
+> n
+> e
+> s
+
+# Go through the slide back up.
+
+> n
+> u
+
+# Back at the Shaft Room. Put coal in the basket and lower it.
+
+> s
+> put coal in basket
+> lower basket
+
+# Go back down through the mine to the bottom of the shaft.
+
+> n
+> d
+> e
+> ne
+> se
+> sw
+> d
+> d
+> w
+
+# Drop everything at the bottom — the squeeze is tight.
+
+> drop all
+
+## The Coal-to-Diamond Machine
+
+> w
+
+# Take the torch and coal from the basket.
+
+> take torch
+> take coal
+> s
+
+# Put coal in the machine, close it, and turn the switch to create a diamond.
+
+> open lid
+> put coal in lid
+> close lid
+> turn on switch
+> open lid
+> take diamond
+
+# Send the diamond and torch back up.
+
+> n
+> put diamond in basket
+> put torch in basket
+> raise basket
+
+# Pick up your dropped items and climb back up.
+
+> e
+> take all
+> e
+> u
+> u
+> n
+> e
+> s
+
+# Slide up to the Shaft Room.
+
+> n
+> u
+
+# Take the diamond and torch from the basket.
+
+> s
+> take diamond
+> take torch
+
+## Return to the House — Major Drop-off
+
+> turn off lantern
+> w
+> s
+> e
+> s
+> d
+> u
+
+# Store all the treasures from this trip.
+
+> put trunk in case
+> put trident in case
+> put figurine in case
+> put bracelet in case
+> put diamond in case
+> put torch in case
+
+## Fifth Trip — The Boat and River
+
+> turn on lantern
+> d
+> n
+> e
+> n
+> ne
+> e
+> d
+
+# Inflate the boat with the pump.
+
+> inflate plastic
+> drop pump
+
+# Push off and ride the current downstream. Wait for the river to carry you.
+
+> launch
+> turn off lantern
+> wait
+> wait
+> wait
+> wait
+> wait
+> wait
+> wait
+> wait
+> wait
+> wait
+
+# Grab the buoy as it floats past.
+
+> take buoy
+> east
+
+## Shore and Sandy Beach
+
+# Get out of the boat.
+
+> exit
+
+# The buoy contains an emerald.
+
+> open buoy
+> take emerald
+
+# Take the shovel and head northeast to the sandy beach.
+
+> take shovel
+> ne
+
+# Dig repeatedly in the sand to find the scarab.
+
+> dig sand
+> dig sand
+> dig sand
+> dig sand
+> take scarab
+> drop shovel
+
+## The Long Walk Back
+
+> sw
+> s
+> s
+> w
+> w
+> sw
+> u
+> u
+> nw
+> w
+> w
+> w
+
+# Store the emerald and scarab. Take the egg back — the thief will fix it.
+
+> put emerald in case
+> put scarab in case
+> take egg from case
+
+## Sixth Trip — The Thief's Lair
+
+> turn on lantern
+> d
+> n
+
+# The dead troll's axe is here.
+
+> take axe
+> w
+> s
+> e
+> u
+
+# The Bank has ancient coins.
+
+> take coins
+> sw
+> e
+> s
+> se
+
+# Climb to the Thief's Lair. Drop the garlic so the thief appears.
+
+> u
+> drop garlic
+
+# Wait for the thief to arrive, then fight him.
+
+> wait
+> wait
+> wait
+> wait
+> wait
+> wait
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> attack thief
+> drop axe
+
+# With the thief defeated, collect the treasures. The canary mechanism in the egg is now repaired.
+
+> take canary
+> take chalice
+> take egg
+
+## Endgame — Final Treasures
+
+> d
+> e
+> e
+> turn off lantern
+> put coins in case
+> put chalice in case
+
+# Head to the forest to wind the canary.
+
+> e
+> e
+> n
+> n
+> wind canary
+
+# The canary sings, and a songbird drops a golden bauble.
+
+> take bauble
+> s
+> s
+> w
+> w
+
+# Place the final treasures in the trophy case.
+
+> put egg in case
+> put canary in case
+> put bauble in case
+
+# With all 350 points, the map appears.
+
+> look
+> take map
+
+## Into the Barrow
+
+# Follow the map to the Stone Barrow — the entrance to Zork II.
+
+> e
+> e
+> n
+> w
+> sw
+> enter barrow

@@ -1,0 +1,438 @@
+n
+n
+u
+take egg
+d
+s
+e
+open window
+w
+take sack
+take bottle
+w
+take sword
+take lantern
+open case
+put egg in case
+e
+turn on lantern
+u
+take rope
+d
+open sack
+take garlic
+w
+move rug
+open trap door
+d
+s
+drop sack
+drop bottle
+drop rope
+e
+take painting
+w
+n
+n
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+drop sword
+e
+e
+e
+echo
+take platinum bar
+w
+n
+ne
+e
+n
+take matchbook
+n
+press yellow button
+take wrench
+take screwdriver
+s
+s
+turn bolt
+drop wrench
+s
+sw
+s
+w
+w
+w
+s
+e
+u
+sw
+e
+s
+se
+odysseus
+e
+e
+turn off lantern
+put painting in case
+put platinum bar in case
+turn on lantern
+open trap door
+d
+s
+take rope
+n
+n
+e
+e
+se
+e
+tie rope to railing
+d
+take torch
+s
+take bell
+s
+take book
+take candles
+d
+d
+ring bell
+take candles
+light match
+light candles with match
+read book
+drop book
+drop candles
+s
+take skull
+n
+u
+n
+n
+n
+w
+w
+w
+s
+e
+u
+sw
+e
+s
+se
+e
+e
+turn off lantern
+put torch in case
+put skull in case
+turn on lantern
+open trap door
+d
+n
+e
+e
+se
+e
+d
+s
+d
+take coffin
+open coffin
+take sceptre
+u
+s
+pray
+turn off lantern
+drop lantern
+drop screwdriver
+s
+n
+e
+d
+d
+n
+wave sceptre
+take pot of gold
+sw
+u
+u
+nw
+s
+w
+take lantern
+e
+s
+e
+w
+w
+put coffin in case
+put sceptre in case
+put pot of gold in case
+turn on lantern
+open trap door
+d
+n
+e
+e
+n
+ne
+nw
+n
+n
+take pump
+n
+take trident
+s
+s
+take trunk
+s
+se
+sw
+s
+w
+w
+w
+s
+e
+u
+sw
+e
+s
+se
+e
+e
+turn off lantern
+put trunk in case
+put trident in case
+e
+e
+nw
+n
+w
+take screwdriver
+e
+s
+e
+w
+w
+take torch from case
+turn on lantern
+open trap door
+d
+n
+e
+e
+s
+s
+rub mirror
+n
+w
+n
+w
+n
+take jade
+e
+put torch in basket
+put screwdriver in basket
+n
+d
+take bracelet
+e
+ne
+se
+sw
+d
+d
+s
+take coal
+n
+u
+u
+n
+e
+s
+n
+u
+s
+put coal in basket
+lower basket
+n
+d
+e
+ne
+se
+sw
+d
+d
+w
+drop lantern
+drop jade
+drop bracelet
+drop pump
+w
+take torch
+take coal
+take screwdriver
+s
+open lid
+put coal in machine
+close lid
+turn on switch
+drop screwdriver
+open lid
+take diamond
+n
+put diamond in basket
+put torch in basket
+raise basket
+e
+take lantern
+take jade
+take bracelet
+take pump
+e
+u
+u
+n
+e
+s
+n
+u
+s
+take diamond
+take torch
+w
+s
+e
+s
+d
+up
+turn off lantern
+put jade in case
+put bracelet in case
+put diamond in case
+put torch in case
+turn on lantern
+open trap door
+d
+n
+e
+e
+n
+ne
+e
+turn off lantern
+d
+inflate plastic
+drop pump
+turn on lantern
+enter boat
+launch
+wait
+wait
+wait
+wait
+take buoy
+east
+exit
+take shovel
+ne
+dig sand
+dig sand
+dig sand
+dig sand
+take scarab
+drop shovel
+sw
+drop buoy
+open buoy
+take emerald
+s
+s
+w
+w
+sw
+u
+u
+nw
+w
+w
+w
+put emerald in case
+put scarab in case
+take egg from case
+turn on lantern
+open trap door
+d
+n
+take axe
+w
+s
+e
+u
+take coins
+sw
+e
+s
+se
+u
+give egg to thief
+d
+u
+attack thief
+attack thief
+attack thief
+attack thief
+attack thief
+attack thief
+attack thief
+attack thief
+attack thief
+attack thief
+attack thief
+attack thief
+drop axe
+take canary
+take chalice
+take egg
+take painting
+d
+e
+e
+turn off lantern
+put coins in case
+put chalice in case
+put painting in case
+e
+e
+nw
+n
+wind canary
+take bauble
+s
+e
+w
+w
+put egg in case
+put canary in case
+put bauble in case
+look
+take map
+read map
+e
+e
+nw
+s
+sw
+sw
+enter barrow
