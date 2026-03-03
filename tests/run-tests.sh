@@ -1,6 +1,7 @@
 #!/bin/bash
 # Zork I RegTest runner (wrapper)
-# Delegates to the generic testing framework with Zork-specific config.
+# Delegates to regtest.py with a wrapper interpreter that answers the
+# sound prompt ("Do you want sound? y/n") before test commands.
 #
 # Usage:
 #   wsl -e bash tests/run-tests.sh                    # run all tests
@@ -12,6 +13,15 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 I7_ROOT="/mnt/c/code/ifhub"
-CONFIG="$SCRIPT_DIR/project.conf"
 
-exec bash "$I7_ROOT/tools/testing/run-tests.sh" --config "$CONFIG" "$@"
+# Source project config for game path and regtest file
+source "$SCRIPT_DIR/project.conf"
+
+# Use wrapper interpreter that answers the sound prompt with "n"
+WRAPPER_INTERP="bash $SCRIPT_DIR/glulxe-wrapper.sh /home/johnesco/glulxe/glulxe"
+
+python3 "$I7_ROOT/tools/regtest.py" \
+    -i "$WRAPPER_INTERP -q" \
+    -g "$REGTEST_GAME" \
+    "$REGTEST_FILE" \
+    "$@"

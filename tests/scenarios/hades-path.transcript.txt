@@ -8,9 +8,12 @@ Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserv
 ZORK is a registered trademark of Infocom, Inc.
 Release 88 / Serial number 840726
 
-Zork I: The Great Underground Empire
+Do you want sound? (y/n) 
+Sound disabled. Type SOUND ON during play to enable it.
+
+Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 1 / Serial number 260225 / Inform 7 v10.1.2 / D
+Release 1 / Serial number 260303 / Inform 7 v10.1.2 / D
 
 West of House
 You are standing in an open field west of a white house, with a boarded front door.
@@ -75,17 +78,16 @@ This is a small room with passages to the east and south and a forbidding hole l
 
 A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
 
-The troll swings his axe, but it misses.
 Your sword has begun to glow very brightly.
 
->A furious exchange, and the troll is knocked out!
->The unconscious troll cannot defend himself: He dies.
-
+>You charge, but the troll jumps nimbly aside.
+The axe crashes against the rock, throwing sparks!
+>Your stroke lands, but it was only the flat of the blade.
+The axe crashes against the rock, throwing sparks!
+>The troll takes a fatal blow and slumps to the floor dead.
 Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 
 Your sword is no longer glowing.
-
->You can't see any such thing.
 
 >You can't see any such thing.
 
@@ -100,13 +102,21 @@ This is a narrow east-west passageway. There is a narrow stairway leading down a
 Round Room
 This is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.
 
+Your sword is glowing with a faint blue glow.
+
 >
 Narrow Passage
 This is a long and narrow corridor where a long north-south passageway briefly narrows even further.
 
+There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
+
+Your sword has begun to glow very brightly.
+
 >
 Mirror Room
 You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
+
+Your sword is no longer glowing.
 
 >
 Cave

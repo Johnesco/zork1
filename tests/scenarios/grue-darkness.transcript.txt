@@ -57,70 +57,29 @@ A battery-powered brass lantern is on the trophy case.
 
 >Taken.
 
->The brass lantern is now on.
-
 >With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.
 
 >The door reluctantly opens to reveal a rickety staircase descending into darkness.
 
 >The trap door crashes shut, and you hear someone barring it.
 
-Cellar
-You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
+Darkness
+It is pitch black. You are likely to be eaten by a grue.
 
 Your sword is glowing with a faint blue glow.
 
 [Your score has just gone up by twenty-five points.]
 
->
-The Troll Room
-This is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
+>You are carrying:
+  a brass lantern
+  a sword
 
-A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
+>The brass lantern is now on.
 
-Your sword has begun to glow very brightly.
+Cellar
+You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
 
->You charge, but the troll jumps nimbly aside.
-The axe crashes against the rock, throwing sparks!
->Your stroke lands, but it was only the flat of the blade.
-The axe crashes against the rock, throwing sparks!
->The troll takes a fatal blow and slumps to the floor dead.
-Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
-
-Your sword is no longer glowing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->East-West Passage
-This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
-
->
-Round Room
-This is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.
-
-Your sword is glowing with a faint blue glow.
-
->
-Narrow Passage
-This is a long and narrow corridor where a long north-south passageway briefly narrows even further.
-
-There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
-
-Your sword has begun to glow very brightly.
-
->
-Mirror Room
-You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
-
-Your sword is no longer glowing.
-
->There is a rumble from deep within the earth and the room shakes.
-
-Mirror Room
-You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
+>Cellar
+You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
 
 >Are you sure you want to quit? 

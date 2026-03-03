@@ -61,7 +61,9 @@ generate_transcript() {
     fi
 
     # Pipe commands + quit sequence to the engine and capture output
+    # Prepend "n" to decline the sound prompt at game start
     {
+        echo "n"
         echo "$COMMANDS"
         echo "quit"
         echo "yes"

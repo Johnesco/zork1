@@ -8,9 +8,12 @@ Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserv
 ZORK is a registered trademark of Infocom, Inc.
 Release 88 / Serial number 840726
 
-Zork I: The Great Underground Empire
+Do you want sound? (y/n) 
+Sound disabled. Type SOUND ON during play to enable it.
+
+Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 1 / Serial number 260225 / Inform 7 v10.1.2 / D
+Release 1 / Serial number 260303 / Inform 7 v10.1.2 / D
 
 West of House
 You are standing in an open field west of a white house, with a boarded front door.
@@ -75,17 +78,16 @@ This is a small room with passages to the east and south and a forbidding hole l
 
 A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
 
-The troll swings his axe, but it misses.
 Your sword has begun to glow very brightly.
 
->A furious exchange, and the troll is knocked out!
->The unconscious troll cannot defend himself: He dies.
-
+>You charge, but the troll jumps nimbly aside.
+The axe crashes against the rock, throwing sparks!
+>Your stroke lands, but it was only the flat of the blade.
+The axe crashes against the rock, throwing sparks!
+>The troll takes a fatal blow and slumps to the floor dead.
 Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 
 Your sword is no longer glowing.
-
->You can't see any such thing.
 
 >You can't see any such thing.
 
@@ -100,9 +102,13 @@ This is a narrow east-west passageway. There is a narrow stairway leading down a
 Round Room
 This is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.
 
+Your sword is glowing with a faint blue glow.
+
 >
 North-South Passage
 This is a high north-south passage, which forks to the northeast.
+
+Your sword is no longer glowing.
 
 >
 Deep Canyon
@@ -158,6 +164,8 @@ The sluice gates on the dam are closed. Behind the dam, there can be seen a wide
 
 There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green plastic bubble which is glowing serenely.
 
+Your sword is glowing with a faint blue glow.
+
 >The sluice gates open and water pours through the dam.
 
 >
@@ -165,5 +173,7 @@ Dam Base
 You are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream.
 
 There is a folded pile of plastic here which has a small valve attached.
+
+Your sword is no longer glowing.
 
 >Are you sure you want to quit? 

@@ -1,0 +1,38 @@
+## Starting the Game -- West of House
+
+# Enter the house and collect gear for testing darkness behavior.
+> look
+> n
+> e
+> open window
+> w
+
+## Get Lantern -- Living Room
+
+# Pick up the lantern but DON'T turn it on yet.
+> w
+> take sword
+> take lantern
+
+## Enter the Cellar Dark -- Cellar
+
+# Open the trap door and go down without light.
+# The cellar is a dark room. ZIL behavior: entering from a lit room
+# should show the warning as part of the room description, but NOT
+# trigger a grue attack.
+> push rug
+> open trap door
+> down
+
+## Non-Movement Actions in Darkness -- Cellar
+
+# ZIL behavior: the grue only attacks on movement, never on non-movement
+# actions. We should be able to do inventory, turn on the lamp, etc.
+# without being eaten.
+> inventory
+> turn on lantern
+
+## Verify Room is Now Lit -- Cellar
+
+# With the lantern on, we should see the cellar description.
+> look

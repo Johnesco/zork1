@@ -355,6 +355,141 @@ Taken
 /A sceptre, possibly that of ancient Egypt itself
 /ornamented with colored enamel
 
+# ============================================================
+# Grue darkness behavior (#135)
+# ============================================================
+
+* grue-darkness
+# Enter cellar without light, verify warning on entry, verify
+# non-movement actions do NOT trigger grue, then turn on lantern.
+# ZIL behavior: grue attacks only on movement, never on inventory/etc.
+>{include} enter-house
+> w
+> take sword
+> take lantern
+> push rug
+/trap door
+> open trap door
+> down
+/pitch black
+/likely to be eaten by a grue
+> inventory
+!slithered into the room
+!slavering fangs
+!den of hungry grues
+/lantern
+> turn on lantern
+/now on
+> look
+/Cellar
+
+# ============================================================
+# Jump behavior (#136)
+# ============================================================
+
+* jump-kitchen
+# Jump in kitchen is fatal — chimney shaft (ZIL FALSE-FLAG always blocked)
+>{include} enter-house
+> jump
+/not a very safe place
+
+* jump-tree
+# Jump from Up-a-Tree is a safe landing at Forest Path
+>{include} startup
+> n
+> n
+/Forest Path
+> up
+{vital}
+/Up a Tree
+> jump
+/feat of unaccustomed daring
+/land on your feet
+> look
+/Forest Path
+
+* jump-altar-safe
+# Jump at altar without coffin — default humor message (exit is open)
+# Path: house → cellar → troll → dome → rope down → temple → egypt → temple → south temple
+>{include} living-room
+> e
+> up
+> take rope
+> d
+> w
+> push rug
+> open trap door
+> down
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> e
+> e
+> se
+> e
+> tie rope to railing
+> d
+> s
+> d
+> take coffin
+> u
+> s
+{vital}
+/Altar
+> drop coffin
+> jump
+!not a very safe place
+/second grade|enjoying yourself|Wheeeeeeeeee|applaud
+
+* jump-altar-fatal
+# Jump at altar while carrying coffin — fatal (ZIL COFFIN-CURE blocked)
+# Path: same as jump-altar-safe but keep the coffin
+# NOTE: After death, glulxe hangs on RESTART/RESTORE/QUIT prompt (no \n>),
+# so we check that the humor message does NOT appear instead of checking
+# for the death message directly.
+>{include} living-room
+> e
+> up
+> take rope
+> d
+> w
+> push rug
+> open trap door
+> down
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> e
+> e
+> se
+> e
+> tie rope to railing
+> d
+> s
+> d
+> take coffin
+> u
+> s
+{vital}
+/Altar
+> jump
+!second grade
+!enjoying yourself
+!Wheeeeeeeeee
+!applaud
+
+# ============================================================
+# FDESC tests — first descriptions for contained objects
+# ============================================================
+
 * fdesc-canary
 # Verify canary appears when egg is broken open (attack or drop from tree)
 # The pristine canary FDESC requires thief-opening which is RNG-dependent

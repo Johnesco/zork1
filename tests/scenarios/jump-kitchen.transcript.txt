@@ -45,36 +45,20 @@ On the table is an elongated brown sack, smelling of hot peppers.
 
 [Your score has just gone up by ten points.]
 
->
-Living Room
-You are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.
+>This was not a very safe place to try jumping.
+Geronimo...
 
-Above the trophy case hangs an elvish sword of great antiquity.
 
-A battery-powered brass lantern is on the trophy case.
+    ****  You have died  ****
 
->Taken.
+Now, let's take a look here...
+Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.
 
->The brass lantern is now on.
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
 
->
-Kitchen
-You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.
+You hear in the distance the chirping of a song bird.
 
-A bottle is sitting on the table.
-
-On the table is an elongated brown sack, smelling of hot peppers.
-
->
-Attic
-This is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down.
-
-On a table is a nasty-looking knife.
-
-A large coil of rope is lying in the corner.
-
->Taken.
-
->Taken.
+[Your score has just gone down by ten points.]
 
 >Are you sure you want to quit? 

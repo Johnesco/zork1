@@ -1,0 +1,24 @@
+## Starting the Game -- West of House
+
+# Navigate to Up a Tree to test the non-fatal jump.
+> look
+> n
+> n
+
+## Climb the Tree -- Up a Tree
+
+# Go up to the tree.
+> up
+
+## Jump from Tree -- Forest Path
+
+# ZIL behavior: Jumping in Up-a-Tree is a special case — you safely
+# land on your feet and move down to Forest Path. Message: "In a feat
+# of unaccustomed daring, you manage to land on your feet without
+# killing yourself."
+> jump
+
+## Verify Location -- Forest Path
+
+# Confirm we're now at Forest Path after the safe jump.
+> look

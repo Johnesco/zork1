@@ -1,0 +1,73 @@
+## Starting the Game -- West of House
+
+# Navigate to the Altar (South Temple) to test jump with/without coffin.
+# Need to get through the troll and reach Egypt Room for the coffin.
+> look
+
+## Enter the House and Get Gear -- Kitchen
+
+> n
+> e
+> open window
+> w
+> w
+> take sword
+> take lantern
+> turn on lantern
+> e
+> up
+> take rope
+> d
+
+## Descend to Cellar -- Cellar
+
+> w
+> push rug
+> open trap door
+> down
+
+## Past the Troll -- Troll Room
+
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+
+## To the Dome Room -- Dome Room
+
+> e
+> e
+> se
+> e
+
+## Down to Temple -- North Temple
+
+> tie rope to railing
+> d
+> s
+
+## Get the Coffin -- Egyptian Room
+
+> d
+> take coffin
+
+## Jump at Altar WITHOUT Coffin First -- South Temple
+
+# Go to South Temple via North Temple, drop the coffin, then jump.
+# ZIL behavior: When not carrying the coffin, COFFIN-CURE is true,
+# so the down exit is open. Jump should give the default humor message.
+> u
+> s
+> drop coffin
+> jump
+
+## Jump at Altar WITH Coffin -- South Temple
+
+# Pick up the coffin and jump again.
+# ZIL behavior: When carrying the coffin, COFFIN-CURE is false,
+# so the down exit is blocked. Jump is fatal.
+> take coffin
+> jump

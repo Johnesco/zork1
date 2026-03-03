@@ -166,7 +166,37 @@ The solid-gold coffin used for the burial of Ramses II is here.
 
 [Your score has just gone up by ten points.]
 
->The gold coffin opens.
-A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point.
+>
+Temple
+This is the north end of a large temple. On the east wall is an ancient inscription, probably a prayer in a long-forgotten language. Below the prayer is a staircase leading down. The west wall is solid granite. The exit to the north end of the room is through huge marble pillars.
+
+You can see a brass bell here.
+
+>
+Altar
+This is the south end of a large temple. In front of you is what appears to be an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it.
+
+On the altar is a large black book, open to page 569.
+
+On the two ends of the altar are burning candles.
+
+>This was not a very safe place to try jumping.
+Geronimo...
+
+
+    ****  You have died  ****
+
+As you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. The objects in the dungeon appear indistinct, bleached of color, even unreal.
+
+Although there is no light, the room seems dimly illuminated.
+The room looks strange and unearthly.
+
+
+Darkness
+It is pitch black.
+
+You can't even do that.
+
+[Your score has just gone down by ten points.]
 
 >Are you sure you want to quit? 

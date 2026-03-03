@@ -18,6 +18,11 @@
     { "name": "boat", "title": "Boat Inflation", "category": "Puzzles" },
     { "name": "mirror", "title": "Mirror Teleportation", "category": "Puzzles" },
     { "name": "cyclops-odysseus", "title": "The Cyclops Solution", "category": "Puzzles" },
+    { "name": "grue-darkness", "title": "Grue Darkness Safety", "category": "Behavior Tests" },
+    { "name": "jump-kitchen", "title": "Fatal Jump in Kitchen", "category": "Behavior Tests" },
+    { "name": "jump-tree", "title": "Safe Jump from Tree", "category": "Behavior Tests" },
+    { "name": "jump-altar-safe", "title": "Altar Jump without Coffin", "category": "Behavior Tests" },
+    { "name": "jump-altar-fatal", "title": "Altar Jump with Coffin", "category": "Behavior Tests" },
     { "name": "fdesc-egg", "title": "Egg in Bird's Nest", "category": "FDESC Tests" },
     { "name": "fdesc-sceptre", "title": "Sceptre in Coffin", "category": "FDESC Tests" },
     { "name": "fdesc-canary", "title": "Canary in Egg", "category": "FDESC Tests" }

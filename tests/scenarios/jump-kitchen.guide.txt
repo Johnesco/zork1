@@ -1,0 +1,15 @@
+## Starting the Game -- West of House
+
+# Enter the house to test jumping in the kitchen.
+> look
+> n
+> e
+> open window
+> w
+
+## Jump in Kitchen -- Kitchen
+
+# ZIL behavior: The kitchen has a chimney shaft going down (DOWN TO STUDIO
+# IF FALSE-FLAG, always blocked). Jumping is fatal — "This was not a very
+# safe place to try jumping." followed by a random JUMPLOSS death message.
+> jump
