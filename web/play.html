@@ -500,6 +500,28 @@ body.egg-invert {
 body.egg-text-glow .BufferLine:last-of-type {
   animation: textGolden 2.5s ease-out;
 }
+
+/* ── Sword glow — blue vignette overlay on screen edges ── */
+body.sword-glow-faint::after,
+body.sword-glow-bright::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: box-shadow 1.5s ease-in-out;
+}
+
+body.sword-glow-faint::after {
+  box-shadow: inset 0 0 80px 15px rgba(80, 130, 255, 0.2),
+              inset 0 0 160px 30px rgba(60, 100, 220, 0.1);
+}
+
+body.sword-glow-bright::after {
+  box-shadow: inset 0 0 100px 25px rgba(80, 140, 255, 0.4),
+              inset 0 0 200px 50px rgba(60, 110, 240, 0.2),
+              inset 0 0 300px 80px rgba(40, 80, 200, 0.1);
+}
 </style>
 
 <script src="lib/parchment/jquery.min.js?v=1772508332"></script>
@@ -765,7 +787,13 @@ body.egg-text-glow .BufferLine:last-of-type {
     }, 3500);
   }
 
-  // Watch buffer text for egg-related "Taken" responses
+  // ── Sword glow — blue screen-edge vignette ──
+  function setSwordGlow(level) {
+    document.body.classList.remove('sword-glow-faint', 'sword-glow-bright');
+    if (level) document.body.classList.add(level);
+  }
+
+  // Watch buffer text for game events (egg flash, sword glow)
   function watchBuffer() {
     function tryAttach() {
       var buf = document.querySelector('.BufferWindow');
@@ -776,9 +804,14 @@ body.egg-text-glow .BufferLine:last-of-type {
             var node = muts[i].addedNodes[j];
             if (node.nodeType !== 1) continue;
             var text = (node.textContent || '').trim();
+            // Egg flash
             if (/^taken\.?$/i.test(text) && /\begg\b/.test(lastNodeText)) {
               triggerEggFlash();
             }
+            // Sword glow
+            if (/faint blue glow/i.test(text)) setSwordGlow('sword-glow-faint');
+            else if (/glow very brightly/i.test(text)) setSwordGlow('sword-glow-bright');
+            else if (/no longer glowing/i.test(text)) setSwordGlow(null);
             if (text.length > 0) lastNodeText = text.toLowerCase();
           }
         }
