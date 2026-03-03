@@ -294,10 +294,11 @@ footer a {
   <ul>
     <li>Richer parser responses and smoother player interactions</li>
     <li>Better default messages and more helpful feedback</li>
-    <li>Inherits all v3 audio, v2 bug fixes, and v1 content</li>
+    <li><strong>Native Glk sound</strong>: audio bundled in .gblorb via Parchment&rsquo;s Emglken WASM engine &mdash; ambient zones and sound effects driven directly from story.ni</li>
+    <li>Inherits all v3 audio design, v2 bug fixes, and v1 content</li>
   </ul>
   <div class="version-links">
-    <a data-play-version="v4" href="v4/">Play</a>
+    <a data-play-version="v4" href="v4/">Play (with sound)</a>
     <a href="v4/story.ni">Inform 7 Source</a>
     <a href="v4/source.html">Browse Source</a>
     <a href="v4/walkthrough.html">Walkthrough</a>
@@ -309,8 +310,8 @@ footer a {
   <p>Intentionally diverging from the original, leaning into what Inform 7 does best.</p>
   <ul>
     <li><strong>Ambient audio</strong>: zone-based background music across 10 zones (forest, cave, house, water, rapids, loud, hades, mine, machinery, silence) with smooth crossfades between areas</li>
-    <li><strong>Sound effects</strong>: 16 one-shot audio triggers for key game events &mdash; puzzle moments, creature encounters, and atmospheric touches (<a href="soundoverlay.html">details</a>). Audio files are CC0 placeholders, not final</li>
-    <li>The audio engine is a JavaScript overlay that detects room changes in the game output &mdash; it&rsquo;s independent of the Inform 7 source and could be applied to any version</li>
+    <li><strong>Sound effects</strong>: 16 one-shot audio triggers for key game events &mdash; puzzle moments, creature encounters, and atmospheric touches. Audio files are CC0 placeholders, not final</li>
+    <li><strong>Native Glk sound</strong>: audio is now driven from story.ni via Glk sound channels, bundled as a .gblorb and played through Parchment&rsquo;s Emglken WASM engine</li>
     <li>Inherits all v2 bug fixes and v1 content</li>
   </ul>
   <div class="version-links">
@@ -520,11 +521,16 @@ footer a {
     }
   }
 
+  // v3+ use unified Parchment (auto-selects best engine)
+  var UNIFIED = ['v3', 'v4'];
+
   function updatePlayLinks(engine) {
     var links = document.querySelectorAll('[data-play-version]');
     for (var i = 0; i < links.length; i++) {
       var version = links[i].getAttribute('data-play-version');
-      if (engine === 'parchment') {
+      if (UNIFIED.indexOf(version) >= 0) {
+        links[i].href = version + '/parchment.html';
+      } else if (engine === 'parchment') {
         links[i].href = version + '/parchment.html';
       } else if (engine === 'glulxe') {
         links[i].href = version + '/glulxe.html';

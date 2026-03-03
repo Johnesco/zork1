@@ -108,15 +108,18 @@ div#gameport {
 </style>
 
 <script src="lib/parchment/jquery.min.js"></script>
+<script src="lib/parchment/ie.js" nomodule></script>
 <script>
     parchment_options = {
         default_story: ['lib/parchment/zork1.ulx.js'],
         lib_path: 'lib/parchment/',
+        story_name: 'zork1.ulx.js',
         use_proxy: 0,
         do_vm_autosave: 1,
     };
 </script>
 <script src="lib/parchment/main.js"></script>
+<script src="lib/parchment/resourcemap.js"></script>
 <script>
     window.addEventListener('pageshow', function(e) {
         if (e.persisted) { window.location.reload(); }
@@ -137,6 +140,7 @@ div#gameport {
   </div>
   <div id="loadingpane">
     <div style="margin-bottom:20px; font-size:1.4em; color:#aa9966; letter-spacing:4px;">ZORK I</div>
+    <img src="lib/parchment/waiting.gif" alt="Loading" style="opacity:0.5"><br>
     <em>Loading the Great Underground Empire...</em>
   </div>
   <div id="errorpane" style="display:none;">

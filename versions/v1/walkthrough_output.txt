@@ -1,17 +1,15 @@
-Welcome to the Cheap Glk Implementation, library version 1.0.7.
-
 
 
 
 
 ZORK I: The Great Underground Empire
-v1: The Port
-An Inform 7 translation by John Escobedo
-Based on the original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
-ZIL source released under the MIT License by Activision
+Infocom interactive fiction - a fantasy story
+Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 88 / Serial number 840726
 
 Zork I: The Great Underground Empire
-An Interactive Fiction by John Escobedo (after Infocom)
+An Interactive Fiction by Infocom (translated to Inform 7)
 Release 1 / Serial number 260301 / Inform 7 v10.1.2 / D
 
 West of House
@@ -92,7 +90,7 @@ You are in the kitchen of the white house. A table seems to have been used recen
 
 >
 Attic
-This is the attic. The only exit is a stairway leading down.
+This is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down.
 
 On a table is a nasty-looking knife.
 
@@ -655,7 +653,7 @@ Altar
 This is the south end of a large temple. In front of you is what appears to be an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it.
 
 >Forest
-This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
 
 >The brass lantern is now off.
 
@@ -665,7 +663,7 @@ This is a forest, with trees in all directions. To the east, there appears to be
 
 >
 Forest
-This is a dimly lit forest, with large trees all around.
+This is a dimly lit forest, with large trees all around. Gnarled roots break through the soil underfoot, and the air is heavy with the smell of wet bark. Somewhere nearby, water drips steadily from the leaves.
 
 >
 Clearing
@@ -713,11 +711,11 @@ You are in a small clearing in a well marked forest path that extends to the eas
 
 >
 Forest
-This is a dimly lit forest, with large trees all around.
+This is a dimly lit forest, with large trees all around. Gnarled roots break through the soil underfoot, and the air is heavy with the smell of wet bark. Somewhere nearby, water drips steadily from the leaves.
 
 >
 Forest
-This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
 
 You can see a screwdriver and a brass lantern here.
 
@@ -939,7 +937,7 @@ This is a path winding through a dimly lit forest. The path heads north-south he
 
 >
 Forest
-This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
 
 You can see a screwdriver here.
 
@@ -1425,7 +1423,7 @@ You can see a magic boat (in which is a tan label) and a shovel here.
 
 >
 Sandy Cave
-This is a sand-filled cave whose exit is to the southwest.
+This is a small, low-ceilinged cave nearly filled with fine white sand. The walls are rough limestone, worn smooth in places by ancient water. The only exit is a narrow passage to the southwest.
 
 >You seem to be digging a hole here.
 
@@ -1769,6 +1767,9 @@ In that game you scored 350 out of a possible 350, in 420 turns, earning you the
 Your score is 350 (total of 350 points), in 420 moves.
 This gives you the rank of Master Adventurer.
 
+
+Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?
+> Please give one of the answers above.
 
 Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?
 > 

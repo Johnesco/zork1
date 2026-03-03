@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Zork I</title>
+<title>zork1</title>
 <meta name="viewport" content="width=device-width, user-scalable=no">
-<link rel="stylesheet" href="lib/parchment/parchment.css">
-<link rel="stylesheet" href="lib/parchment/main.css">
+<link rel="stylesheet" href="lib/parchment/parchment.css?v=1772508332">
+<link rel="stylesheet" href="lib/parchment/main.css?v=1772508332">
 
 <style>
 :root {
@@ -104,16 +104,22 @@ div#gameport {
 }
 </style>
 
-<script src="lib/parchment/jquery.min.js"></script>
+<script src="lib/parchment/jquery.min.js?v=1772508332"></script>
+<script src="lib/parchment/ie.js?v=1772508332" nomodule></script>
 <script>
+    // story_name is REQUIRED — parchment.js calls .substring() on it to detect
+    // the file type (.ulx.js, .gblorb.js, .z3.js). Without it you get:
+    //   TypeError: Cannot read properties of undefined (reading 'substring')
     parchment_options = {
-        default_story: ['lib/parchment/zork1.ulx.js'],
+        default_story: ['lib/parchment/zork1.gblorb.js'],
         lib_path: 'lib/parchment/',
+        story_name: 'zork1.gblorb.js',
         use_proxy: 0,
         do_vm_autosave: 1,
     };
 </script>
-<script src="lib/parchment/main.js"></script>
+<script src="lib/parchment/parchment.js?v=1772508332"></script>
+<script src="lib/parchment/resourcemap.js?v=1772508332"></script>
 <script>
     window.addEventListener('pageshow', function(e) {
         if (e.persisted) { window.location.reload(); }
@@ -127,23 +133,20 @@ div#gameport {
   <div id="windowport">
     <noscript>
       <div style="text-align:center; padding:40px; color:#aa6644;">
-        <h2>Zork I</h2>
+        <h2>zork1</h2>
         <p>JavaScript is required to play this game.</p>
       </div>
     </noscript>
   </div>
   <div id="loadingpane">
-    <div style="margin-bottom:20px; font-size:1.4em; color:#aa9966; letter-spacing:4px;">Zork I</div>
+    <div style="margin-bottom:20px; font-size:1.4em; color:#aa9966; letter-spacing:4px;">zork1</div>
+    <img src="lib/parchment/waiting.gif" alt="Loading" style="opacity:0.5"><br>
     <em>Loading...</em>
   </div>
   <div id="errorpane" style="display:none;">
     <div id="errorcontent">...</div>
   </div>
 </div>
-
-<script src="lib/ambient-audio.js"></script>
-<script src="lib/sound-engine.js"></script>
-<script src="lib/sound-config.js"></script>
 
 </body>
 </html>

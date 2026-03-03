@@ -21,9 +21,11 @@ zork1.ulx          Compiled output (gitignored — rebuild from story.ni)
 tests/             Test scripts, walkthroughs, regtest data
 src/zil/           Original ZIL source files (read-only, NEVER modify)
 src/sharpee/       Sharpee source files
+Sounds/            Audio asset files (.ogg) for Blorb packaging
+zork1.blurb        Blorb packaging manifest (maps sound IDs to .ogg files)
 web/               Web player and site-level pages
   play.html        Standard Parchment player for latest version (local dev entry point)
-  lib/parchment/   7 engine files + zork1.ulx.js (created by setup-web.sh)
+  lib/parchment/   7 engine files + zork1.gblorb.js (game + audio bundle)
   index.html       Landing page — project description, version links
 versions/          Frozen version snapshots
   v0/              Original ZIL — source browser + playable ZIL-compiled game
@@ -60,10 +62,12 @@ The original ZIL source in `src/zil/` is **sacred and must never be modified** �
 
 Starting with v1, every version is a **self-contained snapshot** with its own:
 - `story.ni` — Inform 7 source code (the authoritative source for that version)
-- `zork1.ulx.js` — Compiled game binary (base64-encoded Glulx, built from THIS version's `story.ni`)
+- Game binary — `zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+, includes bundled audio)
 - Walkthrough, source browser, and player pages
 
-**Binary rule**: Never edit `.ulx` or `.ulx.js` files directly. Always compile from the version's own `story.ni` source. The workflow is: edit `story.ni` → compile → base64-encode → update `zork1.ulx.js`.
+**Binary rule**: Never edit `.ulx`, `.ulx.js`, `.gblorb`, or `.gblorb.js` files directly. Always compile from the version's own `story.ni` source.
+- **v1/v2 workflow**: edit `story.ni` → compile → base64-encode `.ulx` → update `zork1.ulx.js`
+- **v3+ workflow**: edit `story.ni` → compile to `.ulx` → package with `cBlorb` into `.gblorb` → base64-encode → update `zork1.gblorb.js`
 
 ### Change Propagation
 
@@ -77,8 +81,8 @@ Once a version is published, it is **frozen**. All new work goes into the latest
 
 In rare cases a past version may be patched (e.g., a translation bug discovered in v1). If that happens:
 1. Edit that version's own `versions/vN/story.ni` directly
-2. Compile from that source to produce a new `.ulx`
-3. Base64-encode the `.ulx` into `versions/vN/lib/parchment/zork1.ulx.js`
+2. Compile from that source to produce a new binary (`.ulx` for v1/v2, `.gblorb` for v3+)
+3. Base64-encode into `versions/vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+)
 4. Propagate the same fix upward to all later versions and recompile each
 
 When possible, every version should provide three buttons:
@@ -106,13 +110,24 @@ This is also where the testing methodology was established — it now underpins 
 
 Where it intentionally diverges from ZIL-faithful behavior and starts leaning into what Inform 7 does best. v1 and v2 are bound to the original; v3 and beyond are not. The first enhancement is ambient audio — zone-based background music and sound effects that respond to room changes.
 
-Audio architecture: two layers, both using MutationObserver on the Parchment DOM.
-- **Ambient audio** (`ambient-audio.js`): Watches `.GridWindow` for room name changes, crossfades zone-based background loops. Zone map is version-specific.
-- **Sound effects** (`sound-engine.js` + `sound-config.js`): Shared engine from `ifhub/tools/web/sound-engine.js`. Matches text patterns in `.BufferWindow` to trigger one-shot effects. `sound-config.js` defines all 16 triggers (bird, mailbox, trapdoor, bell, etc.).
+Audio is now **native Glk sound** — driven from story.ni via Glk sound channels, with audio files bundled into `.gblorb` packages played through Parchment's Emglken WASM engine. The story.ni includes:
+- **Sound declarations**: 9 ambient zone loops + 16 one-shot sound effects (`.ogg` files)
+- **Audio zones**: Every room assigned to a zone (forest, house, cave, water, rapids, loud, hades, mine, machinery, silence)
+- **Ambient audio rule**: Crossfades zone-based background loops on room change using dual Glk background channels
+- **Sound effects**: Triggered inline (`play the sound of X as sfx`) at key game events (grue attacks, match strikes, doors opening, etc.)
+- **Sound toggle**: Player prompted at startup; `SOUND ON` / `SOUND OFF` commands available in-game
+
+### Sound System History
+
+**JS Overlay (legacy, v3 original)**
+The original v3 sound system was a MutationObserver-based JavaScript overlay (`ambient-audio.js`, `sound-engine.js`, `sound-config.js`) that detected room changes and text patterns in the Parchment DOM. It was engine-agnostic and required no changes to story.ni. This approach has been superseded by native Glk sound.
+
+**Native Glk Sound (current, production)**
+Parchment 2025.1.14+ shipped native Glk sound channels via Emglken WASM + AsyncGlk + Web Audio API. The Parchment engine files in v3/v4 are from the `Johnesco/parchment` fork. Sound is now driven directly from story.ni (`play the sound of X`), with audio bundled in `.gblorb` files. The `Sounds/` directory at the project root holds the `.ogg` source files, and `zork1.blurb` is the packaging manifest.
 
 ### v4 — Modern IF (Current)
 
-Applying modern interactive fiction writing best practices for fluid, fun gameplay. Focuses on richer parser responses, smoother player interactions, better default messages, and more helpful feedback. Inherits all v3 audio enhancements.
+Applying modern interactive fiction writing best practices for fluid, fun gameplay. Focuses on richer parser responses, smoother player interactions, better default messages, and more helpful feedback. Inherits all v3 audio (native Glk sound via .gblorb) and expanded room descriptions for aboveground areas.
 
 ## Web Version Architecture
 
@@ -129,7 +144,7 @@ versions/v0/
   walkthrough-guide.txt Annotated walkthrough guide (ZIL version)
 ```
 
-**v1+** (Inform 7):
+**v1/v2** (Inform 7, .ulx):
 ```
 versions/vN/
   index.html            Quixe player page
@@ -142,6 +157,20 @@ versions/vN/
   walkthrough.txt       Raw walkthrough commands
   walkthrough-guide.txt Annotated walkthrough guide
   lib/                  Client-side libraries
+  media/                Assets
+```
+
+**v3+** (Inform 7, .gblorb with native sound):
+```
+versions/vN/
+  index.html            Unified Parchment player (all engines, same as parchment.html)
+  parchment.html        Unified Parchment player (Emglken WASM with Glk sound)
+  source.html           Inform 7 source browser (renders this version's story.ni)
+  story.ni              Frozen Inform 7 source snapshot (includes sound declarations)
+  walkthrough.html      Walkthrough viewer (fetches local walkthrough files)
+  walkthrough.txt       Raw walkthrough commands
+  walkthrough-guide.txt Annotated walkthrough guide
+  lib/parchment/        7 engine files + zork1.gblorb.js (game + audio bundle)
   media/                Assets
 ```
 
@@ -158,7 +187,7 @@ versions/vN/
 
 - Dark/parchment aesthetic matching the game player
 - "Play Latest Version" link at top pointing to `play.html`
-- Engine selector (Quixe/Parchment/Glulxe) with `localStorage` persistence
+- Engine selector (Quixe/Parchment/Glulxe) with `localStorage` persistence — applies to v1/v2 only; v3+ use unified Parchment (auto-selects best engine)
 - Reverse-chronological order: newest version at top, v0 at bottom
 - Each version entry shows: Play Online, Download Source, Browse Source buttons (where applicable)
 - Version links (`v0/`, `v1/`, etc.) resolve only in `_site/` after `build-site.sh` assembles versions — they won't work from `web/` alone
@@ -171,7 +200,7 @@ The **current version** (`story.ni` at the repo root) is the working copy where 
 1. Make changes in `story.ni` (repo root)
 2. Build and test (see "Building the Game" and "Testing Policy" below)
 3. Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
-   (Or manually: copy `story.ni` → `versions/vN/story.ni`, base64-encode `.ulx` → `versions/vN/lib/parchment/zork1.ulx.js`)
+   (Or manually: copy `story.ni` → `versions/vN/story.ni`, compile and base64-encode → `versions/vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+))
 
 **Creating a new version** (vN+1):
 1. Finish all code changes in the current version
@@ -182,11 +211,11 @@ The **current version** (`story.ni` at the repo root) is the working copy where 
    - Update `walkthrough.html` title/header/back link
 4. Update `web/index.html`: add new version entry
 
-**Critical rule**: Every `versions/vN/` (v1+) must contain a `story.ni` and `zork1.ulx.js` compiled from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
+**Critical rule**: Every `versions/vN/` (v1+) must contain a `story.ni` and a compiled binary (`zork1.ulx.js` for v1/v2, `zork1.gblorb.js` for v3+) built from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
 
 **Cascade rule**: When any `story.ni` is modified (repo root or `versions/vN/`), three artifacts eventually need updating for each affected version:
 1. `versions/vN/story.ni` — frozen snapshot synced from source
-2. `versions/vN/lib/parchment/zork1.ulx.js` — recompiled and base64-encoded from that `story.ni`
+2. `versions/vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+) — recompiled and base64-encoded from that `story.ni`
 3. `versions/vN/walkthrough_output.txt` — regenerated transcript from that binary
 
 These do NOT need to happen after every edit. During active development, treat the cascade as a **known outstanding task** — note that artifacts are stale and batch the rebuild once changes stabilize. Do not silently forget it.

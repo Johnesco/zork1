@@ -4,8 +4,10 @@ _site/
 # Build output
 build/
 
-# Compiled Inform 7 game (large binary, rebuild from story.ni)
+# Compiled Inform 7 game (large binaries, rebuild from story.ni)
 *.ulx
+*.gblorb
+*.gblorb.js
 *.materials/
 
 # Inform 7 IDE project wrappers (local-only, contain hard links to story.ni)
