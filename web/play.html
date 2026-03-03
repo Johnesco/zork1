@@ -8,7 +8,35 @@
 <link rel="stylesheet" href="lib/parchment/main.css?v=1772508332">
 
 <style>
+/* ── Houdini @property — register as <color> for smooth transitions ── */
+@property --mood-buffer-bg { syntax: '<color>'; inherits: true; initial-value: #111111; }
+@property --mood-buffer-fg { syntax: '<color>'; inherits: true; initial-value: #d4c5a9; }
+@property --mood-grid-bg   { syntax: '<color>'; inherits: true; initial-value: #1c1810; }
+@property --mood-grid-fg   { syntax: '<color>'; inherits: true; initial-value: #aa9966; }
+@property --mood-accent    { syntax: '<color>'; inherits: true; initial-value: #e8d090; }
+@property --mood-ui-bg     { syntax: '<color>'; inherits: true; initial-value: #111111; }
+@property --mood-border    { syntax: '<color>'; inherits: true; initial-value: #2a2418; }
+
 :root {
+  /* ── Mood palette (updated dynamically by JS on room change) ── */
+  --mood-buffer-bg: #111;
+  --mood-buffer-fg: #d4c5a9;
+  --mood-grid-bg: #1c1810;
+  --mood-grid-fg: #aa9966;
+  --mood-accent: #e8d090;
+  --mood-ui-bg: #111;
+  --mood-border: #2a2418;
+
+  transition:
+    --mood-buffer-bg 1.2s ease-in-out,
+    --mood-buffer-fg 1.2s ease-in-out,
+    --mood-grid-bg 1.2s ease-in-out,
+    --mood-grid-fg 1.2s ease-in-out,
+    --mood-accent 1.2s ease-in-out,
+    --mood-ui-bg 1.2s ease-in-out,
+    --mood-border 1.2s ease-in-out;
+
+  /* ── AsyncGlk / GlkOte base theme ── */
   --glkote-buffer-bg: #111;
   --glkote-buffer-fg: #d4c5a9;
   --glkote-buffer-reverse-bg: #d4c5a9;
@@ -45,44 +73,70 @@ html, body {
 div#gameport {
   position: absolute;
   inset: 0;
-  background: #111;
+  background: var(--mood-ui-bg);
+  transition: background-color 1.2s ease-in-out;
 }
 
 .WindowFrame {
-  background: #111;
+  background: var(--mood-ui-bg);
+  transition: background-color 1.2s ease-in-out;
 }
 
 .GridWindow {
-  border-bottom: 1px solid #2a2418;
+  background-color: var(--mood-grid-bg);
+  color: var(--mood-grid-fg);
+  border-bottom: 1px solid var(--mood-border);
   padding: 6px 12px;
+  transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out, border-color 1.2s ease-in-out;
+}
+
+.BufferWindow {
+  background-color: var(--mood-buffer-bg);
+  color: var(--mood-buffer-fg);
+  transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out;
+  scrollbar-width: thin;
+  scrollbar-color: #3a3020 transparent;
 }
 
 .BufferWindowInner {
   padding: 20px 40px;
+  text-rendering: optimizeLegibility;
 }
 
 .Input {
   font-weight: bold;
-  color: #e8d090;
-  caret-color: #e8d090;
+  color: var(--mood-accent);
+  caret-color: var(--mood-accent);
+  caret-shape: underscore;
+  transition: color 1.2s ease-in-out, caret-color 1.2s ease-in-out;
 }
 
 .Style_header {
   color: #e8d8b0;
+  text-shadow: 0 0 8px rgba(232,216,176,0.15);
 }
 
 .Style_alert {
   color: #cc8844;
+  text-shadow: 0 0 6px rgba(204,136,68,0.12);
 }
 
 .Style_note {
   color: #aa9966;
 }
 
-.BufferWindow::-webkit-scrollbar { width: 8px; }
-.BufferWindow::-webkit-scrollbar-track { background: #1a1a1a; }
-.BufferWindow::-webkit-scrollbar-thumb { background: #3a3020; border-radius: 4px; }
+/* ── Scrollbar polish ── */
+.BufferWindow::-webkit-scrollbar { width: 6px; }
+.BufferWindow::-webkit-scrollbar-track { background: transparent; }
+.BufferWindow::-webkit-scrollbar-thumb { background: #3a3020; border-radius: 3px; }
 .BufferWindow::-webkit-scrollbar-thumb:hover { background: #5a4a30; }
+
+/* ── Text fade-in ── */
+@keyframes bufferFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.BufferLine { animation: bufferFadeIn 0.3s ease-out; }
 
 #loadingpane {
   position: absolute;
@@ -147,6 +201,135 @@ div#gameport {
     <div id="errorcontent">...</div>
   </div>
 </div>
+
+<!-- ── Mood theming — zone-based CSS palette shifts ── -->
+<script>
+(function() {
+  'use strict';
+
+  // 10 zone palettes — subtle tints of the dark theme
+  var PALETTES = {
+    silence:   { bufferBg:'#111111', bufferFg:'#d4c5a9', gridBg:'#1c1810', gridFg:'#aa9966', accent:'#e8d090', uiBg:'#111111', border:'#2a2418' },
+    forest:    { bufferBg:'#0a1a0e', bufferFg:'#b0d8a0', gridBg:'#0c2010', gridFg:'#70b060', accent:'#60d040', uiBg:'#0a1a0e', border:'#1a3a18' },
+    house:     { bufferBg:'#1a1008', bufferFg:'#e8c090', gridBg:'#2a1a08', gridFg:'#c09040', accent:'#f0a030', uiBg:'#1a1008', border:'#3a2810' },
+    cave:      { bufferBg:'#101114', bufferFg:'#c0c4c0', gridBg:'#14161a', gridFg:'#8090a0', accent:'#7090b0', uiBg:'#101114', border:'#1e2028' },
+    water:     { bufferBg:'#0c1018', bufferFg:'#b8c8d4', gridBg:'#101420', gridFg:'#6688aa', accent:'#60a0c0', uiBg:'#0c1018', border:'#162030' },
+    rapids:    { bufferBg:'#0a1018', bufferFg:'#c8d8e8', gridBg:'#0e1420', gridFg:'#7098c0', accent:'#50a0e0', uiBg:'#0a1018', border:'#142038' },
+    loud:      { bufferBg:'#141008', bufferFg:'#e0d0a0', gridBg:'#1e1a0c', gridFg:'#c0a060', accent:'#f0c040', uiBg:'#141008', border:'#302010' },
+    hades:     { bufferBg:'#140c0c', bufferFg:'#d4b8a8', gridBg:'#1c100e', gridFg:'#a07060', accent:'#c07040', uiBg:'#140c0c', border:'#2a1410' },
+    mine:      { bufferBg:'#121008', bufferFg:'#c8bca0', gridBg:'#1a1608', gridFg:'#9a8a60', accent:'#b09050', uiBg:'#121008', border:'#261e10' },
+    machinery: { bufferBg:'#101012', bufferFg:'#b8bcc0', gridBg:'#161618', gridFg:'#808890', accent:'#6888a0', uiBg:'#101012', border:'#1e2024' }
+  };
+
+  // Room → zone mapping (mirrors story.ni audio zones, from ambient-audio.js)
+  var ROOM_ZONES = {
+    // Forest / above-ground outdoors
+    'West of House':'forest', 'North of House':'forest', 'South of House':'forest',
+    'Behind House':'forest', 'Forest':'forest', 'Forest Path':'forest',
+    'Up a Tree':'forest', 'Clearing':'forest', 'Canyon View':'forest',
+    'Rocky Ledge':'forest', 'On the Rainbow':'forest', 'End of Rainbow':'forest',
+    'Stone Barrow':'forest',
+    // House interior
+    'Kitchen':'house', 'Living Room':'house', 'Attic':'house',
+    // General underground
+    'Cellar':'cave', 'The Troll Room':'cave', 'East of Chasm':'cave',
+    'Gallery':'cave', 'Studio':'cave', 'Maze':'cave', 'Dead End':'cave',
+    'Grating Room':'cave', 'Cyclops Room':'cave', 'Strange Passage':'cave',
+    'Treasure Room':'cave', 'East-West Passage':'cave', 'Round Room':'cave',
+    'Deep Canyon':'cave', 'Damp Cave':'cave', 'North-South Passage':'cave',
+    'Chasm':'cave', 'Cold Passage':'cave', 'Narrow Passage':'cave',
+    'Winding Passage':'cave', 'Twisting Passage':'cave', 'Atlantis Room':'cave',
+    'Engravings Cave':'cave', 'Dome Room':'cave', 'Torch Room':'cave',
+    'Temple':'cave', 'Altar':'cave', 'Egyptian Room':'cave',
+    'Mirror Room':'cave', 'Cave':'cave', 'Small Cave':'cave', 'Tiny Cave':'cave',
+    // Water (calm)
+    'Frigid River':'water', 'White Cliffs Beach':'water', 'Shore':'water',
+    'Sandy Beach':'water', 'Sandy Cave':'water', 'Stream':'water',
+    'Stream View':'water', 'Dam Base':'water', 'Dam Lobby':'water',
+    'Reservoir South':'water', 'Reservoir North':'water', 'Reservoir':'water',
+    // Rapids / falls
+    'Aragain Falls':'rapids', 'Canyon Bottom':'rapids',
+    // Loud Room
+    'Loud Room':'loud',
+    // Hades
+    'Entrance to Hades':'hades', 'Land of the Dead':'hades',
+    // Mine
+    'Mine Entrance':'mine', 'Squeaky Room':'mine', 'Bat Room':'mine',
+    'Shaft Room':'mine', 'Smelly Room':'mine', 'Gas Room':'mine',
+    'Coal Mine':'mine', 'Ladder Top':'mine', 'Ladder Bottom':'mine',
+    'Timber Room':'mine', 'Drafty Room':'mine', 'Slide Room':'mine',
+    // Machinery
+    'Dam':'machinery', 'Maintenance Room':'machinery', 'Machine Room':'machinery'
+  };
+
+  var currentRoom = null;
+  var currentZone = null;
+
+  function applyPalette(zone) {
+    var p = PALETTES[zone] || PALETTES.cave;
+    var root = document.documentElement.style;
+    root.setProperty('--mood-buffer-bg', p.bufferBg);
+    root.setProperty('--mood-buffer-fg', p.bufferFg);
+    root.setProperty('--mood-grid-bg', p.gridBg);
+    root.setProperty('--mood-grid-fg', p.gridFg);
+    root.setProperty('--mood-accent', p.accent);
+    root.setProperty('--mood-ui-bg', p.uiBg);
+    root.setProperty('--mood-border', p.border);
+
+    // Direct fallback for elements outside CSS var() cascade
+    var gp = document.getElementById('gameport');
+    if (gp) gp.style.backgroundColor = p.uiBg;
+    var frames = document.querySelectorAll('.WindowFrame');
+    for (var i = 0; i < frames.length; i++) frames[i].style.backgroundColor = p.uiBg;
+  }
+
+  function extractRoomName(gridWindow) {
+    var firstLine = gridWindow.querySelector('.GridLine');
+    if (!firstLine) return null;
+    var text = (firstLine.textContent || '').trim();
+    // Strip trailing score/moves info (everything after 2+ spaces)
+    text = text.replace(/\s{2,}.*$/, '').trim();
+    return text || null;
+  }
+
+  function onRoomChange(roomName) {
+    if (roomName === currentRoom) return;
+    currentRoom = roomName;
+    var zone = ROOM_ZONES[roomName] || 'cave';
+    if (zone === currentZone) return;
+    currentZone = zone;
+    console.log('[mood] ' + roomName + ' \u2192 ' + zone);
+    applyPalette(zone);
+  }
+
+  function attachObserver(grid) {
+    var observer = new MutationObserver(function() {
+      var name = extractRoomName(grid);
+      if (name) onRoomChange(name);
+    });
+    observer.observe(grid, { childList: true, characterData: true, subtree: true });
+    // Initial read
+    var name = extractRoomName(grid);
+    if (name) onRoomChange(name);
+  }
+
+  function startObserving() {
+    var grid = document.querySelector('.GridWindow');
+    if (grid) { attachObserver(grid); return; }
+    // Poll until the grid appears (engines create it dynamically)
+    var poll = setInterval(function() {
+      grid = document.querySelector('.GridWindow');
+      if (grid) { clearInterval(poll); attachObserver(grid); }
+    }, 500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startObserving);
+  } else {
+    startObserving();
+  }
+})();
+</script>
 
 </body>
 </html>
