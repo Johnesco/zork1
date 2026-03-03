@@ -41,13 +41,13 @@
   --glkote-buffer-fg: #d4c5a9;
   --glkote-buffer-reverse-bg: #d4c5a9;
   --glkote-buffer-reverse-fg: #111;
-  --glkote-buffer-size: 16px;
+  --glkote-buffer-size: 19px;
   --glkote-buffer-line-height: 1.6;
   --glkote-grid-bg: #1c1810;
   --glkote-grid-fg: #aa9966;
   --glkote-grid-reverse-bg: #aa9966;
   --glkote-grid-reverse-fg: #1c1810;
-  --glkote-grid-size: 14px;
+  --glkote-grid-size: 17px;
   --glkote-input-fg: #e8d090;
   --glkote-error-border: #882020;
   --glkote-warning-border: #3333aa;
@@ -78,24 +78,30 @@ div#gameport {
 }
 
 .WindowFrame {
-  background: var(--mood-ui-bg);
+  background: #111;
+}
+
+.WindowFrame:has(.GridWindow) {
+  background: var(--mood-buffer-fg) !important;
   transition: background-color 1.2s ease-in-out;
 }
 
+.GridWindow,
+.GridWindow * {
+  background-color: var(--mood-buffer-fg) !important;
+  color: #0a0a0a !important;
+  font-weight: bold;
+  transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out;
+}
+
 .GridWindow {
-  background-color: var(--mood-grid-bg);
-  color: var(--mood-grid-fg);
-  border-bottom: 1px solid var(--mood-border);
   padding: 6px 12px;
-  transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out, border-color 1.2s ease-in-out;
 }
 
 .BufferWindow {
   background-color: var(--mood-buffer-bg);
   color: var(--mood-buffer-fg);
   transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out;
-  scrollbar-width: thin;
-  scrollbar-color: #3a3020 transparent;
 }
 
 .BufferWindowInner {
@@ -111,6 +117,13 @@ div#gameport {
   transition: color 1.2s ease-in-out, caret-color 1.2s ease-in-out;
 }
 
+/* ── Text fade-in ── */
+@keyframes bufferFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.BufferLine { animation: bufferFadeIn 0.3s ease-out; }
+
 .Style_header {
   color: #e8d8b0;
   text-shadow: 0 0 8px rgba(232,216,176,0.15);
@@ -125,18 +138,14 @@ div#gameport {
   color: #aa9966;
 }
 
-/* ── Scrollbar polish ── */
+.BufferWindow {
+  scrollbar-width: thin;
+  scrollbar-color: #3a3020 transparent;
+}
 .BufferWindow::-webkit-scrollbar { width: 6px; }
 .BufferWindow::-webkit-scrollbar-track { background: transparent; }
 .BufferWindow::-webkit-scrollbar-thumb { background: #3a3020; border-radius: 3px; }
 .BufferWindow::-webkit-scrollbar-thumb:hover { background: #5a4a30; }
-
-/* ── Text fade-in ── */
-@keyframes bufferFadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.BufferLine { animation: bufferFadeIn 0.3s ease-out; }
 
 #loadingpane {
   position: absolute;
@@ -155,6 +164,341 @@ div#gameport {
 
 #loadingpane em {
   animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* ── CRT intro mode — green phosphor terminal until first input ── */
+
+@keyframes crtFlicker {
+  0%, 100% { opacity: 1; }
+  3%       { opacity: 0.85; }
+  6%       { opacity: 1; }
+  42%      { opacity: 0.95; }
+  44%      { opacity: 1; }
+  87%      { opacity: 0.92; }
+  89%      { opacity: 1; }
+}
+
+@keyframes crtScanDrift {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+body.crt-intro .BufferWindow {
+  background-color: #0a0a0a !important;
+  color: #33ff33 !important;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  text-shadow: 0 0 5px rgba(51,255,51,0.5), 0 0 12px rgba(51,255,51,0.2);
+  animation: crtFlicker 4s steps(1) infinite;
+  transition: none;
+}
+
+body.crt-intro .BufferWindow .Input {
+  color: #33ff33 !important;
+  caret-color: #33ff33 !important;
+  text-shadow: 0 0 5px rgba(51,255,51,0.5);
+}
+
+body.crt-intro .GridWindow,
+body.crt-intro .GridWindow * {
+  --glkote-grid-bg: #33ff33;
+  --glkote-grid-fg: #0a0a0a;
+  background-color: #33ff33 !important;
+  color: #0a0a0a !important;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  text-shadow: none;
+}
+
+body.crt-intro .GridWindow {
+  box-shadow: 0 0 15px rgba(51,255,51,0.3), 0 0 30px rgba(51,255,51,0.1);
+}
+
+/* Scanlines over the game area */
+body.crt-intro #gameport::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.25) 2px,
+    rgba(0,0,0,0.25) 4px
+  );
+  opacity: 1;
+}
+
+/* CRT vignette — darkened corners */
+body.crt-intro #gameport::after {
+  box-shadow:
+    inset 0 0 100px 30px rgba(0,0,0,0.6),
+    inset 0 0 250px 60px rgba(0,0,0,0.3);
+  opacity: 1;
+}
+
+/* Drifting scan bar */
+body.crt-intro .crt-scanbar {
+  display: block;
+}
+
+.crt-scanbar {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(51,255,51,0.06) 30%,
+    rgba(51,255,51,0.10) 50%,
+    rgba(51,255,51,0.06) 70%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 10002;
+  animation: crtScanDrift 3s linear infinite;
+}
+
+/* Smooth transition OUT of CRT mode */
+body.crt-fade .BufferWindow {
+  transition: background-color 2s ease, color 2s ease, text-shadow 2s ease;
+}
+body.crt-fade .GridWindow {
+  transition: background-color 2s ease, color 2s ease, text-shadow 2s ease;
+}
+body.crt-fade #gameport::before,
+body.crt-fade #gameport::after {
+  transition: opacity 2s ease;
+  opacity: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ROOM: Up a Tree — canopy sway, dappled light, falling leaves
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes treeSway {
+  0%, 100% { transform: rotate(-0.5deg) translateX(-3px); }
+  30%      { transform: rotate(0.3deg) translateX(2px); }
+  60%      { transform: rotate(0.5deg) translateX(4px); }
+  80%      { transform: rotate(-0.2deg) translateX(-1px); }
+}
+
+@keyframes canopyGlow {
+  0%, 100% {
+    box-shadow:
+      inset 0 0 120px 20px rgba(30,120,20,0.04),
+      inset 0 80px 80px -30px rgba(60,160,30,0.06);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 120px 20px rgba(50,150,30,0.10),
+      inset 0 80px 80px -30px rgba(80,200,40,0.14);
+  }
+}
+
+@keyframes windGust {
+  0%, 65%, 100% { transform: skewX(0deg) translateX(0); }
+  70%           { transform: skewX(0.3deg) translateX(3px); }
+  80%           { transform: skewX(-0.2deg) translateX(-2px); }
+  92%           { transform: skewX(0.1deg) translateX(1px); }
+}
+
+@keyframes dapple {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.12); }
+}
+
+@keyframes vignetteBreath {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.65; }
+}
+
+@keyframes leafFall1 {
+  0%   { transform: translateY(-20px) translateX(0)    rotate(0deg);   opacity: 0; }
+  8%   { opacity: 0.7; }
+  25%  { transform: translateY(25vh)  translateX(40px)  rotate(190deg); }
+  50%  { transform: translateY(50vh)  translateX(-25px) rotate(380deg); }
+  75%  { transform: translateY(75vh)  translateX(55px)  rotate(560deg); }
+  92%  { opacity: 0.3; }
+  100% { transform: translateY(105vh) translateX(15px)  rotate(720deg); opacity: 0; }
+}
+
+@keyframes leafFall2 {
+  0%   { transform: translateY(-20px) translateX(0)     rotate(0deg);   opacity: 0; }
+  8%   { opacity: 0.6; }
+  30%  { transform: translateY(28vh)  translateX(-35px)  rotate(170deg); }
+  55%  { transform: translateY(52vh)  translateX(30px)   rotate(350deg); }
+  80%  { transform: translateY(80vh)  translateX(-40px)  rotate(530deg); }
+  92%  { opacity: 0.25; }
+  100% { transform: translateY(105vh) translateX(-10px)  rotate(680deg); opacity: 0; }
+}
+
+@keyframes leafFall3 {
+  0%   { transform: translateY(-20px) translateX(0)     rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.5; }
+  20%  { transform: translateY(18vh)  translateX(25px)   rotate(120deg); }
+  50%  { transform: translateY(48vh)  translateX(-35px)  rotate(310deg); }
+  75%  { transform: translateY(74vh)  translateX(45px)   rotate(500deg); }
+  90%  { opacity: 0.2; }
+  100% { transform: translateY(105vh) translateX(20px)   rotate(660deg); opacity: 0; }
+}
+
+body.mood-tree .BufferWindow {
+  animation: canopyGlow 7s ease-in-out infinite;
+}
+
+/* Dappled sunlight + forest vignette (always exist, fade in when mood-tree) */
+#gameport::before,
+#gameport::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+#gameport::before {
+  z-index: 10000;
+  background:
+    radial-gradient(ellipse 60px 45px at 15% 20%, rgba(140,200,70,0.06), transparent 70%),
+    radial-gradient(ellipse 45px 60px at 55% 12%, rgba(160,210,90,0.05), transparent 70%),
+    radial-gradient(ellipse 55px 40px at 78% 40%, rgba(120,190,60,0.05), transparent 70%),
+    radial-gradient(ellipse 70px 55px at 35% 60%, rgba(150,210,80,0.06), transparent 70%),
+    radial-gradient(ellipse 40px 50px at 8% 75%,  rgba(130,195,65,0.04), transparent 70%),
+    radial-gradient(ellipse 50px 45px at 88% 70%, rgba(145,205,75,0.05), transparent 70%);
+  animation: dapple 8s ease-in-out infinite;
+}
+
+#gameport::after {
+  z-index: 10001;
+  box-shadow: inset 0 0 120px 50px rgba(0,0,0,0.25);
+  animation: vignetteBreath 6s ease-in-out infinite;
+}
+
+body.mood-tree #gameport::before,
+body.mood-tree #gameport::after {
+  opacity: 1;
+}
+
+/* Falling leaf particles */
+.leaf {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10002;
+  border-radius: 50% 0 50% 0;
+  opacity: 0;
+  filter: blur(0.3px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EVENT: Egg taken — golden explosion, screen shake, shockwave
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes eggFlash {
+  0%   { opacity: 0; }
+  6%   { opacity: 1; }
+  12%  { opacity: 0.4; }
+  20%  { opacity: 0.85; }
+  35%  { opacity: 0.5; }
+  60%  { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+
+@keyframes eggFlash2 {
+  0%   { opacity: 0; transform: scale(1); }
+  10%  { opacity: 0.6; transform: scale(1.02); }
+  25%  { opacity: 0.3; }
+  40%  { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.98); }
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  5%  { transform: translate(-10px, 6px) rotate(-0.5deg); }
+  10% { transform: translate(9px, -8px) rotate(0.6deg); }
+  15% { transform: translate(-8px, 5px) rotate(-0.4deg); }
+  20% { transform: translate(10px, -4px) rotate(0.5deg); }
+  25% { transform: translate(-6px, 7px) rotate(-0.3deg); }
+  30% { transform: translate(7px, -6px) rotate(0.4deg); }
+  35% { transform: translate(-9px, 3px) rotate(-0.5deg); }
+  40% { transform: translate(5px, -3px) rotate(0.2deg); }
+  50% { transform: translate(-3px, 4px) rotate(-0.1deg); }
+  60% { transform: translate(3px, -2px) rotate(0.1deg); }
+  75% { transform: translate(-1px, 1px) rotate(0deg); }
+}
+
+@keyframes shockwaveRing {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: 0.8; border-width: 3px; }
+  100% { transform: translate(-50%,-50%) scale(5); opacity: 0;   border-width: 0.5px; }
+}
+
+@keyframes sparkFly {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--sx), var(--sy)) scale(0); opacity: 0; }
+}
+
+@keyframes colorInvert {
+  0%, 100% { filter: none; }
+  6%       { filter: invert(1) hue-rotate(180deg) brightness(1.5); }
+  12%      { filter: none; }
+  18%      { filter: invert(0.3) hue-rotate(60deg); }
+  24%      { filter: none; }
+}
+
+@keyframes textGolden {
+  0%   { color: inherit; text-shadow: none; }
+  15%  { color: #ffd700; text-shadow: 0 0 12px rgba(255,215,0,0.6), 0 0 30px rgba(255,165,0,0.3), 0 0 60px rgba(255,100,0,0.15); }
+  50%  { color: #ffe870; text-shadow: 0 0 8px rgba(255,215,0,0.3); }
+  100% { color: inherit; text-shadow: none; }
+}
+
+.egg-overlay {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 99998;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(255,250,200,0.95) 0%, rgba(255,225,100,0.7) 15%,
+    rgba(255,180,50,0.4) 35%, rgba(255,140,0,0.12) 55%, transparent 72%);
+  animation: eggFlash 2s ease-out forwards;
+}
+
+.egg-overlay-2 {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 99997;
+  background: linear-gradient(135deg,
+    rgba(255,215,0,0.25), transparent 30%,
+    rgba(255,180,0,0.15) 50%, transparent 70%,
+    rgba(255,200,50,0.25));
+  animation: eggFlash2 2.5s ease-out forwards;
+}
+
+.egg-ring {
+  position: fixed; top: 50%; left: 50%;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,215,0,0.5);
+  box-shadow: 0 0 20px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.1);
+  pointer-events: none; z-index: 100000;
+  animation: shockwaveRing var(--ring-dur, 1.2s) var(--ring-delay, 0s) ease-out forwards;
+}
+
+.egg-spark {
+  position: fixed;
+  width: var(--spark-size, 5px);
+  height: var(--spark-size, 5px);
+  border-radius: 50%;
+  background: var(--spark-color, #ffd700);
+  box-shadow: 0 0 8px var(--spark-color, #ffd700), 0 0 16px rgba(255,200,0,0.3);
+  pointer-events: none; z-index: 100001;
+  animation: sparkFly var(--spark-dur, 1s) ease-out forwards;
+}
+
+body.egg-shake #gameport {
+  animation: screenShake 0.9s ease-out;
+}
+
+body.egg-invert {
+  animation: colorInvert 0.8s ease-out;
+}
+
+body.egg-text-glow .BufferLine:last-of-type {
+  animation: textGolden 2.5s ease-out;
 }
 </style>
 
@@ -197,6 +541,7 @@ div#gameport {
     <img src="lib/parchment/waiting.gif" alt="Loading" style="opacity:0.5"><br>
     <em>Loading...</em>
   </div>
+  <div class="crt-scanbar"></div>
   <div id="errorpane" style="display:none;">
     <div id="errorcontent">...</div>
   </div>
@@ -276,11 +621,9 @@ div#gameport {
     root.setProperty('--mood-ui-bg', p.uiBg);
     root.setProperty('--mood-border', p.border);
 
-    // Direct fallback for elements outside CSS var() cascade
+    // Direct fallback for gameport background
     var gp = document.getElementById('gameport');
     if (gp) gp.style.backgroundColor = p.uiBg;
-    var frames = document.querySelectorAll('.WindowFrame');
-    for (var i = 0; i < frames.length; i++) frames[i].style.backgroundColor = p.uiBg;
   }
 
   function extractRoomName(gridWindow) {
@@ -295,6 +638,7 @@ div#gameport {
   function onRoomChange(roomName) {
     if (roomName === currentRoom) return;
     currentRoom = roomName;
+    handleRoomEffects(roomName);
     var zone = ROOM_ZONES[roomName] || 'cave';
     if (zone === currentZone) return;
     currentZone = zone;
@@ -323,10 +667,182 @@ div#gameport {
     }, 500);
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startObserving);
-  } else {
+  // ── Room-specific visual effects ──
+
+  var leafContainer = null;
+  var LEAF_COLORS = ['#4a8030','#5a9035','#3d7028','#6aaa40','#8ab850',
+                     '#a0c060','#7a6030','#9a8040','#c4a050','#b8a040'];
+  var LEAF_ANIMS = ['leafFall1','leafFall2','leafFall3'];
+
+  function spawnLeaves() {
+    if (leafContainer) return;
+    leafContainer = document.createElement('div');
+    leafContainer.id = 'leaf-container';
+    document.body.appendChild(leafContainer);
+    for (var i = 0; i < 24; i++) {
+      var leaf = document.createElement('div');
+      leaf.className = 'leaf';
+      var size = 6 + Math.random() * 10;
+      leaf.style.left = (Math.random() * 100) + '%';
+      leaf.style.width = size + 'px';
+      leaf.style.height = (size * 0.65) + 'px';
+      leaf.style.background = LEAF_COLORS[Math.floor(Math.random() * LEAF_COLORS.length)];
+      leaf.style.animationName = LEAF_ANIMS[Math.floor(Math.random() * LEAF_ANIMS.length)];
+      leaf.style.animationDuration = (7 + Math.random() * 8) + 's';
+      leaf.style.animationDelay = (Math.random() * 12) + 's';
+      leaf.style.animationTimingFunction = 'ease-in-out';
+      leaf.style.animationIterationCount = 'infinite';
+      leafContainer.appendChild(leaf);
+    }
+  }
+
+  function clearLeaves() {
+    if (leafContainer) { leafContainer.remove(); leafContainer = null; }
+  }
+
+  function handleRoomEffects(roomName) {
+    if (roomName === 'Up a Tree') {
+      document.body.classList.add('mood-tree');
+      spawnLeaves();
+    } else {
+      document.body.classList.remove('mood-tree');
+      clearLeaves();
+    }
+  }
+
+  // ── Egg-taken golden flash event ──
+
+  var lastNodeText = '';
+  var eggFlashCooldown = false;
+
+  function triggerEggFlash() {
+    if (eggFlashCooldown) return;
+    eggFlashCooldown = true;
+    console.log('[mood] EGG TAKEN — golden flash!');
+
+    // Double flash overlay
+    var ov1 = document.createElement('div'); ov1.className = 'egg-overlay';
+    var ov2 = document.createElement('div'); ov2.className = 'egg-overlay-2';
+    document.body.appendChild(ov1);
+    document.body.appendChild(ov2);
+
+    // Shockwave rings (staggered)
+    for (var r = 0; r < 5; r++) {
+      var ring = document.createElement('div');
+      ring.className = 'egg-ring';
+      ring.style.setProperty('--ring-dur', (1 + r * 0.25) + 's');
+      ring.style.setProperty('--ring-delay', (r * 0.12) + 's');
+      document.body.appendChild(ring);
+    }
+
+    // Spark burst — 32 sparks radiating outward
+    var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    var sparkColors = ['#ffd700','#ffb800','#ff8c00','#fff4c0','#ffe066','#ffffff','#ffaa00'];
+    for (var s = 0; s < 32; s++) {
+      var spark = document.createElement('div');
+      spark.className = 'egg-spark';
+      var angle = (s / 32) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+      var dist = 100 + Math.random() * 300;
+      spark.style.left = cx + 'px';
+      spark.style.top = cy + 'px';
+      spark.style.setProperty('--sx', (Math.cos(angle) * dist) + 'px');
+      spark.style.setProperty('--sy', (Math.sin(angle) * dist) + 'px');
+      spark.style.setProperty('--spark-size', (3 + Math.random() * 7) + 'px');
+      spark.style.setProperty('--spark-dur', (0.5 + Math.random() * 0.9) + 's');
+      spark.style.setProperty('--spark-color', sparkColors[Math.floor(Math.random() * sparkColors.length)]);
+      document.body.appendChild(spark);
+    }
+
+    // Body-level effects: screen shake + brief color invert + golden text
+    document.body.classList.add('egg-shake', 'egg-invert', 'egg-text-glow');
+
+    // Cleanup after animations finish
+    setTimeout(function() {
+      document.body.classList.remove('egg-shake', 'egg-invert', 'egg-text-glow');
+      var els = document.querySelectorAll('.egg-overlay,.egg-overlay-2,.egg-ring,.egg-spark');
+      for (var i = 0; i < els.length; i++) els[i].remove();
+      eggFlashCooldown = false;
+    }, 3500);
+  }
+
+  // Watch buffer text for egg-related "Taken" responses
+  function watchBuffer() {
+    function tryAttach() {
+      var buf = document.querySelector('.BufferWindow');
+      if (!buf) return false;
+      new MutationObserver(function(muts) {
+        for (var i = 0; i < muts.length; i++) {
+          for (var j = 0; j < muts[i].addedNodes.length; j++) {
+            var node = muts[i].addedNodes[j];
+            if (node.nodeType !== 1) continue;
+            var text = (node.textContent || '').trim();
+            if (/^taken\.?$/i.test(text) && /\begg\b/.test(lastNodeText)) {
+              triggerEggFlash();
+            }
+            if (text.length > 0) lastNodeText = text.toLowerCase();
+          }
+        }
+      }).observe(buf, { childList: true, subtree: true });
+      return true;
+    }
+    if (!tryAttach()) {
+      var poll = setInterval(function() { if (tryAttach()) clearInterval(poll); }, 500);
+    }
+  }
+
+  // ── CRT intro mode — active until first user input ──
+
+  function startCRT() {
+    document.body.classList.add('crt-intro');
+  }
+
+  function endCRT() {
+    if (!document.body.classList.contains('crt-intro')) return;
+    document.body.classList.remove('crt-intro');
+    document.body.classList.add('crt-fade');
+    setTimeout(function() {
+      document.body.classList.remove('crt-fade');
+    }, 2500);
+    console.log('[mood] CRT intro ended');
+  }
+
+  function watchForFirstInput() {
+    function tryAttachInput() {
+      var buf = document.querySelector('.BufferWindow');
+      if (!buf) return false;
+      var inputObserver = new MutationObserver(function(muts) {
+        for (var i = 0; i < muts.length; i++) {
+          for (var j = 0; j < muts[i].addedNodes.length; j++) {
+            var node = muts[i].addedNodes[j];
+            if (node.nodeType !== 1) continue;
+            var inp = node.querySelector && node.querySelector('.Input');
+            if (inp) {
+              endCRT();
+              inputObserver.disconnect();
+              return;
+            }
+          }
+        }
+      });
+      inputObserver.observe(buf, { childList: true, subtree: true });
+      return true;
+    }
+    if (!tryAttachInput()) {
+      var poll = setInterval(function() { if (tryAttachInput()) clearInterval(poll); }, 500);
+    }
+  }
+
+  function init() {
+    startCRT();
     startObserving();
+    watchBuffer();
+    watchForFirstInput();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 })();
 </script>

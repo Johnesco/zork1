@@ -129,6 +129,22 @@ Parchment 2025.1.14+ shipped native Glk sound channels via Emglken WASM + AsyncG
 
 Applying modern interactive fiction writing best practices for fluid, fun gameplay. Focuses on richer parser responses, smoother player interactions, better default messages, and more helpful feedback. Inherits all v3 audio (native Glk sound via .gblorb) and expanded room descriptions for aboveground areas.
 
+**CSS Atmospheric Effects** — v4 and current versions include a mood theming system in `play.html` that transforms the player into an immersive atmospheric experience:
+
+- **Mood palette zones**: Each room is mapped to a color zone (forest, house, cave, water, rapids, loud, hades, mine, machinery, silence). Room changes trigger smooth CSS variable transitions via Houdini `@property` color interpolation (1.2s ease-in-out).
+- **Reversed status bar**: The GridWindow (status line) uses buffer text color as background with bold black text — inverted from the normal scheme. Uses `!important` to override GlkOte inline styles.
+- **CRT intro**: Green terminal aesthetic on startup (`#00ff41` text, scanline overlay, flickering scanbar) that fades out after the first user input.
+- **Up a Tree effects**: When in "Up a Tree", a forest canopy glow overlay and 24 animated falling leaves appear (randomized sizes, speeds, sway). Cleaned up on room exit.
+- **Egg taken flash**: Taking the jewel-encrusted egg triggers a golden explosion — double flash overlay, 5 staggered shockwave rings, 32 radiating sparks, screen shake, and brief color inversion. Detection uses MutationObserver tracking of the previous buffer node text (`lastNodeText`), not `.Input` spans (Parchment doesn't use them in WASM mode).
+- **Typography**: 20% larger fonts (19px buffer, 17px grid) via `--glkote-buffer-size` / `--glkote-grid-size`.
+- **Text effects**: Fade-in animation on new buffer content, subtle text shadows matching the mood accent color.
+- **Synchronized transitions**: All color changes (CSS vars, backgrounds, text) use coordinated 1.2s timing.
+
+These effects are applied in three places:
+- `web/play.html` — local development player (always active)
+- `ifhub/games/zork1-v4/play.html` — per-game IF Hub page (always active)
+- `ifhub/play.html` — shared IF Hub player (version-gated: `body.zork1-enhanced` class added only for v4+ via binary path regex)
+
 ## Web Version Architecture
 
 ### Per-Version Contents
