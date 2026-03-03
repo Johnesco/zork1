@@ -2310,6 +2310,23 @@ Instead of jumping in Dome Room:
 	say "This was not a very safe place to try jumping.";
 	die saying "[jumploss]"
 
+[ZIL V-LEAP: Kitchen chimney shaft — DOWN TO STUDIO IF FALSE-FLAG (always blocked)]
+Instead of jumping in Kitchen:
+	say "This was not a very safe place to try jumping.";
+	die saying "[jumploss]"
+
+[ZIL V-LEAP: Altar — DOWN TO TINY-CAVE IF COFFIN-CURE (blocked when carrying coffin)]
+Instead of jumping in South Temple:
+	if the player carries the gold coffin:
+		say "This was not a very safe place to try jumping.";
+		die saying "[jumploss]";
+	continue the action.
+
+[ZIL V-LEAP: Up-a-Tree — special non-fatal case, safely jump down]
+Instead of jumping in Up a Tree:
+	say "In a feat of unaccustomed daring, you manage to land on your feet without killing yourself.";
+	try going down.
+
 Instead of jumping in Canyon View:
 	die saying "Nice view, lousy place to jump."
 
