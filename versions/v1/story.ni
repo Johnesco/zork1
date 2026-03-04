@@ -1,4 +1,4 @@
-"Zork I - The Great Underground Empire" by "Infocom (translated to Inform 7)"
+"Zork I: The Great Underground Empire" by "John Escobedo (after Infocom)"
 
 The story headline is "An Interactive Fiction".
 The story genre is "Fantasy".
@@ -19,7 +19,7 @@ The player is in West-of-House.
 When play begins:
 	now the left hand status line is "[the player's surroundings] [if in darkness]   [otherwise]   Score: [score]/[turn count][end if]";
 	now the right hand status line is "";
-	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Infocom interactive fiction - a fantasy story[line break]Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Release 88 / Serial number 840726[paragraph break]".
+	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]v1: The Port[line break]An Inform 7 translation by John Escobedo[line break]Based on the original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson[line break]ZIL source released under the MIT License by Activision[paragraph break]".
 
 Chapter 2 - Verbosity Modes
 
@@ -98,9 +98,6 @@ To die saying (reason - text):
 		end the story;
 		stop;
 	increase the player-deaths by 1;
-	if the match-lit is true:
-		now the match-lit is false;
-		now the match-timer is 0;
 	if South Temple is visited:
 		say "As you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. The objects in the dungeon appear indistinct, bleached of color, even unreal.[paragraph break]";
 		now the player-is-dead is true;
@@ -351,7 +348,6 @@ Carry out lighting-match:
 		say "This room is drafty, and the match goes out instantly." instead;
 	now the match-lit is true;
 	now the match-timer is 2;
-	play the sound of match-sfx as sfx;
 	say "One of the matches starts to burn."
 
 Every turn when the match-lit is true (this is the match burn timer rule):
@@ -405,258 +401,6 @@ After taking something when the point-value of the noun is greater than 0 (this 
 Chapter 9 - Lucky Flag
 
 The lucky-flag is a truth state that varies. The lucky-flag is true.
-
-Chapter 10 - Sound and Audio System
-
-Section 0 - Sound Toggle
-
-The sound-enabled is a truth state that varies. The sound-enabled is false.
-
-When play begins (this is the ask about sound rule):
-	say "Do you want sound? (y/n) ";
-	if the player consents:
-		now the sound-enabled is true;
-		say "[line break]Sound enabled.[paragraph break]";
-		follow the ambient audio zone rule;
-	otherwise:
-		say "[line break]Sound disabled. Type SOUND ON during play to enable it.[paragraph break]".
-
-Enabling sound is an action out of world.
-Understand "sound on" as enabling sound.
-Carry out enabling sound:
-	now the sound-enabled is true;
-	now the current-zone is zone-silence;
-	say "Sound enabled.";
-	follow the ambient audio zone rule.
-
-Disabling sound is an action out of world.
-Understand "sound off" as disabling sound.
-Carry out disabling sound:
-	now the sound-enabled is false;
-	stop ambient sound;
-	say "Sound disabled."
-
-Section 1 - Sound Declarations
-
-[Ambient zone sounds]
-Sound of forest-ambient is the file "forest.ogg".
-Sound of house-ambient is the file "house.ogg".
-Sound of cave-ambient is the file "cave.ogg".
-Sound of water-ambient is the file "water.ogg".
-Sound of rapids-ambient is the file "rapids.ogg".
-Sound of loud-ambient is the file "loud.ogg".
-Sound of hades-ambient is the file "hades.ogg".
-Sound of mine-ambient is the file "mine.ogg".
-Sound of machinery-ambient is the file "machinery.ogg".
-
-[Sound effects]
-Sound of bird-sfx is the file "bird.ogg".
-Sound of creak-sfx is the file "creak.ogg".
-Sound of window-sfx is the file "window.ogg".
-Sound of trapdoor-sfx is the file "trapdoor.ogg".
-Sound of bell-sfx is the file "bell.ogg".
-Sound of spirits-sfx is the file "spirits.ogg".
-Sound of bat-sfx is the file "bat.ogg".
-Sound of footsteps-sfx is the file "footsteps.ogg".
-Sound of machine-sfx is the file "machine.ogg".
-Sound of inflate-sfx is the file "inflate.ogg".
-Sound of coffin-sfx is the file "coffin.ogg".
-Sound of match-sfx is the file "match.ogg".
-Sound of grue-sfx is the file "grue.ogg".
-Sound of flood-sfx is the file "flood.ogg".
-Sound of sword-sfx is the file "sword.ogg".
-Sound of laugh-sfx is the file "laugh.ogg".
-
-Section 2 - Audio Zones
-
-Audio-zone is a kind of value. The audio-zones are zone-silence, zone-forest, zone-house, zone-cave, zone-water, zone-rapids, zone-loud, zone-hades, zone-mine, and zone-machinery.
-
-A room has an audio-zone. The audio-zone of a room is usually zone-cave.
-
-The current-zone is an audio-zone that varies. The current-zone is zone-silence.
-
-Section 3 - Zone Room Assignments
-
-[Forest zone - outdoor above-ground areas]
-The audio-zone of West-of-House is zone-forest.
-The audio-zone of North-of-House is zone-forest.
-The audio-zone of South-of-House is zone-forest.
-The audio-zone of Behind House is zone-forest.
-The audio-zone of Forest1 is zone-forest.
-The audio-zone of Forest2 is zone-forest.
-The audio-zone of Forest3 is zone-forest.
-The audio-zone of Mountains is zone-forest.
-The audio-zone of Forest Path is zone-forest.
-The audio-zone of Up a Tree is zone-forest.
-The audio-zone of Clearing is zone-forest.
-The audio-zone of Grating Clearing is zone-forest.
-The audio-zone of Canyon View is zone-forest.
-The audio-zone of Rocky Ledge is zone-forest.
-The audio-zone of On-the-Rainbow is zone-forest.
-The audio-zone of End of Rainbow is zone-forest.
-The audio-zone of Stone Barrow is zone-forest.
-
-[House zone - house interior]
-The audio-zone of Kitchen is zone-house.
-The audio-zone of Living Room is zone-house.
-The audio-zone of Attic is zone-house.
-
-[Water zone - calm river and reservoir areas]
-The audio-zone of River1 is zone-water.
-The audio-zone of River2 is zone-water.
-The audio-zone of River3 is zone-water.
-The audio-zone of White Cliffs North is zone-water.
-The audio-zone of White Cliffs South is zone-water.
-The audio-zone of Shore is zone-water.
-The audio-zone of Sandy Beach is zone-water.
-The audio-zone of Sandy Cave is zone-water.
-The audio-zone of In-Stream is zone-water.
-The audio-zone of Stream View is zone-water.
-The audio-zone of Dam-Base is zone-water.
-The audio-zone of Dam-Lobby is zone-water.
-The audio-zone of Reservoir-South is zone-water.
-The audio-zone of Reservoir-North is zone-water.
-The audio-zone of Reservoir is zone-water.
-
-[Rapids zone - fast water areas]
-The audio-zone of Aragain Falls is zone-rapids.
-The audio-zone of Canyon Bottom is zone-rapids.
-The audio-zone of River4 is zone-rapids.
-The audio-zone of River5 is zone-rapids.
-
-[Loud Room zone]
-The audio-zone of Loud Room is zone-loud.
-
-[Hades zone]
-The audio-zone of Entrance to Hades is zone-hades.
-The audio-zone of Land of the Dead is zone-hades.
-
-[Mine zone - coal mine areas]
-The audio-zone of Mine Entrance is zone-mine.
-The audio-zone of Squeaky Room is zone-mine.
-The audio-zone of Bat-Room is zone-mine.
-The audio-zone of Shaft Room is zone-mine.
-The audio-zone of Smelly Room is zone-mine.
-The audio-zone of Gas Room is zone-mine.
-The audio-zone of Mine1 is zone-mine.
-The audio-zone of Mine2 is zone-mine.
-The audio-zone of Mine3 is zone-mine.
-The audio-zone of Mine4 is zone-mine.
-The audio-zone of Ladder Top is zone-mine.
-The audio-zone of Ladder Bottom is zone-mine.
-The audio-zone of Dead End 5 is zone-mine.
-The audio-zone of Timber Room is zone-mine.
-The audio-zone of Drafty Room is zone-mine.
-The audio-zone of Slide Room is zone-mine.
-
-[Machinery zone - dam machinery areas]
-The audio-zone of Dam-Room is zone-machinery.
-The audio-zone of Maintenance Room is zone-machinery.
-The audio-zone of Machine-Room is zone-machinery.
-
-Section 4 - Background Channel Sound Phrases (in place of Sounds by Dannii Willis in Standard Rules - unindexed)
-
-[Inform 7 creates two Glk sound channels at startup: gg_foregroundchan and
-gg_backgroundchan. The standard "play the sound of X" phrase always uses the
-foreground channel, so playing SFX interrupts ambient. These I6 inclusions
-let us play ambient on the background channel independently.]
-
-To play (SFX - sound name) as ambient looping:
-	(- PlayOnBackgroundChannel({SFX}, -1); -).
-
-To play (SFX - sound name) as sfx:
-	(- if ((+ sound-enabled +)) VM_SoundEffect(ResourceIDsOfSounds-->{SFX}); -).
-
-To stop ambient sound:
-	(- StopBackgroundChannel(); -).
-
-Include (-
-Constant AMBIENT_VOL = 16384;       ! ~25% of max volume (65536)
-Constant CROSSFADE_MS = 2000;        ! 2 second crossfade between zones
-Constant FADEIN_SILENCE_MS = 5000;   ! 5 second fade-in from silence
-
-Global bg_chan_b = 0;                 ! Second background channel for crossfading
-Global bg_active = 0;                ! 0 = gg_backgroundchan, 1 = bg_chan_b
-Global ambient_playing = 0;          ! Whether ambient sound is currently active
-
-[ PlayOnBackgroundChannel resource_ID repeats res active_chan inactive_chan;
-	res = ResourceIDsOfSounds-->resource_ID;
-	if (res == 0) rtrue;
-	if (~~glk_gestalt(gestalt_Sound, 0)) rtrue;
-
-	! Ensure both background channels exist
-	if (gg_backgroundchan == 0)
-		gg_backgroundchan = glk_schannel_create(GG_BACKGROUNDCHAN_ROCK);
-	if (bg_chan_b == 0)
-		bg_chan_b = glk_schannel_create(412);
-
-	if (ambient_playing) {
-		! Crossfade: fade out current, fade in new on alternate channel
-		if (bg_active == 0) {
-			active_chan = gg_backgroundchan;
-			inactive_chan = bg_chan_b;
-		} else {
-			active_chan = bg_chan_b;
-			inactive_chan = gg_backgroundchan;
-		}
-		! Fade out the currently playing channel over 2 seconds
-		glk_schannel_set_volume_ext(active_chan, 0, CROSSFADE_MS, 0);
-		! Start new sound on alternate channel at volume 0, then fade in
-		glk_schannel_set_volume(inactive_chan, 0);
-		glk_schannel_play_ext(inactive_chan, res, repeats, 0);
-		glk_schannel_set_volume_ext(inactive_chan, AMBIENT_VOL, CROSSFADE_MS, 0);
-		! Toggle active channel
-		bg_active = 1 - bg_active;
-	} else {
-		! No ambient currently playing - fade in from zero over 5 seconds
-		if (bg_active == 0)
-			active_chan = gg_backgroundchan;
-		else
-			active_chan = bg_chan_b;
-		glk_schannel_set_volume(active_chan, 0);
-		glk_schannel_play_ext(active_chan, res, repeats, 0);
-		glk_schannel_set_volume_ext(active_chan, AMBIENT_VOL, FADEIN_SILENCE_MS, 0);
-	}
-	ambient_playing = 1;
-];
-
-[ StopBackgroundChannel;
-	if (~~glk_gestalt(gestalt_Sound, 0)) rtrue;
-	! Fade out both channels (active + any still fading from previous crossfade)
-	if (gg_backgroundchan)
-		glk_schannel_set_volume_ext(gg_backgroundchan, 0, CROSSFADE_MS, 0);
-	if (bg_chan_b)
-		glk_schannel_set_volume_ext(bg_chan_b, 0, CROSSFADE_MS, 0);
-	ambient_playing = 0;
-];
--).
-
-Section 5 - Ambient Audio Rule
-
-Every turn when the sound-enabled is true (this is the ambient audio zone rule):
-	let Z be the audio-zone of the location;
-	if Z is not the current-zone:
-		now the current-zone is Z;
-		if Z is zone-silence:
-			stop ambient sound;
-		otherwise if Z is zone-forest:
-			play the sound of forest-ambient as ambient looping;
-		otherwise if Z is zone-house:
-			play the sound of house-ambient as ambient looping;
-		otherwise if Z is zone-cave:
-			play the sound of cave-ambient as ambient looping;
-		otherwise if Z is zone-water:
-			play the sound of water-ambient as ambient looping;
-		otherwise if Z is zone-rapids:
-			play the sound of rapids-ambient as ambient looping;
-		otherwise if Z is zone-loud:
-			play the sound of loud-ambient as ambient looping;
-		otherwise if Z is zone-hades:
-			play the sound of hades-ambient as ambient looping;
-		otherwise if Z is zone-mine:
-			play the sound of mine-ambient as ambient looping;
-		otherwise if Z is zone-machinery:
-			play the sound of machinery-ambient as ambient looping.
 
 Part 2 - The World
 
@@ -750,16 +494,16 @@ Instead of going north in South-of-House:
 
 Section 4 - Forest Rooms
 
-Forest1 is a room. The printed name of Forest1 is "Forest". "This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss."
+Forest1 is a room. The printed name of Forest1 is "Forest". "This is a forest, with trees in all directions. To the east, there appears to be sunlight."
 Forest1 is in Forest Area.
 Forest1 is west of West-of-House.
 
-Forest2 is a room. The printed name of Forest2 is "Forest". "This is a dimly lit forest, with large trees all around. The canopy here is thick, allowing only thin shafts of light to reach the forest floor. A carpet of pine needles muffles your footsteps."
+Forest2 is a room. The printed name of Forest2 is "Forest". "This is a dimly lit forest, with large trees all around."
 Forest2 is in Forest Area.
 
 Mountains is a room. The printed name of Mountains is "Forest". "The forest thins out, revealing impassable mountains."
 
-Forest3 is a room. The printed name of Forest3 is "Forest". "This is a dimly lit forest, with large trees all around. Gnarled roots break through the soil underfoot, and the air is heavy with the smell of wet bark. Somewhere nearby, water drips steadily from the leaves."
+Forest3 is a room. The printed name of Forest3 is "Forest". "This is a dimly lit forest, with large trees all around."
 Forest3 is in Forest Area.
 Forest3 is south of South-of-House.
 Northwest of Forest3 is South-of-House.
@@ -843,7 +587,7 @@ Instead of going north in Grating Clearing:
 	say "The forest becomes impenetrable to the north."
 
 Instead of going down in Grating Clearing:
-	if the grate is not visible:
+	if the grate is not zil-visible:
 		say "You can't go that way." instead;
 	if the grate is open:
 		say "(through the grating)[line break]";
@@ -866,7 +610,6 @@ Instead of listening to the forest-songbird:
 
 Every turn when the player is in the Forest Area (this is the songbird singing rule):
 	if a random chance of 15 in 100 succeeds:
-		play the sound of bird-sfx as sfx;
 		say "You hear in the distance the chirping of a song bird.[line break]".
 
 Section 5a - Forest Pseudo-Object
@@ -904,10 +647,6 @@ The small mailbox is a closed openable container in West-of-House. "There is a s
 The description of the small mailbox is "It's a small mailbox."
 Understand "mailbox" and "box" as the small mailbox.
 The carrying capacity of the small mailbox is 2.
-
-After opening the small mailbox:
-	play the sound of creak-sfx as sfx;
-	continue the action.
 
 Instead of taking the small mailbox:
 	say "It is securely anchored."
@@ -965,7 +704,6 @@ Instead of opening the kitchen-window:
 		say "It is already open." instead;
 	now the kitchen-window is open;
 	now the kitchen-window-touched is true;
-	play the sound of window-sfx as sfx;
 	say "With great effort, you open the window far enough to allow entry."
 
 Instead of closing the kitchen-window:
@@ -1114,7 +852,7 @@ Instead of eating the clove of garlic:
 
 Section 2 - Attic
 
-Attic is a room. "This is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down."
+Attic is a room. "This is the attic. The only exit is a stairway leading down."
 Attic is in House Interior. Attic is a dark room.
 
 The attic table is a supporter in Attic. The attic table is scenery.
@@ -1239,7 +977,7 @@ The trap door is below Living Room and above Cellar.
 
 A thing can be zil-visible or zil-invisible. A thing is usually zil-visible. The trap door is zil-invisible.
 
-Rule for writing a paragraph about a zil-invisible thing: now the item described is mentioned.
+Rule for writing a paragraph about a zil-invisible thing: do nothing.
 Before printing the locale description of a room (called the place):
 	repeat with item running through zil-invisible things in the place:
 		now item is mentioned.
@@ -1437,7 +1175,6 @@ After going down from Living Room to Cellar:
 	if the trap-door-touched is false:
 		now the trap-door-touched is true;
 		now the trap door is not open;
-		play the sound of trapdoor-sfx as sfx;
 		say "The trap door crashes shut, and you hear someone barring it.[paragraph break]";
 	continue the action.
 
@@ -1659,6 +1396,7 @@ Chapter 4 - Troll NPC
 The troll is a person in Troll-Room. "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room[otherwise]A troll is here[end if]."
 Understand "troll" and "nasty" as the troll.
 The description of the troll is "[if the troll is defeated]The troll is dead.[otherwise if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A troll is here.[end if]".
+
 The troll-strength is a number that varies. The troll-strength is 2.
 The troll-unconscious is a truth state that varies. The troll-unconscious is false.
 The troll-recovery-chance is a number that varies. The troll-recovery-chance is 0.
@@ -1671,8 +1409,6 @@ Instead of taking the bloody axe when the troll is not defeated and the troll ca
 	say "The troll swings it out of your reach."
 
 Instead of attacking the troll:
-	if the troll is not in the location of the player:
-		say "There is no troll here." instead;
 	if the troll is defeated:
 		say "The troll is already dead.";
 	otherwise if the troll-unconscious is true:
@@ -1763,8 +1499,6 @@ Instead of listening to the troll:
 	say "Every so often the troll says something, probably uncomplimentary, in his guttural tongue."
 
 Instead of throwing something at the troll:
-	if the troll is not in the location of the player:
-		say "There is no troll here." instead;
 	if the noun is a weapon:
 		if a random chance of 1 in 5 succeeds:
 			say "The troll, who is remarkably coordinated, catches the [noun] and, not having the most discriminating tastes, gleefully eats it. Poor troll, he dies from an internal hemorrhage and his carcass disappears in a sinister black fog.";
@@ -1787,7 +1521,7 @@ Instead of answering the troll that "hello":
 	if the troll is defeated:
 		say "Unfortunately, the troll can[apostrophe]t hear you."
 
-Chapter 5 - East-of-Chasm
+Chapter 4 - East-of-Chasm
 
 East-of-Chasm is a dark room. "You are on the east edge of a chasm, the bottom of which cannot be seen. A narrow passage goes north, and the path you are on continues to the east."
 The printed name of East-of-Chasm is "East of Chasm".
@@ -1842,7 +1576,7 @@ Instead of attacking the painting:
 	now the point-value of the painting is 0;
 	say "Congratulations! Unlike the other vandals, who merely stole the artist's masterpieces, you have destroyed one."
 
-Chapter 6 - Maze
+Chapter 5 - Maze
 
 Maze1 is a dark room. The printed name of Maze1 is "Maze". "This is part of a maze of twisty little passages, all alike."
 Maze1 is in the Underground.
@@ -1969,9 +1703,6 @@ The grate is a door. The grate is scenery. The grate is closed and openable and 
 Understand "grate" and "grating" as the grate.
 The grate is above Grating Room and below Grating Clearing.
 
-Instead of locking the grate with something when the grate is open:
-	say "You can[apostrophe]t lock an open grate."
-
 Instead of locking the grate with something when the player is in Grating Clearing:
 	say "You can[apostrophe]t lock it from this side."
 
@@ -2017,7 +1748,7 @@ Maze15 is a dark room. The printed name of Maze15 is "Maze". "This is part of a 
 Maze15 is in the Underground.
 West of Maze15 is Maze14. South of Maze15 is Maze7. Southeast of Maze15 is Cyclops-Room.
 
-Chapter 7 - Grating and Leaves
+Chapter 6 - Grating and Leaves
 
 The pile of leaves is in Grating Clearing. "On the ground is a pile of leaves."
 Understand "leaves" and "leaf" and "pile" as the pile of leaves.
@@ -2061,7 +1792,7 @@ Instead of looking under the pile of leaves:
 	otherwise:
 		say "There is nothing else under the leaves."
 
-Chapter 8 - Cyclops-Room, Strange Passage, Treasure Room
+Chapter 7 - Cyclops-Room, Strange Passage, Treasure Room
 
 Cyclops-Room is a dark room. Cyclops-Room is in the Underground.
 The printed name of Cyclops-Room is "Cyclops Room".
@@ -2091,7 +1822,7 @@ Treasure Room is a dark room. "This is a large room, whose east wall is solid gr
 Treasure Room is in the Underground.
 Down from Treasure Room is Cyclops-Room.
 
-Chapter 9 - Cyclops NPC
+Chapter 8 - Cyclops NPC
 
 The cyclops is a person in Cyclops-Room.
 Understand "cyclops" and "monster" and "eye" and "hungry" and "giant" as the cyclops.
@@ -2191,7 +1922,6 @@ Understand "odysseus" and "ulysses" as odysseusing.
 
 Carry out odysseusing:
 	if the player is in Cyclops-Room and the cyclops is in Cyclops-Room and the cyclops-asleep is false:
-		play the sound of footsteps-sfx as sfx;
 		say "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down the wall on the east of the room.";
 		remove the cyclops from play;
 		now the cyclops-flag is true;
@@ -2213,7 +1943,7 @@ Instead of inserting something into the chalice:
 Instead of taking the chalice when the player is in Treasure Room and the thief is not defeated and the thief is in Treasure Room:
 	say "You[apostrophe]d be stabbed in the back first."
 
-Chapter 10 - East-West Passage and Round Room Area
+Chapter 9 - East-West Passage and Round Room Area
 
 East-West Passage is a dark room. "This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room."
 East-West Passage is in the Underground.
@@ -2226,7 +1956,7 @@ Round Room is a dark room. "This is a circular stone room with passages in all d
 Round Room is in the Underground.
 East of Round Room is Loud Room. North of Round Room is North-South Passage. South of Round Room is Narrow Passage. Southeast of Round Room is Engravings Cave.
 
-Chapter 11 - Dam and Reservoir Area
+Chapter 10 - Dam and Reservoir Area
 
 Deep Canyon is a dark room. "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. [if the gates-open is true and the low-tide is false]You can hear a loud roaring sound, like that of rushing water, from below.[otherwise if the gates-open is false and the low-tide is true][otherwise]You can hear the sound of flowing water from below.[end if]".
 Deep Canyon is in the Underground.
@@ -2310,19 +2040,19 @@ Instead of jumping in Dome Room:
 	say "This was not a very safe place to try jumping.";
 	die saying "[jumploss]"
 
-[ZIL V-LEAP: Kitchen chimney shaft — DOWN TO STUDIO IF FALSE-FLAG (always blocked)]
+[ZIL V-LEAP: Kitchen chimney shaft]
 Instead of jumping in Kitchen:
 	say "This was not a very safe place to try jumping.";
 	die saying "[jumploss]"
 
-[ZIL V-LEAP: Altar — DOWN TO TINY-CAVE IF COFFIN-CURE (blocked when carrying coffin)]
+[ZIL V-LEAP: Altar — blocked when carrying coffin]
 Instead of jumping in South Temple:
 	if the player carries the gold coffin:
 		say "This was not a very safe place to try jumping.";
 		die saying "[jumploss]";
 	continue the action.
 
-[ZIL V-LEAP: Up-a-Tree — special non-fatal case, safely jump down]
+[ZIL V-LEAP: Up-a-Tree — safely jump down]
 Instead of jumping in Up a Tree:
 	say "In a feat of unaccustomed daring, you manage to land on your feet without killing yourself.";
 	try going down.
@@ -2338,7 +2068,7 @@ Instead of inserting something into the chasm-pseudo:
 	remove the noun from play.
 
 Reservoir-South is a dark room. The printed name of Reservoir-South is "Reservoir South". Reservoir-South is in the Underground.
-The description of Reservoir-South is "[if the low-tide is true and the gates-open is true]You are in a long room, to the north of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through the center of the room.[otherwise if the gates-open is true]You are in a long room. To the north is a large lake, too deep to cross. You notice, however, that the water level appears to be dropping at a rapid rate. Before long, it might be possible to cross to the other side from here.[otherwise if the low-tide is true]You are in a long room, to the north of which is a wide area which was formerly a reservoir, but now is merely a stream. You notice, however, that the level of the stream is rising quickly and that before long it will be impossible to cross here.[otherwise]You are in a long room on the south shore of a large lake, far too deep and wide for crossing.[end if][paragraph break]There is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast.".
+The description of Reservoir-South is "[if the low-tide is true and the gates-open is true]You are in a long room, to the north of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through the center of the room.[otherwise if the gates-open is true]You are in a long room. To the north is a large lake, too deep to cross. You notice, however, that the water level appears to be dropping at a rapid rate. Before long, it might be possible to cross to the other side from here.[otherwise if the low-tide is true]You are in a long room, to the north of which is a wide area which was formerly a reservoir, but now is merely a stream. You notice, however, that the level of the stream is rising quickly and that before long it will be impossible to cross here.[otherwise]You are in a long room on the south shore of a large lake, far too deep and wide for crossing.[end if][paragraph break]There is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast."
 
 Southeast of Reservoir-South is Deep Canyon.
 
@@ -2370,7 +2100,7 @@ The description of Dam-Room is "You are standing on the top of Flood Control Dam
 South of Dam-Room is Deep Canyon. Down from Dam-Room is Dam-Base. East of Dam-Room is Dam-Base. North of Dam-Room is Dam-Lobby.
 West of Dam-Room is Reservoir-South.
 
-The dam is scenery in Dam-Room. Understand "dam" and "gate" and "gates" and "fcd" and "fcd#3" and "fcd3" as the dam.
+The dam is scenery in Dam-Room. Understand "dam" and "gate" and "gates" and "fcd" as the dam.
 The description of the dam is "This is Flood Control Dam #3, quite an impressive engineering feat."
 Instead of opening or closing the dam: say "Sounds reasonable, but this isn't how."
 Instead of plugging the dam with something:
@@ -2523,7 +2253,7 @@ Instead of inserting something into the group of tool chests:
 	remove the group of tool chests from play;
 	say "The chests are so rusty and corroded that they crumble when you touch them."
 
-Chapter 12 - Reservoir Area
+Chapter 11 - Reservoir Area
 
 Reservoir is a dark room. Reservoir is in the Underground.
 The description of Reservoir is "[if the low-tide is true]You are on what used to be a large lake, but which is now a large mud pile. There are [quotation mark]shores[quotation mark] to the north and south.[otherwise]You are on the lake. Beaches can be seen north and south. Upstream a small stream enters the lake through a narrow cleft in the rocks. The dam can be seen downstream.[end if]".
@@ -2565,7 +2295,7 @@ The hand-held air pump is in Reservoir-North. "There is a small pump here."
 Understand "pump" and "air-pump" and "tool" and "small" and "hand-held" as the hand-held air pump.
 The description of the hand-held air pump is "It's a small hand-held air pump."
 
-Chapter 13 - Dam-Base and River
+Chapter 12 - Dam-Base and River
 
 Dam-Base is a room. The printed name of Dam-Base is "Dam Base". "You are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream."
 Dam-Base is in the Underground.
@@ -2575,7 +2305,7 @@ The pile of plastic is in Dam-Base. "There is a folded pile of plastic here whic
 Understand "boat" and "pile" and "plastic" and "valve" and "inflatable" as the pile of plastic.
 The description of the pile of plastic is "It's a pile of folded plastic with a small valve attached."
 
-Chapter 14 - Mirror Rooms and Connecting Passages
+Chapter 13 - Mirror Rooms and Connecting Passages
 
 Mirror Room 1 is a dark room. The printed name of Mirror Room 1 is "Mirror Room".
 Mirror Room 1 is in the Underground.
@@ -2638,7 +2368,7 @@ Tiny Cave is a dark room. The printed name of Tiny Cave is "Cave". "This is a ti
 Tiny Cave is in the Underground.
 North of Tiny Cave is Mirror Room 2. West of Tiny Cave is Winding-Passage. Down from Tiny Cave is Entrance to Hades.
 
-Every turn when the player is in Tiny Cave and the pair of candles is lit (this is the drafty cave candle rule):
+Every turn when the player is in Tiny Cave and the player carries the pair of candles and the pair of candles is lit (this is the drafty cave candle rule):
 	if a random chance of 50 in 100 succeeds:
 		now the pair of candles is not lit;
 		say "A gust of wind blows out your candles![line break]";
@@ -2671,7 +2401,7 @@ Understand "trident" and "fork" and "crystal" and "poseidon" as the crystal trid
 The treasure-value of the crystal trident is 11.
 The point-value of the crystal trident is 4.
 
-Chapter 15 - Temple, Dome, Egypt, and Hades
+Chapter 14 - Temple, Dome, Egypt, and Hades
 
 Engravings Cave is a dark room. "You have entered a low cave with passages leading northwest and east."
 Engravings Cave is in the Underground.
@@ -2835,7 +2565,6 @@ The point-value of the gold coffin is 10.
 The carrying capacity of the gold coffin is 5.
 
 After opening the gold coffin when the sceptre is in the gold coffin and the sceptre is not handled:
-	play the sound of coffin-sfx as sfx;
 	say "The gold coffin opens.[line break]";
 	say "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point." instead.
 
@@ -2914,7 +2643,7 @@ Understand "skull" and "head" and "crystal" as the crystal skull.
 The treasure-value of the crystal skull is 10.
 The point-value of the crystal skull is 10.
 
-Chapter 16 - Exorcism Ceremony
+Chapter 15 - Exorcism Ceremony
 
 The xb-flag is a truth state that varies. The xb-flag is false.
 The xc-flag is a truth state that varies. The xc-flag is false.
@@ -2967,7 +2696,6 @@ Instead of ringing the brass bell:
 		now the hot-bell-timer is 20;
 		remove the brass bell from play;
 		now the red hot brass bell is in Entrance to Hades;
-		play the sound of bell-sfx as sfx;
 		say "The bell suddenly becomes red hot and falls to the ground. The wraiths, as if paralyzed, stop their jeering and slowly turn to face you. On their ashen faces, the expression of a long-forgotten terror takes shape.";
 		if the player carries the pair of candles:
 			say "[line break]In your confusion, the candles drop to the ground (and they are out).";
@@ -3035,12 +2763,11 @@ Instead of reading or examining the black book:
 	if the xc-flag is true and the player is in Entrance to Hades and the lld-flag is false:
 		now the lld-flag is true;
 		remove the ghosts from play;
-		play the sound of spirits-sfx as sfx;
 		say "Each word of the prayer reverberates through the hall in a deafening confusion. As the last word fades, a voice, loud and commanding, speaks: [quotation mark]Begone, fiends![quotation mark] A heart-stopping scream fills the cavern, and the spirits, sensing a greater power, flee through the walls.";
 	otherwise:
 		say "[description of the black book]".
 
-Chapter 17 - River and Falls Area
+Chapter 16 - River and Falls Area
 
 River1 is a room. The printed name of River1 is "Frigid River". "You are on the Frigid River in the vicinity of the Dam. The river flows quietly here. There is a landing on the west shore."
 River1 is in the Underground.
@@ -3222,7 +2949,7 @@ Northeast of Sandy Beach is Sandy Cave. South of Sandy Beach is Shore.
 The shovel is in Sandy Beach. Understand "shovel" and "tool" as the shovel.
 The description of the shovel is "It's a sturdy shovel."
 
-Sandy Cave is a room. "This is a small, low-ceilinged cave nearly filled with fine white sand. The walls are rough limestone, worn smooth in places by ancient water. The only exit is a narrow passage to the southwest."
+Sandy Cave is a room. "This is a sand-filled cave whose exit is to the southwest."
 Sandy Cave is in the Underground.
 Southwest of Sandy Cave is Sandy Beach.
 
@@ -3316,7 +3043,7 @@ East of Clearing is Canyon View.
 Instead of going south in Canyon View:
 	say "Storm-tossed trees block your way."
 
-Chapter 18 - Sceptre and Rainbow
+Chapter 17 - Sceptre and Rainbow
 
 Carry out waving: say "You wave [the noun] around. Nothing happens."
 
@@ -3359,7 +3086,7 @@ Instead of entering the rainbow-object:
 Instead of looking under the rainbow-object:
 	say "The Frigid River flows under the rainbow."
 
-Chapter 19 - Coal Mine Area
+Chapter 18 - Coal Mine Area
 
 Mine Entrance is a dark room. "You are standing at the entrance of what might have been a coal mine. The shaft enters the west wall, and there is another exit on the south end of the room."
 Mine Entrance is in the Underground.
@@ -3390,7 +3117,6 @@ Instead of going north in Bat-Room:
 	if the player carries the clove of garlic or the clove of garlic is in Bat-Room:
 		continue the action;
 	otherwise:
-		play the sound of bat-sfx as sfx;
 		say "    Fweep![line break]    Fweep![line break]    Fweep![line break][line break]The bat grabs you by the scruff of your neck and lifts you away....[paragraph break]";
 		let R be a random number between 1 and 8;
 		if R is 1:
@@ -3614,7 +3340,6 @@ Instead of switching on the machine switch:
 	otherwise if the small pile of coal is in the machine:
 		remove the small pile of coal from play;
 		now the huge diamond is in the machine;
-		play the sound of machine-sfx as sfx;
 		say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 	otherwise:
 		let found-something be false;
@@ -3623,7 +3348,6 @@ Instead of switching on the machine switch:
 			remove item from play;
 			now the small piece of vitreous slag is in the machine;
 		if found-something is true:
-			play the sound of machine-sfx as sfx;
 			say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 		otherwise:
 			say "The machine doesn[apostrophe]t seem to want to do anything."
@@ -3679,7 +3403,7 @@ The broken timber is in Timber Room.
 Understand "timbers" and "pile" and "wooden" and "broken" as the broken timber.
 The description of the broken timber is "They're just a pile of broken timbers."
 
-Chapter 20 - Stone Barrow and Endgame
+Chapter 19 - Stone Barrow and Endgame
 
 Stone Barrow is a room. "You are standing in front of a massive barrow of stone. In the east face is a huge stone door which is open. You cannot see into the dark of the tomb."
 Northeast of Stone Barrow is West-of-House.
@@ -3709,7 +3433,7 @@ Instead of going inside in Stone Barrow:
 Instead of going west in Stone Barrow:
 	try going inside.
 
-Chapter 21 - In-Stream
+Chapter 20 - In-Stream
 
 In-Stream is a room. The printed name of In-Stream is "Stream". "You are on the gently flowing stream. The upstream route is too narrow to navigate, and the downstream route is invisible due to twisting walls. There is a narrow beach to land on."
 In-Stream is in the Underground.
@@ -3806,7 +3530,6 @@ Every turn when the thief is not defeated and the thief-active is true (this is 
 							now item is in the large bag;
 							now stolen-any is true;
 				if stolen-any is true:
-					play the sound of laugh-sfx as sfx;
 					say "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.";
 					if lost-light is true:
 						say "[line break]The thief seems to have left you in the dark.";
@@ -3834,7 +3557,7 @@ Every turn when the player is in Treasure Room and the thief is not defeated and
 	move the thief to Treasure Room;
 	say "You hear a scream of anguish as you violate the robber[apostrophe]s hideaway. Using passages unknown to you, he rushes to its defense.";
 	let found-treasure be false;
-	repeat with item running through visible things in the Treasure Room:
+	repeat with item running through zil-visible things in the Treasure Room:
 		if item is not the thief and item is not the chalice:
 			if the treasure-value of item > 0:
 				now found-treasure is true;
@@ -3870,8 +3593,6 @@ Instead of giving something to the thief:
 			say "The thief places the [noun] in his bag and thanks you politely."
 
 Instead of attacking the thief:
-	if the thief is not in the location of the player:
-		say "There is no thief here." instead;
 	if the thief is defeated:
 		say "The thief is already dead.";
 	otherwise:
@@ -3948,7 +3669,6 @@ Every turn when the player carries the sword (this is the sword glow rule):
 	if danger-level is 0 and a villain lurks adjacent:
 		now danger-level is 1;
 	if danger-level is not the sword-glow-level:
-		play the sound of sword-sfx as sfx;
 		if danger-level is 0:
 			say "Your sword is no longer glowing.";
 		otherwise if danger-level is 1:
@@ -4863,7 +4583,6 @@ Instead of inflating the pile of plastic:
 	if the pile of plastic is not in the location of the player:
 		say "The boat must be on the ground to be inflated.";
 	otherwise if the player carries the hand-held air pump or the hand-held air pump is in the location of the player:
-		play the sound of inflate-sfx as sfx;
 		say "The boat inflates and appears seaworthy.";
 		if the tan label is not handled:
 			say "A tan label is lying inside the boat.";
@@ -4891,8 +4610,6 @@ Instead of deflating the magic boat:
 	say "The boat deflates.";
 	now the boat-inflated is false;
 	let here be the location of the magic boat;
-	repeat with item running through things in the magic boat:
-		now item is in here;
 	now the magic boat is nowhere;
 	now the pile of plastic is in here.
 
@@ -4930,8 +4647,6 @@ Before entering the magic boat:
 		say "Oops! Something sharp seems to have slipped and punctured the boat. The boat deflates to the sounds of hissing, sputtering, and cursing.";
 		now the boat-punctured is true;
 		let here be the location of the player;
-		repeat with item running through things in the magic boat:
-			now item is in here;
 		now the magic boat is nowhere;
 		now the punctured boat is in here;
 		stop the action.
@@ -5029,7 +4744,6 @@ Instead of turning the bolt:
 	otherwise:
 		now the gates-open is true;
 		now the reservoir-empty-timer is 8;
-		play the sound of flood-sfx as sfx;
 		say "The sluice gates open and water pours through the dam."
 
 The reservoir-fill-timer is a number that varies. The reservoir-fill-timer is 0.
@@ -5070,20 +4784,4 @@ Every turn when the location of the player is Reservoir and the player is not in
 	say "You notice that the water level here is rising rapidly. The currents are also becoming stronger. Staying here seems quite perilous!"
 
 Chapter 15 - Room Entering Points
-
-Chapter 16 - Test Commands
-
-Test cellar with "n / n / u / take egg / d / s / e / open window / w / take sack / take bottle / w / take sword / take lantern / open case / put egg in case / e / turn on lantern / u / take rope / d / open sack / take garlic / w / move rug / open trap door / d".
-
-Test troll with "s / drop sack / drop bottle / drop rope / e / take painting / w / n / n / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll" holding the sword and the garlic.
-
-Test cyclops with "e / e / e / echo / take platinum bar / w / n / ne / e / n / take matchbook / n / press yellow button / take wrench / take screwdriver / s / s / turn bolt / drop wrench / s / sw / s / w / w / w / s / e / u / sw / e / s / se / odysseus" holding the sword and the brass lantern.
-
-Test dam with "n / ne / e / n / take matchbook / n / press yellow button / take wrench / take screwdriver / s / s / turn bolt / drop wrench" holding the brass lantern.
-
-Test exorcism with "se / e / tie rope to railing / d / take torch / s / take bell / s / take book / take candles / d / d / ring bell / take candles / light match / light candles with match / read book / drop book / drop candles / s / take skull" holding the brass lantern and the rope and the matchbook.
-
-Test machine with "n / d / take bracelet / e / ne / se / sw / d / d / s / take coal / n / u / u / n / e / s / n / u / s / put coal in basket / lower basket / n / d / e / ne / se / sw / d / d / w / drop lantern / w / take torch / take coal / take screwdriver / s / open lid / put coal in machine / close lid / turn on switch / drop screwdriver / open lid / take diamond" holding the brass lantern and the screwdriver.
-
-Test boat with "ne / e / turn off lantern / d / inflate plastic / drop pump / turn on lantern / enter boat / launch" holding the brass lantern and the pile of plastic and the air pump.
 

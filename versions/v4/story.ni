@@ -2,7 +2,7 @@
 
 The story headline is "An Interactive Fiction".
 The story genre is "Fantasy".
-The release number is 1.
+The release number is 2403041.
 The story creation year is 1980.
 The story description is "ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!"
 
@@ -19,7 +19,7 @@ The player is in West-of-House.
 When play begins:
 	now the left hand status line is "[the player's surroundings] [if in darkness]   [otherwise]   Score: [score]/[turn count][end if]";
 	now the right hand status line is "";
-	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Infocom interactive fiction - a fantasy story[line break]Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Release 88 / Serial number 840726[paragraph break]".
+	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Infocom interactive fiction - a fantasy story[line break]Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Release 2403041 / Serial number 840726[paragraph break]".
 
 Chapter 2 - Verbosity Modes
 
@@ -2639,7 +2639,7 @@ Tiny Cave is a dark room. The printed name of Tiny Cave is "Cave". "This is a ti
 Tiny Cave is in the Underground.
 North of Tiny Cave is Mirror Room 2. West of Tiny Cave is Winding-Passage. Down from Tiny Cave is Entrance to Hades.
 
-Every turn when the player is in Tiny Cave and the pair of candles is lit (this is the drafty cave candle rule):
+Every turn when the player is in Tiny Cave and the player carries the pair of candles and the pair of candles is lit (this is the drafty cave candle rule):
 	if a random chance of 50 in 100 succeeds:
 		now the pair of candles is not lit;
 		say "A gust of wind blows out your candles![line break]";

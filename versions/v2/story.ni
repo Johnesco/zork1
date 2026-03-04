@@ -1,8 +1,8 @@
-"Zork I - The Great Underground Empire" by "Infocom (translated to Inform 7)"
+"Zork I: The Great Underground Empire" by "John Escobedo (after Infocom)"
 
 The story headline is "An Interactive Fiction".
 The story genre is "Fantasy".
-The release number is 1.
+The release number is 2.
 The story creation year is 1980.
 The story description is "ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!"
 
@@ -19,7 +19,7 @@ The player is in West-of-House.
 When play begins:
 	now the left hand status line is "[the player's surroundings] [if in darkness]   [otherwise]   Score: [score]/[turn count][end if]";
 	now the right hand status line is "";
-	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Infocom interactive fiction - a fantasy story[line break]Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Release 88 / Serial number 840726[paragraph break]".
+	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]v2: Bug Fixes & Testing[line break]An Inform 7 translation by John Escobedo[line break]Based on the original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson[line break]ZIL source released under the MIT License by Activision[paragraph break]".
 
 Chapter 2 - Verbosity Modes
 
@@ -226,18 +226,15 @@ Before looking when the player-is-dead is true:
 
 Chapter 5 - Darkness and Grues
 
-[ZIL grue behavior: attacks only on movement, never on non-movement actions.
-Two triggers: (1) V-WALK — trying to go a direction with no exit while in dark,
-(2) GOTO — successfully moving from one dark room to another dark room.
-Moving from a lit room into a dark room is always safe (warning only).]
+[ZIL-accurate grue behavior: grues only attack on MOVEMENT between dark rooms,
+not on standing still. The ZIL CHECK-FLAG in darkness checks F,RFLAG (= just moved)
+and only then runs the grue attack. Standing still in a dark room just repeats the
+"pitch black" warning. See GitHub issue #135.]
 
 The was-in-dark is a truth state that varies. The was-in-dark is false.
 
 Rule for printing the description of a dark room:
-	if the always-lit-mode is false:
-		say "It is pitch black. You are likely to be eaten by a grue.[line break]" instead;
-	otherwise:
-		say "It is pitch black.[line break]" instead.
+	say "It is pitch black.[line break]" instead.
 
 To grue-death:
 	let R be a random number between 1 and 3;
@@ -248,25 +245,24 @@ To grue-death:
 	otherwise:
 		die saying "Oh, no! You have walked into a den of hungry grues and it[apostrophe]s dinner time!".
 
-[Record lighting state before any movement attempt]
 Before going (this is the save darkness state rule):
 	if in darkness:
 		now the was-in-dark is true;
 	otherwise:
-		now the was-in-dark is false;
-	continue the action.
+		now the was-in-dark is false.
 
-[ZIL GOTO check: moving dark-to-dark has 80% grue death]
 After going when the was-in-dark is true and in darkness (this is the dark-to-dark grue rule):
-	if the always-lit-mode is false and a random chance of 4 in 5 succeeds:
-		grue-death;
+	if the always-lit-mode is false:
+		if a random chance of 4 in 5 succeeds:
+			grue-death;
 	continue the action.
 
-[ZIL V-WALK check: trying to move in a direction with no exit while in dark]
 Instead of going nowhere when in darkness (this is the dark-movement grue rule):
-	if the always-lit-mode is false and a random chance of 4 in 5 succeeds:
-		grue-death;
-	say "You can[apostrophe]t go that way."
+	if the always-lit-mode is false:
+		say "You are likely to be eaten by a grue.[line break]";
+		if a random chance of 4 in 5 succeeds:
+			grue-death;
+	say "It[apostrophe]s too dark to see where you[apostrophe]re going."
 
 After deciding the scope of the player when in darkness:
 	repeat with item running through things enclosed by the location:
@@ -351,7 +347,6 @@ Carry out lighting-match:
 		say "This room is drafty, and the match goes out instantly." instead;
 	now the match-lit is true;
 	now the match-timer is 2;
-	play the sound of match-sfx as sfx;
 	say "One of the matches starts to burn."
 
 Every turn when the match-lit is true (this is the match burn timer rule):
@@ -405,258 +400,6 @@ After taking something when the point-value of the noun is greater than 0 (this 
 Chapter 9 - Lucky Flag
 
 The lucky-flag is a truth state that varies. The lucky-flag is true.
-
-Chapter 10 - Sound and Audio System
-
-Section 0 - Sound Toggle
-
-The sound-enabled is a truth state that varies. The sound-enabled is false.
-
-When play begins (this is the ask about sound rule):
-	say "Do you want sound? (y/n) ";
-	if the player consents:
-		now the sound-enabled is true;
-		say "[line break]Sound enabled.[paragraph break]";
-		follow the ambient audio zone rule;
-	otherwise:
-		say "[line break]Sound disabled. Type SOUND ON during play to enable it.[paragraph break]".
-
-Enabling sound is an action out of world.
-Understand "sound on" as enabling sound.
-Carry out enabling sound:
-	now the sound-enabled is true;
-	now the current-zone is zone-silence;
-	say "Sound enabled.";
-	follow the ambient audio zone rule.
-
-Disabling sound is an action out of world.
-Understand "sound off" as disabling sound.
-Carry out disabling sound:
-	now the sound-enabled is false;
-	stop ambient sound;
-	say "Sound disabled."
-
-Section 1 - Sound Declarations
-
-[Ambient zone sounds]
-Sound of forest-ambient is the file "forest.ogg".
-Sound of house-ambient is the file "house.ogg".
-Sound of cave-ambient is the file "cave.ogg".
-Sound of water-ambient is the file "water.ogg".
-Sound of rapids-ambient is the file "rapids.ogg".
-Sound of loud-ambient is the file "loud.ogg".
-Sound of hades-ambient is the file "hades.ogg".
-Sound of mine-ambient is the file "mine.ogg".
-Sound of machinery-ambient is the file "machinery.ogg".
-
-[Sound effects]
-Sound of bird-sfx is the file "bird.ogg".
-Sound of creak-sfx is the file "creak.ogg".
-Sound of window-sfx is the file "window.ogg".
-Sound of trapdoor-sfx is the file "trapdoor.ogg".
-Sound of bell-sfx is the file "bell.ogg".
-Sound of spirits-sfx is the file "spirits.ogg".
-Sound of bat-sfx is the file "bat.ogg".
-Sound of footsteps-sfx is the file "footsteps.ogg".
-Sound of machine-sfx is the file "machine.ogg".
-Sound of inflate-sfx is the file "inflate.ogg".
-Sound of coffin-sfx is the file "coffin.ogg".
-Sound of match-sfx is the file "match.ogg".
-Sound of grue-sfx is the file "grue.ogg".
-Sound of flood-sfx is the file "flood.ogg".
-Sound of sword-sfx is the file "sword.ogg".
-Sound of laugh-sfx is the file "laugh.ogg".
-
-Section 2 - Audio Zones
-
-Audio-zone is a kind of value. The audio-zones are zone-silence, zone-forest, zone-house, zone-cave, zone-water, zone-rapids, zone-loud, zone-hades, zone-mine, and zone-machinery.
-
-A room has an audio-zone. The audio-zone of a room is usually zone-cave.
-
-The current-zone is an audio-zone that varies. The current-zone is zone-silence.
-
-Section 3 - Zone Room Assignments
-
-[Forest zone - outdoor above-ground areas]
-The audio-zone of West-of-House is zone-forest.
-The audio-zone of North-of-House is zone-forest.
-The audio-zone of South-of-House is zone-forest.
-The audio-zone of Behind House is zone-forest.
-The audio-zone of Forest1 is zone-forest.
-The audio-zone of Forest2 is zone-forest.
-The audio-zone of Forest3 is zone-forest.
-The audio-zone of Mountains is zone-forest.
-The audio-zone of Forest Path is zone-forest.
-The audio-zone of Up a Tree is zone-forest.
-The audio-zone of Clearing is zone-forest.
-The audio-zone of Grating Clearing is zone-forest.
-The audio-zone of Canyon View is zone-forest.
-The audio-zone of Rocky Ledge is zone-forest.
-The audio-zone of On-the-Rainbow is zone-forest.
-The audio-zone of End of Rainbow is zone-forest.
-The audio-zone of Stone Barrow is zone-forest.
-
-[House zone - house interior]
-The audio-zone of Kitchen is zone-house.
-The audio-zone of Living Room is zone-house.
-The audio-zone of Attic is zone-house.
-
-[Water zone - calm river and reservoir areas]
-The audio-zone of River1 is zone-water.
-The audio-zone of River2 is zone-water.
-The audio-zone of River3 is zone-water.
-The audio-zone of White Cliffs North is zone-water.
-The audio-zone of White Cliffs South is zone-water.
-The audio-zone of Shore is zone-water.
-The audio-zone of Sandy Beach is zone-water.
-The audio-zone of Sandy Cave is zone-water.
-The audio-zone of In-Stream is zone-water.
-The audio-zone of Stream View is zone-water.
-The audio-zone of Dam-Base is zone-water.
-The audio-zone of Dam-Lobby is zone-water.
-The audio-zone of Reservoir-South is zone-water.
-The audio-zone of Reservoir-North is zone-water.
-The audio-zone of Reservoir is zone-water.
-
-[Rapids zone - fast water areas]
-The audio-zone of Aragain Falls is zone-rapids.
-The audio-zone of Canyon Bottom is zone-rapids.
-The audio-zone of River4 is zone-rapids.
-The audio-zone of River5 is zone-rapids.
-
-[Loud Room zone]
-The audio-zone of Loud Room is zone-loud.
-
-[Hades zone]
-The audio-zone of Entrance to Hades is zone-hades.
-The audio-zone of Land of the Dead is zone-hades.
-
-[Mine zone - coal mine areas]
-The audio-zone of Mine Entrance is zone-mine.
-The audio-zone of Squeaky Room is zone-mine.
-The audio-zone of Bat-Room is zone-mine.
-The audio-zone of Shaft Room is zone-mine.
-The audio-zone of Smelly Room is zone-mine.
-The audio-zone of Gas Room is zone-mine.
-The audio-zone of Mine1 is zone-mine.
-The audio-zone of Mine2 is zone-mine.
-The audio-zone of Mine3 is zone-mine.
-The audio-zone of Mine4 is zone-mine.
-The audio-zone of Ladder Top is zone-mine.
-The audio-zone of Ladder Bottom is zone-mine.
-The audio-zone of Dead End 5 is zone-mine.
-The audio-zone of Timber Room is zone-mine.
-The audio-zone of Drafty Room is zone-mine.
-The audio-zone of Slide Room is zone-mine.
-
-[Machinery zone - dam machinery areas]
-The audio-zone of Dam-Room is zone-machinery.
-The audio-zone of Maintenance Room is zone-machinery.
-The audio-zone of Machine-Room is zone-machinery.
-
-Section 4 - Background Channel Sound Phrases (in place of Sounds by Dannii Willis in Standard Rules - unindexed)
-
-[Inform 7 creates two Glk sound channels at startup: gg_foregroundchan and
-gg_backgroundchan. The standard "play the sound of X" phrase always uses the
-foreground channel, so playing SFX interrupts ambient. These I6 inclusions
-let us play ambient on the background channel independently.]
-
-To play (SFX - sound name) as ambient looping:
-	(- PlayOnBackgroundChannel({SFX}, -1); -).
-
-To play (SFX - sound name) as sfx:
-	(- if ((+ sound-enabled +)) VM_SoundEffect(ResourceIDsOfSounds-->{SFX}); -).
-
-To stop ambient sound:
-	(- StopBackgroundChannel(); -).
-
-Include (-
-Constant AMBIENT_VOL = 16384;       ! ~25% of max volume (65536)
-Constant CROSSFADE_MS = 2000;        ! 2 second crossfade between zones
-Constant FADEIN_SILENCE_MS = 5000;   ! 5 second fade-in from silence
-
-Global bg_chan_b = 0;                 ! Second background channel for crossfading
-Global bg_active = 0;                ! 0 = gg_backgroundchan, 1 = bg_chan_b
-Global ambient_playing = 0;          ! Whether ambient sound is currently active
-
-[ PlayOnBackgroundChannel resource_ID repeats res active_chan inactive_chan;
-	res = ResourceIDsOfSounds-->resource_ID;
-	if (res == 0) rtrue;
-	if (~~glk_gestalt(gestalt_Sound, 0)) rtrue;
-
-	! Ensure both background channels exist
-	if (gg_backgroundchan == 0)
-		gg_backgroundchan = glk_schannel_create(GG_BACKGROUNDCHAN_ROCK);
-	if (bg_chan_b == 0)
-		bg_chan_b = glk_schannel_create(412);
-
-	if (ambient_playing) {
-		! Crossfade: fade out current, fade in new on alternate channel
-		if (bg_active == 0) {
-			active_chan = gg_backgroundchan;
-			inactive_chan = bg_chan_b;
-		} else {
-			active_chan = bg_chan_b;
-			inactive_chan = gg_backgroundchan;
-		}
-		! Fade out the currently playing channel over 2 seconds
-		glk_schannel_set_volume_ext(active_chan, 0, CROSSFADE_MS, 0);
-		! Start new sound on alternate channel at volume 0, then fade in
-		glk_schannel_set_volume(inactive_chan, 0);
-		glk_schannel_play_ext(inactive_chan, res, repeats, 0);
-		glk_schannel_set_volume_ext(inactive_chan, AMBIENT_VOL, CROSSFADE_MS, 0);
-		! Toggle active channel
-		bg_active = 1 - bg_active;
-	} else {
-		! No ambient currently playing - fade in from zero over 5 seconds
-		if (bg_active == 0)
-			active_chan = gg_backgroundchan;
-		else
-			active_chan = bg_chan_b;
-		glk_schannel_set_volume(active_chan, 0);
-		glk_schannel_play_ext(active_chan, res, repeats, 0);
-		glk_schannel_set_volume_ext(active_chan, AMBIENT_VOL, FADEIN_SILENCE_MS, 0);
-	}
-	ambient_playing = 1;
-];
-
-[ StopBackgroundChannel;
-	if (~~glk_gestalt(gestalt_Sound, 0)) rtrue;
-	! Fade out both channels (active + any still fading from previous crossfade)
-	if (gg_backgroundchan)
-		glk_schannel_set_volume_ext(gg_backgroundchan, 0, CROSSFADE_MS, 0);
-	if (bg_chan_b)
-		glk_schannel_set_volume_ext(bg_chan_b, 0, CROSSFADE_MS, 0);
-	ambient_playing = 0;
-];
--).
-
-Section 5 - Ambient Audio Rule
-
-Every turn when the sound-enabled is true (this is the ambient audio zone rule):
-	let Z be the audio-zone of the location;
-	if Z is not the current-zone:
-		now the current-zone is Z;
-		if Z is zone-silence:
-			stop ambient sound;
-		otherwise if Z is zone-forest:
-			play the sound of forest-ambient as ambient looping;
-		otherwise if Z is zone-house:
-			play the sound of house-ambient as ambient looping;
-		otherwise if Z is zone-cave:
-			play the sound of cave-ambient as ambient looping;
-		otherwise if Z is zone-water:
-			play the sound of water-ambient as ambient looping;
-		otherwise if Z is zone-rapids:
-			play the sound of rapids-ambient as ambient looping;
-		otherwise if Z is zone-loud:
-			play the sound of loud-ambient as ambient looping;
-		otherwise if Z is zone-hades:
-			play the sound of hades-ambient as ambient looping;
-		otherwise if Z is zone-mine:
-			play the sound of mine-ambient as ambient looping;
-		otherwise if Z is zone-machinery:
-			play the sound of machinery-ambient as ambient looping.
 
 Part 2 - The World
 
@@ -750,16 +493,16 @@ Instead of going north in South-of-House:
 
 Section 4 - Forest Rooms
 
-Forest1 is a room. The printed name of Forest1 is "Forest". "This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss."
+Forest1 is a room. The printed name of Forest1 is "Forest". "This is a forest, with trees in all directions. To the east, there appears to be sunlight."
 Forest1 is in Forest Area.
 Forest1 is west of West-of-House.
 
-Forest2 is a room. The printed name of Forest2 is "Forest". "This is a dimly lit forest, with large trees all around. The canopy here is thick, allowing only thin shafts of light to reach the forest floor. A carpet of pine needles muffles your footsteps."
+Forest2 is a room. The printed name of Forest2 is "Forest". "This is a dimly lit forest, with large trees all around."
 Forest2 is in Forest Area.
 
 Mountains is a room. The printed name of Mountains is "Forest". "The forest thins out, revealing impassable mountains."
 
-Forest3 is a room. The printed name of Forest3 is "Forest". "This is a dimly lit forest, with large trees all around. Gnarled roots break through the soil underfoot, and the air is heavy with the smell of wet bark. Somewhere nearby, water drips steadily from the leaves."
+Forest3 is a room. The printed name of Forest3 is "Forest". "This is a dimly lit forest, with large trees all around."
 Forest3 is in Forest Area.
 Forest3 is south of South-of-House.
 Northwest of Forest3 is South-of-House.
@@ -843,7 +586,7 @@ Instead of going north in Grating Clearing:
 	say "The forest becomes impenetrable to the north."
 
 Instead of going down in Grating Clearing:
-	if the grate is not visible:
+	if the grate is not zil-visible:
 		say "You can't go that way." instead;
 	if the grate is open:
 		say "(through the grating)[line break]";
@@ -866,7 +609,6 @@ Instead of listening to the forest-songbird:
 
 Every turn when the player is in the Forest Area (this is the songbird singing rule):
 	if a random chance of 15 in 100 succeeds:
-		play the sound of bird-sfx as sfx;
 		say "You hear in the distance the chirping of a song bird.[line break]".
 
 Section 5a - Forest Pseudo-Object
@@ -904,10 +646,6 @@ The small mailbox is a closed openable container in West-of-House. "There is a s
 The description of the small mailbox is "It's a small mailbox."
 Understand "mailbox" and "box" as the small mailbox.
 The carrying capacity of the small mailbox is 2.
-
-After opening the small mailbox:
-	play the sound of creak-sfx as sfx;
-	continue the action.
 
 Instead of taking the small mailbox:
 	say "It is securely anchored."
@@ -965,7 +703,6 @@ Instead of opening the kitchen-window:
 		say "It is already open." instead;
 	now the kitchen-window is open;
 	now the kitchen-window-touched is true;
-	play the sound of window-sfx as sfx;
 	say "With great effort, you open the window far enough to allow entry."
 
 Instead of closing the kitchen-window:
@@ -1114,7 +851,7 @@ Instead of eating the clove of garlic:
 
 Section 2 - Attic
 
-Attic is a room. "This is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down."
+Attic is a room. "This is the attic. The only exit is a stairway leading down."
 Attic is in House Interior. Attic is a dark room.
 
 The attic table is a supporter in Attic. The attic table is scenery.
@@ -1239,7 +976,7 @@ The trap door is below Living Room and above Cellar.
 
 A thing can be zil-visible or zil-invisible. A thing is usually zil-visible. The trap door is zil-invisible.
 
-Rule for writing a paragraph about a zil-invisible thing: now the item described is mentioned.
+Rule for writing a paragraph about a zil-invisible thing: do nothing.
 Before printing the locale description of a room (called the place):
 	repeat with item running through zil-invisible things in the place:
 		now item is mentioned.
@@ -1437,7 +1174,6 @@ After going down from Living Room to Cellar:
 	if the trap-door-touched is false:
 		now the trap-door-touched is true;
 		now the trap door is not open;
-		play the sound of trapdoor-sfx as sfx;
 		say "The trap door crashes shut, and you hear someone barring it.[paragraph break]";
 	continue the action.
 
@@ -1659,6 +1395,7 @@ Chapter 4 - Troll NPC
 The troll is a person in Troll-Room. "[if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room[otherwise]A troll is here[end if]."
 Understand "troll" and "nasty" as the troll.
 The description of the troll is "[if the troll is defeated]The troll is dead.[otherwise if the troll-unconscious is true]An unconscious troll is sprawled on the floor. All passages out of the room are open.[otherwise if the troll carries the bloody axe]A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.[otherwise]A troll is here.[end if]".
+
 The troll-strength is a number that varies. The troll-strength is 2.
 The troll-unconscious is a truth state that varies. The troll-unconscious is false.
 The troll-recovery-chance is a number that varies. The troll-recovery-chance is 0.
@@ -2191,7 +1928,6 @@ Understand "odysseus" and "ulysses" as odysseusing.
 
 Carry out odysseusing:
 	if the player is in Cyclops-Room and the cyclops is in Cyclops-Room and the cyclops-asleep is false:
-		play the sound of footsteps-sfx as sfx;
 		say "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down the wall on the east of the room.";
 		remove the cyclops from play;
 		now the cyclops-flag is true;
@@ -2310,19 +2046,19 @@ Instead of jumping in Dome Room:
 	say "This was not a very safe place to try jumping.";
 	die saying "[jumploss]"
 
-[ZIL V-LEAP: Kitchen chimney shaft — DOWN TO STUDIO IF FALSE-FLAG (always blocked)]
+[ZIL V-LEAP: Kitchen chimney shaft]
 Instead of jumping in Kitchen:
 	say "This was not a very safe place to try jumping.";
 	die saying "[jumploss]"
 
-[ZIL V-LEAP: Altar — DOWN TO TINY-CAVE IF COFFIN-CURE (blocked when carrying coffin)]
+[ZIL V-LEAP: Altar — blocked when carrying coffin]
 Instead of jumping in South Temple:
 	if the player carries the gold coffin:
 		say "This was not a very safe place to try jumping.";
 		die saying "[jumploss]";
 	continue the action.
 
-[ZIL V-LEAP: Up-a-Tree — special non-fatal case, safely jump down]
+[ZIL V-LEAP: Up-a-Tree — safely jump down]
 Instead of jumping in Up a Tree:
 	say "In a feat of unaccustomed daring, you manage to land on your feet without killing yourself.";
 	try going down.
@@ -2638,7 +2374,7 @@ Tiny Cave is a dark room. The printed name of Tiny Cave is "Cave". "This is a ti
 Tiny Cave is in the Underground.
 North of Tiny Cave is Mirror Room 2. West of Tiny Cave is Winding-Passage. Down from Tiny Cave is Entrance to Hades.
 
-Every turn when the player is in Tiny Cave and the pair of candles is lit (this is the drafty cave candle rule):
+Every turn when the player is in Tiny Cave and the player carries the pair of candles and the pair of candles is lit (this is the drafty cave candle rule):
 	if a random chance of 50 in 100 succeeds:
 		now the pair of candles is not lit;
 		say "A gust of wind blows out your candles![line break]";
@@ -2835,7 +2571,6 @@ The point-value of the gold coffin is 10.
 The carrying capacity of the gold coffin is 5.
 
 After opening the gold coffin when the sceptre is in the gold coffin and the sceptre is not handled:
-	play the sound of coffin-sfx as sfx;
 	say "The gold coffin opens.[line break]";
 	say "A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point." instead.
 
@@ -2967,7 +2702,6 @@ Instead of ringing the brass bell:
 		now the hot-bell-timer is 20;
 		remove the brass bell from play;
 		now the red hot brass bell is in Entrance to Hades;
-		play the sound of bell-sfx as sfx;
 		say "The bell suddenly becomes red hot and falls to the ground. The wraiths, as if paralyzed, stop their jeering and slowly turn to face you. On their ashen faces, the expression of a long-forgotten terror takes shape.";
 		if the player carries the pair of candles:
 			say "[line break]In your confusion, the candles drop to the ground (and they are out).";
@@ -3035,7 +2769,6 @@ Instead of reading or examining the black book:
 	if the xc-flag is true and the player is in Entrance to Hades and the lld-flag is false:
 		now the lld-flag is true;
 		remove the ghosts from play;
-		play the sound of spirits-sfx as sfx;
 		say "Each word of the prayer reverberates through the hall in a deafening confusion. As the last word fades, a voice, loud and commanding, speaks: [quotation mark]Begone, fiends![quotation mark] A heart-stopping scream fills the cavern, and the spirits, sensing a greater power, flee through the walls.";
 	otherwise:
 		say "[description of the black book]".
@@ -3222,7 +2955,7 @@ Northeast of Sandy Beach is Sandy Cave. South of Sandy Beach is Shore.
 The shovel is in Sandy Beach. Understand "shovel" and "tool" as the shovel.
 The description of the shovel is "It's a sturdy shovel."
 
-Sandy Cave is a room. "This is a small, low-ceilinged cave nearly filled with fine white sand. The walls are rough limestone, worn smooth in places by ancient water. The only exit is a narrow passage to the southwest."
+Sandy Cave is a room. "This is a sand-filled cave whose exit is to the southwest."
 Sandy Cave is in the Underground.
 Southwest of Sandy Cave is Sandy Beach.
 
@@ -3390,7 +3123,6 @@ Instead of going north in Bat-Room:
 	if the player carries the clove of garlic or the clove of garlic is in Bat-Room:
 		continue the action;
 	otherwise:
-		play the sound of bat-sfx as sfx;
 		say "    Fweep![line break]    Fweep![line break]    Fweep![line break][line break]The bat grabs you by the scruff of your neck and lifts you away....[paragraph break]";
 		let R be a random number between 1 and 8;
 		if R is 1:
@@ -3614,7 +3346,6 @@ Instead of switching on the machine switch:
 	otherwise if the small pile of coal is in the machine:
 		remove the small pile of coal from play;
 		now the huge diamond is in the machine;
-		play the sound of machine-sfx as sfx;
 		say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 	otherwise:
 		let found-something be false;
@@ -3623,7 +3354,6 @@ Instead of switching on the machine switch:
 			remove item from play;
 			now the small piece of vitreous slag is in the machine;
 		if found-something is true:
-			play the sound of machine-sfx as sfx;
 			say "The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.";
 		otherwise:
 			say "The machine doesn[apostrophe]t seem to want to do anything."
@@ -3806,7 +3536,6 @@ Every turn when the thief is not defeated and the thief-active is true (this is 
 							now item is in the large bag;
 							now stolen-any is true;
 				if stolen-any is true:
-					play the sound of laugh-sfx as sfx;
 					say "The thief just left, still carrying his large bag. You may not have noticed that he robbed you blind first.";
 					if lost-light is true:
 						say "[line break]The thief seems to have left you in the dark.";
@@ -3834,7 +3563,7 @@ Every turn when the player is in Treasure Room and the thief is not defeated and
 	move the thief to Treasure Room;
 	say "You hear a scream of anguish as you violate the robber[apostrophe]s hideaway. Using passages unknown to you, he rushes to its defense.";
 	let found-treasure be false;
-	repeat with item running through visible things in the Treasure Room:
+	repeat with item running through zil-visible things in the Treasure Room:
 		if item is not the thief and item is not the chalice:
 			if the treasure-value of item > 0:
 				now found-treasure is true;
@@ -3948,7 +3677,6 @@ Every turn when the player carries the sword (this is the sword glow rule):
 	if danger-level is 0 and a villain lurks adjacent:
 		now danger-level is 1;
 	if danger-level is not the sword-glow-level:
-		play the sound of sword-sfx as sfx;
 		if danger-level is 0:
 			say "Your sword is no longer glowing.";
 		otherwise if danger-level is 1:
@@ -4863,7 +4591,6 @@ Instead of inflating the pile of plastic:
 	if the pile of plastic is not in the location of the player:
 		say "The boat must be on the ground to be inflated.";
 	otherwise if the player carries the hand-held air pump or the hand-held air pump is in the location of the player:
-		play the sound of inflate-sfx as sfx;
 		say "The boat inflates and appears seaworthy.";
 		if the tan label is not handled:
 			say "A tan label is lying inside the boat.";
@@ -5029,7 +4756,6 @@ Instead of turning the bolt:
 	otherwise:
 		now the gates-open is true;
 		now the reservoir-empty-timer is 8;
-		play the sound of flood-sfx as sfx;
 		say "The sluice gates open and water pours through the dam."
 
 The reservoir-fill-timer is a number that varies. The reservoir-fill-timer is 0.
@@ -5070,20 +4796,4 @@ Every turn when the location of the player is Reservoir and the player is not in
 	say "You notice that the water level here is rising rapidly. The currents are also becoming stronger. Staying here seems quite perilous!"
 
 Chapter 15 - Room Entering Points
-
-Chapter 16 - Test Commands
-
-Test cellar with "n / n / u / take egg / d / s / e / open window / w / take sack / take bottle / w / take sword / take lantern / open case / put egg in case / e / turn on lantern / u / take rope / d / open sack / take garlic / w / move rug / open trap door / d".
-
-Test troll with "s / drop sack / drop bottle / drop rope / e / take painting / w / n / n / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll / attack troll" holding the sword and the garlic.
-
-Test cyclops with "e / e / e / echo / take platinum bar / w / n / ne / e / n / take matchbook / n / press yellow button / take wrench / take screwdriver / s / s / turn bolt / drop wrench / s / sw / s / w / w / w / s / e / u / sw / e / s / se / odysseus" holding the sword and the brass lantern.
-
-Test dam with "n / ne / e / n / take matchbook / n / press yellow button / take wrench / take screwdriver / s / s / turn bolt / drop wrench" holding the brass lantern.
-
-Test exorcism with "se / e / tie rope to railing / d / take torch / s / take bell / s / take book / take candles / d / d / ring bell / take candles / light match / light candles with match / read book / drop book / drop candles / s / take skull" holding the brass lantern and the rope and the matchbook.
-
-Test machine with "n / d / take bracelet / e / ne / se / sw / d / d / s / take coal / n / u / u / n / e / s / n / u / s / put coal in basket / lower basket / n / d / e / ne / se / sw / d / d / w / drop lantern / w / take torch / take coal / take screwdriver / s / open lid / put coal in machine / close lid / turn on switch / drop screwdriver / open lid / take diamond" holding the brass lantern and the screwdriver.
-
-Test boat with "ne / e / turn off lantern / d / inflate plastic / drop pump / turn on lantern / enter boat / launch" holding the brass lantern and the pile of plastic and the air pump.
 

@@ -2639,7 +2639,7 @@ Tiny Cave is a dark room. The printed name of Tiny Cave is "Cave". "This is a ti
 Tiny Cave is in the Underground.
 North of Tiny Cave is Mirror Room 2. West of Tiny Cave is Winding-Passage. Down from Tiny Cave is Entrance to Hades.
 
-Every turn when the player is in Tiny Cave and the pair of candles is lit (this is the drafty cave candle rule):
+Every turn when the player is in Tiny Cave and the player carries the pair of candles and the pair of candles is lit (this is the drafty cave candle rule):
 	if a random chance of 50 in 100 succeeds:
 		now the pair of candles is not lit;
 		say "A gust of wind blows out your candles![line break]";
