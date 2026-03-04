@@ -292,12 +292,11 @@ body.crt-fade #gameport::after {
   }
 }
 
-@keyframes textShimmer {
-  0%, 100% { text-shadow: none; color: var(--mood-buffer-fg); }
-  20%  { text-shadow: 0 0 6px rgba(100,180,60,0.25); }
-  40%  { text-shadow: 0 0 10px rgba(120,200,70,0.35), 0 0 3px rgba(80,160,40,0.15); color: #c0d8a0; }
-  60%  { text-shadow: 0 0 4px rgba(140,210,80,0.20); }
-  80%  { text-shadow: 0 0 8px rgba(90,170,50,0.30); color: #b8d0a0; }
+@keyframes dappledShimmer {
+  0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+  25%      { transform: translate(40px, -25px); opacity: 0.9; }
+  50%      { transform: translate(-30px, 20px); opacity: 0.6; }
+  75%      { transform: translate(20px, -15px); opacity: 0.85; }
 }
 
 @keyframes windGust {
@@ -356,10 +355,27 @@ body.mood-tree-canopy .BufferWindow {
   animation: canopyGlow 7s ease-in-out infinite;
 }
 
-/* Sway + text shimmer — after egg taken */
+/* Sway + dappled light shimmer — after egg taken */
 body.mood-tree-sway .BufferWindowInner {
-  animation: treeSway 12s ease-in-out infinite, textShimmer 6s ease-in-out infinite;
+  position: relative;
+  animation: treeSway 12s ease-in-out infinite;
   transform-origin: top center;
+}
+
+body.mood-tree-sway .BufferWindowInner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 100px 80px at 15% 25%, rgba(140,220,80,0.18), transparent 70%),
+    radial-gradient(ellipse 80px 100px at 55% 45%, rgba(160,230,90,0.14), transparent 70%),
+    radial-gradient(ellipse 90px 70px at 80% 15%, rgba(120,200,60,0.12), transparent 70%),
+    radial-gradient(ellipse 70px 90px at 35% 70%, rgba(150,215,75,0.15), transparent 70%),
+    radial-gradient(ellipse 60px 50px at 70% 80%, rgba(130,210,65,0.10), transparent 70%);
+  mix-blend-mode: overlay;
+  animation: dappledShimmer 8s ease-in-out infinite;
+  z-index: 1;
 }
 
 body.mood-tree-sway .GridWindow {
