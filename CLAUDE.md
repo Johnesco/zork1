@@ -42,7 +42,8 @@ C:\code\ifhub\
 ├── CLAUDE.md              ← Inform 7 conventions and compiler paths
 ├── tools/
 │   ├── regtest.py         ← Shared test runner
-│   └── testing/           ← Generic testing framework (walkthroughs, seed sweeps)
+│   ├── interpreters/      ← Native Windows glulxe.exe + dfrotz.exe (built locally)
+│   └── testing/           ← Generic testing framework (walkthroughs, seed sweeps, pcre_grep.py)
 └── reference/             ← Syntax + formatting docs
 ```
 
@@ -248,6 +249,20 @@ GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from `w
 Testing is a **project-wide process**, not a version feature. The same methodology applies to every version.
 
 All testing happens in `tests/` at the repo root. The test wrapper scripts delegate to the shared framework at `C:\code\ifhub\tools\testing\`. See `C:\code\ifhub\CLAUDE.md` for interpreter paths and framework details.
+
+### Interpreters
+
+`tests/project.conf` auto-detects the platform and selects the right interpreter:
+
+- **Git Bash / MSYS**: Uses native `tools/interpreters/glulxe.exe` (no WSL needed). Build with `bash tools/interpreters/build.sh` from MSYS2 UCRT64.
+- **WSL / Linux**: Falls back to `~/glulxe/glulxe` and `~/frotz-install/usr/games/dfrotz`.
+
+Tests can be run directly from Git Bash when native interpreters are available:
+```bash
+bash tests/run-walkthrough.sh --seed 2         # walkthrough
+bash tests/run-tests.sh                         # all regtests
+bash tests/run-tests.sh --vital startup         # single regtest
+```
 
 ### Methodology
 - **Deterministic walkthroughs**: Seed-based RNG (`glulxe --rngseed N`) ensures reproducible runs. Golden seeds stored in `seeds.conf`.

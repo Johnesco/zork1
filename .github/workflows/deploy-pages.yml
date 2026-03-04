@@ -27,10 +27,9 @@ jobs:
         run: |
           mkdir -p _site
           cp -r web/* _site/
-          for v in v0 v1 v2 v3 v4; do
-            if [ -d "versions/$v" ]; then
-              cp -r "versions/$v" "_site/$v"
-            fi
+          for v in versions/v*/; do
+            v=$(basename "$v")
+            cp -r "versions/$v" "_site/$v"
           done
       - uses: actions/upload-pages-artifact@v3
         with:

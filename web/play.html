@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <title>zork1</title>
 <meta name="viewport" content="width=device-width, user-scalable=no">
-<link rel="stylesheet" href="lib/parchment/parchment.css?v=1772574799">
-<link rel="stylesheet" href="lib/parchment/main.css?v=1772574799">
+<link rel="stylesheet" href="lib/parchment/parchment.css?v=1772602803">
+<link rel="stylesheet" href="lib/parchment/main.css?v=1772602803">
 
 <style>
 /* ── Houdini @property — register as <color> for smooth transitions ── */
@@ -343,6 +343,15 @@ body.mood-tree .BufferWindow {
   animation: canopyGlow 7s ease-in-out infinite;
 }
 
+body.mood-tree .BufferWindowInner {
+  animation: treeSway 12s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+body.mood-tree .GridWindow {
+  animation: windGust 15s ease-in-out infinite;
+}
+
 /* Dappled sunlight + forest vignette (always exist, fade in when mood-tree) */
 #gameport::before,
 #gameport::after {
@@ -524,8 +533,8 @@ body.sword-glow-bright::after {
 }
 </style>
 
-<script src="lib/parchment/jquery.min.js?v=1772574799"></script>
-<script src="lib/parchment/ie.js?v=1772574799" nomodule></script>
+<script src="lib/parchment/jquery.min.js?v=1772602803"></script>
+<script src="lib/parchment/ie.js?v=1772602803" nomodule></script>
 <script>
     // story_name is REQUIRED — parchment.js calls .substring() on it to detect
     // the file type (.ulx.js, .gblorb.js, .z3.js). Without it you get:
@@ -538,8 +547,8 @@ body.sword-glow-bright::after {
         do_vm_autosave: 1,
     };
 </script>
-<script src="lib/parchment/parchment.js?v=1772574799"></script>
-<script src="lib/parchment/resourcemap.js?v=1772574799"></script>
+<script src="lib/parchment/parchment.js?v=1772602803"></script>
+<script src="lib/parchment/resourcemap.js?v=1772602803"></script>
 <script>
     window.addEventListener('pageshow', function(e) {
         if (e.persisted) { window.location.reload(); }
@@ -691,6 +700,7 @@ body.sword-glow-bright::after {
 
   // ── Room-specific visual effects ──
 
+  var eggTaken = false;  // tree sway only activates after egg is taken
   var leafContainer = null;
   var LEAF_COLORS = ['#4a8030','#5a9035','#3d7028','#6aaa40','#8ab850',
                      '#a0c060','#7a6030','#9a8040','#c4a050','#b8a040'];
@@ -723,7 +733,7 @@ body.sword-glow-bright::after {
   }
 
   function handleRoomEffects(roomName) {
-    if (roomName === 'Up a Tree') {
+    if (roomName === 'Up a Tree' && eggTaken) {
       document.body.classList.add('mood-tree');
       spawnLeaves();
     } else {
@@ -732,7 +742,16 @@ body.sword-glow-bright::after {
     }
   }
 
-  // ── Egg-taken golden flash event ──
+  function triggerTreeSway() {
+    eggTaken = true;
+    console.log('[mood] Egg taken — tree disturbed!');
+    if (currentRoom === 'Up a Tree') {
+      document.body.classList.add('mood-tree');
+      spawnLeaves();
+    }
+  }
+
+  // ── Trophy case golden flash event ──
 
   var lastNodeText = '';
   var eggFlashCooldown = false;
@@ -740,7 +759,7 @@ body.sword-glow-bright::after {
   function triggerEggFlash() {
     if (eggFlashCooldown) return;
     eggFlashCooldown = true;
-    console.log('[mood] EGG TAKEN — golden flash!');
+    console.log('[mood] Egg in trophy case — golden flash!');
 
     // Double flash overlay
     var ov1 = document.createElement('div'); ov1.className = 'egg-overlay';
@@ -793,7 +812,7 @@ body.sword-glow-bright::after {
     if (level) document.body.classList.add(level);
   }
 
-  // Watch buffer text for game events (egg flash, sword glow)
+  // Watch buffer text for game events (tree sway, trophy flash, sword glow)
   function watchBuffer() {
     function tryAttach() {
       var buf = document.querySelector('.BufferWindow');
@@ -804,8 +823,12 @@ body.sword-glow-bright::after {
             var node = muts[i].addedNodes[j];
             if (node.nodeType !== 1) continue;
             var text = (node.textContent || '').trim();
-            // Egg flash
+            // Egg taken — trigger tree sway
             if (/^taken\.?$/i.test(text) && /\begg\b/.test(lastNodeText)) {
+              triggerTreeSway();
+            }
+            // Egg in trophy case — golden explosion
+            if (/^done\.?$/i.test(text) && /\begg\b/.test(lastNodeText) && /\b(case|trophy)\b/.test(lastNodeText)) {
               triggerEggFlash();
             }
             // Sword glow

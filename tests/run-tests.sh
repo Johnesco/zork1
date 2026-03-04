@@ -12,13 +12,19 @@
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
-I7_ROOT="/mnt/c/code/ifhub"
+
+# Resolve ifhub root (platform-aware)
+if [[ "$OSTYPE" == "msys" || "$OSTYPE" == "cygwin" ]]; then
+    I7_ROOT="/c/code/ifhub"
+else
+    I7_ROOT="/mnt/c/code/ifhub"
+fi
 
 # Source project config for game path and regtest file
 source "$SCRIPT_DIR/project.conf"
 
 # Use wrapper interpreter that answers the sound prompt with "n"
-WRAPPER_INTERP="bash $SCRIPT_DIR/glulxe-wrapper.sh /home/johnesco/glulxe/glulxe"
+WRAPPER_INTERP="bash $SCRIPT_DIR/glulxe-wrapper.sh $REGTEST_ENGINE"
 
 python3 "$I7_ROOT/tools/regtest.py" \
     -i "$WRAPPER_INTERP -q" \
