@@ -572,6 +572,11 @@ function parseTranscript(transcriptText, commandsText) {
   // Preamble = everything before first >
   var preamble = firstPrompt > 0 ? lines.slice(0, firstPrompt).join('\n').trim() : '';
 
+  // Detect sound prompt: if the preamble contains the sound question,
+  // the first walkthrough command answered it without producing a > prompt.
+  // This means commands are offset by 1 from transcript prompts.
+  var soundPromptOffset = /Do you want sound|Sound disabled|Sound enabled/i.test(preamble) ? 1 : 0;
+
   // Split into steps at each > line
   var steps = [];
   var promptIndices = [];
@@ -579,7 +584,10 @@ function parseTranscript(transcriptText, commandsText) {
     if (lines[i].match(/^>/)) promptIndices.push(i);
   }
 
-  for (var p = 0; p < promptIndices.length && p < commands.length; p++) {
+  for (var p = 0; p < promptIndices.length; p++) {
+    var cmdIdx = p + soundPromptOffset;
+    if (cmdIdx >= commands.length) break;
+
     var promptLine = lines[promptIndices[p]];
     var immediateText = promptLine.slice(1); // text after >
 
@@ -601,8 +609,8 @@ function parseTranscript(transcriptText, commandsText) {
     }
 
     steps.push({
-      num: p + 1,
-      command: commands[p],
+      num: cmdIdx + 1,
+      command: commands[cmdIdx],
       response: fullResponse
     });
   }
