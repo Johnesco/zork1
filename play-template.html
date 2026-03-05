@@ -682,6 +682,15 @@ body.sword-glow-bright::after {
     root.setProperty('--mood-ui-bg', p.uiBg);
     root.setProperty('--mood-border', p.border);
 
+    // Sync GlkOte variables so inline styles follow the mood palette
+    root.setProperty('--glkote-buffer-bg', p.bufferBg);
+    root.setProperty('--glkote-buffer-fg', p.bufferFg);
+    root.setProperty('--glkote-grid-bg', p.gridBg);
+    root.setProperty('--glkote-grid-fg', p.gridFg);
+    root.setProperty('--glkote-input-fg', p.accent);
+    root.setProperty('--asyncglk-ui-bg', p.uiBg);
+    root.setProperty('--asyncglk-ui-border', p.border);
+
     // Direct fallback for gameport background
     var gp = document.getElementById('gameport');
     if (gp) gp.style.backgroundColor = p.uiBg;
