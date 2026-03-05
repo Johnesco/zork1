@@ -1,43 +1,46 @@
-open mailbox
-take leaflet
-read leaflet
-drop leaflet
+n
+n
+n
+u
+take egg
+d
 s
 e
 open window
-enter
-take bottle
+w
 take sack
+take bottle
+w
+take sword
+take lamp
+open case
+put egg in case
+e
+turn on lamp
+u
+take rope
+d
 open sack
 take garlic
-take lunch
 w
-take lamp
-take sword
-open case
 move rug
 open trap door
-turn on lamp
-down
+d
 s
+drop sack
+drop bottle
+drop rope
 e
 take painting
-n
-up
-up
-take knife
-take rope
-down
-down
 w
-put painting in case
-drop knife
-drop bottle
-drop lunch
-drop sack
-open trap door
-down
 n
+n
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
 kill troll with sword
 kill troll with sword
 kill troll with sword
@@ -47,173 +50,138 @@ kill troll with sword
 drop sword
 e
 e
-se
 e
-tie rope to railing
-down
-take torch
-s
-down
-take coffin
-up
-s
-pray
-turn off lamp
-s
-n
-e
-down
-down
-n
-drop coffin
-open coffin
-take sceptre
-wave sceptre
-take pot of gold
-take coffin
-sw
-up
-up
-nw
+echo
+take platinum bar
 w
-in
-w
-put coffin in case
-put pot of gold in case
-put sceptre in case
-open trap door
-turn on lamp
-down
-n
-e
-e
 n
 ne
 e
 n
 take matchbook
 n
+push yellow button
 take wrench
 take screwdriver
-push yellow button
 s
 s
-turn bolt with wrench
+turn bolt
 drop wrench
 s
 sw
 s
+w
+w
+w
+s
+e
+u
+sw
+e
+s
+se
+odysseus
+e
+e
+turn off lamp
+put painting in case
+put platinum bar in case
+turn on lamp
+open trap door
+d
+s
+take rope
+n
+n
+e
+e
 se
 e
-down
-turn off lamp
+tie rope to railing
+d
+take torch
 s
 take bell
 s
 take book
 take candles
-down
-down
+d
+d
 ring bell
 take candles
 light match
 light candles with match
 read book
 drop book
+drop candles
 s
 take skull
 n
-up
+u
 n
-put out candles
-drop candles
-drop matchbook
-rub mirror
+n
 n
 w
-n
 w
-n
+w
+s
 e
-put torch in basket
-turn on lamp
-n
-down
-take bracelet
-e
-ne
-se
+u
 sw
-down
-down
-s
-take coal
-n
-up
-up
-n
 e
 s
-n
-up
-s
-put coal in basket
-put screwdriver in basket
-lower basket
-n
-down
-e
-ne
 se
-sw
-down
-down
-w
-drop all
-w
-take coal
-take screwdriver
-take torch
-s
-open lid
-put coal in machine
-close lid
-turn switch with screwdriver
-drop screwdriver
-open lid
-take diamond
-n
-put diamond in basket
-put torch in basket
 e
-take all
 e
-up
-up
-n
-e
-s
-n
-up
-s
-raise basket
-take diamond
-take torch
 turn off lamp
-w
-take jade
+put torch in case
+put skull in case
+turn on lamp
+open trap door
+d
+n
+e
+e
+se
+e
+d
 s
+d
+take coffin
+open coffin
+take sceptre
+u
+s
+pray
+turn off lamp
+drop lamp
+drop screwdriver
+s
+n
+e
+d
+d
+n
+wave sceptre
+take pot of gold
+sw
+u
+u
+nw
+s
+w
+take lamp
 e
 s
-down
-up
-put jade in case
-put skull in case
-put bracelet in case
-put torch in case
-put diamond in case
+e
+w
+w
+put coffin in case
+put sceptre in case
+put pot of gold in case
 turn on lamp
-down
+open trap door
+d
 n
 e
 e
@@ -229,19 +197,148 @@ s
 s
 take trunk
 s
+se
+sw
+s
+w
+w
+w
+s
 e
-down
+u
+sw
+e
+s
+se
+e
+e
+turn off lamp
+put trunk in case
+put trident in case
+e
+e
+nw
+n
+w
+take screwdriver
+e
+s
+e
+w
+w
+take torch from case
+turn on lamp
+open trap door
+d
+n
+e
+e
+s
+s
+rub mirror
+n
+w
+n
+w
+n
+take jade
+e
+put torch in basket
+put screwdriver in basket
+n
+d
+take bracelet
+e
+ne
+se
+sw
+d
+d
+s
+take coal
+n
+u
+u
+n
+e
+s
+n
+u
+s
+put coal in basket
+lower basket
+n
+d
+e
+ne
+se
+sw
+d
+d
+w
+drop lamp
+drop jade
+drop bracelet
+drop pump
+w
+take torch
+take coal
+take screwdriver
+s
+open lid
+put coal in machine
+close lid
+turn on switch
+drop screwdriver
+open lid
+take diamond
+n
+put diamond in basket
+put torch in basket
+raise basket
+e
+take lamp
+take jade
+take bracelet
+take pump
+e
+u
+u
+n
+e
+s
+n
+u
+s
+take diamond
+take torch
+w
+s
+e
+s
+d
+up
+turn off lamp
+put jade in case
+put bracelet in case
+put diamond in case
+put torch in case
+turn on lamp
+open trap door
+d
+n
+e
+e
+n
+ne
+e
+turn off lamp
+d
 inflate plastic with pump
 drop pump
+turn on lamp
 enter boat
 launch
-wait
-wait
-wait
-wait
-wait
-wait
-wait
 wait
 wait
 wait
@@ -263,110 +360,79 @@ open buoy
 take emerald
 s
 s
-cross rainbow
-turn off lamp
+w
+w
 sw
-up
-up
+u
+u
 nw
 w
-in
+w
 w
 put emerald in case
 put scarab in case
-put trident in case
-put trunk in case
-e
-e
-n
-n
-climb tree
-take egg
-climb down
-s
-e
-in
-w
+take egg from case
 turn on lamp
-down
+open trap door
+d
 n
+take axe
 w
 s
 e
-up
+u
 take coins
-take key
 sw
 e
 s
 se
-odysseus
-up
+u
 give egg to thief
-down
+d
+u
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+drop axe
+take canary
+take chalice
+take egg
+take painting
+d
 e
 e
+turn off lamp
 put coins in case
-take knife
-down
-n
-w
-s
+put chalice in case
+put painting in case
 e
-up
-sw
 e
-s
-se
-up
-kill thief with knife
-kill thief with knife
-kill thief with knife
-kill thief with knife
-kill thief with knife
-kill thief with knife
-take all
-drop stiletto
-down
 nw
-s
-w
-up
-down
-ne
-unlock grate with key
-open grate
-up
-s
+n
 wind canary
 take bauble
 s
 e
-in
 w
-put bauble in case
-put canary in case
+w
 put egg in case
-put chalice in case
-down
-n
-e
-e
-e
-echo
-take bar
-w
-w
-w
-s
-up
-put bar in case
+put canary in case
+put bauble in case
 look
 take map
 read map
 e
 e
-n
+s
 w
 sw
 enter barrow

@@ -11,11 +11,11 @@ take sack
 take bottle
 w
 take sword
-take lantern
+take lamp
 open case
 put egg in case
 e
-turn on lantern
+turn on lamp
 u
 take rope
 d
@@ -34,18 +34,18 @@ take painting
 w
 n
 n
-attack troll
-attack troll
-attack troll
-attack troll
-attack troll
-attack troll
-attack troll
-attack troll
-attack troll
-attack troll
-attack troll
-attack troll
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
+kill troll with sword
 drop sword
 e
 e
@@ -59,7 +59,7 @@ e
 n
 take matchbook
 n
-press yellow button
+push yellow button
 take wrench
 take screwdriver
 s
@@ -82,10 +82,10 @@ se
 odysseus
 e
 e
-turn off lantern
+turn off lamp
 put painting in case
 put platinum bar in case
-turn on lantern
+turn on lamp
 open trap door
 d
 s
@@ -132,10 +132,10 @@ s
 se
 e
 e
-turn off lantern
+turn off lamp
 put torch in case
 put skull in case
-turn on lantern
+turn on lamp
 open trap door
 d
 n
@@ -152,8 +152,8 @@ take sceptre
 u
 s
 pray
-turn off lantern
-drop lantern
+turn off lamp
+drop lamp
 drop screwdriver
 s
 n
@@ -169,7 +169,7 @@ u
 nw
 s
 w
-take lantern
+take lamp
 e
 s
 e
@@ -178,7 +178,7 @@ w
 put coffin in case
 put sceptre in case
 put pot of gold in case
-turn on lantern
+turn on lamp
 open trap door
 d
 n
@@ -211,7 +211,7 @@ s
 se
 e
 e
-turn off lantern
+turn off lamp
 put trunk in case
 put trident in case
 e
@@ -226,7 +226,7 @@ e
 w
 w
 take torch from case
-turn on lantern
+turn on lamp
 open trap door
 d
 n
@@ -275,7 +275,7 @@ sw
 d
 d
 w
-drop lantern
+drop lamp
 drop jade
 drop bracelet
 drop pump
@@ -296,7 +296,7 @@ put diamond in basket
 put torch in basket
 raise basket
 e
-take lantern
+take lamp
 take jade
 take bracelet
 take pump
@@ -317,12 +317,12 @@ e
 s
 d
 up
-turn off lantern
+turn off lamp
 put jade in case
 put bracelet in case
 put diamond in case
 put torch in case
-turn on lantern
+turn on lamp
 open trap door
 d
 n
@@ -331,11 +331,11 @@ e
 n
 ne
 e
-turn off lantern
+turn off lamp
 d
-inflate plastic
+inflate plastic with pump
 drop pump
-turn on lantern
+turn on lamp
 enter boat
 launch
 wait
@@ -371,7 +371,7 @@ w
 put emerald in case
 put scarab in case
 take egg from case
-turn on lantern
+turn on lamp
 open trap door
 d
 n
@@ -389,18 +389,18 @@ u
 give egg to thief
 d
 u
-attack thief
-attack thief
-attack thief
-attack thief
-attack thief
-attack thief
-attack thief
-attack thief
-attack thief
-attack thief
-attack thief
-attack thief
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
+kill thief with axe
 drop axe
 take canary
 take chalice
@@ -409,7 +409,7 @@ take painting
 d
 e
 e
-turn off lantern
+turn off lamp
 put coins in case
 put chalice in case
 put painting in case
@@ -431,8 +431,7 @@ take map
 read map
 e
 e
-nw
 s
-sw
+w
 sw
 enter barrow
