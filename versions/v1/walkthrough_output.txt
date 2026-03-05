@@ -2,15 +2,13 @@
 
 
 
-ZORK I: The Great Underground Empire
-Infocom interactive fiction - a fantasy story
-Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.
-ZORK is a registered trademark of Infocom, Inc.
-Release 88 / Serial number 840726
-
-Zork I: The Great Underground Empire
+Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 1 / Serial number 260301 / Inform 7 v10.1.2 / D
+Release 4 / Serial number 260305 / Inform 7 v10.1.2 / D
+v4: Modern IF
+Translated to Inform 7 by John Escobedo
+Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
+Copyright (c) 1981-1986 Infocom, Inc. ZIL source released under MIT License.
 
 West of House
 You are standing in an open field west of a white house, with a boarded front door.
@@ -110,7 +108,11 @@ You are in the kitchen of the white house. A table seems to have been used recen
 Living Room
 You are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.
 
+Your sword is glowing with a faint blue glow.
+
 >With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.
+
+Your sword is no longer glowing.
 
 >The door reluctantly opens to reveal a rickety staircase descending into darkness.
 
@@ -163,10 +165,10 @@ This is a small room with passages to the east and south and a forbidding hole l
 
 A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
 
-The troll swings his axe, but it misses.
+The axe sweeps past as you jump aside.
 Your sword has begun to glow very brightly.
 
->A furious exchange, and the troll is knocked out!
+>Your sword crashes down, knocking the troll into dreamland.
 >The unconscious troll cannot defend himself: He dies.
 
 Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
@@ -338,6 +340,8 @@ This is part of a maze of twisty little passages, all alike.
 Maze
 This is part of a maze of twisty little passages, all alike.
 
+There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
+
 >
 Cyclops Room
 This room has an exit on the northwest, and a staircase leading up.
@@ -443,6 +447,8 @@ On the two ends of the altar are burning candles.
 >Cave
 This is a tiny cave with entrances west and north, and a dark, forbidding staircase leading down.
 
+A gust of wind blows out your candles!
+
 >
 Entrance to Hades
 You are outside a large gateway, on which is inscribed
@@ -533,8 +539,6 @@ This is part of a maze of twisty little passages, all alike.
 Maze
 This is part of a maze of twisty little passages, all alike.
 
-There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
-
 >
 Maze
 This is part of a maze of twisty little passages, all alike.
@@ -585,7 +589,7 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 >The brass lantern is now on.
 
->Have your eyes checked.
+>Look around.
 
 >
 Cellar
@@ -656,6 +660,8 @@ This is the south end of a large temple. In front of you is what appears to be a
 This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
 
 >The brass lantern is now off.
+
+You hear in the distance the chirping of a song bird.
 
 >Dropped.
 
@@ -943,6 +949,8 @@ You can see a screwdriver here.
 
 >Taken.
 
+You hear in the distance the chirping of a song bird.
+
 >
 Forest Path
 This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
@@ -969,7 +977,7 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 >The brass lantern is now on.
 
->Too late for that.
+>Look around.
 
 >
 Cellar
@@ -1002,6 +1010,8 @@ You are in a large square room with tall ceilings. On the south wall is an enorm
 
 Mirror Room
 You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
+
+There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
 
 >
 Cold Passage
@@ -1323,7 +1333,7 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 >The brass lantern is now on.
 
->Look around.
+>Have your eyes checked.
 
 >
 Cellar
@@ -1530,8 +1540,6 @@ You can also see a sword here.
 >Maze
 This is part of a maze of twisty little passages, all alike.
 
-There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
-
 >
 Maze
 This is part of a maze of twisty little passages, all alike.
@@ -1580,8 +1588,6 @@ The east wall, previously solid, now has a cyclops-sized opening in it.
 >Treasure Room
 This is a large room, whose east wall is solid granite. A number of discarded bags, which crumble at your touch, are scattered about on the floor. There is an exit down a staircase.
 
-There is a silver chalice, intricately engraved, here.
-
 You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
 
 [Your score has just gone up by twenty-five points.]
@@ -1599,21 +1605,20 @@ This is a large room, whose east wall is solid granite. A number of discarded ba
 
 You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
 
+>A good stroke, but it's too slow; the thief dodges.
+>The thief is struck on the arm; blood begins to trickle down.
+>Your bloody axe pinks the thief on the wrist, but it's not serious.
+>The thief is struck on the arm; blood begins to trickle down.
 >The blow lands, making a shallow gash in the thief's arm!
->The thief is struck on the arm; blood begins to trickle down.
->Your stroke lands, but it was only the flat of the blade.
->The thief is struck on the arm; blood begins to trickle down.
 >The fatal blow strikes the thief square in the heart: He dies.
 Almost as soon as the thief breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 
 
 As the thief dies, the power of his magic decreases, and his treasures reappear:
-  A jewel-encrusted egg, with a golden clockwork canary
   A chalice
+  A jewel-encrusted egg, with a golden clockwork canary
 
 The chalice is now safe to take.
-
->You can't see any such thing.
 
 >You can't see any such thing.
 
@@ -1682,8 +1687,6 @@ You are facing the north side of a white house. There is no door here, and all t
 Forest Path
 This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
 
-You hear in the distance the chirping of a song bird.
-
 >The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the greenery flies a lovely songbird. It perches on a limb just over your head and opens its beak to sing. As it does so a beautiful brass bauble drops from its mouth, bounces off the top of your head, and lands glimmering in the grass. As the canary winds down, the songbird flies away.
 
 >Taken.
@@ -1737,10 +1740,8 @@ Behind House
 You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is open.
 
 >
-North of House
-You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
-
->The windows are all boarded.
+South of House
+You are facing the south side of a white house. There is no door here, and all the windows are boarded.
 
 >
 West of House

@@ -418,14 +418,14 @@ Section 0 - Sound Toggle
 
 The sound-enabled is a truth state that varies. The sound-enabled is false.
 
-When play begins (this is the ask about sound rule):
-	say "Do you want sound? (y/n) ";
-	if the player consents:
+To decide whether glk sound is supported:
+	(- (glk_gestalt(gestalt_Sound, 0)) -).
+
+When play begins (this is the auto-enable sound rule):
+	if glk sound is supported:
 		now the sound-enabled is true;
-		say "[line break]Sound enabled.[paragraph break]";
-		follow the ambient audio zone rule;
-	otherwise:
-		say "[line break]Sound disabled. Type SOUND ON during play to enable it.[paragraph break]".
+		say "Sound enabled. Type SOUND OFF to mute.[paragraph break]";
+		follow the ambient audio zone rule.
 
 Enabling sound is an action out of world.
 Understand "sound on" as enabling sound.

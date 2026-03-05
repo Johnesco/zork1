@@ -116,7 +116,7 @@ Audio is now **native Glk sound** — driven from story.ni via Glk sound channel
 - **Audio zones**: Every room assigned to a zone (forest, house, cave, water, rapids, loud, hades, mine, machinery, silence)
 - **Ambient audio rule**: Crossfades zone-based background loops on room change using dual Glk background channels
 - **Sound effects**: Triggered inline (`play the sound of X as sfx`) at key game events (grue attacks, match strikes, doors opening, etc.)
-- **Sound toggle**: Player prompted at startup; `SOUND ON` / `SOUND OFF` commands available in-game
+- **Sound auto-detect**: Uses `glk_gestalt(gestalt_Sound, 0)` to auto-enable sound when the interpreter supports it (Parchment WASM) — no startup prompt. `SOUND ON` / `SOUND OFF` commands available in-game
 
 ### Sound System History
 
@@ -280,20 +280,20 @@ bash tests/run-tests.sh --vital startup         # single regtest
 
 The walkthrough exists in multiple locations for different purposes:
 
-| File | Purpose | Sound prompt? |
-|------|---------|---------------|
-| `tests/inform7/walkthrough.txt` | **Runner reads this** — used by `run-walkthrough.sh` and `find-seeds.sh` | Yes (`n` on line 1) |
-| `tests/walkthrough.txt` | Root-level copy (kept in sync with above) | Yes |
-| `tests/zil/walkthrough.txt` | ZIL v0 walkthrough (read-only reference, 439 commands) | No |
-| `versions/v0/walkthrough.txt` | ZIL version for web walkthrough viewer | No |
-| `versions/v1/walkthrough.txt` | Web walkthrough viewer (no sound in v1) | No |
-| `versions/v2/walkthrough.txt` | Web walkthrough viewer (no sound in v2) | No |
-| `versions/v3/walkthrough.txt` | Web walkthrough viewer (v3 has sound) | Yes |
-| `versions/v4/walkthrough.txt` | Web walkthrough viewer (v4 has sound) | Yes |
+| File | Purpose |
+|------|---------|
+| `tests/inform7/walkthrough.txt` | **Runner reads this** — used by `run-walkthrough.sh` and `find-seeds.sh` |
+| `tests/walkthrough.txt` | Root-level copy (kept in sync with above) |
+| `tests/zil/walkthrough.txt` | ZIL v0 walkthrough (read-only reference, 439 commands) |
+| `versions/v0/walkthrough.txt` | ZIL version for web walkthrough viewer |
+| `versions/v1/walkthrough.txt` | Web walkthrough viewer (no sound in v1) |
+| `versions/v2/walkthrough.txt` | Web walkthrough viewer (no sound in v2) |
+| `versions/v3/walkthrough.txt` | Web walkthrough viewer (v3 has sound) |
+| `versions/v4/walkthrough.txt` | Web walkthrough viewer (v4 has sound) |
 
 **Critical**: `project.conf` line 23 sets `PRIMARY_WALKTHROUGH` to `tests/inform7/walkthrough.txt`. The runner does NOT use `tests/walkthrough.txt`. Always update the `inform7/` copy.
 
-**Sound prompt**: v3+ games ask "Do you want sound? (y/n)" before play begins, consuming the first walkthrough command. Walkthroughs for v3/v4 must start with `n` to answer this prompt. v0/v1/v2 have no sound system — their walkthroughs must NOT have this prefix or it will be interpreted as "go north."
+**Sound auto-detect**: v3+ games use `glk_gestalt(gestalt_Sound, 0)` to auto-enable sound when the interpreter supports it — no startup prompt. All walkthrough files are identical across versions (no sound prompt prefix needed).
 
 **ZIL reference as ground truth**: The I7 walkthrough was rebuilt from the proven ZIL v0 route (`tests/zil/walkthrough.txt`) with these I7 syntax adaptations:
 - `lamp` instead of `lantern`
@@ -306,14 +306,13 @@ The walkthrough exists in multiple locations for different purposes:
 **When updating the walkthrough**: Sync all three file types to all locations, then deploy:
 1. Update `tests/inform7/walkthrough.txt` (the runner's source of truth)
 2. Copy to `tests/walkthrough.txt` (root-level copy)
-3. Copy to `versions/v1/` and `versions/v2/` **without** the sound prompt line
-4. Copy to `versions/v3/` and `versions/v4/` **with** the sound prompt line
-5. Run `find-seeds.sh` to discover a new golden seed if game code changed
-6. Run walkthrough to regenerate `tests/inform7/walkthrough_output.txt`
-7. Regenerate the guide: `python3 /c/code/ifhub/tools/testing/generate-guide.py --walkthrough tests/inform7/walkthrough.txt --transcript tests/inform7/walkthrough_output.txt -o tests/inform7/walkthrough-guide.txt`
-8. Sync guide to versions (v1/v2 without first `> n` line, v3/v4 full)
-9. Run `bash /c/code/ifhub/ifhub/deploy.sh` to sync all walkthrough files to `ifhub/games/zork1-v*/` — OR manually copy to each `ifhub/games/zork1-vN/`
-10. Commit and push both the zork1 repo AND the ifhub repo
+3. Copy to all `versions/vN/` directories
+4. Run `find-seeds.sh` to discover a new golden seed if game code changed
+5. Run walkthrough to regenerate `tests/inform7/walkthrough_output.txt`
+6. Regenerate the guide: `python3 /c/code/ifhub/tools/testing/generate-guide.py --walkthrough tests/inform7/walkthrough.txt --transcript tests/inform7/walkthrough_output.txt -o tests/inform7/walkthrough-guide.txt`
+7. Copy guide to all `versions/vN/` directories
+8. Run `bash /c/code/ifhub/ifhub/deploy.sh` to sync all walkthrough files to `ifhub/games/zork1-v*/` — OR manually copy to each `ifhub/games/zork1-vN/`
+9. Commit and push both the zork1 repo AND the ifhub repo
 
 **Three walkthrough file types** (all must stay in sync):
 - `walkthrough.txt` — raw commands, one per line
