@@ -2,7 +2,7 @@
 
 The story headline is "An Interactive Fiction".
 The story genre is "Fantasy".
-The release number is 1.
+The release number is 3.
 The story creation year is 1980.
 The story description is "ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!"
 
@@ -18,8 +18,13 @@ The player is in West-of-House.
 
 When play begins:
 	now the left hand status line is "[the player's surroundings] [if in darkness]   [otherwise]   Score: [score]/[turn count][end if]";
-	now the right hand status line is "";
-	say "[bold type]ZORK I: The Great Underground Empire[roman type][line break]Infocom interactive fiction - a fantasy story[line break]Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.[line break]ZORK is a registered trademark of Infocom, Inc.[line break]Release 88 / Serial number 840726[paragraph break]".
+	now the right hand status line is "".
+
+After printing the banner text:
+	say "v3: Sound[line break]";
+	say "Translated to Inform 7 by John Escobedo[line break]";
+	say "Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson[line break]";
+	say "Copyright (c) 1981-1986 Infocom, Inc. ZIL source released under MIT License.[paragraph break]".
 
 Chapter 2 - Verbosity Modes
 
@@ -913,7 +918,7 @@ After opening the small mailbox:
 Instead of taking the small mailbox:
 	say "It is securely anchored."
 
-The leaflet is in the small mailbox. The description of the leaflet is "WELCOME TO ZORK![paragraph break]ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!"
+The leaflet is in the small mailbox. The description of the leaflet is "WELCOME TO ZORK![paragraph break]ZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one![paragraph break](v3: Sound — An Inform 7 translation)[line break]Translated to Inform 7 by John Escobedo[line break]Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson[line break]Copyright (c) 1981-1986 Infocom, Inc. ZIL source released under MIT License."
 Understand "advertisement" and "leaflet" and "booklet" and "mail" and "small" as the leaflet.
 
 The front door is scenery in West-of-House.

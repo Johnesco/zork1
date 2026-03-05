@@ -216,8 +216,14 @@ The **current version** (`story.ni` at the repo root) is the working copy where 
 **Updating the latest version** (routine — happens frequently):
 1. Make changes in `story.ni` (repo root)
 2. Build and test (see "Building the Game" and "Testing Policy" below)
-3. Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
-   (Or manually: copy `story.ni` → `versions/vN/story.ni`, compile and base64-encode → `versions/vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+))
+3. Run: `bash /c/code/ifhub/tools/pipeline.sh zork1 compile snapshot --version vN`
+   (Pipeline syncs root `story.ni` → version dir, then `snapshot.sh --update` recompiles from it)
+   Or manually: copy `story.ni` → `versions/vN/story.ni`, then run `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
+
+**Recompiling a frozen version** (rare — fixing old versions):
+1. Edit `versions/vN/story.ni` directly
+2. Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
+   (`--update` compiles from the version's own `story.ni`, auto-detects `.gblorb` vs `.ulx`)
 
 **Creating a new version** (vN+1):
 1. Finish all code changes in the current version
