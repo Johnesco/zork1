@@ -1,0 +1,1093 @@
+## North of House
+
+> n
+
+## Forest Path
+
+> n
+
+## Up a Tree
+
+> u
+# +5 points
+> take egg
+
+## Forest Path
+
+> d
+
+## North of House
+
+> s
+
+## Behind House
+
+> e
+> open window
+
+## Kitchen
+
+# +10 points
+> w
+> take sack
+> take bottle
+
+## Living Room
+
+> w
+> take sword
+> take lamp
+> open case
+# +9 points
+> put egg in case
+
+## Kitchen
+
+> e
+> turn on lamp
+
+## Attic
+
+> u
+> take rope
+
+## Kitchen
+
+> d
+> open sack
+> take garlic
+
+## Living Room
+
+> w
+> move rug
+> open trap door
+# +25 points
+> d
+
+## East of Chasm
+
+> s
+> drop sack
+> drop bottle
+> drop rope
+
+## Gallery
+
+> e
+# +4 points
+> take painting
+
+## East of Chasm
+
+> w
+
+## Cellar
+
+> n
+> n
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> drop sword
+
+## East-West Passage
+
+> e
+
+## Round Room
+
+> e
+
+## Loud Room
+
+> e
+> echo
+# +10 points
+> take platinum bar
+
+## Round Room
+
+> w
+
+## North-South Passage
+
+> n
+
+## Deep Canyon
+
+> ne
+
+## Dam
+
+> e
+
+## Dam Lobby
+
+> n
+> take matchbook
+
+## Maintenance Room
+
+> n
+> push yellow button
+> take wrench
+> take screwdriver
+
+## Dam Lobby
+
+> s
+
+## Dam
+
+> s
+> turn bolt
+> drop wrench
+
+## Deep Canyon
+
+> s
+
+## North-South Passage
+
+> sw
+
+## Round Room
+
+> s
+
+## East-West Passage
+
+# +5 points
+> w
+> w
+
+## Maze
+
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+
+## Cyclops Room
+
+> se
+> odysseus
+
+## Strange Passage
+
+> e
+
+## Living Room
+
+> e
+> turn off lamp
+# +6 points
+> put painting in case
+# +5 points
+> put platinum bar in case
+> turn on lamp
+> open trap door
+
+## Cellar
+
+> d
+
+## East of Chasm
+
+> s
+> take rope
+
+## Cellar
+
+> n
+> n
+
+## East-West Passage
+
+> e
+
+## Round Room
+
+> e
+
+## Engravings Cave
+
+> se
+
+## Dome Room
+
+> e
+> tie rope to railing
+
+## Torch Room
+
+> d
+# +14 points
+> take torch
+
+## Temple
+
+> s
+> take bell
+
+## Altar
+
+> s
+> take book
+> take candles
+
+## Cave
+
+> d
+
+## Entrance to Hades
+
+> d
+> ring bell
+> take candles
+> light match
+> light candles with match
+> read book
+> drop book
+> drop candles
+
+## Land of the Dead
+
+> s
+# +10 points
+> take skull
+
+## Entrance to Hades
+
+> n
+
+## Cave
+
+> u
+
+## Mirror Room
+
+> n
+
+## Narrow Passage
+
+> n
+
+## Round Room
+
+> n
+
+## East-West Passage
+
+> w
+> w
+
+## Maze
+
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+
+## Cyclops Room
+
+> se
+
+## Strange Passage
+
+> e
+
+## Living Room
+
+> e
+> turn off lamp
+# +6 points
+> put torch in case
+# +10 points
+> put skull in case
+> turn on lamp
+> open trap door
+
+## Cellar
+
+> d
+> n
+
+## East-West Passage
+
+> e
+
+## Round Room
+
+> e
+
+## Engravings Cave
+
+> se
+
+## Dome Room
+
+> e
+
+## Torch Room
+
+> d
+
+## Temple
+
+> s
+
+## Egyptian Room
+
+> d
+# +10 points
+> take coffin
+> open coffin
+# +4 points
+> take sceptre
+
+## Temple
+
+> u
+
+## Altar
+
+> s
+
+## Forest
+
+> pray
+> turn off lamp
+> drop lamp
+> drop screwdriver
+> s
+
+## Clearing
+
+> n
+
+## Canyon View
+
+> e
+
+## Rocky Ledge
+
+> d
+
+## Canyon Bottom
+
+> d
+
+## End of Rainbow
+
+> n
+> wave sceptre
+# +10 points
+> take pot of gold
+
+## Canyon Bottom
+
+> sw
+
+## Rocky Ledge
+
+> u
+
+## Canyon View
+
+> u
+
+## Clearing
+
+> nw
+
+## Forest
+
+> s
+> w
+> take lamp
+
+## Forest Path
+
+> e
+
+## North of House
+
+> s
+
+## Behind House
+
+> e
+
+## Kitchen
+
+> w
+
+## Living Room
+
+> w
+# +15 points
+> put coffin in case
+# +6 points
+> put sceptre in case
+# +10 points
+> put pot of gold in case
+> turn on lamp
+> open trap door
+
+## Cellar
+
+> d
+> n
+
+## East-West Passage
+
+> e
+
+## Round Room
+
+> e
+
+## North-South Passage
+
+> n
+
+## Deep Canyon
+
+> ne
+
+## Reservoir South
+
+> nw
+
+## Reservoir
+
+> n
+
+## Reservoir North
+
+> n
+> take pump
+
+## Atlantis Room
+
+> n
+# +4 points
+> take trident
+
+## Reservoir North
+
+> s
+
+## Reservoir
+
+> s
+# +15 points
+> take trunk
+
+## Reservoir South
+
+> s
+
+## Deep Canyon
+
+> se
+
+## North-South Passage
+
+> sw
+
+## Round Room
+
+> s
+
+## East-West Passage
+
+> w
+> w
+
+## Maze
+
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+
+## Cyclops Room
+
+> se
+
+## Strange Passage
+
+> e
+
+## Living Room
+
+> e
+> turn off lamp
+# +5 points
+> put trunk in case
+# +11 points
+> put trident in case
+
+## Kitchen
+
+> e
+
+## Behind House
+
+> e
+
+## North of House
+
+> nw
+
+## Forest Path
+
+> n
+
+## Forest
+
+> w
+> take screwdriver
+
+## Forest Path
+
+> e
+
+## North of House
+
+> s
+
+## Behind House
+
+> e
+
+## Kitchen
+
+> w
+
+## Living Room
+
+> w
+# -6 points
+> take torch from case
+> turn on lamp
+> open trap door
+
+## Cellar
+
+> d
+> n
+
+## East-West Passage
+
+> e
+
+## Round Room
+
+> e
+
+## Narrow Passage
+
+> s
+
+## Mirror Room
+
+> s
+> rub mirror
+
+## Cold Passage
+
+> n
+
+## Slide Room
+
+> w
+
+## Mine Entrance
+
+> n
+
+## Squeaky Room
+
+> w
+
+## Bat Room
+
+> n
+# +5 points
+> take jade
+
+## Shaft Room
+
+> e
+> put torch in basket
+> put screwdriver in basket
+
+## Smelly Room
+
+> n
+
+## Gas Room
+
+> d
+# +5 points
+> take bracelet
+
+## Coal Mine
+
+> e
+> ne
+> se
+> sw
+
+## Ladder Top
+
+> d
+
+## Ladder Bottom
+
+> d
+
+## Dead End
+
+> s
+> take coal
+
+## Ladder Bottom
+
+> n
+
+## Ladder Top
+
+> u
+
+## Coal Mine
+
+> u
+> n
+> e
+> s
+
+## Gas Room
+
+> n
+
+## Smelly Room
+
+> u
+
+## Shaft Room
+
+> s
+> put coal in basket
+> lower basket
+
+## Smelly Room
+
+> n
+
+## Gas Room
+
+> d
+
+## Coal Mine
+
+> e
+> ne
+> se
+> sw
+
+## Ladder Top
+
+> d
+
+## Ladder Bottom
+
+> d
+
+## Timber Room
+
+> w
+> drop lamp
+> drop jade
+> drop bracelet
+> drop pump
+
+## Drafty Room
+
+> w
+> take torch
+> take coal
+> take screwdriver
+
+## Machine Room
+
+> s
+> open lid
+> put coal in machine
+> close lid
+> turn on switch
+> drop screwdriver
+> open lid
+# +10 points
+> take diamond
+
+## Drafty Room
+
+# +13 points
+> n
+> put diamond in basket
+> put torch in basket
+> raise basket
+
+## Timber Room
+
+> e
+> take lamp
+> take jade
+> take bracelet
+> take pump
+
+## Ladder Bottom
+
+> e
+
+## Ladder Top
+
+> u
+
+## Coal Mine
+
+> u
+> n
+> e
+> s
+
+## Gas Room
+
+> n
+
+## Smelly Room
+
+> u
+
+## Shaft Room
+
+> s
+> take diamond
+> take torch
+
+## Bat Room
+
+> w
+
+## Squeaky Room
+
+> s
+
+## Mine Entrance
+
+> e
+
+## Slide Room
+
+> s
+> d
+
+## Living Room
+
+> up
+> turn off lamp
+# +5 points
+> put jade in case
+# +5 points
+> put bracelet in case
+# +10 points
+> put diamond in case
+# +6 points
+> put torch in case
+> turn on lamp
+> open trap door
+
+## Cellar
+
+> d
+> n
+
+## East-West Passage
+
+> e
+
+## Round Room
+
+> e
+
+## North-South Passage
+
+> n
+
+## Deep Canyon
+
+> ne
+
+## Dam
+
+> e
+> turn off lamp
+
+## Dam Base
+
+> d
+> inflate plastic with pump
+> drop pump
+> turn on lamp
+> enter boat
+> launch
+
+## Time passes...
+
+> wait
+> wait
+> wait
+> wait
+> take buoy
+
+## Sandy Beach (in the magic boat)
+
+> east
+> exit
+> take shovel
+
+## Sandy Cave
+
+> ne
+> dig sand
+> dig sand
+> dig sand
+> dig sand
+# +5 points
+> take scarab
+> drop shovel
+
+## Sandy Beach
+
+> sw
+> drop buoy
+> open buoy
+# +5 points
+> take emerald
+
+## Shore
+
+> s
+
+## Aragain Falls
+
+> s
+
+## On the Rainbow
+
+> w
+
+## End of Rainbow
+
+> w
+
+## Canyon Bottom
+
+> sw
+
+## Rocky Ledge
+
+> u
+
+## Canyon View
+
+> u
+
+## Clearing
+
+> nw
+
+## Behind House
+
+> w
+
+## Kitchen
+
+> w
+
+## Living Room
+
+> w
+# +10 points
+> put emerald in case
+# +5 points
+> put scarab in case
+# -9 points
+> take egg from case
+> turn on lamp
+> open trap door
+
+## Cellar
+
+> d
+> n
+> take axe
+
+## Maze
+
+> w
+> s
+> e
+> u
+# +10 points
+> take coins
+> sw
+> e
+> s
+
+## Cyclops Room
+
+> se
+
+## Treasure Room
+
+# +25 points
+> u
+> give egg to thief
+
+## Cyclops Room
+
+> d
+
+## Treasure Room
+
+> u
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> drop axe
+# +6 points
+> take canary
+# +10 points
+> take chalice
+> take egg
+> take painting
+
+## Cyclops Room
+
+> d
+
+## Strange Passage
+
+> e
+
+## Living Room
+
+> e
+> turn off lamp
+# +5 points
+> put coins in case
+# +5 points
+> put chalice in case
+> put painting in case
+
+## Kitchen
+
+> e
+
+## Behind House
+
+> e
+
+## North of House
+
+> nw
+
+## Forest Path
+
+> n
+> wind canary
+# +1 points
+> take bauble
+
+## North of House
+
+> s
+
+## Behind House
+
+> e
+
+## Kitchen
+
+> w
+
+## Living Room
+
+> w
+# +5 points
+> put egg in case
+# +4 points
+> put canary in case
+# +1 points
+> put bauble in case
+> look
+> take map
+> read map
+
+## Kitchen
+
+> e
+
+## Behind House
+
+> e
+
+## South of House
+
+> s
+
+## West of House
+
+> w
+
+## Stone Barrow
+
+> sw
+
+## Inside the Barrow
+
+# GAME WON
+> enter barrow

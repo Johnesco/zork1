@@ -78,7 +78,7 @@ div#gameport {
 }
 
 .WindowFrame {
-  background: #111;
+  background: var(--mood-ui-bg) !important;
 }
 
 .WindowFrame:has(.GridWindow) {
@@ -99,8 +99,8 @@ div#gameport {
 }
 
 .BufferWindow {
-  background-color: var(--mood-buffer-bg);
-  color: var(--mood-buffer-fg);
+  background-color: var(--mood-buffer-bg) !important;
+  color: var(--mood-buffer-fg) !important;
   transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out;
 }
 

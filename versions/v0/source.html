@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZIL Source — Zork I: The Great Underground Empire</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #0a0a0a;
+  color: #d4c5a9;
+  font-family: Georgia, "Times New Roman", serif;
+  overflow: hidden;
+}
+
+/* --- Layout --- */
+.container {
+  display: flex;
+  height: 100%;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: #0e0e0c;
+  border-right: 1px solid #1e1a14;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid #1e1a14;
+}
+
+.sidebar-header h1 {
+  font-size: 0.95em;
+  color: #c4b48a;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.sidebar-header a {
+  font-size: 0.8em;
+  color: #887755;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.sidebar-header a:hover {
+  color: #aa9966;
+  border-bottom-color: #aa9966;
+}
+
+/* --- File picker --- */
+.file-list {
+  border-bottom: 1px solid #1e1a14;
+  overflow-y: auto;
+  max-height: 40%;
+  flex-shrink: 0;
+}
+
+.file-list::-webkit-scrollbar { width: 6px; }
+.file-list::-webkit-scrollbar-track { background: #0e0e0c; }
+.file-list::-webkit-scrollbar-thumb { background: #2a2418; border-radius: 3px; }
+
+.file-item {
+  display: block;
+  padding: 6px 16px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.1s, color 0.1s;
+}
+
+.file-item:hover {
+  background: #151510;
+}
+
+.file-item.active {
+  background: #18160f;
+  border-left-color: #e8d090;
+}
+
+.file-name {
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.82em;
+  color: #aa9966;
+}
+
+.file-item.active .file-name {
+  color: #e8d090;
+}
+
+.file-desc {
+  font-size: 0.75em;
+  color: #665a40;
+  margin-top: 1px;
+}
+
+.file-item.active .file-desc {
+  color: #887755;
+}
+
+/* --- Definition nav --- */
+.def-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.def-nav::-webkit-scrollbar { width: 6px; }
+.def-nav::-webkit-scrollbar-track { background: #0e0e0c; }
+.def-nav::-webkit-scrollbar-thumb { background: #2a2418; border-radius: 3px; }
+
+.def-label {
+  display: block;
+  padding: 6px 16px 2px;
+  font-size: 0.72em;
+  color: #554433;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.nav-item {
+  display: block;
+  padding: 3px 16px 3px 24px;
+  font-size: 0.78em;
+  color: #998866;
+  text-decoration: none;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.1s, color 0.1s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-item:hover {
+  background: #151510;
+  color: #c4b48a;
+}
+
+.nav-item.active {
+  background: #18160f;
+  color: #e8d090;
+  border-left-color: #e8d090;
+}
+
+.nav-subtitle {
+  padding-left: 16px;
+  font-weight: bold;
+  color: #c4b48a;
+  padding-top: 8px;
+  font-size: 0.82em;
+}
+
+/* --- Main content --- */
+.main {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  padding: 8px 20px;
+  background: #0e0e0c;
+  border-bottom: 1px solid #1e1a14;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.85em;
+  color: #887755;
+}
+
+.toolbar .file-path {
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+  color: #aa9966;
+}
+
+.toolbar .line-count {
+  margin-left: auto;
+}
+
+.ann-toggle {
+  background: #1a1810;
+  border: 1px solid #2a2418;
+  border-radius: 4px;
+  color: #887755;
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.85em;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.ann-toggle:hover {
+  background: #2a2010;
+  color: #c4b48a;
+  border-color: #4a3a20;
+}
+
+.ann-toggle.active {
+  background: #2a2010;
+  border-color: #5a4a30;
+  color: #e8d090;
+}
+
+.search-box {
+  background: #111;
+  border: 1px solid #2a2418;
+  border-radius: 4px;
+  color: #d4c5a9;
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+  padding: 3px 8px;
+  width: 200px;
+  outline: none;
+}
+
+.search-box:focus {
+  border-color: #4a3a20;
+}
+
+.search-box::placeholder {
+  color: #554433;
+}
+
+.code-wrap {
+  flex: 1;
+  overflow: auto;
+  padding: 16px 0;
+}
+
+.code-wrap::-webkit-scrollbar { width: 8px; }
+.code-wrap::-webkit-scrollbar-track { background: #0a0a0a; }
+.code-wrap::-webkit-scrollbar-thumb { background: #2a2418; border-radius: 4px; }
+.code-wrap::-webkit-scrollbar-thumb:hover { background: #3a3020; }
+
+/* --- Code display --- */
+table.code {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+table.code td {
+  vertical-align: top;
+}
+
+td.ln {
+  min-width: 48px;
+  padding: 0 16px 0 20px;
+  text-align: right;
+  color: #3a3020;
+  user-select: none;
+  white-space: nowrap;
+}
+
+td.lc {
+  white-space: pre-wrap;
+  word-break: break-all;
+  padding: 0 20px 0 0;
+}
+
+tr:target td,
+tr.highlight td {
+  background: #1a1810;
+}
+
+tr:target td.ln,
+tr.highlight td.ln {
+  color: #887755;
+}
+
+/* --- Annotation lines --- */
+tr.ann-line td.lc {
+  color: #7a9a6a;
+  font-style: italic;
+}
+
+tr.ann-line td.ln {
+  color: #3a4a30;
+}
+
+/* --- ZIL Syntax colors --- */
+.zil-cmt  { color: #666050; font-style: italic; }
+.zil-str  { color: #8bab6e; }
+.zil-kw   { color: #c49060; }
+.zil-def  { color: #e8d090; font-weight: bold; }
+.zil-num  { color: #b08a70; }
+.zil-prop { color: #7ea8b0; }
+
+/* --- SUBTITLE headings in code --- */
+tr.subtitle-line td {
+  padding-top: 8px;
+}
+
+tr.subtitle-line td.lc {
+  font-weight: bold;
+  color: #e8d8b0;
+  font-size: 15px;
+}
+
+tr.subtitle-line td.ln {
+  color: #5a4a30;
+}
+
+/* --- Loading / error --- */
+.loading {
+  text-align: center;
+  padding: 80px 40px;
+  color: #887755;
+  font-size: 1.1em;
+}
+
+.loading em {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.error-msg {
+  text-align: center;
+  padding: 80px 40px;
+  color: #aa6644;
+}
+
+/* --- Search highlights --- */
+.search-hit {
+  background: #5a4a10;
+  color: #ffe8a0;
+  border-radius: 2px;
+}
+
+.search-current {
+  background: #7a6a20;
+  outline: 1px solid #aa9930;
+}
+
+/* --- File select dropdown (narrow screens) --- */
+.file-select {
+  display: none;
+  background: #111;
+  border: 1px solid #2a2418;
+  border-radius: 4px;
+  color: #aa9966;
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.9em;
+  padding: 3px 8px;
+  outline: none;
+  max-width: 200px;
+}
+
+.file-select:focus {
+  border-color: #4a3a20;
+}
+
+/* --- Responsive --- */
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+  .file-select { display: inline; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h1>Zork I: ZIL Source</h1>
+      <a href="../">&larr; Back to project</a>
+    </div>
+    <div class="file-list" id="file-list"></div>
+    <div class="def-nav" id="def-nav"></div>
+  </div>
+  <div class="main">
+    <div class="toolbar">
+      <select class="file-select" id="file-select"></select>
+      <span class="file-path" id="file-path">Select a file</span>
+      <button class="ann-toggle" id="ann-toggle" title="Toggle annotations" style="display:none">@@</button>
+      <input type="text" class="search-box" id="search" placeholder="Search... (Ctrl+F)">
+      <span class="line-count" id="line-count"></span>
+    </div>
+    <div class="code-wrap" id="code-wrap">
+      <div class="loading"><em>Select a file from the sidebar to begin browsing.</em></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+'use strict';
+
+/* ---- File manifest ---- */
+var FILES = [
+  { name: 'zork1.zil',   desc: 'Project Manifest',   lines: 32 },
+  { name: 'main.zil',    desc: 'Main Game Loop',      lines: 313 },
+  { name: 'clock.zil',   desc: 'Timer System',        lines: 60 },
+  { name: 'parser.zil',  desc: 'Text Parser',         lines: 1407 },
+  { name: 'syntax.zil',  desc: 'Verb Definitions',    lines: 561 },
+  { name: 'macros.zil',  desc: 'ZIL Macros',          lines: 154 },
+  { name: 'verbs.zil',   desc: 'Verb Handlers',       lines: 2216 },
+  { name: 'globals.zil',  desc: 'Global Objects',     lines: 308 },
+  { name: 'dungeon.zil', desc: 'Rooms & Objects',     lines: 2661 },
+  { name: 'actions.zil',  desc: 'Action Routines',    lines: 4184 }
+];
+
+var RAW_BASE = 'https://raw.githubusercontent.com/Johnesco/zork1/main/src/zil/';
+var ANN_BASE = RAW_BASE + 'annotated/';
+
+/* ---- Caches ---- */
+var origCache = {};   // filename -> raw text
+var annCache = {};    // filename -> raw text (annotated) or null if 404
+var htmlCache = {};   // filename + mode -> { html, navHtml, defItems }
+
+/* ---- State ---- */
+var activeFile = null;
+var showAnnotated = false;
+
+/* ---- DOM refs ---- */
+var fileListEl = document.getElementById('file-list');
+var defNavEl = document.getElementById('def-nav');
+var codeWrap = document.getElementById('code-wrap');
+var filePathEl = document.getElementById('file-path');
+var lineCountEl = document.getElementById('line-count');
+var annToggle = document.getElementById('ann-toggle');
+var searchInput = document.getElementById('search');
+var fileSelectEl = document.getElementById('file-select');
+
+/* ---- Build file list ---- */
+function buildFileList() {
+  var html = '';
+  var opts = '';
+  for (var i = 0; i < FILES.length; i++) {
+    var f = FILES[i];
+    html += '<div class="file-item" data-file="' + f.name + '">' +
+            '<div class="file-name">' + esc(f.name) + '</div>' +
+            '<div class="file-desc">' + esc(f.desc) + ' &mdash; ' + f.lines + ' lines</div>' +
+            '</div>';
+    opts += '<option value="' + f.name + '">' + f.name + ' — ' + f.desc + '</option>';
+  }
+  fileListEl.innerHTML = html;
+  fileSelectEl.innerHTML = opts;
+}
+
+/* ---- File loading ---- */
+function fetchText(url) {
+  return fetch(url).then(function(r) {
+    if (!r.ok) throw new Error(r.status);
+    return r.text();
+  });
+}
+
+function loadFile(filename) {
+  if (activeFile === filename && !needsRender()) return;
+  activeFile = filename;
+  clearSearch();
+
+  // Update sidebar active state
+  var items = fileListEl.querySelectorAll('.file-item');
+  for (var i = 0; i < items.length; i++) {
+    if (items[i].getAttribute('data-file') === filename) {
+      items[i].classList.add('active');
+    } else {
+      items[i].classList.remove('active');
+    }
+  }
+
+  filePathEl.textContent = 'src/zil/' + filename;
+  fileSelectEl.value = filename;
+
+  // Check caches
+  if (origCache[filename] !== undefined) {
+    tryLoadAnnotated(filename);
+    return;
+  }
+
+  codeWrap.innerHTML = '<div class="loading"><em>Loading ' + esc(filename) + '...</em></div>';
+  defNavEl.innerHTML = '';
+  lineCountEl.textContent = '';
+
+  fetchText(RAW_BASE + filename).then(function(text) {
+    origCache[filename] = text;
+    tryLoadAnnotated(filename);
+  }).catch(function() {
+    codeWrap.innerHTML = '<div class="error-msg">Failed to load ' + esc(filename) + '.</div>';
+  });
+}
+
+function tryLoadAnnotated(filename) {
+  if (annCache[filename] !== undefined) {
+    renderFile(filename);
+    return;
+  }
+
+  fetchText(ANN_BASE + filename).then(function(text) {
+    annCache[filename] = text;
+    annToggle.style.display = '';
+    renderFile(filename);
+  }).catch(function() {
+    annCache[filename] = null;
+    annToggle.style.display = 'none';
+    showAnnotated = false;
+    annToggle.classList.remove('active');
+    renderFile(filename);
+  });
+}
+
+function needsRender() { return false; }
+
+/* ---- Rendering ---- */
+function renderFile(filename) {
+  var mode = (showAnnotated && annCache[filename]) ? 'ann' : 'orig';
+  var key = filename + ':' + mode;
+
+  if (!htmlCache[key]) {
+    var source = (mode === 'ann') ? annCache[filename] : origCache[filename];
+    htmlCache[key] = buildHtml(source, mode === 'ann');
+  }
+
+  var cached = htmlCache[key];
+  codeWrap.innerHTML = '<table class="code">' + cached.html + '</table>';
+  defNavEl.innerHTML = cached.navHtml;
+  lineCountEl.textContent = cached.lineCount + ' lines';
+
+  // Update toggle state
+  if (annCache[filename]) {
+    annToggle.style.display = '';
+    if (showAnnotated) annToggle.classList.add('active');
+    else annToggle.classList.remove('active');
+  } else {
+    annToggle.style.display = 'none';
+  }
+
+  // Nav click handler
+  defNavEl.addEventListener('click', function(e) {
+    var a = e.target.closest('.nav-item');
+    if (!a) return;
+    defNavEl.querySelectorAll('.nav-item').forEach(function(el) { el.classList.remove('active'); });
+    a.classList.add('active');
+    var line = a.getAttribute('data-line');
+    var row = document.getElementById('L' + line);
+    if (row) row.scrollIntoView({ block: 'start' });
+  });
+
+  // Scroll to top
+  codeWrap.scrollTop = 0;
+}
+
+function buildHtml(source, isAnnotated) {
+  var allLines = source.split('\n');
+  var rows = [];
+  var navItems = [];
+  var codeLineNum = 0;
+
+  // For annotated mode, separate @@ lines from code
+  for (var i = 0; i < allLines.length; i++) {
+    var raw = allLines[i];
+    var isAnn = isAnnotated && raw.substring(0, 2) === '@@';
+
+    if (isAnn) {
+      // Annotation line - no line number
+      var annText = raw.substring(2).trimStart();
+      rows.push('<tr class="ann-line"><td class="ln"></td><td class="lc">' + esc(annText) + '</td></tr>');
+    } else {
+      codeLineNum++;
+      var isSubtitle = /^"SUBTITLE\s/.test(raw);
+      var cls = isSubtitle ? ' class="subtitle-line"' : '';
+      rows.push('<tr id="L' + codeLineNum + '"' + cls + '><td class="ln">' + codeLineNum + '</td><td class="lc">' + highlightZil(raw) + '</td></tr>');
+
+      // Build nav items
+      var nav = extractNavItem(raw, codeLineNum);
+      if (nav) navItems.push(nav);
+    }
+  }
+
+  // Build nav HTML
+  var navHtml = '';
+  for (var j = 0; j < navItems.length; j++) {
+    var item = navItems[j];
+    if (item.type === 'subtitle') {
+      navHtml += '<a class="nav-item nav-subtitle" data-line="' + item.line + '">' + esc(item.label) + '</a>';
+    } else {
+      navHtml += '<a class="nav-item" data-line="' + item.line + '">' + esc(item.label) + '</a>';
+    }
+  }
+
+  return { html: rows.join(''), navHtml: navHtml, lineCount: codeLineNum };
+}
+
+/* ---- Navigation extraction ---- */
+function extractNavItem(line, lineNum) {
+  // SUBTITLE
+  var m = line.match(/^"SUBTITLE\s+(.+?)"/);
+  if (m) return { type: 'subtitle', label: m[1], line: lineNum };
+
+  // ROUTINE
+  m = line.match(/^<ROUTINE\s+([A-Z0-9?._-]+)/i);
+  if (m) return { type: 'routine', label: m[1], line: lineNum };
+
+  // OBJECT
+  m = line.match(/^<OBJECT\s+([A-Z0-9?._-]+)/i);
+  if (m) return { type: 'object', label: m[1], line: lineNum };
+
+  // ROOM
+  m = line.match(/^<ROOM\s+([A-Z0-9?._-]+)/i);
+  if (m) return { type: 'room', label: m[1], line: lineNum };
+
+  // DEFMAC
+  m = line.match(/^<DEFMAC\s+([A-Z0-9?._-]+)/i);
+  if (m) return { type: 'macro', label: m[1], line: lineNum };
+
+  // DEFINE
+  m = line.match(/^<DEFINE\s+([A-Z0-9?._-]+)/i);
+  if (m) return { type: 'define', label: m[1], line: lineNum };
+
+  // SYNTAX
+  m = line.match(/^<SYNTAX\s+(.+?)\s*=/);
+  if (m) return { type: 'syntax', label: m[1], line: lineNum };
+
+  // GLOBAL
+  m = line.match(/^<GLOBAL\s+([A-Z0-9?._-]+)/i);
+  if (m) return { type: 'global', label: m[1], line: lineNum };
+
+  // CONSTANT
+  m = line.match(/^<CONSTANT\s+([A-Z0-9?._-]+)/i);
+  if (m) return { type: 'constant', label: m[1], line: lineNum };
+
+  return null;
+}
+
+/* ---- ZIL Syntax Highlighter ---- */
+// ZIL keywords
+var ZIL_KEYWORDS = new Set([
+  'ROUTINE', 'OBJECT', 'ROOM', 'COND', 'TELL', 'SETG', 'SET', 'GLOBAL',
+  'CONSTANT', 'REPEAT', 'RETURN', 'RTRUE', 'RFALSE', 'AND', 'OR', 'NOT',
+  'EQUAL?', 'FSET?', 'FSET', 'FCLEAR', 'IN?', 'MOVE', 'REMOVE', 'FIRST?',
+  'NEXT?', 'LOC', 'GET', 'PUT', 'GETB', 'PUTB', 'REST', 'GETP', 'PUTP',
+  'APPLY', 'RANDOM', 'BAND', 'BOR', 'BTST', 'ZERO?', 'G?', 'L?', 'PROG',
+  'AGAIN', 'MAPF', 'MAPR', 'FUNCTION', 'FORM', 'LVAL', 'GVAL',
+  'TABLE', 'ITABLE', 'SYNTAX', 'SYNONYM', 'ADJECTIVE', 'BUZZ',
+  'DEFMAC', 'DEFINE', 'DIRECTIONS', 'PROPDEF', 'INSERT-FILE',
+  'VERSION', 'CRLF', 'PRINTI', 'PRINTN', 'PRINTD', 'PRINTA', 'PRINTC',
+  'PRINTB', 'PRINT', 'READ', 'INPUT', 'QUIT', 'RESTART', 'SAVE', 'RESTORE',
+  'VERIFY', 'ENABLE', 'DISABLE', 'QUEUE', 'INT',
+  'ASSIGNED?', 'TYPE?', 'LENGTH?', 'EMPTY?', 'CHTYPE',
+  'MAPRET', 'MAPSTOP', 'ERROR', 'PARSE', 'STRING', 'SPNAME',
+  'NTH', 'LENGTH', 'PUTREST',
+  'RFATAL', 'COND'
+]);
+
+var ZIL_PROPS = new Set([
+  'FLAGS', 'DESC', 'LDESC', 'FDESC', 'IN', 'ACTION', 'SYNONYM',
+  'ADJECTIVE', 'GLOBAL', 'CONTFCN', 'DESCFCN', 'ADVFCN',
+  'PSEUDO', 'CAPACITY', 'SIZE', 'VALUE', 'TVALUE', 'STRENGTH',
+  'VTYPE', 'TEXT', 'LAND', 'UP', 'DOWN', 'NORTH', 'SOUTH',
+  'EAST', 'WEST', 'NE', 'NW', 'SE', 'SW', 'OUT',
+  'PER', 'TO', 'IF', 'IS', 'SORRY', 'ELSE'
+]);
+
+// Definition keywords — the name after these gets special highlighting
+var ZIL_DEF_KW = new Set(['ROUTINE', 'OBJECT', 'ROOM', 'DEFMAC', 'DEFINE']);
+
+function highlightZil(line) {
+  // Handle empty lines
+  if (!line) return '';
+
+  var out = '';
+  var i = 0;
+  var len = line.length;
+  // States: 'normal', 'string', 'comment'
+  var state = 'normal';
+  var buf = '';
+  var depth = 0;
+
+  // Track if we're right after a definition keyword (for highlighting the name)
+  var afterDefKw = false;
+  var defKwDone = false;
+
+  function flush(cls) {
+    if (!buf) return;
+    if (cls) out += '<span class="' + cls + '">' + esc(buf) + '</span>';
+    else out += processNormal(buf);
+    buf = '';
+  }
+
+  while (i < len) {
+    var ch = line[i];
+
+    if (state === 'normal') {
+      if (ch === ';' && i + 1 < len && line[i + 1] === '"') {
+        // Start of ;"-style comment - goes until matching close quote
+        flush();
+        buf = ';';
+        i++;
+        buf += '"';
+        state = 'comment';
+        depth = 0; // track nested quotes? No, ZIL ;" comments end at next "
+      } else if (ch === '"') {
+        flush();
+        buf = ch;
+        state = 'string';
+      } else if (ch === ';' && (i === 0 || line[i - 1] !== '<')) {
+        // Line comment to end (only if standalone semicolon not followed by ")
+        flush();
+        buf = line.substring(i);
+        out += '<span class="zil-cmt">' + esc(buf) + '</span>';
+        buf = '';
+        i = len;
+        continue;
+      } else {
+        buf += ch;
+      }
+    } else if (state === 'string') {
+      buf += ch;
+      if (ch === '"' && buf.length > 1) {
+        // Check if this is a SUBTITLE string
+        if (/^"SUBTITLE\s/.test(buf)) {
+          flush('zil-def');
+        } else {
+          flush('zil-str');
+        }
+        state = 'normal';
+      }
+    } else if (state === 'comment') {
+      buf += ch;
+      if (ch === '"' && buf.length > 2) {
+        flush('zil-cmt');
+        state = 'normal';
+      }
+    }
+    i++;
+  }
+
+  // Flush remaining
+  if (state === 'string') flush('zil-str');
+  else if (state === 'comment') flush('zil-cmt');
+  else flush();
+
+  return out;
+}
+
+function processNormal(text) {
+  // Tokenize the normal text and apply keyword/number/property/definition highlighting
+  // We need to handle tokens delimited by < > ( ) spaces
+  var result = '';
+  var token = '';
+  var afterDef = false;
+  var expectDefName = false;
+
+  for (var i = 0; i < text.length; i++) {
+    var ch = text[i];
+    if ('<>() \t,'.indexOf(ch) !== -1) {
+      if (token) {
+        result += colorToken(token, expectDefName);
+        if (expectDefName && /^[A-Z0-9?._-]+$/i.test(token)) {
+          expectDefName = false;
+        }
+        if (ZIL_DEF_KW.has(token.toUpperCase())) {
+          expectDefName = true;
+        }
+        token = '';
+      }
+      result += esc(ch);
+    } else {
+      token += ch;
+    }
+  }
+  if (token) result += colorToken(token, expectDefName);
+  return result;
+}
+
+function colorToken(token, isDefName) {
+  var upper = token.toUpperCase();
+
+  // Definition name
+  if (isDefName && /^[A-Z0-9?._-]+$/i.test(token)) {
+    return '<span class="zil-def">' + esc(token) + '</span>';
+  }
+
+  // Keyword
+  if (ZIL_KEYWORDS.has(upper)) {
+    return '<span class="zil-kw">' + esc(token) + '</span>';
+  }
+
+  // Property name (inside object/room definitions)
+  if (ZIL_PROPS.has(upper)) {
+    return '<span class="zil-prop">' + esc(token) + '</span>';
+  }
+
+  // Numbers
+  if (/^-?\d+$/.test(token)) {
+    return '<span class="zil-num">' + esc(token) + '</span>';
+  }
+
+  // Flag constants (all caps with BIT suffix)
+  if (/^[A-Z][A-Z0-9]*BIT$/.test(token)) {
+    return '<span class="zil-prop">' + esc(token) + '</span>';
+  }
+
+  return esc(token);
+}
+
+function esc(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* ---- Annotation toggle ---- */
+annToggle.addEventListener('click', function() {
+  showAnnotated = !showAnnotated;
+  if (activeFile) {
+    clearSearch();
+    renderFile(activeFile);
+  }
+});
+
+/* ---- File list click handler ---- */
+fileListEl.addEventListener('click', function(e) {
+  var item = e.target.closest('.file-item');
+  if (!item) return;
+  var filename = item.getAttribute('data-file');
+  loadFile(filename);
+});
+
+/* ---- File select dropdown handler (narrow screens) ---- */
+fileSelectEl.addEventListener('change', function() {
+  loadFile(this.value);
+});
+
+/* ---- Search ---- */
+var searchHits = [];
+var currentHit = -1;
+
+function clearSearch() {
+  var hits = document.querySelectorAll('.search-hit');
+  for (var i = 0; i < hits.length; i++) {
+    hits[i].outerHTML = hits[i].textContent;
+  }
+  searchHits = [];
+  currentHit = -1;
+}
+
+function doSearch(query) {
+  clearSearch();
+  if (!query || query.length < 2) return;
+
+  var lower = query.toLowerCase();
+  var cells = document.querySelectorAll('td.lc');
+
+  for (var i = 0; i < cells.length; i++) {
+    var td = cells[i];
+    if (td.textContent.toLowerCase().indexOf(lower) !== -1) {
+      highlightMatches(td, query);
+    }
+  }
+
+  searchHits = Array.from(document.querySelectorAll('.search-hit'));
+  if (searchHits.length > 0) {
+    currentHit = 0;
+    searchHits[0].classList.add('search-current');
+    searchHits[0].scrollIntoView({ block: 'center' });
+  }
+}
+
+function highlightMatches(el, query) {
+  var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  var lower = query.toLowerCase();
+  var nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  for (var i = 0; i < nodes.length; i++) {
+    var node = nodes[i];
+    var text = node.textContent;
+    var idx = text.toLowerCase().indexOf(lower);
+    if (idx === -1) continue;
+
+    var before = text.slice(0, idx);
+    var match = text.slice(idx, idx + query.length);
+    var after = text.slice(idx + query.length);
+
+    var span = document.createElement('span');
+    span.className = 'search-hit';
+    span.textContent = match;
+
+    var parent = node.parentNode;
+    if (before) parent.insertBefore(document.createTextNode(before), node);
+    parent.insertBefore(span, node);
+    if (after) parent.insertBefore(document.createTextNode(after), node);
+    parent.removeChild(node);
+
+    // Recurse for multiple matches
+    if (after.toLowerCase().indexOf(lower) !== -1) {
+      var afterNode = span.nextSibling;
+      if (afterNode && afterNode.nodeType === Node.TEXT_NODE) {
+        var temp = document.createElement('span');
+        temp.appendChild(afterNode.cloneNode(true));
+        parent.replaceChild(temp, afterNode);
+        highlightMatches(temp, query);
+        while (temp.firstChild) parent.insertBefore(temp.firstChild, temp);
+        parent.removeChild(temp);
+      }
+    }
+  }
+}
+
+function nextHit() {
+  if (searchHits.length === 0) return;
+  searchHits[currentHit].classList.remove('search-current');
+  currentHit = (currentHit + 1) % searchHits.length;
+  searchHits[currentHit].classList.add('search-current');
+  searchHits[currentHit].scrollIntoView({ block: 'center' });
+}
+
+function prevHit() {
+  if (searchHits.length === 0) return;
+  searchHits[currentHit].classList.remove('search-current');
+  currentHit = (currentHit - 1 + searchHits.length) % searchHits.length;
+  searchHits[currentHit].classList.add('search-current');
+  searchHits[currentHit].scrollIntoView({ block: 'center' });
+}
+
+var debounce;
+searchInput.addEventListener('input', function() {
+  clearTimeout(debounce);
+  var self = this;
+  debounce = setTimeout(function() { doSearch(self.value); }, 200);
+});
+
+searchInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    if (e.shiftKey) prevHit(); else nextHit();
+  }
+  if (e.key === 'Escape') {
+    clearSearch();
+    this.value = '';
+    this.blur();
+  }
+});
+
+// Ctrl+F intercept
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+    e.preventDefault();
+    searchInput.focus();
+    searchInput.select();
+  }
+});
+
+/* ---- Init ---- */
+buildFileList();
+
+// Auto-load first file
+loadFile(FILES[0].name);
+
+})();
+</script>
+
+</body>
+</html>

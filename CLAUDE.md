@@ -153,26 +153,26 @@ These effects are applied in three places:
 **v0** (ZIL):
 ```
 versions/v0/
-  index.html            ZIL source browser with syntax highlighting and annotations
-  parchment.html        Parchment player page (plays ZIL-compiled .z3)
-  zork1.z3.js           Compiled ZIL game (base64 Z-machine, built from original ZIL)
+  index.html            Landing page (links to play, source, walkthrough)
+  play.html             Parchment player page (plays ZIL-compiled .z3)
+  source.html           ZIL source browser with syntax highlighting and annotations
   walkthrough.html      Walkthrough viewer (fetches local walkthrough files)
   walkthrough.txt       Raw walkthrough commands (ZIL version)
   walkthrough-guide.txt Annotated walkthrough guide (ZIL version)
+  zork1.z3.js           Compiled ZIL game (base64 Z-machine, built from original ZIL)
 ```
 
 **v1/v2** (Inform 7, .ulx):
 ```
 versions/vN/
-  index.html            Quixe player page
-  parchment.html        Parchment player page
-  glulxe.html           Glulxe (WASM) player page
+  index.html            Landing page (links to play, source, walkthrough)
+  play.html             Parchment player page
   source.html           Inform 7 source browser (renders this version's story.ni)
-  story.ni              Frozen Inform 7 source snapshot
-  zork1.ulx.js          Compiled game (base64 Glulx, built from THIS story.ni)
   walkthrough.html      Walkthrough viewer (fetches local walkthrough files)
+  story.ni              Frozen Inform 7 source snapshot
   walkthrough.txt       Raw walkthrough commands
   walkthrough-guide.txt Annotated walkthrough guide
+  zork1.ulx.js          Compiled game (base64 Glulx, built from THIS story.ni)
   lib/                  Client-side libraries
   media/                Assets
 ```
@@ -180,11 +180,11 @@ versions/vN/
 **v3+** (Inform 7, .gblorb with native sound):
 ```
 versions/vN/
-  index.html            Unified Parchment player (all engines, same as parchment.html)
-  parchment.html        Unified Parchment player (Emglken WASM with Glk sound)
+  index.html            Landing page (links to play, source, walkthrough)
+  play.html             Parchment player page (Emglken WASM with Glk sound)
   source.html           Inform 7 source browser (renders this version's story.ni)
-  story.ni              Frozen Inform 7 source snapshot (includes sound declarations)
   walkthrough.html      Walkthrough viewer (fetches local walkthrough files)
+  story.ni              Frozen Inform 7 source snapshot (includes sound declarations)
   walkthrough.txt       Raw walkthrough commands
   walkthrough-guide.txt Annotated walkthrough guide
   lib/parchment/        7 engine files + zork1.gblorb.js (game + audio bundle)
@@ -194,7 +194,7 @@ versions/vN/
 ### Source Browsers
 
 - **Per-version** (`versions/vN/source.html`) — Shows the frozen source for that version (fetches local `story.ni`)
-- **v0** (`versions/v0/index.html`) — ZIL source browser with annotations (already exists)
+- **v0** (`versions/v0/source.html`) — ZIL source browser with annotations
 
 ### Standard Player (`web/play.html`)
 
