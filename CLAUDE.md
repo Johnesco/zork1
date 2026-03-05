@@ -265,7 +265,7 @@ All testing happens in `tests/` at the repo root. The test wrapper scripts deleg
 
 Tests can be run directly from Git Bash when native interpreters are available:
 ```bash
-bash tests/run-walkthrough.sh --seed 2         # walkthrough
+bash tests/run-walkthrough.sh --seed 26        # walkthrough
 bash tests/run-tests.sh                         # all regtests
 bash tests/run-tests.sh --vital startup         # single regtest
 ```
@@ -275,6 +275,35 @@ bash tests/run-tests.sh --vital startup         # single regtest
 - **Transcript comparison**: Side-by-side diffing of ZIL (v0, dfrotz) vs. I7 (glulxe) walkthrough output to catch behavioral differences.
 - **Automated regression**: `run-walkthrough.sh` verifies 350/350 completion. `find-seeds.sh` discovers working seeds after code changes.
 - **RegTest**: `regtest.py` for targeted scenario testing of specific puzzles and mechanics.
+
+### Walkthrough Files
+
+The walkthrough exists in multiple locations for different purposes:
+
+| File | Purpose | Sound prompt? |
+|------|---------|---------------|
+| `tests/inform7/walkthrough.txt` | **Runner reads this** — used by `run-walkthrough.sh` and `find-seeds.sh` | Yes (`n` on line 1) |
+| `tests/walkthrough.txt` | Root-level copy (kept in sync with above) | Yes |
+| `tests/zil/walkthrough.txt` | ZIL v0 walkthrough (read-only reference, 439 commands) | No |
+| `versions/v0/walkthrough.txt` | ZIL version for web walkthrough viewer | No |
+| `versions/v1/walkthrough.txt` | Web walkthrough viewer (no sound in v1) | No |
+| `versions/v2/walkthrough.txt` | Web walkthrough viewer (no sound in v2) | No |
+| `versions/v3/walkthrough.txt` | Web walkthrough viewer (v3 has sound) | Yes |
+| `versions/v4/walkthrough.txt` | Web walkthrough viewer (v4 has sound) | Yes |
+
+**Critical**: `project.conf` line 23 sets `PRIMARY_WALKTHROUGH` to `tests/inform7/walkthrough.txt`. The runner does NOT use `tests/walkthrough.txt`. Always update the `inform7/` copy.
+
+**Sound prompt**: v3+ games ask "Do you want sound? (y/n)" before play begins, consuming the first walkthrough command. Walkthroughs for v3/v4 must start with `n` to answer this prompt. v0/v1/v2 have no sound system — their walkthroughs must NOT have this prefix or it will be interpreted as "go north."
+
+**ZIL reference as ground truth**: The I7 walkthrough was rebuilt from the proven ZIL v0 route (`tests/zil/walkthrough.txt`) with these I7 syntax adaptations:
+- `lamp` instead of `lantern`
+- `turn bolt` instead of `turn bolt with wrench` (I7 parser stops at "turn the bolt")
+- `turn on switch` instead of `turn switch with screwdriver`
+- `push yellow button` instead of `press yellow button`
+- `dig sand` instead of `dig sand with shovel`
+- Endgame forest route differs (I7 room connections ≠ ZIL)
+
+**When updating the walkthrough**: Sync changes to all locations. v1/v2 get the walkthrough without the sound prompt line; v3/v4 get the full file including it. Then run `find-seeds.sh` to discover a new golden seed if game code changed.
 
 ### Policy
 Report failures, don't fix unless explicitly instructed. Test all versions when propagating fixes.
