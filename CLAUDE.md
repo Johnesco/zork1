@@ -303,7 +303,16 @@ The walkthrough exists in multiple locations for different purposes:
 - `dig sand` instead of `dig sand with shovel`
 - Endgame forest route differs (I7 room connections ≠ ZIL)
 
-**When updating the walkthrough**: Sync changes to all locations. v1/v2 get the walkthrough without the sound prompt line; v3/v4 get the full file including it. Then run `find-seeds.sh` to discover a new golden seed if game code changed.
+**When updating the walkthrough**: Sync changes to all locations, then deploy to the hub:
+1. Update `tests/inform7/walkthrough.txt` (the runner's source of truth)
+2. Copy to `tests/walkthrough.txt` (root-level copy)
+3. Copy to `versions/v1/` and `versions/v2/` **without** the sound prompt line
+4. Copy to `versions/v3/` and `versions/v4/` **with** the sound prompt line
+5. Run `find-seeds.sh` to discover a new golden seed if game code changed
+6. Run `bash /c/code/ifhub/ifhub/deploy.sh` to sync walkthrough files to `ifhub/games/zork1-v*/` (reads `walkthroughDir` from `games.json`) — OR manually copy to each `ifhub/games/zork1-vN/`
+7. Commit and push both the zork1 repo AND the ifhub repo
+
+**Hub deployment**: The `versions/vN/` directories are the `walkthroughDir` source for each zork1 version in `games.json`. Running `deploy.sh` copies `walkthrough.txt`, `walkthrough-guide.txt`, and `walkthrough_output.txt` from there to `ifhub/games/zork1-vN/`. If you update walkthrough files without running `deploy.sh`, the hub will serve stale data.
 
 ### Policy
 Report failures, don't fix unless explicitly instructed. Test all versions when propagating fixes.
