@@ -8,6 +8,9 @@ build/
 *.ulx
 *.gblorb
 *.gblorb.js
+# But track version snapshot binaries (needed for GitHub Pages deployment)
+!v*/lib/parchment/*.gblorb.js
+!lib/parchment/*.gblorb.js
 *.materials/
 
 # Inform 7 IDE project wrappers (local-only, contain hard links to story.ni)
