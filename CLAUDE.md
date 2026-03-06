@@ -303,7 +303,9 @@ The walkthrough exists in multiple locations for different purposes:
 - `dig sand` instead of `dig sand with shovel`
 - Endgame forest route differs (I7 room connections ≠ ZIL)
 
-**When updating the walkthrough**: Sync all three file types to all locations, then deploy:
+**Pipeline auto-sync**: The pipeline's test stage (`bash /c/code/ifhub/tools/pipeline.sh zork1 test`) now automatically regenerates `walkthrough-guide.txt` and syncs walkthrough files to the web root. For versioned projects like zork1, files sync to `$PIPELINE_CURRENT_VERSION/` (e.g., `v4/`). You still need to manually copy to other `vN/` directories if needed.
+
+**When updating the walkthrough manually** (outside the pipeline): Sync all three file types to all locations, then deploy:
 1. Update `tests/inform7/walkthrough.txt` (the runner's source of truth)
 2. Copy to `tests/walkthrough.txt` (root-level copy)
 3. Copy to all `vN/` directories
