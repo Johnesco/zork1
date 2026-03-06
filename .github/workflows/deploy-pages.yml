@@ -26,10 +26,13 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p _site
-          cp -r web/* _site/
-          for v in versions/v*/; do
-            v=$(basename "$v")
-            cp -r "versions/$v" "_site/$v"
+          cp *.html _site/ 2>/dev/null || true
+          cp *.txt _site/ 2>/dev/null || true
+          cp story.ni _site/ 2>/dev/null || true
+          [ -d lib ] && cp -r lib _site/lib
+          [ -d scenarios ] && cp -r scenarios _site/scenarios
+          for v in v[0-9]*/; do
+            [ -d "$v" ] && cp -r "$v" "_site/$v"
           done
       - uses: actions/upload-pages-artifact@v3
         with:

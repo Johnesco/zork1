@@ -18,19 +18,19 @@ This repo contains the Inform 7 source, tests, and the GitHub Pages web site —
 ```
 story.ni           Current Inform 7 source (EDIT HERE)
 zork1.ulx          Compiled output (gitignored — rebuild from story.ni)
+index.html         Landing page — project description, version links
+play.html          Standard Parchment player for latest version (local dev entry point)
+source.html        Source browser for current version
+walkthrough.html   Walkthrough viewer
+lib/parchment/     7 engine files + zork1.gblorb.js (game + audio bundle)
+v0/                Original ZIL — source browser + playable ZIL-compiled game
+v1/, v2/, ...      Inform 7 version archives (self-contained snapshots)
 tests/             Test scripts, walkthroughs, regtest data
 src/zil/           Original ZIL source files (read-only, NEVER modify)
 src/sharpee/       Sharpee source files
 Sounds/            Audio asset files (.ogg) for Blorb packaging
 zork1.blurb        Blorb packaging manifest (maps sound IDs to .ogg files)
-web/               Web player and site-level pages
-  play.html        Standard Parchment player for latest version (local dev entry point)
-  lib/parchment/   7 engine files + zork1.gblorb.js (game + audio bundle)
-  index.html       Landing page — project description, version links
-versions/          Frozen version snapshots
-  v0/              Original ZIL — source browser + playable ZIL-compiled game
-  v1/, v2/, ...    Inform 7 version archives (self-contained snapshots)
-_site/             Assembled deploy directory (gitignored, built by CI)
+scenarios/         Scenario guides and transcripts
 ```
 
 ## Inform 7 Shared Tools (External)
@@ -49,7 +49,7 @@ C:\code\ifhub\
 
 **Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\ifhub\CLAUDE.md` for CLI usage).
 
-Any `story.ni` files found inside `versions/` (e.g., `versions/vN/story.ni`) are **frozen snapshots**. The current version is `story.ni` at the repo root — it is never published to the web directly but snapshotted into a numbered version when ready.
+Any `story.ni` files found inside version directories (e.g., `vN/story.ni`) are **frozen snapshots**. The current version is `story.ni` at the repo root — it is never published to the web directly but snapshotted into a numbered version when ready.
 
 ## Version Philosophy
 
@@ -81,9 +81,9 @@ This means each version is always a strict superset of the one below it: v2 cont
 Once a version is published, it is **frozen**. All new work goes into the latest version only. Do not edit past versions unless explicitly asked.
 
 In rare cases a past version may be patched (e.g., a translation bug discovered in v1). If that happens:
-1. Edit that version's own `versions/vN/story.ni` directly
+1. Edit that version's own `vN/story.ni` directly
 2. Compile from that source to produce a new binary (`.ulx` for v1/v2, `.gblorb` for v3+)
-3. Base64-encode into `versions/vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+)
+3. Base64-encode into `vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+)
 4. Propagate the same fix upward to all later versions and recompile each
 
 When possible, every version should provide three buttons:
@@ -142,7 +142,7 @@ Applying modern interactive fiction writing best practices for fluid, fun gamepl
 - **Synchronized transitions**: All color changes (CSS vars, backgrounds, text) use coordinated 1.2s timing.
 
 These effects are applied in three places:
-- `web/play.html` — local development player (always active)
+- `play.html` — local development player (always active)
 - `ifhub/games/zork1-v4/play.html` — per-game IF Hub page (always active)
 - `ifhub/play.html` — shared IF Hub player (version-gated: `body.zork1-enhanced` class added only for v4+ via binary path regex)
 
@@ -152,7 +152,7 @@ These effects are applied in three places:
 
 **v0** (ZIL):
 ```
-versions/v0/
+v0/
   index.html            Landing page (links to play, source, walkthrough)
   play.html             Parchment player page (plays ZIL-compiled .z3)
   source.html           ZIL source browser with syntax highlighting and annotations
@@ -164,7 +164,7 @@ versions/v0/
 
 **v1/v2** (Inform 7, .ulx):
 ```
-versions/vN/
+vN/
   index.html            Landing page (links to play, source, walkthrough)
   play.html             Parchment player page
   source.html           Inform 7 source browser (renders this version's story.ni)
@@ -179,7 +179,7 @@ versions/vN/
 
 **v3+** (Inform 7, .gblorb with native sound):
 ```
-versions/vN/
+vN/
   index.html            Landing page (links to play, source, walkthrough)
   play.html             Parchment player page (Emglken WASM with Glk sound)
   source.html           Inform 7 source browser (renders this version's story.ni)
@@ -193,21 +193,21 @@ versions/vN/
 
 ### Source Browsers
 
-- **Per-version** (`versions/vN/source.html`) — Shows the frozen source for that version (fetches local `story.ni`)
-- **v0** (`versions/v0/source.html`) — ZIL source browser with annotations
+- **Per-version** (`vN/source.html`) — Shows the frozen source for that version (fetches local `story.ni`)
+- **v0** (`v0/source.html`) — ZIL source browser with annotations
 
-### Standard Player (`web/play.html`)
+### Standard Player (`play.html`)
 
-`web/play.html` is the standard Parchment player for the latest compiled version — the same pattern used by all other projects (sample, dracula, feverdream). Created by `compile.sh` / `setup-web.sh`. This is the **local development entry point**: `python -m http.server 8000 --directory projects/zork1/web` → open `play.html`.
+`play.html` is the standard Parchment player for the latest compiled version — the same pattern used by all other projects (sample, dracula, feverdream). Created by `compile.sh` / `setup-web.sh`. This is the **local development entry point**: `python -m http.server 8000 --directory projects/zork1` → open `play.html`.
 
-### Landing Page (`web/index.html`)
+### Landing Page (`index.html`)
 
 - Dark/parchment aesthetic matching the game player
 - "Play Latest Version" link at top pointing to `play.html`
 - Engine selector (Quixe/Parchment/Glulxe) with `localStorage` persistence — applies to v1/v2 only; v3+ use unified Parchment (auto-selects best engine)
 - Reverse-chronological order: newest version at top, v0 at bottom
 - Each version entry shows: Play Online, Download Source, Browse Source buttons (where applicable)
-- Version links (`v0/`, `v1/`, etc.) resolve only in `_site/` after `build-site.sh` assembles versions — they won't work from `web/` alone
+- Version links (`v0/`, `v1/`, etc.) resolve directly from the project root (flat layout)
 
 ### Versioning Workflow
 
@@ -218,10 +218,10 @@ The **current version** (`story.ni` at the repo root) is the working copy where 
 2. Build and test (see "Building the Game" and "Testing Policy" below)
 3. Run: `bash /c/code/ifhub/tools/pipeline.sh zork1 compile snapshot --version vN`
    (Pipeline syncs root `story.ni` → version dir, then `snapshot.sh --update` recompiles from it)
-   Or manually: copy `story.ni` → `versions/vN/story.ni`, then run `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
+   Or manually: copy `story.ni` → `vN/story.ni`, then run `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
 
 **Recompiling a frozen version** (rare — fixing old versions):
-1. Edit `versions/vN/story.ni` directly
+1. Edit `vN/story.ni` directly
 2. Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
    (`--update` compiles from the version's own `story.ni`, auto-detects `.gblorb` vs `.ulx`)
 
@@ -232,20 +232,20 @@ The **current version** (`story.ni` at the repo root) is the working copy where 
    - Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN+1`
    - Update `source.html` RAW_URL and sidebar header
    - Update `walkthrough.html` title/header/back link
-4. Update `web/index.html`: add new version entry
+4. Update `index.html`: add new version entry
 
-**Critical rule**: Every `versions/vN/` (v1+) must contain a `story.ni` and a compiled binary (`zork1.ulx.js` for v1/v2, `zork1.gblorb.js` for v3+) built from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
+**Critical rule**: Every `vN/` (v1+) must contain a `story.ni` and a compiled binary (`zork1.ulx.js` for v1/v2, `zork1.gblorb.js` for v3+) built from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
 
-**Cascade rule**: When any `story.ni` is modified (repo root or `versions/vN/`), three artifacts eventually need updating for each affected version:
-1. `versions/vN/story.ni` — frozen snapshot synced from source
-2. `versions/vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+) — recompiled and base64-encoded from that `story.ni`
-3. `versions/vN/walkthrough_output.txt` — regenerated transcript from that binary
+**Cascade rule**: When any `story.ni` is modified (repo root or `vN/`), three artifacts eventually need updating for each affected version:
+1. `vN/story.ni` — frozen snapshot synced from source
+2. `vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+) — recompiled and base64-encoded from that `story.ni`
+3. `vN/walkthrough_output.txt` — regenerated transcript from that binary
 
 These do NOT need to happen after every edit. During active development, treat the cascade as a **known outstanding task** — note that artifacts are stale and batch the rebuild once changes stabilize. Do not silently forget it.
 
 ### Deployment
 
-GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from `web/` (site-level pages) + `versions/` (frozen snapshots), then deploys to GitHub Pages on push to `main`. Locally, run `bash /c/code/ifhub/tools/build-site.sh zork1` to assemble for preview.
+GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from site-level files and version directories (`v0/`, `v1/`, etc.), then deploys to GitHub Pages on push to `main`. Locally, run `bash /c/code/ifhub/tools/build-site.sh zork1` to assemble for preview.
 
 - Landing page: `johnesco.github.io/zork1/`
 - Version N: `johnesco.github.io/zork1/vN/`
@@ -285,11 +285,11 @@ The walkthrough exists in multiple locations for different purposes:
 | `tests/inform7/walkthrough.txt` | **Runner reads this** — used by `run-walkthrough.sh` and `find-seeds.sh` |
 | `tests/walkthrough.txt` | Root-level copy (kept in sync with above) |
 | `tests/zil/walkthrough.txt` | ZIL v0 walkthrough (read-only reference, 439 commands) |
-| `versions/v0/walkthrough.txt` | ZIL version for web walkthrough viewer |
-| `versions/v1/walkthrough.txt` | Web walkthrough viewer (no sound in v1) |
-| `versions/v2/walkthrough.txt` | Web walkthrough viewer (no sound in v2) |
-| `versions/v3/walkthrough.txt` | Web walkthrough viewer (v3 has sound) |
-| `versions/v4/walkthrough.txt` | Web walkthrough viewer (v4 has sound) |
+| `v0/walkthrough.txt` | ZIL version for web walkthrough viewer |
+| `v1/walkthrough.txt` | Web walkthrough viewer (no sound in v1) |
+| `v2/walkthrough.txt` | Web walkthrough viewer (no sound in v2) |
+| `v3/walkthrough.txt` | Web walkthrough viewer (v3 has sound) |
+| `v4/walkthrough.txt` | Web walkthrough viewer (v4 has sound) |
 
 **Critical**: `project.conf` line 23 sets `PRIMARY_WALKTHROUGH` to `tests/inform7/walkthrough.txt`. The runner does NOT use `tests/walkthrough.txt`. Always update the `inform7/` copy.
 
@@ -306,11 +306,11 @@ The walkthrough exists in multiple locations for different purposes:
 **When updating the walkthrough**: Sync all three file types to all locations, then deploy:
 1. Update `tests/inform7/walkthrough.txt` (the runner's source of truth)
 2. Copy to `tests/walkthrough.txt` (root-level copy)
-3. Copy to all `versions/vN/` directories
+3. Copy to all `vN/` directories
 4. Run `find-seeds.sh` to discover a new golden seed if game code changed
 5. Run walkthrough to regenerate `tests/inform7/walkthrough_output.txt`
 6. Regenerate the guide: `python3 /c/code/ifhub/tools/testing/generate-guide.py --walkthrough tests/inform7/walkthrough.txt --transcript tests/inform7/walkthrough_output.txt -o tests/inform7/walkthrough-guide.txt`
-7. Copy guide to all `versions/vN/` directories
+7. Copy guide to all `vN/` directories
 8. Run `bash /c/code/ifhub/ifhub/deploy.sh` to sync all walkthrough files to `ifhub/games/zork1-v*/` — OR manually copy to each `ifhub/games/zork1-vN/`
 9. Commit and push both the zork1 repo AND the ifhub repo
 
@@ -319,7 +319,7 @@ The walkthrough exists in multiple locations for different purposes:
 - `walkthrough-guide.txt` — annotated guide with `## Room` headers, `# score` events, `> command` lines (generated by `tools/testing/generate-guide.py`)
 - `walkthrough_output.txt` — full game transcript (generated by `run-walkthrough.sh`)
 
-**Hub deployment**: The `versions/vN/` directories are the `walkthroughDir` source for each zork1 version in `games.json`. Running `deploy.sh` copies `walkthrough.txt`, `walkthrough-guide.txt`, and `walkthrough_output.txt` from there to `ifhub/games/zork1-vN/`. If you update walkthrough files without running `deploy.sh`, the hub will serve stale data.
+**Hub deployment**: The `vN/` directories are the `walkthroughDir` source for each zork1 version in `games.json`. Running `deploy.sh` copies `walkthrough.txt`, `walkthrough-guide.txt`, and `walkthrough_output.txt` from there to `ifhub/games/zork1-vN/`. If you update walkthrough files without running `deploy.sh`, the hub will serve stale data.
 
 ### Policy
 Report failures, don't fix unless explicitly instructed. Test all versions when propagating fixes.
@@ -433,7 +433,7 @@ Exit criteria for moving an issue from **In Progress** to **Verify**:
 
 **Documentation:**
 - [ ] Content accurate and matches current code
-- [ ] Consistent across CLAUDE.md, README, web/index.html
+- [ ] Consistent across CLAUDE.md, README, index.html
 - [ ] No broken links or references
 - [ ] Commits reference ticket (`#XX`)
 
