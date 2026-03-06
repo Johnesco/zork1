@@ -2,25 +2,52 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>ZORK I: The Great Underground Empire</title>
+<title>Zork I (v4 — Current)</title>
 <meta name="viewport" content="width=device-width, user-scalable=no">
-<link rel="stylesheet" href="lib/parchment/parchment.css">
-<link rel="stylesheet" href="lib/parchment/main.css">
+<link rel="stylesheet" href="lib/parchment/parchment.css?v=1772755439">
+<link rel="stylesheet" href="lib/parchment/main.css?v=1772755439">
 
 <style>
-/* Dark parchment theme overrides for AsyncGlk/Parchment */
+/* ── Houdini @property — register as <color> for smooth transitions ── */
+@property --mood-buffer-bg { syntax: '<color>'; inherits: true; initial-value: #111111; }
+@property --mood-buffer-fg { syntax: '<color>'; inherits: true; initial-value: #d4c5a9; }
+@property --mood-grid-bg   { syntax: '<color>'; inherits: true; initial-value: #1c1810; }
+@property --mood-grid-fg   { syntax: '<color>'; inherits: true; initial-value: #aa9966; }
+@property --mood-accent    { syntax: '<color>'; inherits: true; initial-value: #e8d090; }
+@property --mood-ui-bg     { syntax: '<color>'; inherits: true; initial-value: #111111; }
+@property --mood-border    { syntax: '<color>'; inherits: true; initial-value: #2a2418; }
+
 :root {
+  /* ── Mood palette (updated dynamically by JS on room change) ── */
+  --mood-buffer-bg: #111;
+  --mood-buffer-fg: #d4c5a9;
+  --mood-grid-bg: #1c1810;
+  --mood-grid-fg: #aa9966;
+  --mood-accent: #e8d090;
+  --mood-ui-bg: #111;
+  --mood-border: #2a2418;
+
+  transition:
+    --mood-buffer-bg 1.2s ease-in-out,
+    --mood-buffer-fg 1.2s ease-in-out,
+    --mood-grid-bg 1.2s ease-in-out,
+    --mood-grid-fg 1.2s ease-in-out,
+    --mood-accent 1.2s ease-in-out,
+    --mood-ui-bg 1.2s ease-in-out,
+    --mood-border 1.2s ease-in-out;
+
+  /* ── AsyncGlk / GlkOte base theme ── */
   --glkote-buffer-bg: #111;
   --glkote-buffer-fg: #d4c5a9;
   --glkote-buffer-reverse-bg: #d4c5a9;
   --glkote-buffer-reverse-fg: #111;
-  --glkote-buffer-size: 16px;
+  --glkote-buffer-size: 19px;
   --glkote-buffer-line-height: 1.6;
   --glkote-grid-bg: #1c1810;
   --glkote-grid-fg: #aa9966;
   --glkote-grid-reverse-bg: #aa9966;
   --glkote-grid-reverse-fg: #1c1810;
-  --glkote-grid-size: 14px;
+  --glkote-grid-size: 17px;
   --glkote-input-fg: #e8d090;
   --glkote-error-border: #882020;
   --glkote-warning-border: #3333aa;
@@ -46,47 +73,80 @@ html, body {
 div#gameport {
   position: absolute;
   inset: 0;
-  background: #111;
+  background: var(--mood-ui-bg);
+  transition: background-color 1.2s ease-in-out;
 }
 
 .WindowFrame {
-  background: #111;
+  background: var(--mood-ui-bg) !important;
+}
+
+.WindowFrame:has(.GridWindow) {
+  background: var(--mood-buffer-fg) !important;
+  transition: background-color 1.2s ease-in-out;
+}
+
+.GridWindow,
+.GridWindow * {
+  background-color: var(--mood-buffer-fg) !important;
+  color: #0a0a0a !important;
+  font-weight: bold;
+  transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out;
 }
 
 .GridWindow {
-  border-bottom: 1px solid #2a2418;
   padding: 6px 12px;
+}
+
+.BufferWindow {
+  background-color: var(--mood-buffer-bg) !important;
+  color: var(--mood-buffer-fg) !important;
+  transition: background-color 1.2s ease-in-out, color 1.2s ease-in-out;
 }
 
 .BufferWindowInner {
   padding: 20px 40px;
+  text-rendering: optimizeLegibility;
 }
 
 .Input {
   font-weight: bold;
-  color: #e8d090;
-  caret-color: #e8d090;
+  color: var(--mood-accent);
+  caret-color: var(--mood-accent);
+  caret-shape: underscore;
+  transition: color 1.2s ease-in-out, caret-color 1.2s ease-in-out;
 }
+
+/* ── Text fade-in ── */
+@keyframes bufferFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.BufferLine { animation: bufferFadeIn 0.3s ease-out; }
 
 .Style_header {
   color: #e8d8b0;
+  text-shadow: 0 0 8px rgba(232,216,176,0.15);
 }
 
 .Style_alert {
   color: #cc8844;
+  text-shadow: 0 0 6px rgba(204,136,68,0.12);
 }
 
 .Style_note {
   color: #aa9966;
 }
 
-/* Scrollbar */
-.BufferWindow::-webkit-scrollbar { width: 8px; }
-.BufferWindow::-webkit-scrollbar-track { background: #1a1a1a; }
-.BufferWindow::-webkit-scrollbar-thumb { background: #3a3020; border-radius: 4px; }
+.BufferWindow {
+  scrollbar-width: thin;
+  scrollbar-color: #3a3020 transparent;
+}
+.BufferWindow::-webkit-scrollbar { width: 6px; }
+.BufferWindow::-webkit-scrollbar-track { background: transparent; }
+.BufferWindow::-webkit-scrollbar-thumb { background: #3a3020; border-radius: 3px; }
 .BufferWindow::-webkit-scrollbar-thumb:hover { background: #5a4a30; }
 
-/* Loading screen */
 #loadingpane {
   position: absolute;
   width: 100%;
@@ -105,11 +165,410 @@ div#gameport {
 #loadingpane em {
   animation: pulse 1.5s ease-in-out infinite;
 }
+
+/* ── CRT intro mode — green phosphor terminal until first input ── */
+
+@keyframes crtFlicker {
+  0%, 100% { opacity: 1; }
+  3%       { opacity: 0.85; }
+  6%       { opacity: 1; }
+  42%      { opacity: 0.95; }
+  44%      { opacity: 1; }
+  87%      { opacity: 0.92; }
+  89%      { opacity: 1; }
+}
+
+@keyframes crtScanDrift {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+body.crt-intro .BufferWindow {
+  background-color: #0a0a0a !important;
+  color: #33ff33 !important;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  text-shadow: 0 0 5px rgba(51,255,51,0.5), 0 0 12px rgba(51,255,51,0.2);
+  animation: crtFlicker 4s steps(1) infinite;
+  transition: none;
+}
+
+body.crt-intro .BufferWindow .Input {
+  color: #33ff33 !important;
+  caret-color: #33ff33 !important;
+  text-shadow: 0 0 5px rgba(51,255,51,0.5);
+}
+
+body.crt-intro .GridWindow,
+body.crt-intro .GridWindow * {
+  --glkote-grid-bg: #33ff33;
+  --glkote-grid-fg: #0a0a0a;
+  background-color: #33ff33 !important;
+  color: #0a0a0a !important;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", Consolas, "Courier New", monospace;
+  text-shadow: none;
+}
+
+body.crt-intro .GridWindow {
+  box-shadow: 0 0 15px rgba(51,255,51,0.3), 0 0 30px rgba(51,255,51,0.1);
+}
+
+/* Scanlines over the game area */
+body.crt-intro #gameport::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.25) 2px,
+    rgba(0,0,0,0.25) 4px
+  );
+  opacity: 1;
+}
+
+/* CRT vignette — darkened corners */
+body.crt-intro #gameport::after {
+  box-shadow:
+    inset 0 0 100px 30px rgba(0,0,0,0.6),
+    inset 0 0 250px 60px rgba(0,0,0,0.3);
+  opacity: 1;
+}
+
+/* Drifting scan bar */
+body.crt-intro .crt-scanbar {
+  display: block;
+}
+
+.crt-scanbar {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to bottom,
+    transparent,
+    rgba(51,255,51,0.06) 30%,
+    rgba(51,255,51,0.10) 50%,
+    rgba(51,255,51,0.06) 70%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 10002;
+  animation: crtScanDrift 3s linear infinite;
+}
+
+/* Smooth transition OUT of CRT mode */
+body.crt-fade .BufferWindow {
+  transition: background-color 2s ease, color 2s ease, text-shadow 2s ease;
+}
+body.crt-fade .GridWindow {
+  transition: background-color 2s ease, color 2s ease, text-shadow 2s ease;
+}
+body.crt-fade #gameport::before,
+body.crt-fade #gameport::after {
+  transition: opacity 2s ease;
+  opacity: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Tree area — leaves, dappled light, canopy glow, sway, text shimmer
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes treeSway {
+  0%, 100% { transform: rotate(-0.5deg) translateX(-3px); }
+  30%      { transform: rotate(0.3deg) translateX(2px); }
+  60%      { transform: rotate(0.5deg) translateX(4px); }
+  80%      { transform: rotate(-0.2deg) translateX(-1px); }
+}
+
+@keyframes canopyGlow {
+  0%, 100% {
+    box-shadow:
+      inset 0 0 120px 20px rgba(30,120,20,0.04),
+      inset 0 80px 80px -30px rgba(60,160,30,0.06);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 120px 20px rgba(50,150,30,0.10),
+      inset 0 80px 80px -30px rgba(80,200,40,0.14);
+  }
+}
+
+@keyframes dappledShimmer {
+  0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+  25%      { transform: translate(40px, -25px); opacity: 0.9; }
+  50%      { transform: translate(-30px, 20px); opacity: 0.6; }
+  75%      { transform: translate(20px, -15px); opacity: 0.85; }
+}
+
+@keyframes windGust {
+  0%, 65%, 100% { transform: skewX(0deg) translateX(0); }
+  70%           { transform: skewX(0.3deg) translateX(3px); }
+  80%           { transform: skewX(-0.2deg) translateX(-2px); }
+  92%           { transform: skewX(0.1deg) translateX(1px); }
+}
+
+@keyframes dapple {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.12); }
+}
+
+@keyframes vignetteBreath {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 0.65; }
+}
+
+@keyframes leafFall1 {
+  0%   { transform: translateY(-20px) translateX(0)    rotate(0deg);   opacity: 0; }
+  8%   { opacity: 0.7; }
+  25%  { transform: translateY(25vh)  translateX(40px)  rotate(190deg); }
+  50%  { transform: translateY(50vh)  translateX(-25px) rotate(380deg); }
+  75%  { transform: translateY(75vh)  translateX(55px)  rotate(560deg); }
+  92%  { opacity: 0.3; }
+  100% { transform: translateY(105vh) translateX(15px)  rotate(720deg); opacity: 0; }
+}
+
+@keyframes leafFall2 {
+  0%   { transform: translateY(-20px) translateX(0)     rotate(0deg);   opacity: 0; }
+  8%   { opacity: 0.6; }
+  30%  { transform: translateY(28vh)  translateX(-35px)  rotate(170deg); }
+  55%  { transform: translateY(52vh)  translateX(30px)   rotate(350deg); }
+  80%  { transform: translateY(80vh)  translateX(-40px)  rotate(530deg); }
+  92%  { opacity: 0.25; }
+  100% { transform: translateY(105vh) translateX(-10px)  rotate(680deg); opacity: 0; }
+}
+
+@keyframes leafFall3 {
+  0%   { transform: translateY(-20px) translateX(0)     rotate(0deg);   opacity: 0; }
+  10%  { opacity: 0.5; }
+  20%  { transform: translateY(18vh)  translateX(25px)   rotate(120deg); }
+  50%  { transform: translateY(48vh)  translateX(-35px)  rotate(310deg); }
+  75%  { transform: translateY(74vh)  translateX(45px)   rotate(500deg); }
+  90%  { opacity: 0.2; }
+  100% { transform: translateY(105vh) translateX(20px)   rotate(660deg); opacity: 0; }
+}
+
+/* mood-tree: base effect (Forest Path + Up a Tree) — leaves, dappled light */
+/* mood-tree-canopy: Up a Tree only — adds canopy glow */
+/* mood-tree-sway: after egg taken in Up a Tree — adds sway + text shimmer */
+
+/* Canopy glow on buffer (Up a Tree only) */
+body.mood-tree-canopy .BufferWindow {
+  animation: canopyGlow 7s ease-in-out infinite;
+}
+
+/* Sway + dappled light shimmer — after egg taken */
+body.mood-tree-sway .BufferWindowInner {
+  position: relative;
+  animation: treeSway 12s ease-in-out infinite;
+  transform-origin: top center;
+}
+
+body.mood-tree-sway .BufferWindowInner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 100px 80px at 15% 25%, rgba(140,220,80,0.18), transparent 70%),
+    radial-gradient(ellipse 80px 100px at 55% 45%, rgba(160,230,90,0.14), transparent 70%),
+    radial-gradient(ellipse 90px 70px at 80% 15%, rgba(120,200,60,0.12), transparent 70%),
+    radial-gradient(ellipse 70px 90px at 35% 70%, rgba(150,215,75,0.15), transparent 70%),
+    radial-gradient(ellipse 60px 50px at 70% 80%, rgba(130,210,65,0.10), transparent 70%);
+  mix-blend-mode: overlay;
+  animation: dappledShimmer 8s ease-in-out infinite;
+  z-index: 1;
+}
+
+body.mood-tree-sway .GridWindow {
+  animation: windGust 15s ease-in-out infinite;
+}
+
+/* Dappled sunlight + forest vignette (always exist, fade in when mood-tree) */
+#gameport::before,
+#gameport::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+
+#gameport::before {
+  z-index: 10000;
+  background:
+    radial-gradient(ellipse 60px 45px at 15% 20%, rgba(140,200,70,0.06), transparent 70%),
+    radial-gradient(ellipse 45px 60px at 55% 12%, rgba(160,210,90,0.05), transparent 70%),
+    radial-gradient(ellipse 55px 40px at 78% 40%, rgba(120,190,60,0.05), transparent 70%),
+    radial-gradient(ellipse 70px 55px at 35% 60%, rgba(150,210,80,0.06), transparent 70%),
+    radial-gradient(ellipse 40px 50px at 8% 75%,  rgba(130,195,65,0.04), transparent 70%),
+    radial-gradient(ellipse 50px 45px at 88% 70%, rgba(145,205,75,0.05), transparent 70%);
+  animation: dapple 8s ease-in-out infinite;
+}
+
+#gameport::after {
+  z-index: 10001;
+  box-shadow: inset 0 0 120px 50px rgba(0,0,0,0.25);
+  animation: vignetteBreath 6s ease-in-out infinite;
+}
+
+body.mood-tree #gameport::before,
+body.mood-tree #gameport::after {
+  opacity: 1;
+}
+
+/* Falling leaf particles */
+.leaf {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10002;
+  border-radius: 50% 0 50% 0;
+  opacity: 0;
+  filter: blur(0.3px);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   EVENT: Egg taken — golden explosion, screen shake, shockwave
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes eggFlash {
+  0%   { opacity: 0; }
+  6%   { opacity: 1; }
+  12%  { opacity: 0.4; }
+  20%  { opacity: 0.85; }
+  35%  { opacity: 0.5; }
+  60%  { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+
+@keyframes eggFlash2 {
+  0%   { opacity: 0; transform: scale(1); }
+  10%  { opacity: 0.6; transform: scale(1.02); }
+  25%  { opacity: 0.3; }
+  40%  { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.98); }
+}
+
+@keyframes screenShake {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  5%  { transform: translate(-10px, 6px) rotate(-0.5deg); }
+  10% { transform: translate(9px, -8px) rotate(0.6deg); }
+  15% { transform: translate(-8px, 5px) rotate(-0.4deg); }
+  20% { transform: translate(10px, -4px) rotate(0.5deg); }
+  25% { transform: translate(-6px, 7px) rotate(-0.3deg); }
+  30% { transform: translate(7px, -6px) rotate(0.4deg); }
+  35% { transform: translate(-9px, 3px) rotate(-0.5deg); }
+  40% { transform: translate(5px, -3px) rotate(0.2deg); }
+  50% { transform: translate(-3px, 4px) rotate(-0.1deg); }
+  60% { transform: translate(3px, -2px) rotate(0.1deg); }
+  75% { transform: translate(-1px, 1px) rotate(0deg); }
+}
+
+@keyframes shockwaveRing {
+  0%   { transform: translate(-50%,-50%) scale(0); opacity: 0.8; border-width: 3px; }
+  100% { transform: translate(-50%,-50%) scale(5); opacity: 0;   border-width: 0.5px; }
+}
+
+@keyframes sparkFly {
+  0%   { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--sx), var(--sy)) scale(0); opacity: 0; }
+}
+
+@keyframes colorInvert {
+  0%, 100% { filter: none; }
+  6%       { filter: invert(1) hue-rotate(180deg) brightness(1.5); }
+  12%      { filter: none; }
+  18%      { filter: invert(0.3) hue-rotate(60deg); }
+  24%      { filter: none; }
+}
+
+@keyframes textGolden {
+  0%   { color: inherit; text-shadow: none; }
+  15%  { color: #ffd700; text-shadow: 0 0 12px rgba(255,215,0,0.6), 0 0 30px rgba(255,165,0,0.3), 0 0 60px rgba(255,100,0,0.15); }
+  50%  { color: #ffe870; text-shadow: 0 0 8px rgba(255,215,0,0.3); }
+  100% { color: inherit; text-shadow: none; }
+}
+
+.egg-overlay {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 99998;
+  background: radial-gradient(circle at 50% 50%,
+    rgba(255,250,200,0.95) 0%, rgba(255,225,100,0.7) 15%,
+    rgba(255,180,50,0.4) 35%, rgba(255,140,0,0.12) 55%, transparent 72%);
+  animation: eggFlash 2s ease-out forwards;
+}
+
+.egg-overlay-2 {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 99997;
+  background: linear-gradient(135deg,
+    rgba(255,215,0,0.25), transparent 30%,
+    rgba(255,180,0,0.15) 50%, transparent 70%,
+    rgba(255,200,50,0.25));
+  animation: eggFlash2 2.5s ease-out forwards;
+}
+
+.egg-ring {
+  position: fixed; top: 50%; left: 50%;
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,215,0,0.5);
+  box-shadow: 0 0 20px rgba(255,215,0,0.3), inset 0 0 20px rgba(255,215,0,0.1);
+  pointer-events: none; z-index: 100000;
+  animation: shockwaveRing var(--ring-dur, 1.2s) var(--ring-delay, 0s) ease-out forwards;
+}
+
+.egg-spark {
+  position: fixed;
+  width: var(--spark-size, 5px);
+  height: var(--spark-size, 5px);
+  border-radius: 50%;
+  background: var(--spark-color, #ffd700);
+  box-shadow: 0 0 8px var(--spark-color, #ffd700), 0 0 16px rgba(255,200,0,0.3);
+  pointer-events: none; z-index: 100001;
+  animation: sparkFly var(--spark-dur, 1s) ease-out forwards;
+}
+
+body.egg-shake #gameport {
+  animation: screenShake 0.9s ease-out;
+}
+
+body.egg-invert {
+  animation: colorInvert 0.8s ease-out;
+}
+
+body.egg-text-glow .BufferLine:last-of-type {
+  animation: textGolden 2.5s ease-out;
+}
+
+/* ── Sword glow — blue vignette overlay on screen edges ── */
+body.sword-glow-faint::after,
+body.sword-glow-bright::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: box-shadow 1.5s ease-in-out;
+}
+
+body.sword-glow-faint::after {
+  box-shadow: inset 0 0 80px 15px rgba(80, 130, 255, 0.2),
+              inset 0 0 160px 30px rgba(60, 100, 220, 0.1);
+}
+
+body.sword-glow-bright::after {
+  box-shadow: inset 0 0 100px 25px rgba(80, 140, 255, 0.4),
+              inset 0 0 200px 50px rgba(60, 110, 240, 0.2),
+              inset 0 0 300px 80px rgba(40, 80, 200, 0.1);
+}
 </style>
 
-<script src="lib/parchment/jquery.min.js"></script>
-<script src="lib/parchment/ie.js" nomodule></script>
+<script src="lib/parchment/jquery.min.js?v=1772755439"></script>
+<script src="lib/parchment/ie.js?v=1772755439" nomodule></script>
 <script>
+    // story_name is REQUIRED — parchment.js calls .substring() on it to detect
+    // the file type (.ulx.js, .gblorb.js, .z3.js). Without it you get:
+    //   TypeError: Cannot read properties of undefined (reading 'substring')
     parchment_options = {
         default_story: ['lib/parchment/zork1.gblorb.js'],
         lib_path: 'lib/parchment/',
@@ -118,8 +577,8 @@ div#gameport {
         do_vm_autosave: 1,
     };
 </script>
-<script src="lib/parchment/main.js"></script>
-<script src="lib/parchment/resourcemap.js"></script>
+<script src="lib/parchment/parchment.js?v=1772755439"></script>
+<script src="lib/parchment/resourcemap.js?v=1772755439"></script>
 <script>
     window.addEventListener('pageshow', function(e) {
         if (e.persisted) { window.location.reload(); }
@@ -133,20 +592,381 @@ div#gameport {
   <div id="windowport">
     <noscript>
       <div style="text-align:center; padding:40px; color:#aa6644;">
-        <h2>ZORK I</h2>
+        <h2>zork1</h2>
         <p>JavaScript is required to play this game.</p>
       </div>
     </noscript>
   </div>
   <div id="loadingpane">
-    <div style="margin-bottom:20px; font-size:1.4em; color:#aa9966; letter-spacing:4px;">ZORK I</div>
+    <div style="margin-bottom:20px; font-size:1.4em; color:#aa9966; letter-spacing:4px;">zork1</div>
     <img src="lib/parchment/waiting.gif" alt="Loading" style="opacity:0.5"><br>
-    <em>Loading the Great Underground Empire...</em>
+    <em>Loading...</em>
   </div>
+  <div class="crt-scanbar"></div>
   <div id="errorpane" style="display:none;">
     <div id="errorcontent">...</div>
   </div>
 </div>
+
+<!-- ── Mood theming — zone-based CSS palette shifts ── -->
+<script>
+(function() {
+  'use strict';
+
+  // 10 zone palettes — subtle tints of the dark theme
+  var PALETTES = {
+    silence:   { bufferBg:'#111111', bufferFg:'#d4c5a9', gridBg:'#1c1810', gridFg:'#aa9966', accent:'#e8d090', uiBg:'#111111', border:'#2a2418' },
+    forest:    { bufferBg:'#0a1a0e', bufferFg:'#b0d8a0', gridBg:'#0c2010', gridFg:'#70b060', accent:'#60d040', uiBg:'#0a1a0e', border:'#1a3a18' },
+    house:     { bufferBg:'#1a1008', bufferFg:'#e8c090', gridBg:'#2a1a08', gridFg:'#c09040', accent:'#f0a030', uiBg:'#1a1008', border:'#3a2810' },
+    cave:      { bufferBg:'#101114', bufferFg:'#c0c4c0', gridBg:'#14161a', gridFg:'#8090a0', accent:'#7090b0', uiBg:'#101114', border:'#1e2028' },
+    water:     { bufferBg:'#0c1018', bufferFg:'#b8c8d4', gridBg:'#101420', gridFg:'#6688aa', accent:'#60a0c0', uiBg:'#0c1018', border:'#162030' },
+    rapids:    { bufferBg:'#0a1018', bufferFg:'#c8d8e8', gridBg:'#0e1420', gridFg:'#7098c0', accent:'#50a0e0', uiBg:'#0a1018', border:'#142038' },
+    loud:      { bufferBg:'#141008', bufferFg:'#e0d0a0', gridBg:'#1e1a0c', gridFg:'#c0a060', accent:'#f0c040', uiBg:'#141008', border:'#302010' },
+    hades:     { bufferBg:'#140c0c', bufferFg:'#d4b8a8', gridBg:'#1c100e', gridFg:'#a07060', accent:'#c07040', uiBg:'#140c0c', border:'#2a1410' },
+    mine:      { bufferBg:'#121008', bufferFg:'#c8bca0', gridBg:'#1a1608', gridFg:'#9a8a60', accent:'#b09050', uiBg:'#121008', border:'#261e10' },
+    machinery: { bufferBg:'#101012', bufferFg:'#b8bcc0', gridBg:'#161618', gridFg:'#808890', accent:'#6888a0', uiBg:'#101012', border:'#1e2024' }
+  };
+
+  // Room → zone mapping (mirrors story.ni audio zones, from ambient-audio.js)
+  var ROOM_ZONES = {
+    // Forest / above-ground outdoors
+    'West of House':'forest', 'North of House':'forest', 'South of House':'forest',
+    'Behind House':'forest', 'Forest':'forest', 'Forest Path':'forest',
+    'Up a Tree':'forest', 'Clearing':'forest', 'Canyon View':'forest',
+    'Rocky Ledge':'forest', 'On the Rainbow':'forest', 'End of Rainbow':'forest',
+    'Stone Barrow':'forest',
+    // House interior
+    'Kitchen':'house', 'Living Room':'house', 'Attic':'house',
+    // General underground
+    'Cellar':'cave', 'The Troll Room':'cave', 'East of Chasm':'cave',
+    'Gallery':'cave', 'Studio':'cave', 'Maze':'cave', 'Dead End':'cave',
+    'Grating Room':'cave', 'Cyclops Room':'cave', 'Strange Passage':'cave',
+    'Treasure Room':'cave', 'East-West Passage':'cave', 'Round Room':'cave',
+    'Deep Canyon':'cave', 'Damp Cave':'cave', 'North-South Passage':'cave',
+    'Chasm':'cave', 'Cold Passage':'cave', 'Narrow Passage':'cave',
+    'Winding Passage':'cave', 'Twisting Passage':'cave', 'Atlantis Room':'cave',
+    'Engravings Cave':'cave', 'Dome Room':'cave', 'Torch Room':'cave',
+    'Temple':'cave', 'Altar':'cave', 'Egyptian Room':'cave',
+    'Mirror Room':'cave', 'Cave':'cave', 'Small Cave':'cave', 'Tiny Cave':'cave',
+    // Water (calm)
+    'Frigid River':'water', 'White Cliffs Beach':'water', 'Shore':'water',
+    'Sandy Beach':'water', 'Sandy Cave':'water', 'Stream':'water',
+    'Stream View':'water', 'Dam Base':'water', 'Dam Lobby':'water',
+    'Reservoir South':'water', 'Reservoir North':'water', 'Reservoir':'water',
+    // Rapids / falls
+    'Aragain Falls':'rapids', 'Canyon Bottom':'rapids',
+    // Loud Room
+    'Loud Room':'loud',
+    // Hades
+    'Entrance to Hades':'hades', 'Land of the Dead':'hades',
+    // Mine
+    'Mine Entrance':'mine', 'Squeaky Room':'mine', 'Bat Room':'mine',
+    'Shaft Room':'mine', 'Smelly Room':'mine', 'Gas Room':'mine',
+    'Coal Mine':'mine', 'Ladder Top':'mine', 'Ladder Bottom':'mine',
+    'Timber Room':'mine', 'Drafty Room':'mine', 'Slide Room':'mine',
+    // Machinery
+    'Dam':'machinery', 'Maintenance Room':'machinery', 'Machine Room':'machinery'
+  };
+
+  var currentRoom = null;
+  var currentZone = null;
+
+  function applyPalette(zone) {
+    var p = PALETTES[zone] || PALETTES.cave;
+    var root = document.documentElement.style;
+    root.setProperty('--mood-buffer-bg', p.bufferBg);
+    root.setProperty('--mood-buffer-fg', p.bufferFg);
+    root.setProperty('--mood-grid-bg', p.gridBg);
+    root.setProperty('--mood-grid-fg', p.gridFg);
+    root.setProperty('--mood-accent', p.accent);
+    root.setProperty('--mood-ui-bg', p.uiBg);
+    root.setProperty('--mood-border', p.border);
+
+    // Sync GlkOte variables so inline styles follow the mood palette
+    root.setProperty('--glkote-buffer-bg', p.bufferBg);
+    root.setProperty('--glkote-buffer-fg', p.bufferFg);
+    root.setProperty('--glkote-grid-bg', p.gridBg);
+    root.setProperty('--glkote-grid-fg', p.gridFg);
+    root.setProperty('--glkote-input-fg', p.accent);
+    root.setProperty('--asyncglk-ui-bg', p.uiBg);
+    root.setProperty('--asyncglk-ui-border', p.border);
+
+    // Direct fallback for gameport background
+    var gp = document.getElementById('gameport');
+    if (gp) gp.style.backgroundColor = p.uiBg;
+  }
+
+  function extractRoomName(gridWindow) {
+    var firstLine = gridWindow.querySelector('.GridLine');
+    if (!firstLine) return null;
+    var text = (firstLine.textContent || '').trim();
+    // Strip trailing score/moves info (everything after 2+ spaces)
+    text = text.replace(/\s{2,}.*$/, '').trim();
+    return text || null;
+  }
+
+  function onRoomChange(roomName) {
+    if (roomName === currentRoom) return;
+    currentRoom = roomName;
+    handleRoomEffects(roomName);
+    var zone = ROOM_ZONES[roomName] || 'cave';
+    if (zone === currentZone) return;
+    currentZone = zone;
+    console.log('[mood] ' + roomName + ' \u2192 ' + zone);
+    applyPalette(zone);
+  }
+
+  function attachObserver(grid) {
+    var observer = new MutationObserver(function() {
+      var name = extractRoomName(grid);
+      if (name) onRoomChange(name);
+    });
+    observer.observe(grid, { childList: true, characterData: true, subtree: true });
+    // Initial read
+    var name = extractRoomName(grid);
+    if (name) onRoomChange(name);
+  }
+
+  function startObserving() {
+    var grid = document.querySelector('.GridWindow');
+    if (grid) { attachObserver(grid); return; }
+    // Poll until the grid appears (engines create it dynamically)
+    var poll = setInterval(function() {
+      grid = document.querySelector('.GridWindow');
+      if (grid) { clearInterval(poll); attachObserver(grid); }
+    }, 500);
+  }
+
+  // ── Room-specific visual effects ──
+
+  var eggTaken = false;  // tree sway only activates after egg is taken
+  var leafContainer = null;
+  var LEAF_COLORS = ['#4a8030','#5a9035','#3d7028','#6aaa40','#8ab850',
+                     '#a0c060','#7a6030','#9a8040','#c4a050','#b8a040'];
+  var LEAF_ANIMS = ['leafFall1','leafFall2','leafFall3'];
+
+  function spawnLeaves() {
+    if (leafContainer) return;
+    leafContainer = document.createElement('div');
+    leafContainer.id = 'leaf-container';
+    document.body.appendChild(leafContainer);
+    for (var i = 0; i < 24; i++) {
+      var leaf = document.createElement('div');
+      leaf.className = 'leaf';
+      var size = 6 + Math.random() * 10;
+      leaf.style.left = (Math.random() * 100) + '%';
+      leaf.style.width = size + 'px';
+      leaf.style.height = (size * 0.65) + 'px';
+      leaf.style.background = LEAF_COLORS[Math.floor(Math.random() * LEAF_COLORS.length)];
+      leaf.style.animationName = LEAF_ANIMS[Math.floor(Math.random() * LEAF_ANIMS.length)];
+      leaf.style.animationDuration = (7 + Math.random() * 8) + 's';
+      leaf.style.animationDelay = (Math.random() * 12) + 's';
+      leaf.style.animationTimingFunction = 'ease-in-out';
+      leaf.style.animationIterationCount = 'infinite';
+      leafContainer.appendChild(leaf);
+    }
+  }
+
+  function clearLeaves() {
+    if (leafContainer) { leafContainer.remove(); leafContainer = null; }
+  }
+
+  function handleRoomEffects(roomName) {
+    // Three-tier tree effects:
+    //   Forest Path:              mood-tree (dappled light + leaves)
+    //   Up a Tree:                mood-tree + mood-tree-canopy (+ canopy glow)
+    //   Up a Tree after egg:      mood-tree + mood-tree-canopy + mood-tree-sway (+ sway + text shimmer)
+    document.body.classList.remove('mood-tree', 'mood-tree-canopy', 'mood-tree-sway');
+
+    if (roomName === 'Forest Path' || roomName === 'Up a Tree') {
+      document.body.classList.add('mood-tree');
+      spawnLeaves();
+      if (roomName === 'Up a Tree') {
+        document.body.classList.add('mood-tree-canopy');
+        if (eggTaken) {
+          document.body.classList.add('mood-tree-sway');
+        }
+      }
+    } else {
+      clearLeaves();
+    }
+  }
+
+  function triggerTreeSway() {
+    eggTaken = true;
+    console.log('[mood] Egg taken — tree disturbed!');
+    if (currentRoom === 'Up a Tree') {
+      document.body.classList.add('mood-tree-sway');
+    }
+  }
+
+  // ── Trophy case golden flash event ──
+
+  var lastNodeText = '';
+  var eggFlashCooldown = false;
+
+  function triggerEggFlash() {
+    if (eggFlashCooldown) return;
+    eggFlashCooldown = true;
+    console.log('[mood] Egg in trophy case — golden flash!');
+
+    // Double flash overlay
+    var ov1 = document.createElement('div'); ov1.className = 'egg-overlay';
+    var ov2 = document.createElement('div'); ov2.className = 'egg-overlay-2';
+    document.body.appendChild(ov1);
+    document.body.appendChild(ov2);
+
+    // Shockwave rings (staggered)
+    for (var r = 0; r < 5; r++) {
+      var ring = document.createElement('div');
+      ring.className = 'egg-ring';
+      ring.style.setProperty('--ring-dur', (1 + r * 0.25) + 's');
+      ring.style.setProperty('--ring-delay', (r * 0.12) + 's');
+      document.body.appendChild(ring);
+    }
+
+    // Spark burst — 32 sparks radiating outward
+    var cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    var sparkColors = ['#ffd700','#ffb800','#ff8c00','#fff4c0','#ffe066','#ffffff','#ffaa00'];
+    for (var s = 0; s < 32; s++) {
+      var spark = document.createElement('div');
+      spark.className = 'egg-spark';
+      var angle = (s / 32) * Math.PI * 2 + (Math.random() - 0.5) * 0.5;
+      var dist = 100 + Math.random() * 300;
+      spark.style.left = cx + 'px';
+      spark.style.top = cy + 'px';
+      spark.style.setProperty('--sx', (Math.cos(angle) * dist) + 'px');
+      spark.style.setProperty('--sy', (Math.sin(angle) * dist) + 'px');
+      spark.style.setProperty('--spark-size', (3 + Math.random() * 7) + 'px');
+      spark.style.setProperty('--spark-dur', (0.5 + Math.random() * 0.9) + 's');
+      spark.style.setProperty('--spark-color', sparkColors[Math.floor(Math.random() * sparkColors.length)]);
+      document.body.appendChild(spark);
+    }
+
+    // Body-level effects: screen shake + brief color invert + golden text
+    document.body.classList.add('egg-shake', 'egg-invert', 'egg-text-glow');
+
+    // Cleanup after animations finish
+    setTimeout(function() {
+      document.body.classList.remove('egg-shake', 'egg-invert', 'egg-text-glow');
+      var els = document.querySelectorAll('.egg-overlay,.egg-overlay-2,.egg-ring,.egg-spark');
+      for (var i = 0; i < els.length; i++) els[i].remove();
+      eggFlashCooldown = false;
+    }, 3500);
+  }
+
+  // ── Sword glow — blue screen-edge vignette ──
+  function setSwordGlow(level) {
+    document.body.classList.remove('sword-glow-faint', 'sword-glow-bright');
+    if (level) document.body.classList.add(level);
+  }
+
+  // Watch buffer text for game events (tree sway, trophy flash, sword glow)
+  function watchBuffer() {
+    function tryAttach() {
+      var buf = document.querySelector('.BufferWindow');
+      if (!buf) return false;
+      new MutationObserver(function(muts) {
+        for (var i = 0; i < muts.length; i++) {
+          for (var j = 0; j < muts[i].addedNodes.length; j++) {
+            var node = muts[i].addedNodes[j];
+            if (node.nodeType !== 1) continue;
+            var text = (node.textContent || '').trim();
+            // Egg taken — trigger tree sway
+            if (/^taken\.?$/i.test(text) && /\begg\b/.test(lastNodeText)) {
+              triggerTreeSway();
+            }
+            // Egg in trophy case — golden explosion
+            if (/\begg\b/i.test(text) && /\btrophy case\b/i.test(text)) {
+              triggerEggFlash();
+            }
+            // Sword glow
+            if (/faint blue glow/i.test(text)) setSwordGlow('sword-glow-faint');
+            else if (/glow very brightly/i.test(text)) setSwordGlow('sword-glow-bright');
+            else if (/no longer glowing/i.test(text)) setSwordGlow(null);
+            if (text.length > 0) lastNodeText = text.toLowerCase();
+          }
+        }
+      }).observe(buf, { childList: true, subtree: true });
+      return true;
+    }
+    if (!tryAttach()) {
+      var poll = setInterval(function() { if (tryAttach()) clearInterval(poll); }, 500);
+    }
+  }
+
+  // ── CRT intro mode — active until first user input ──
+
+  function startCRT() {
+    document.body.classList.add('crt-intro');
+  }
+
+  function endCRT() {
+    if (!document.body.classList.contains('crt-intro')) return;
+    document.body.classList.remove('crt-intro');
+    document.body.classList.add('crt-fade');
+    setTimeout(function() {
+      document.body.classList.remove('crt-fade');
+    }, 2500);
+    console.log('[mood] CRT intro ended');
+  }
+
+  function watchForFirstInput() {
+    // Detect first user input to end CRT intro. Uses two strategies:
+    // 1. .Input span detection (non-WASM engines like Quixe)
+    // 2. Settle-then-mutate: after initial output burst quiets for 1s,
+    //    the next mutation is user input (WASM/Emglken which has no .Input spans)
+    var settled = false;
+    var settleTimer = null;
+    function tryAttachInput() {
+      var buf = document.querySelector('.BufferWindow');
+      if (!buf) return false;
+      var inputObserver = new MutationObserver(function(muts) {
+        // After initial output settled, any new mutation = user input
+        if (settled) {
+          endCRT();
+          inputObserver.disconnect();
+          return;
+        }
+        // Fast path: .Input spans (non-WASM engines)
+        for (var i = 0; i < muts.length; i++) {
+          for (var j = 0; j < muts[i].addedNodes.length; j++) {
+            var node = muts[i].addedNodes[j];
+            if (node.nodeType !== 1) continue;
+            var inp = node.querySelector && node.querySelector('.Input');
+            if (inp) {
+              endCRT();
+              inputObserver.disconnect();
+              return;
+            }
+          }
+        }
+        // Reset settle timer — output still arriving
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(function() { settled = true; }, 1000);
+      });
+      inputObserver.observe(buf, { childList: true, subtree: true });
+      return true;
+    }
+    if (!tryAttachInput()) {
+      var poll = setInterval(function() { if (tryAttachInput()) clearInterval(poll); }, 500);
+    }
+  }
+
+  function init() {
+    startCRT();
+    startObserving();
+    watchBuffer();
+    watchForFirstInput();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
 
 </body>
 </html>
