@@ -508,3 +508,261 @@ Taken
 /succeeded in opening
 /golden clockwork canary
 /bad experience
+
+# ============================================================
+# Death scenarios
+# ============================================================
+
+* death-grue
+# Walk into the cellar without a light source — grue kills you
+>{include} enter-house
+> w
+> take sword
+> push rug
+/trap door
+> open trap door
+> down
+/pitch black
+/likely to be eaten by a grue
+> n
+/grue
+
+* death-falls-dome
+# Jump from Dome Room without rope — fatal fall
+>{include} round-room
+> se
+> e
+{vital}
+/Dome Room
+> jump
+/not a very safe place
+
+* death-canyon
+# Jump from Canyon View — fatal
+# Route via forest (no troll): West of House → N → N → E → S → E
+>{include} startup
+> n
+> n
+/Forest Path
+> e
+/Forest
+> s
+{vital}
+/Clearing
+> e
+{vital}
+/Canyon View
+> jump
+/lousy place to jump
+
+* death-river-falls
+# Drift off the waterfall at River5 — fatal
+# Mirror teleport to get pump, teleport back, then dam route to Dam Base
+>{include} mirror
+> e
+/Cave
+> d
+/Atlantis
+> s
+{vital}
+/Reservoir North
+> take pump
+> n
+> u
+> w
+> n
+/Mirror Room
+> rub mirror
+/rumble
+> n
+> n
+/Round Room
+> n
+> ne
+> nw
+/Reservoir South
+> e
+/Dam
+> d
+{vital}
+/Dam Base
+/pile of plastic
+> inflate pile
+/inflates and appears seaworthy
+> drop sword
+> get in boat
+> launch
+/push off
+> z
+> z
+> z
+> z
+> z
+> z
+> z
+/You have died
+
+# ============================================================
+# Alternative paths
+# ============================================================
+
+* cyclops-feed
+# Feed the cyclops lunch and water instead of saying "odysseus"
+>{include} enter-house
+> take bottle
+> take sack
+> w
+> take sword
+> take lantern
+> turn on lantern
+> push rug
+> open trap door
+> down
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+{vital}
+/Cyclops Room
+/cyclops
+> open sack
+> give lunch to cyclops
+/I love hot peppers
+> open bottle
+> give bottle to cyclops
+/falls fast asleep
+
+* echo-before-solve
+# Verify Loud Room echoes before solving
+>{include} round-room
+> e
+{vital}
+/Loud Room
+> take bar
+/clanging
+
+# ============================================================
+# Edge cases
+# ============================================================
+
+* basket-raise-lower
+# Test basket raise/lower from Shaft Room
+# Mirror teleport → Cold Passage → Slide Room → Mine Entrance → Squeaky → Bat → Shaft
+>{include} mirror
+> n
+/Cold Passage
+> w
+/Slide Room
+> n
+/Mine Entrance
+> w
+/Squeaky Room
+> n
+/Bat Room
+> e
+{vital}
+/Shaft Room
+/basket
+> lower basket
+/lowered to the bottom
+> raise basket
+/raised to the top
+
+* boat-sharp-puncture
+# Board inflated boat with sword — punctures it
+# Mirror teleport to get pump, teleport back, then dam route to Dam Base
+>{include} mirror
+> e
+/Cave
+> d
+/Atlantis
+> s
+{vital}
+/Reservoir North
+> take pump
+> n
+> u
+> w
+> n
+/Mirror Room
+> rub mirror
+/rumble
+> n
+> n
+/Round Room
+> n
+> ne
+> nw
+/Reservoir South
+> e
+/Dam
+> d
+{vital}
+/Dam Base
+/pile of plastic
+> inflate pile
+/inflates and appears seaworthy
+> get in boat
+/punctured
+
+* river-room-descriptions
+# Verify room descriptions appear during river drift (#93 fix)
+# Mirror teleport to get pump, teleport back, then dam route to Dam Base
+>{include} mirror
+> e
+/Cave
+> d
+/Atlantis
+> s
+{vital}
+/Reservoir North
+> take pump
+> n
+> u
+> w
+> n
+/Mirror Room
+> rub mirror
+/rumble
+> n
+> n
+/Round Room
+> n
+> ne
+> nw
+/Reservoir South
+> e
+/Dam
+> d
+{vital}
+/Dam Base
+/pile of plastic
+> inflate pile
+/inflates and appears seaworthy
+> drop sword
+> get in boat
+> launch
+/push off
+/Frigid River
+> z
+/carries you downstream
+/Frigid River
+> z
+> z
+/carries you downstream
+/Frigid River

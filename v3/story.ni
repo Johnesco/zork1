@@ -21,7 +21,7 @@ When play begins:
 	now the right hand status line is "".
 
 After printing the banner text:
-	say "v3: Sound[line break]";
+	say "v3: Multimedia[line break]";
 	say "Translated to Inform 7 by John Escobedo[line break]";
 	say "Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson[line break]";
 	say "Copyright (c) 1981-1986 Infocom, Inc. ZIL source released under MIT License.[paragraph break]".
@@ -1148,6 +1148,12 @@ Instead of taking the trophy case:
 
 Instead of closing the trophy case: say "[dummy]".
 
+After looking when the location is Living Room and the number of things in the trophy case is greater than 0:
+	say "Your collection of treasures consists of:";
+	repeat with item running through things in the trophy case:
+		say "[line break]  [a item]";
+	say "[paragraph break]".
+
 The sword is in Living Room. "Above the trophy case hangs an elvish sword of great antiquity."
 Understand "sword" and "orcrist" and "glamdring" and "blade" and "elvish" and "old" and "antique" as the sword.
 The description of the sword is "It's an old elvish sword of great antiquity."
@@ -1454,11 +1460,8 @@ Chapter 2 - Troll-Room
 Troll-Room is a dark room. The printed name of Troll-Room is "The Troll Room". "This is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls."
 Troll-Room is in the Underground.
 
-Instead of going east in Troll-Room:
-	if the troll-flag is false:
-		say "The troll fends you off with a menacing gesture.";
-	otherwise:
-		move the player to East-West Passage.
+Instead of going east in Troll-Room when the troll-flag is false:
+	say "The troll fends you off with a menacing gesture."
 
 Instead of going west in Troll-Room:
 	if the troll-flag is false:
@@ -2133,7 +2136,16 @@ Instead of giving the quantity of water to the cyclops:
 		say "The cyclops takes the bottle, checks that it's open, and drinks the water. A moment later, he lets out a yawn that nearly blows you over, and then falls fast asleep (what did you put in that drink, anyway?)."
 
 Instead of giving the glass bottle to the cyclops when the quantity of water is in the glass bottle:
-	try giving the quantity of water to the cyclops.
+	if the cyclops-asleep is true:
+		say "No use. He's fast asleep.";
+	otherwise if the cyclops-fed is false:
+		say "The cyclops apparently is not thirsty and refuses your generous offer.";
+	otherwise:
+		remove the quantity of water from play;
+		now the cyclops-watered is true;
+		now the cyclops-asleep is true;
+		now the cyclops-flag is true;
+		say "The cyclops takes the bottle, checks that it's open, and drinks the water. A moment later, he lets out a yawn that nearly blows you over, and then falls fast asleep (what did you put in that drink, anyway?)."
 
 Instead of giving something to the cyclops:
 	if the cyclops-asleep is true:
@@ -2224,7 +2236,7 @@ Chapter 10 - East-West Passage and Round Room Area
 East-West Passage is a dark room. "This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room."
 East-West Passage is in the Underground.
 
-East of Troll-Room is nowhere. [blocked by troll check - handled by instead rule]
+[East of Troll-Room is established by "West of East-West Passage is Troll-Room" below]
 East of East-West Passage is Round Room. West of East-West Passage is Troll-Room. Down from East-West Passage is Chasm.
 North of East-West Passage is Chasm.
 
@@ -2493,6 +2505,23 @@ Every turn when the water-level > 0 and the maint-flooded is false (this is the 
 
 Instead of going to Maintenance Room when the maint-flooded is true:
 	say "The room is full of water and cannot be entered." instead.
+
+The tool chests are in Maintenance Room. "There is a group of tool chests here."
+The tool chests are plural-named.
+Understand "chest" and "chests" and "tool" and "toolchests" and "group" as the tool chests.
+The description of the tool chests is "The chests are all empty."
+
+Instead of taking the tool chests:
+	remove the tool chests from play;
+	say "The chests are so rusty and corroded that they crumble when you touch them."
+
+Instead of opening the tool chests:
+	remove the tool chests from play;
+	say "The chests are so rusty and corroded that they crumble when you touch them."
+
+Instead of inserting something into the tool chests:
+	remove the tool chests from play;
+	say "The chests are so rusty and corroded that they crumble when you touch them."
 
 The wrench is in Maintenance Room. Understand "wrench" and "tool" as the wrench.
 The description of the wrench is "It's a wrench."
@@ -3155,18 +3184,22 @@ Every turn when the river-current-active is true (this is the river current rule
 			say "The flow of the river carries you downstream.[line break]";
 			move the magic boat to River2;
 			now the river-current-timer is 2;
+			try looking;
 		otherwise if here is River2:
 			say "The flow of the river carries you downstream.[line break]";
 			move the magic boat to River3;
 			now the river-current-timer is 1;
+			try looking;
 		otherwise if here is River3:
 			say "The flow of the river carries you downstream.[line break]";
 			move the magic boat to River4;
 			now the river-current-timer is 2;
+			try looking;
 		otherwise if here is River4:
 			say "The flow of the river carries you downstream.[line break]";
 			move the magic boat to River5;
 			now the river-current-timer is 1;
+			try looking;
 		otherwise if here is River5:
 			die saying "Unfortunately, the magic boat doesn't provide protection from the rocks and boulders one meets at the bottom of waterfalls. Including this one.";
 		otherwise:
@@ -3576,7 +3609,13 @@ Instead of raising the raised-basket:
 		say "The basket is raised to the top of the shaft."
 
 Instead of raising the lowered-basket:
-	try raising the raised-basket.
+	if the basket-is-at-top is true:
+		say "[dummy]";
+	otherwise:
+		now the basket-is-at-top is true;
+		now the raised-basket is in Shaft Room;
+		now the lowered-basket is in Drafty Room;
+		say "The basket is raised to the top of the shaft."
 
 Lowering is an action applying to one thing. Understand "lower [something]" as lowering.
 Carry out lowering: say "You can't lower that."
@@ -3591,7 +3630,13 @@ Instead of lowering the raised-basket:
 		say "The basket is lowered to the bottom of the shaft."
 
 Instead of lowering the lowered-basket:
-	try lowering the raised-basket.
+	if the basket-is-at-top is false:
+		say "[dummy]";
+	otherwise:
+		now the basket-is-at-top is false;
+		now the raised-basket is in Drafty Room;
+		now the lowered-basket is in Shaft Room;
+		say "The basket is lowered to the bottom of the shaft."
 
 Machine-Room is a dark room. "This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled [quotation mark]START[quotation mark]. The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is [if the machine is open]open[otherwise]closed[end if]."
 The printed name of Machine-Room is "Machine Room".
@@ -3836,17 +3881,17 @@ Every turn when the thief is not defeated and the thief-active is true (this is 
 Every turn when the jewel-encrusted egg is in the large bag and the jewel-encrusted egg is closed (this is the thief opens egg rule):
 	now the jewel-encrusted egg is open.
 
-Every turn when the player is in Treasure Room and the thief is not defeated and the thief is not in Treasure Room (this is the thief lair rule):
+Before looking when the player is in Treasure Room and the thief is not defeated and the thief is not in Treasure Room (this is the thief lair rule):
 	move the thief to Treasure Room;
 	say "You hear a scream of anguish as you violate the robber[apostrophe]s hideaway. Using passages unknown to you, he rushes to its defense.";
 	let found-treasure be false;
-	repeat with item running through visible things in the Treasure Room:
-		if item is not the thief and item is not the chalice:
+	repeat with item running through things in the Treasure Room:
+		if item is not the thief and item is not the chalice and item is not the player:
 			if the treasure-value of item > 0:
 				now found-treasure is true;
 				now item is zil-invisible;
 	if found-treasure is true:
-		say "[line break]The thief gestures mysteriously, and the treasures in the room suddenly vanish."
+		say "[line break]The thief gestures mysteriously, and the treasures in the room suddenly vanish.[line break]".
 
 Instead of answering the thief that "hello":
 	if the thief is defeated:
@@ -3901,7 +3946,7 @@ Instead of attacking the thief:
 						print hero melee for "kill";
 						say "[line break][sinister-black-fog for the thief][paragraph break]As the thief dies, the power of his magic decreases, and his treasures reappear:";
 						repeat with item running through things in the location of the player:
-							if the treasure-value of item > 0:
+							if item is not the chalice and item is not the thief and item is not the player and item is not the large bag:
 								say "[line break]  A [item]";
 								if item is an open container and something is in item:
 									say ", with ";
@@ -4958,32 +5003,39 @@ Carry out launching:
 		move the magic boat to River1;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
+		try looking;
 	otherwise if here is White Cliffs North:
 		say "You push off from the shore.";
 		move the magic boat to River3;
 		now the river-current-active is true;
 		now the river-current-timer is 1;
+		try looking;
 	otherwise if here is White Cliffs South:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
+		try looking;
 	otherwise if here is Shore:
 		say "You push off from the shore.";
 		move the magic boat to River5;
 		now the river-current-active is true;
 		now the river-current-timer is 1;
+		try looking;
 	otherwise if here is Sandy Beach:
 		say "You push off from the shore.";
 		move the magic boat to River4;
 		now the river-current-active is true;
 		now the river-current-timer is 2;
+		try looking;
 	otherwise if here is Reservoir-South or here is Reservoir-North:
 		say "You push off from the shore.";
 		move the magic boat to Reservoir;
+		try looking;
 	otherwise if here is Stream View:
 		say "You push off from the shore.";
 		move the magic boat to In-Stream;
+		try looking;
 	otherwise:
 		say "You're not near any water."
 

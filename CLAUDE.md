@@ -43,7 +43,7 @@ C:\code\ifhub\
 ├── tools/
 │   ├── regtest.py         ← Shared test runner
 │   ├── interpreters/      ← Native Windows glulxe.exe + dfrotz.exe (built locally)
-│   └── testing/           ← Generic testing framework (walkthroughs, seed sweeps, pcre_grep.py)
+│   └── testing/           ← Generic testing framework (walkthroughs, seed sweeps)
 └── reference/             ← Syntax + formatting docs
 ```
 
@@ -57,7 +57,14 @@ Each version is a **playable milestone** that tells a chapter of the project sto
 
 The original ZIL source in `src/zil/` is **sacred and must never be modified** — all changes carry forward into Inform 7 versions only.
 
-**The most recent version is the default work target.** If no version is specified, work on the latest version.
+### Frozen Versions vs Current
+
+There are two kinds of playable versions:
+
+- **vN** (v0, v1, v2, v3...) — frozen published snapshots. Each has a subtitle (e.g., "v3 — Multimedia"). Once published, immutable. Lives in `vN/` with its own `story.ni` and compiled binary.
+- **Current** — the root `story.ni`, always in progress. Displayed as "Game Name (Current)" in the hub and landing page. Has no version number. Changes freely. When ready, it gets frozen into the next numbered version.
+
+**The current version is the default work target.** If no version is specified, work on current (root `story.ni`).
 
 ### Self-Contained Versions
 
@@ -76,15 +83,15 @@ Starting with v1, every version is a **self-contained snapshot** with its own:
 
 This means each version is always a strict superset of the one below it: v2 contains everything in v1 plus its own changes, v3 contains everything in v2 plus its own, and so on.
 
-### Past Versions Are Frozen Snapshots
+### Patching Frozen Versions
 
-Once a version is published, it is **frozen**. All new work goes into the latest version only. Do not edit past versions unless explicitly asked.
+Once a version is published, it is **frozen**. All new work goes into current (root). Do not edit past versions unless explicitly asked.
 
 In rare cases a past version may be patched (e.g., a translation bug discovered in v1). If that happens:
 1. Edit that version's own `vN/story.ni` directly
 2. Compile from that source to produce a new binary (`.ulx` for v1/v2, `.gblorb` for v3+)
 3. Base64-encode into `vN/lib/parchment/zork1.ulx.js` (v1/v2) or `zork1.gblorb.js` (v3+)
-4. Propagate the same fix upward to all later versions and recompile each
+4. Propagate the same fix upward to all later versions and to current, recompile each
 
 When possible, every version should provide three buttons:
 - **Play Online** — launch the game in the browser
@@ -107,30 +114,18 @@ The first version that changes the game rather than just translating it — but 
 
 This is also where the testing methodology was established — it now underpins all development across every version. Each fix is tracked with a GitHub issue noting what was changed and why. Changes propagate to all higher versions.
 
-### v3 — Making It My Own
+### v3 — Multimedia
 
-Where it intentionally diverges from ZIL-faithful behavior and starts leaning into what Inform 7 does best. v1 and v2 are bound to the original; v3 and beyond are not. The first enhancement is ambient audio — zone-based background music and sound effects that respond to room changes.
+Where it intentionally diverges from ZIL-faithful behavior and starts leaning into what Inform 7 does best. v1 and v2 are bound to the original; v3 and beyond are not. This version adds two major enhancements: **ambient audio** and **CSS atmospheric effects**.
 
-Audio is now **native Glk sound** — driven from story.ni via Glk sound channels, with audio files bundled into `.gblorb` packages played through Parchment's Emglken WASM engine. The story.ni includes:
+**Native Glk Sound** — zone-based background music and sound effects that respond to room changes, driven from story.ni via Glk sound channels, with audio files bundled into `.gblorb` packages played through Parchment's Emglken WASM engine. The story.ni includes:
 - **Sound declarations**: 9 ambient zone loops + 16 one-shot sound effects (`.ogg` files)
 - **Audio zones**: Every room assigned to a zone (forest, house, cave, water, rapids, loud, hades, mine, machinery, silence)
 - **Ambient audio rule**: Crossfades zone-based background loops on room change using dual Glk background channels
 - **Sound effects**: Triggered inline (`play the sound of X as sfx`) at key game events (grue attacks, match strikes, doors opening, etc.)
 - **Sound auto-detect**: Uses `glk_gestalt(gestalt_Sound, 0)` to auto-enable sound when the interpreter supports it (Parchment WASM) — no startup prompt. `SOUND ON` / `SOUND OFF` commands available in-game
 
-### Sound System History
-
-**JS Overlay (legacy, v3 original)**
-The original v3 sound system was a MutationObserver-based JavaScript overlay (`ambient-audio.js`, `sound-engine.js`, `sound-config.js`) that detected room changes and text patterns in the Parchment DOM. It was engine-agnostic and required no changes to story.ni. This approach has been superseded by native Glk sound.
-
-**Native Glk Sound (current, production)**
-Parchment 2025.1.14+ shipped native Glk sound channels via Emglken WASM + AsyncGlk + Web Audio API. The Parchment engine files in v3/v4 are from the `Johnesco/parchment` fork. Sound is now driven directly from story.ni (`play the sound of X`), with audio bundled in `.gblorb` files. The `Sounds/` directory at the project root holds the `.ogg` source files, and `zork1.blurb` is the packaging manifest.
-
-### v4 — Modern IF (Current)
-
-Applying modern interactive fiction writing best practices for fluid, fun gameplay. Focuses on richer parser responses, smoother player interactions, better default messages, and more helpful feedback. Inherits all v3 audio (native Glk sound via .gblorb) and expanded room descriptions for aboveground areas.
-
-**CSS Atmospheric Effects** — v4 and current versions include a mood theming system in `play.html` that transforms the player into an immersive atmospheric experience:
+**CSS Atmospheric Effects** — v3 includes a mood theming system in `play.html` that transforms the player into an immersive atmospheric experience:
 
 - **Mood palette zones**: Each room is mapped to a color zone (forest, house, cave, water, rapids, loud, hades, mine, machinery, silence). Room changes trigger smooth CSS variable transitions via Houdini `@property` color interpolation (1.2s ease-in-out).
 - **Reversed status bar**: The GridWindow (status line) uses buffer text color as background with bold black text — inverted from the normal scheme. Uses `!important` to override GlkOte inline styles.
@@ -142,8 +137,16 @@ Applying modern interactive fiction writing best practices for fluid, fun gamepl
 - **Synchronized transitions**: All color changes (CSS vars, backgrounds, text) use coordinated 1.2s timing.
 
 These effects are applied in two places:
-- `play.html` / `v4/play.html` — the game's own player pages (always active)
-- `ifhub/play.html` — shared IF Hub player (version-gated: `body.zork1-enhanced` class added only for v4+ via binary path regex)
+- `play.html` / `v3/play.html` — the game's own player pages (always active)
+- `ifhub/play.html` — shared IF Hub player (version-gated: `body.zork1-enhanced` class added only for v3+ via binary path regex)
+
+### Sound System History
+
+**JS Overlay (legacy, v3 original)**
+The original v3 sound system was a MutationObserver-based JavaScript overlay (`ambient-audio.js`, `sound-engine.js`, `sound-config.js`) that detected room changes and text patterns in the Parchment DOM. It was engine-agnostic and required no changes to story.ni. This approach has been superseded by native Glk sound.
+
+**Native Glk Sound (current, production)**
+Parchment 2025.1.14+ shipped native Glk sound channels via Emglken WASM + AsyncGlk + Web Audio API. The Parchment engine files in v3 are from the `Johnesco/parchment` fork. Sound is now driven directly from story.ni (`play the sound of X`), with audio bundled in `.gblorb` files. The `Sounds/` directory at the project root holds the `.ogg` source files, and `zork1.blurb` is the packaging manifest.
 
 ## Web Version Architecture
 
@@ -197,7 +200,7 @@ vN/
 
 ### Standard Player (`play.html`)
 
-`play.html` is the standard Parchment player for the latest compiled version — the same pattern used by all other projects (sample, dracula, feverdream). Created by `compile.sh` / `setup-web.sh`. This is the **local development entry point**: `python -m http.server 8000 --directory projects/zork1` → open `play.html`.
+`play.html` is the standard Parchment player for the latest compiled version — the same pattern used by all other projects (sample, dracula, feverdream). Created by `compile.py` / `setup_web.py`. This is the **local development entry point**: `python -m http.server 8000 --directory projects/zork1` → open `play.html`.
 
 ### Landing Page (`index.html`)
 
@@ -210,28 +213,28 @@ vN/
 
 ### Versioning Workflow
 
-The **current version** (`story.ni` at the repo root) is the working copy where all new development happens. It is snapshotted into numbered versions when ready. The **latest numbered version** (currently v4) may be updated many times — it is republished from the current version as development progresses.
+**Current** (`story.ni` at the repo root) is the working copy where all new development happens. It is never a numbered version — it is always "current". When a milestone is ready, current gets frozen into the next numbered version.
 
-**Updating the latest version** (routine — happens frequently):
-1. Make changes in `story.ni` (repo root)
+**Working on current** (routine — all day-to-day development):
+1. Edit `story.ni` (repo root)
 2. Build and test (see "Building the Game" and "Testing Policy" below)
-3. Run: `bash /c/code/ifhub/tools/pipeline.sh zork1 compile snapshot --version vN`
-   (Pipeline syncs root `story.ni` → version dir, then `snapshot.sh --update` recompiles from it)
-   Or manually: copy `story.ni` → `vN/story.ni`, then run `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
+3. Root `play.html` serves the latest compiled current binary
 
-**Recompiling a frozen version** (rare — fixing old versions):
-1. Edit `vN/story.ni` directly
-2. Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN --update`
-   (`--update` compiles from the version's own `story.ni`, auto-detects `.gblorb` vs `.ulx`)
-
-**Creating a new version** (vN+1):
-1. Finish all code changes in the current version
+**Freezing a new version** (milestone — when current is ready to ship):
+1. Finish all code changes in current
 2. Build and run tests (RegTest + walkthrough)
 3. Only after tests pass:
-   - Run: `bash /c/code/ifhub/tools/snapshot.sh zork1 vN+1`
+   - Run: `python /c/code/ifhub/tools/snapshot.py zork1 vN`
+   - Update `vN/story.ni` banner text to show the version number and subtitle
    - Update `source.html` RAW_URL and sidebar header
    - Update `walkthrough.html` title/header/back link
 4. Update `index.html`: add new version entry
+5. Add `games.json` + `cards.json` entries for the new version
+
+**Recompiling a frozen version** (rare — fixing old versions):
+1. Edit `vN/story.ni` directly
+2. Run: `python /c/code/ifhub/tools/snapshot.py zork1 vN --update`
+   (`--update` compiles from the version's own `story.ni`, auto-detects `.gblorb` vs `.ulx`)
 
 **Critical rule**: Every `vN/` (v1+) must contain a `story.ni` and a compiled binary (`zork1.ulx.js` for v1/v2, `zork1.gblorb.js` for v3+) built from **that exact source**. Never copy binaries from another version. Always compile from the version's own `story.ni`.
 
@@ -244,7 +247,7 @@ These do NOT need to happen after every edit. During active development, treat t
 
 ### Deployment
 
-GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from site-level files and version directories (`v0/`, `v1/`, etc.), then deploys to GitHub Pages on push to `main`. Locally, run `bash /c/code/ifhub/tools/build-site.sh zork1` to assemble for preview.
+GitHub Actions (`.github/workflows/deploy-pages.yml`) assembles `_site/` from site-level files and version directories (`v0/`, `v1/`, etc.), then deploys to GitHub Pages on push to `main`. Locally, run `python /c/code/ifhub/tools/build_site.py zork1` to assemble for preview.
 
 - Landing page: `johnesco.github.io/zork1/`
 - Version N: `johnesco.github.io/zork1/vN/`
@@ -264,15 +267,15 @@ All testing happens in `tests/` at the repo root. The test wrapper scripts deleg
 
 Tests can be run directly from Git Bash when native interpreters are available:
 ```bash
-bash tests/run-walkthrough.sh --seed 26        # walkthrough
-bash tests/run-tests.sh                         # all regtests
-bash tests/run-tests.sh --vital startup         # single regtest
+python /c/code/ifhub/tools/testing/run_walkthrough.py --config tests/project.conf --seed 26    # walkthrough
+python /c/code/ifhub/tools/testing/run_tests.py --config tests/project.conf                   # all regtests
+python /c/code/ifhub/tools/testing/run_tests.py --config tests/project.conf --vital startup   # single regtest
 ```
 
 ### Methodology
 - **Deterministic walkthroughs**: Seed-based RNG (`glulxe --rngseed N`) ensures reproducible runs. Golden seeds stored in `seeds.conf`.
 - **Transcript comparison**: Side-by-side diffing of ZIL (v0, dfrotz) vs. I7 (glulxe) walkthrough output to catch behavioral differences.
-- **Automated regression**: `run-walkthrough.sh` verifies 350/350 completion. `find-seeds.sh` discovers working seeds after code changes.
+- **Automated regression**: `run-walkthrough.py` verifies 350/350 completion. `find-seeds.py` discovers working seeds after code changes.
 - **RegTest**: `regtest.py` for targeted scenario testing of specific puzzles and mechanics.
 
 ### Walkthrough Files
@@ -281,14 +284,13 @@ The walkthrough exists in multiple locations for different purposes:
 
 | File | Purpose |
 |------|---------|
-| `tests/inform7/walkthrough.txt` | **Runner reads this** — used by `run-walkthrough.sh` and `find-seeds.sh` |
+| `tests/inform7/walkthrough.txt` | **Runner reads this** — used by `run-walkthrough.py` and `find-seeds.py` |
 | `tests/walkthrough.txt` | Root-level copy (kept in sync with above) |
 | `tests/zil/walkthrough.txt` | ZIL v0 walkthrough (read-only reference, 439 commands) |
 | `v0/walkthrough.txt` | ZIL version for web walkthrough viewer |
 | `v1/walkthrough.txt` | Web walkthrough viewer (no sound in v1) |
 | `v2/walkthrough.txt` | Web walkthrough viewer (no sound in v2) |
 | `v3/walkthrough.txt` | Web walkthrough viewer (v3 has sound) |
-| `v4/walkthrough.txt` | Web walkthrough viewer (v4 has sound) |
 
 **Critical**: `project.conf` line 23 sets `PRIMARY_WALKTHROUGH` to `tests/inform7/walkthrough.txt`. The runner does NOT use `tests/walkthrough.txt`. Always update the `inform7/` copy.
 
@@ -302,13 +304,13 @@ The walkthrough exists in multiple locations for different purposes:
 - `dig sand` instead of `dig sand with shovel`
 - Endgame forest route differs (I7 room connections ≠ ZIL)
 
-**Pipeline auto-sync**: The pipeline's test stage (`bash /c/code/ifhub/tools/pipeline.sh zork1 test`) now automatically regenerates `walkthrough-guide.txt` and syncs walkthrough files to the web root. For versioned projects like zork1, files sync to `$PIPELINE_CURRENT_VERSION/` (e.g., `v4/`). You still need to manually copy to other `vN/` directories if needed.
+**Pipeline auto-sync**: The pipeline's test stage (`python /c/code/ifhub/tools/pipeline.py zork1 test`) automatically regenerates `walkthrough-guide.txt` and syncs walkthrough files to the web root. You still need to manually copy to `vN/` directories if updating frozen versions.
 
 **When updating the walkthrough manually** (outside the pipeline): Sync all three file types to all locations, then deploy:
 1. Update `tests/inform7/walkthrough.txt` (the runner's source of truth)
 2. Copy to `tests/walkthrough.txt` (root-level copy)
 3. Copy to all `vN/` directories
-4. Run `find-seeds.sh` to discover a new golden seed if game code changed
+4. Run `find-seeds.py` to discover a new golden seed if game code changed
 5. Run walkthrough to regenerate `tests/inform7/walkthrough_output.txt`
 6. Regenerate the guide: `python3 /c/code/ifhub/tools/testing/generate-guide.py --walkthrough tests/inform7/walkthrough.txt --transcript tests/inform7/walkthrough_output.txt -o tests/inform7/walkthrough-guide.txt`
 7. Copy guide to all `vN/` directories
@@ -317,7 +319,7 @@ The walkthrough exists in multiple locations for different purposes:
 **Three walkthrough file types** (all must stay in sync):
 - `walkthrough.txt` — raw commands, one per line
 - `walkthrough-guide.txt` — annotated guide with `## Room` headers, `# score` events, `> command` lines (generated by `tools/testing/generate-guide.py`)
-- `walkthrough_output.txt` — full game transcript (generated by `run-walkthrough.sh`)
+- `walkthrough_output.txt` — full game transcript (generated by `run-walkthrough.py`)
 
 **Hub serves in-place**: The hub iframes walkthrough pages directly from `johnesco.github.io/zork1/vN/walkthrough.html`. No deploy script copies files to the hub — push to the zork1 repo and GitHub Pages serves the updated content automatically.
 
@@ -346,7 +348,7 @@ For the base SDLC workflow (commit convention, branch naming, documentation rule
 - `"Dev time — implement ticket #12."`
 - `"QA check — I'm testing what you built."`
 
-**Labels**: Type (`feature`, `bug`, `task`, `spike`, `docs`) + Area (`area:combat`, `area:objects`, etc.) + Priority (`priority:high`, `priority:low`) + Version (`v1`, `v2`, `v4`) + Resolution (`resolution:wontfix`, `resolution:duplicate`, `resolution:cannot-reproduce`, `resolution:by-design`, `resolution:stale`, `resolution:superseded`)
+**Labels**: Type (`feature`, `bug`, `task`, `spike`, `docs`) + Area (`area:combat`, `area:objects`, etc.) + Priority (`priority:high`, `priority:low`) + Version (`v1`, `v2`, `v3`) + Resolution (`resolution:wontfix`, `resolution:duplicate`, `resolution:cannot-reproduce`, `resolution:by-design`, `resolution:stale`, `resolution:superseded`)
 
 ### Definition of Done
 

@@ -26,8 +26,21 @@ source "$SCRIPT_DIR/project.conf"
 # Use wrapper interpreter that answers the sound prompt with "n"
 WRAPPER_INTERP="bash $SCRIPT_DIR/glulxe-wrapper.sh $REGTEST_ENGINE"
 
+# Load golden seed for deterministic combat results
+SEED=""
+if [[ -f "$SCRIPT_DIR/seeds.conf" ]]; then
+    SEED_LINE=$(grep "^${PRIMARY_SEEDS_KEY}:" "$SCRIPT_DIR/seeds.conf" 2>/dev/null | head -1 || true)
+    if [[ -n "$SEED_LINE" ]]; then
+        SEED=$(echo "$SEED_LINE" | cut -d: -f2)
+    fi
+fi
+SEED_FLAG=""
+if [[ -n "$SEED" ]]; then
+    SEED_FLAG="$PRIMARY_ENGINE_SEED_FLAG $SEED"
+fi
+
 python3 "$I7_ROOT/tools/regtest.py" \
-    -i "$WRAPPER_INTERP -q" \
+    -i "$WRAPPER_INTERP $SEED_FLAG -q" \
     -g "$REGTEST_GAME" \
     "$REGTEST_FILE" \
     "$@"

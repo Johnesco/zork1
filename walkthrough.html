@@ -224,6 +224,26 @@ html, body {
   margin-left: 8px;
 }
 
+/* --- Annotation lines (Commands mode) --- */
+.note-line {
+  padding-left: 48px;
+  font-size: 0.82em;
+  color: #8a7a5a;
+  font-style: italic;
+  line-height: 1.5;
+  margin: 1px 0;
+}
+
+/* --- Sub-section headers (### in guide) --- */
+.sub-header {
+  font-size: 0.9em;
+  color: #aa9966;
+  font-style: italic;
+  margin: 14px 0 4px;
+  padding-left: 48px;
+  letter-spacing: 0.3px;
+}
+
 /* --- Command lines (Commands mode) --- */
 .command-line {
   display: flex;
@@ -524,6 +544,15 @@ function parseGuide(text) {
   for (var i = 0; i < lines.length; i++) {
     var line = lines[i];
 
+    if (line.match(/^### /)) {
+      if (!currentSection) {
+        currentSection = { title: 'Introduction', subtitle: '', id: 'section-0', items: [], firstCommand: 1 };
+        sections.push(currentSection);
+      }
+      currentSection.items.push({ type: 'subheader', text: line.slice(4) });
+      continue;
+    }
+
     if (line.match(/^## /)) {
       var headerText = line.slice(3);
       var parts = headerText.split(' -- ');
@@ -658,6 +687,16 @@ function renderCommands(guideData, rawText) {
         var item = sec.items[j];
         if (item.type === 'command') {
           html += '<div class="command-line"><span class="command-num">' + item.num + '</span><span class="command-prompt">&gt;</span><span class="command-text">' + esc(item.text) + '</span></div>';
+        } else if (item.type === 'subheader') {
+          html += '<div class="sub-header">' + esc(item.text) + '</div>';
+        } else if (item.type === 'note') {
+          // Join continuation lines (start with whitespace) into one note
+          var noteText = item.text;
+          while (j + 1 < sec.items.length && sec.items[j + 1].type === 'note' && sec.items[j + 1].text.match(/^\s/)) {
+            j++;
+            noteText += ' ' + sec.items[j].text.trimStart();
+          }
+          html += '<div class="note-line">' + esc(noteText) + '</div>';
         }
       }
     }

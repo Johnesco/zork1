@@ -1,3 +1,7 @@
+# Auto-generated walkthrough guide
+
+## Stage 1
+
 ## North of House
 
 > n
@@ -9,6 +13,8 @@
 ## Up a Tree
 
 > u
+
+# Pick up the egg
 # +5 points
 > take egg
 
@@ -23,46 +29,71 @@
 ## Behind House
 
 > e
+
+# With great effort, you open the window far enough to allow entry.
 > open window
 
 ## Kitchen
 
 # +10 points
 > w
+# Pick up the sack
 > take sack
+# Pick up the bottle
 > take bottle
 
 ## Living Room
 
 > w
+
+# Pick up the sword
 > take sword
+# Pick up the lamp
 > take lamp
 > open case
+
+# Store the egg in the case
 # +9 points
+# You put the jewel-encrusted egg into the trophy case.
 > put egg in case
 
 ## Kitchen
 
 > e
+
+# The brass lantern is now on.
 > turn on lamp
 
 ## Attic
 
 > u
+
+# Pick up the rope
 > take rope
 
 ## Kitchen
 
 > d
+
+# Open the sack
+# You open the brown sack, revealing a lunch and a clove of garlic.
 > open sack
+# Pick up the garlic
 > take garlic
 
 ## Living Room
 
 > w
+
+# With a great effort, the rug is moved to one side of the room, revealing the
+#   dusty cover of a closed trap door. Your sword is no longer glowing.
 > move rug
+# Open the trap door
+# The door reluctantly opens to reveal a rickety staircase descending into
+#   darkness.
 > open trap door
 # +25 points
+# The trap door crashes shut, and you hear someone barring it.
 > d
 
 ## East of Chasm
@@ -75,6 +106,8 @@
 ## Gallery
 
 > e
+
+# Pick up the painting
 # +4 points
 > take painting
 
@@ -85,7 +118,12 @@
 ## Cellar
 
 > n
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > n
+# Combat: troll (12 attempts)
+# Your sword crashes down, knocking the troll into dreamland.
 > kill troll with sword
 > kill troll with sword
 > kill troll with sword
@@ -102,6 +140,7 @@
 
 ## East-West Passage
 
+# +5 points
 > e
 
 ## Round Room
@@ -111,7 +150,10 @@
 ## Loud Room
 
 > e
+
+# The acoustics of the room change subtly.
 > echo
+# Pick up the platinum bar
 # +10 points
 > take platinum bar
 
@@ -134,13 +176,18 @@
 ## Dam Lobby
 
 > n
+
+# Pick up the matchbook
 > take matchbook
 
 ## Maintenance Room
 
 > n
 > push yellow button
+
+# Pick up the wrench
 > take wrench
+# Pick up the screwdriver
 > take screwdriver
 
 ## Dam Lobby
@@ -150,6 +197,8 @@
 ## Dam
 
 > s
+
+# The sluice gates open and water pours through the dam.
 > turn bolt
 > drop wrench
 
@@ -167,8 +216,10 @@
 
 ## East-West Passage
 
-# +5 points
 > w
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > w
 
 ## Maze
@@ -184,6 +235,9 @@
 ## Cyclops Room
 
 > se
+
+# The cyclops, hearing the name of his father's deadly nemesis, flees the room
+#   by knocking down the wall on the east of the room.
 > odysseus
 
 ## Strange Passage
@@ -193,12 +247,22 @@
 ## Living Room
 
 > e
+
+# The brass lantern is now off.
 > turn off lamp
+# Store the painting in the case
 # +6 points
+# You put the painting into the trophy case.
 > put painting in case
+# Store the platinum bar in the case
 # +5 points
+# You put the platinum bar into the trophy case.
 > put platinum bar in case
+# The brass lantern is now on.
 > turn on lamp
+# Open the trap door
+# The door reluctantly opens to reveal a rickety staircase descending into
+#   darkness.
 > open trap door
 
 ## Cellar
@@ -208,16 +272,23 @@
 ## East of Chasm
 
 > s
+
+# Pick up the rope
 > take rope
 
 ## Cellar
 
 > n
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > n
 
 ## East-West Passage
 
 > e
+
+## Stage 2
 
 ## Round Room
 
@@ -230,23 +301,32 @@
 ## Dome Room
 
 > e
+
+# The rope drops over the side and comes within ten feet of the floor.
 > tie rope to railing
 
 ## Torch Room
 
 > d
+
+# Pick up the torch
 # +14 points
 > take torch
 
 ## Temple
 
 > s
+
+# Pick up the bell
 > take bell
 
 ## Altar
 
 > s
+
+# Pick up the book
 > take book
+# Pick up the candles
 > take candles
 
 ## Cave
@@ -256,10 +336,19 @@
 ## Entrance to Hades
 
 > d
+
+# The bell suddenly becomes red hot and falls to the ground. The wraiths, as
+#   if paralyzed, stop their jeering and slowly turn to face you.
 > ring bell
+# Pick up the candles
 > take candles
+# One of the matches starts to burn.
 > light match
+# The candles are lit. The flames flicker wildly and appear to dance. The
+#   earth beneath your feet trembles, and your legs nearly buckle beneath you.
 > light candles with match
+# Each word of the prayer reverberates through the hall in a deafening
+#   confusion.
 > read book
 > drop book
 > drop candles
@@ -267,6 +356,8 @@
 ## Land of the Dead
 
 > s
+
+# Pick up the skull
 # +10 points
 > take skull
 
@@ -293,6 +384,9 @@
 ## East-West Passage
 
 > w
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > w
 
 ## Maze
@@ -316,17 +410,28 @@
 ## Living Room
 
 > e
+
+# The brass lantern is now off.
 > turn off lamp
+# Store the torch in the case
 # +6 points
+# You put the torch into the trophy case.
 > put torch in case
+# Store the skull in the case
 # +10 points
+# You put the crystal skull into the trophy case.
 > put skull in case
+# The brass lantern is now on.
 > turn on lamp
+# Look around.
 > open trap door
 
 ## Cellar
 
 > d
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > n
 
 ## East-West Passage
@@ -356,9 +461,14 @@
 ## Egyptian Room
 
 > d
+
+# Pick up the coffin
 # +10 points
 > take coffin
+# The gold coffin opens. A sceptre, possibly that of ancient Egypt itself, is
+#   in the coffin.
 > open coffin
+# Pick up the sceptre
 # +4 points
 > take sceptre
 
@@ -373,6 +483,9 @@
 ## Forest
 
 > pray
+
+# The brass lantern is now off. You hear in the distance the chirping of a
+#   song bird.
 > turn off lamp
 > drop lamp
 > drop screwdriver
@@ -397,7 +510,11 @@
 ## End of Rainbow
 
 > n
+
+# Suddenly, the rainbow appears to become solid and, I venture, walkable (I
+#   think the giveaway was the stairs and bannister).
 > wave sceptre
+# Pick up the pot of gold
 # +10 points
 > take pot of gold
 
@@ -421,6 +538,8 @@
 
 > s
 > w
+
+# Pick up the lamp
 > take lamp
 
 ## Forest Path
@@ -435,6 +554,8 @@
 
 > e
 
+## Stage 3
+
 ## Kitchen
 
 > w
@@ -442,18 +563,30 @@
 ## Living Room
 
 > w
+
+# Store the coffin in the case
 # +15 points
+# You put the gold coffin into the trophy case.
 > put coffin in case
+# Store the sceptre in the case
 # +6 points
+# You put the sceptre into the trophy case.
 > put sceptre in case
+# Store the pot of gold in the case
 # +10 points
+# You put the pot of gold into the trophy case.
 > put pot of gold in case
+# The brass lantern is now on.
 > turn on lamp
+# Have your eyes checked.
 > open trap door
 
 ## Cellar
 
 > d
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > n
 
 ## East-West Passage
@@ -483,11 +616,15 @@
 ## Reservoir North
 
 > n
+
+# Pick up the pump
 > take pump
 
 ## Atlantis Room
 
 > n
+
+# Pick up the trident
 # +4 points
 > take trident
 
@@ -498,6 +635,8 @@
 ## Reservoir
 
 > s
+
+# Pick up the trunk
 # +15 points
 > take trunk
 
@@ -520,6 +659,9 @@
 ## East-West Passage
 
 > w
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > w
 
 ## Maze
@@ -543,10 +685,16 @@
 ## Living Room
 
 > e
+
+# The brass lantern is now off.
 > turn off lamp
+# Store the trunk in the case
 # +5 points
+# You put the trunk of jewels into the trophy case.
 > put trunk in case
+# Store the trident in the case
 # +11 points
+# You put the crystal trident into the trophy case.
 > put trident in case
 
 ## Kitchen
@@ -568,6 +716,9 @@
 ## Forest
 
 > w
+
+# Pick up the screwdriver
+# You hear in the distance the chirping of a song bird.
 > take screwdriver
 
 ## Forest Path
@@ -589,14 +740,23 @@
 ## Living Room
 
 > w
+
+# Pick up the torch
 # -6 points
 > take torch from case
+# The brass lantern is now on.
 > turn on lamp
+# Look around.
 > open trap door
+
+## Stage 4
 
 ## Cellar
 
 > d
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > n
 
 ## East-West Passage
@@ -614,6 +774,9 @@
 ## Mirror Room
 
 > s
+
+# There is a rumble from deep within the earth and the room shakes. Mirror
+#   Room You are in a large square room with tall ceilings.
 > rub mirror
 
 ## Cold Passage
@@ -635,13 +798,20 @@
 ## Bat Room
 
 > n
+
+# Pick up the jade
 # +5 points
 > take jade
 
 ## Shaft Room
 
 > e
+
+# Store the torch in the basket
+# You put the torch into the basket.
 > put torch in basket
+# Store the screwdriver in the basket
+# You put the screwdriver into the basket.
 > put screwdriver in basket
 
 ## Smelly Room
@@ -651,6 +821,8 @@
 ## Gas Room
 
 > d
+
+# Pick up the bracelet
 # +5 points
 > take bracelet
 
@@ -672,6 +844,8 @@
 ## Dead End
 
 > s
+
+# Pick up the coal
 > take coal
 
 ## Ladder Bottom
@@ -700,7 +874,11 @@
 ## Shaft Room
 
 > s
+
+# Store the coal in the basket
+# You put the small pile of coal into the basket.
 > put coal in basket
+# The basket is lowered to the bottom of the shaft.
 > lower basket
 
 ## Smelly Room
@@ -737,19 +915,34 @@
 ## Drafty Room
 
 > w
+
+# Pick up the torch
 > take torch
+# Pick up the coal
 > take coal
+# Pick up the screwdriver
 > take screwdriver
 
 ## Machine Room
 
 > s
+
+# You open the machine.
 > open lid
+# Store the coal in the machine
+# (the machine) You put the small pile of coal into the machine.
 > put coal in machine
+# You close the machine.
 > close lid
+# The machine comes to life (figuratively) with a dazzling display of colored
+#   lights and bizarre noises. After a few moments, the excitement abates.
 > turn on switch
 > drop screwdriver
+
+# Open the lid
+# You open the machine, revealing a huge diamond.
 > open lid
+# Pick up the diamond
 # +10 points
 > take diamond
 
@@ -757,17 +950,29 @@
 
 # +13 points
 > n
+# Store the diamond in the basket
+# You put the huge diamond into the basket.
 > put diamond in basket
+# Store the torch in the basket
+# You put the torch into the basket.
 > put torch in basket
+# The basket is raised to the top of the shaft. It is now pitch dark in here!
 > raise basket
 
 ## Timber Room
 
 > e
+
+# Pick up the lamp
 > take lamp
+# Pick up the jade
 > take jade
+# Pick up the bracelet
 > take bracelet
+# Pick up the pump
 > take pump
+
+## Stage 5
 
 ## Ladder Bottom
 
@@ -795,7 +1000,10 @@
 ## Shaft Room
 
 > s
+
+# Pick up the diamond
 > take diamond
+# Pick up the torch
 > take torch
 
 ## Bat Room
@@ -813,26 +1021,44 @@
 ## Slide Room
 
 > s
+
+# You tumble down the slide.... Cellar You are in a dark and damp cellar with
+#   a narrow passageway leading north, and a crawlway to the south.
 > d
 
 ## Living Room
 
 > up
+
+# The brass lantern is now off.
 > turn off lamp
+# Store the jade in the case
 # +5 points
+# You put the jade figurine into the trophy case.
 > put jade in case
+# Store the bracelet in the case
 # +5 points
+# You put the sapphire-encrusted bracelet into the trophy case.
 > put bracelet in case
+# Store the diamond in the case
 # +10 points
+# You put the huge diamond into the trophy case.
 > put diamond in case
+# Store the torch in the case
 # +6 points
+# You put the torch into the trophy case.
 > put torch in case
+# The brass lantern is now on.
 > turn on lamp
+# Have your eyes checked.
 > open trap door
 
 ## Cellar
 
 > d
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > n
 
 ## East-West Passage
@@ -854,38 +1080,61 @@
 ## Dam
 
 > e
+
+# The brass lantern is now off. It is now pitch dark in here!
 > turn off lamp
 
 ## Dam Base
 
 > d
+
+# The boat inflates and appears seaworthy. A tan label is lying inside the
+#   boat.
 > inflate plastic with pump
 > drop pump
+
+# The brass lantern is now on.
 > turn on lamp
+# You get into the magic boat. In the magic boat you can see a tan label.
 > enter boat
+# You push off from the shore. Frigid River (in the magic boat) You are on the
+#   Frigid River in the vicinity of the Dam. The river flows quietly here.
 > launch
 
 ## Time passes...
 
+# Repeat: wait (4 times)
 > wait
 > wait
 > wait
 > wait
+
+# Pick up the buoy
+# You notice something funny about the feel of the buoy.
 > take buoy
 
 ## Sandy Beach (in the magic boat)
 
 > east
+
+# You are on your own feet again. Sandy Beach You are on a large sandy beach
+#   on the east shore of the river, which is flowing quickly by.
 > exit
+# Pick up the shovel
 > take shovel
 
 ## Sandy Cave
 
 > ne
+
+# Repeat: dig sand (4 times)
+# You seem to be digging a hole here.
 > dig sand
 > dig sand
 > dig sand
 > dig sand
+
+# Pick up the scarab
 # +5 points
 > take scarab
 > drop shovel
@@ -894,7 +1143,11 @@
 
 > sw
 > drop buoy
+
+# Open the buoy
+# You open the red buoy, revealing a large emerald.
 > open buoy
+# Pick up the emerald
 # +5 points
 > take emerald
 
@@ -930,6 +1183,8 @@
 
 > nw
 
+## Stage 6
+
 ## Behind House
 
 > w
@@ -941,19 +1196,31 @@
 ## Living Room
 
 > w
+
+# Store the emerald in the case
 # +10 points
+# You put the large emerald into the trophy case.
 > put emerald in case
+# Store the scarab in the case
 # +5 points
+# You put the beautiful jeweled scarab into the trophy case.
 > put scarab in case
+# Pick up the egg
 # -9 points
 > take egg from case
+# The brass lantern is now on.
 > turn on lamp
+# Look around.
 > open trap door
 
 ## Cellar
 
 > d
+
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > n
+# Pick up the axe
 > take axe
 
 ## Maze
@@ -962,7 +1229,10 @@
 > s
 > e
 > u
+
+# Pick up the coins
 # +10 points
+# The lamp is definitely dimmer now.
 > take coins
 > sw
 > e
@@ -972,19 +1242,21 @@
 
 > se
 
-## Treasure Room
-
 # +25 points
+# You hear a scream of anguish as you violate the robber's hideaway. Using
+#   passages unknown to you, he rushes to its defense.
 > u
+# Give egg to thief
+# The thief is taken aback by your unexpected generosity, but accepts the
+#   jewel-encrusted egg and stops to admire its beauty.
 > give egg to thief
-
-## Cyclops Room
-
 > d
 
-## Treasure Room
-
+# You hear a scream of anguish as you violate the robber's hideaway. Using
+#   passages unknown to you, he rushes to its defense.
 > u
+# Combat: thief (12 attempts)
+# A good stroke, but it's too slow; the thief dodges.
 > kill thief with axe
 > kill thief with axe
 > kill thief with axe
@@ -998,15 +1270,16 @@
 > kill thief with axe
 > kill thief with axe
 > drop axe
+
+# Pick up the canary
 # +6 points
 > take canary
+# Pick up the chalice
 # +10 points
 > take chalice
+# Pick up the egg
 > take egg
 > take painting
-
-## Cyclops Room
-
 > d
 
 ## Strange Passage
@@ -1016,11 +1289,19 @@
 ## Living Room
 
 > e
+
+# The brass lantern is now off.
 > turn off lamp
+# Store the coins in the case
 # +5 points
+# You put the leather bag of coins into the trophy case.
 > put coins in case
+# Store the chalice in the case
 # +5 points
+# You put the chalice into the trophy case.
 > put chalice in case
+# Store the painting in the case
+# The painting is already there.
 > put painting in case
 
 ## Kitchen
@@ -1038,9 +1319,15 @@
 ## Forest Path
 
 > n
+
+# The canary chirps, slightly off-key, an aria from a forgotten opera. From
+#   out of the greenery flies a lovely songbird.
 > wind canary
+# Pick up the bauble
 # +1 points
 > take bauble
+
+## Stage 7
 
 ## North of House
 
@@ -1057,14 +1344,26 @@
 ## Living Room
 
 > w
+
+# Store the egg in the case
 # +5 points
+# You put the jewel-encrusted egg into the trophy case.
 > put egg in case
+# Store the canary in the case
 # +4 points
+# You put the golden clockwork canary into the trophy case.
 > put canary in case
+# Store the bauble in the case
 # +1 points
+# You put the beautiful brass bauble into the trophy case. An almost inaudible
+#   voice whispers in your ear, "Look to your treasures for the final secret.
 > put bauble in case
 > look
+
+# Pick up the map
 > take map
+# The map shows a forest with three clearings. The largest clearing contains a
+#   house. Three paths leave the large clearing.
 > read map
 
 ## Kitchen

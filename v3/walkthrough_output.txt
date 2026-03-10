@@ -4,8 +4,8 @@
 
 Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 4 / Serial number 260305 / Inform 7 v10.1.2 / D
-v4: Modern IF
+Release 3 / Serial number 260308 / Inform 7 v10.1.2 / D
+v3: Multimedia
 Translated to Inform 7 by John Escobedo
 Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
 Copyright (c) 1981-1986 Infocom, Inc. ZIL source released under MIT License.

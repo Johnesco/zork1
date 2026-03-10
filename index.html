@@ -193,7 +193,7 @@ footer a {
 <h1>Zork I - The Great Underground Empire</h1>
 <p class="subtitle">Inform 7 Edition</p>
 
-<a class="play-latest" href="v4/play.html">Play Latest Version (with sound)</a>
+<a class="play-latest" href="play.html">Play Current Version (with sound)</a>
 
 <p>I&rsquo;ve played video games for a long time. Video? I&rsquo;ve played games with NO graphics. As a kid I stared into a CRT monitor hooked to an Atari 800 computer and marveled at the description: &ldquo;You are standing in an open field west of a white house, with a boarded front door.&rdquo; I&rsquo;d type in short phrases &mdash; pure text. Type &ldquo;open mailbox&rdquo; and the game would do it &mdash; all in text. I saw so many advancements from that point. Sounds, graphics, 2D and 3D. From a few pixels on the screen to ultra-real worlds. And yet, I often still thought of that white house.</p>
 <p>The game in question is <a href="https://en.wikipedia.org/wiki/Zork">Zork</a> &mdash; a game of adventure, danger, and low cunning &mdash; and it&rsquo;s now <a href="https://github.com/historicalsource/zork1">open source</a>. These games, in a genre sometimes called &ldquo;Text-Adventures&rdquo; and sometimes &ldquo;Interactive Fiction&rdquo; (or IF), just gave you a text prompt (hey there&rsquo;s a switch) and you responded.</p>
@@ -201,32 +201,23 @@ footer a {
 <p>I got into a dialogue with Claude, something like, &ldquo;hey, why is this detail in ZIL but not in the translation?&rdquo; And so began a long introduction into the ZIL code format. There are shortcuts being taken here for sure, but using AI will force you to realize you&rsquo;ve got to be in the driver&rsquo;s seat, at least for now. We began to look at all text, piece by piece, every bit, discovering together the odd format of the old engine, bound by such tight limitations, and the loose translation we began to refine.</p>
 <p>Using <a href="https://foss.heptapod.net/zilf/zilf">ZILF</a>, we compiled the ZIL to the .z5 format and ran it online. We had a working version of the original, warts and all. Claude began to suggest trying to test outcomes deterministically. I reminded Claude about the random aspects of Zork. Claude mentioned we could compile with a specific seed to mitigate randomness and produce expected results (as it compared transcripts). Transcripts. I mean &mdash; it is text after all. Every playthrough, we stored the transcripts. We&rsquo;d compare transcripts of the original and the translation side by side. That developed into a testing system that I&rsquo;m now expanding to test the games.</p>
 <p>This wasn&rsquo;t a one-shot vibe code. It was a deep dive into AI and IF.</p>
-<p>Below are snapshots of each milestone. <strong>v0</strong> is the purest version of the original Zork I commercial release. <strong>v1</strong> attempts to translate it into Inform 7 &mdash; if it&rsquo;s in the ZIL code, it&rsquo;s in v1 (any bugs naturally fixed by the move to a modern engine will remain fixed, we won&rsquo;t force bugs to remain). <strong>v2</strong> is where real improvement begins &mdash; only here do I allow myself to actually fix anything that was ever a bug in the original ZIL. The latest version builds on all of that &mdash; now with ambient audio and sound effects &mdash; but it&rsquo;s really v0 to v1 being given huge attention.</p>
+<p>Below are snapshots of each milestone. <strong>v0</strong> is the purest version of the original Zork I commercial release. <strong>v1</strong> attempts to translate it into Inform 7 &mdash; if it&rsquo;s in the ZIL code, it&rsquo;s in v1 (any bugs naturally fixed by the move to a modern engine will remain fixed, we won&rsquo;t force bugs to remain). <strong>v2</strong> is where real improvement begins &mdash; only here do I allow myself to actually fix anything that was ever a bug in the original ZIL. <strong>v3</strong> builds on all of that &mdash; now with ambient audio, sound effects, and atmospheric CSS visuals &mdash; but it&rsquo;s really v0 to v1 being given huge attention.</p>
 
 
 <h2>Version History</h2>
 
 <div class="version-entry">
-  <h3>v4 &mdash; Modern IF (Current)</h3>
-  <p>Applying modern interactive fiction best practices for fluid, fun gameplay.</p>
-  <ul>
-    <li>Richer parser responses and smoother player interactions</li>
-    <li>Better default messages and more helpful feedback</li>
-    <li><strong>Native Glk sound</strong>: audio bundled in .gblorb via Parchment&rsquo;s Emglken WASM engine &mdash; ambient zones and sound effects driven directly from story.ni</li>
-    <li>Inherits all v3 audio design, v2 bug fixes, and v1 content</li>
-  </ul>
-  <div class="version-links">
-    <a href="v4/play.html">Play (with sound)</a> <a href="/ifhub/app.html?game=zork1-v4">Source</a> <a href="v4/walkthrough.html">Walkthrough</a>
-  </div>
-</div>
-
-<div class="version-entry">
-  <h3>v3 &mdash; Sound</h3>
-  <p>Intentionally diverging from the original, leaning into what Inform 7 does best.</p>
+  <h3>v3 &mdash; Multimedia</h3>
+  <p>Intentionally diverging from the original, leaning into what Inform 7 does best. Sound and atmospheric CSS visuals transform the player into an immersive experience.</p>
   <ul>
     <li><strong>Ambient audio</strong>: zone-based background music across 10 zones (forest, cave, house, water, rapids, loud, hades, mine, machinery, silence) with smooth crossfades between areas</li>
-    <li><strong>Sound effects</strong>: 16 one-shot audio triggers for key game events &mdash; puzzle moments, creature encounters, and atmospheric touches. Audio files are CC0 placeholders, not final</li>
-    <li><strong>Native Glk sound</strong>: audio is now driven from story.ni via Glk sound channels, bundled as a .gblorb and played through Parchment&rsquo;s Emglken WASM engine</li>
+    <li><strong>Sound effects</strong>: 16 one-shot audio triggers for key game events &mdash; puzzle moments, creature encounters, and atmospheric touches</li>
+    <li><strong>Native Glk sound</strong>: audio driven from story.ni via Glk sound channels, bundled as a .gblorb and played through Parchment&rsquo;s Emglken WASM engine</li>
+    <li><strong>CSS mood palettes</strong>: zone-based color theming with smooth Houdini transitions &mdash; forest greens, cave blues, warm house tones</li>
+    <li><strong>CRT intro</strong>: green phosphor terminal aesthetic on startup, fading to the game theme after first input</li>
+    <li><strong>Tree effects</strong>: falling leaves, canopy glow, and wind sway when climbing the tree</li>
+    <li><strong>Egg flash</strong>: golden explosion with shockwave rings and sparks when placing the egg in the trophy case</li>
+    <li><strong>Sword glow</strong>: blue screen-edge vignette when the sword detects danger</li>
     <li>Inherits all v2 bug fixes and v1 content</li>
   </ul>
   <div class="version-links">

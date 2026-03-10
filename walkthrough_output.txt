@@ -4,8 +4,8 @@
 
 Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 4 / Serial number 260305 / Inform 7 v10.1.2 / D
-v4: Modern IF
+Release 4 / Serial number 260310 / Inform 7 v10.1.2 / D
+Current
 Translated to Inform 7 by John Escobedo
 Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
 Copyright (c) 1981-1986 Infocom, Inc. ZIL source released under MIT License.
@@ -70,6 +70,9 @@ Above the trophy case hangs an elvish sword of great antiquity.
 
 A battery-powered brass lantern is on the trophy case.
 
+Your collection of treasures consists of:
+  an ancient map
+
 >Taken.
 
 >Taken.
@@ -107,6 +110,10 @@ You are in the kitchen of the white house. A table seems to have been used recen
 >
 Living Room
 You are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.
+
+Your collection of treasures consists of:
+  a jewel-encrusted egg
+  an ancient map
 
 Your sword is glowing with a faint blue glow.
 
@@ -197,8 +204,11 @@ Your sword is no longer glowing.
 
 >Dropped.
 
->East-West Passage
+>
+East-West Passage
 This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
+
+[Your score has just gone up by five points.]
 
 >
 Round Room
@@ -250,6 +260,8 @@ There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
 Maintenance Room
 This is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways to the west and south.
 
+There is a group of tool chests here.
+
 There is an object which looks like a tube of toothpaste here.
 
 You can also see a wrench and a screwdriver here.
@@ -293,8 +305,6 @@ This is a circular stone room with passages in all directions. Several of them h
 >
 East-West Passage
 This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
-
-[Your score has just gone up by five points.]
 
 >
 The Troll Room
@@ -357,6 +367,10 @@ This is a long passage. To the west is one entrance. On the east there is an old
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a closed trap door at your feet.
 
+Your collection of treasures consists of:
+  a jewel-encrusted egg
+  an ancient map
+
 >The brass lantern is now off.
 
 >You put the painting into the trophy case.
@@ -395,7 +409,8 @@ There is a bloody axe here.
 
 You can also see a sword here.
 
->East-West Passage
+>
+East-West Passage
 This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
 
 >
@@ -577,6 +592,12 @@ This is a long passage. To the west is one entrance. On the east there is an old
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
+Your collection of treasures consists of:
+  a platinum bar
+  a painting
+  a jewel-encrusted egg
+  an ancient map
+
 >The brass lantern is now off.
 
 >You put the torch into the trophy case.
@@ -603,7 +624,8 @@ There is a bloody axe here.
 
 You can also see a sword here.
 
->East-West Passage
+>
+East-West Passage
 This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
 
 >
@@ -747,6 +769,14 @@ You are in the kitchen of the white house. A table seems to have been used recen
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
+Your collection of treasures consists of:
+  a crystal skull
+  a torch
+  a platinum bar
+  a painting
+  a jewel-encrusted egg
+  an ancient map
+
 >You put the gold coffin into the trophy case.
 
 [Your score has just gone up by fifteen points.]
@@ -775,7 +805,8 @@ There is a bloody axe here.
 
 You can also see a sword here.
 
->East-West Passage
+>
+East-West Passage
 This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
 
 >
@@ -915,6 +946,17 @@ This is a long passage. To the west is one entrance. On the east there is an old
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
+Your collection of treasures consists of:
+  a pot of gold
+  a sceptre
+  a gold coffin
+  a crystal skull
+  a torch
+  a platinum bar
+  a painting
+  a jewel-encrusted egg
+  an ancient map
+
 >The brass lantern is now off.
 
 >You put the trunk of jewels into the trophy case.
@@ -971,6 +1013,19 @@ You are in the kitchen of the white house. A table seems to have been used recen
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
+Your collection of treasures consists of:
+  a crystal trident
+  a trunk of jewels
+  a pot of gold
+  a sceptre
+  a gold coffin
+  a crystal skull
+  a torch
+  a platinum bar
+  a painting
+  a jewel-encrusted egg
+  an ancient map
+
 >Taken.
 
 [Your score has just gone down by six points.]
@@ -991,7 +1046,8 @@ There is a bloody axe here.
 
 You can also see a sword here.
 
->East-West Passage
+>
+East-West Passage
 This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
 
 >
@@ -1313,6 +1369,18 @@ You are in a dark and damp cellar with a narrow passageway leading north, and a 
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
+Your collection of treasures consists of:
+  a crystal trident
+  a trunk of jewels
+  a pot of gold
+  a sceptre
+  a gold coffin
+  a crystal skull
+  a platinum bar
+  a painting
+  a jewel-encrusted egg
+  an ancient map
+
 >The brass lantern is now off.
 
 >You put the jade figurine into the trophy case.
@@ -1347,7 +1415,8 @@ There is a bloody axe here.
 
 You can also see a sword here.
 
->East-West Passage
+>
+East-West Passage
 This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
 
 >
@@ -1395,19 +1464,41 @@ In the magic boat you can see a tan label.
 
 >You push off from the shore.
 
->Time passes...
+Frigid River (in the magic boat)
+You are on the Frigid River in the vicinity of the Dam. The river flows quietly here. There is a landing on the west shore.
 
-The flow of the river carries you downstream.
-
->Time passes...
-
->Time passes...
-
-The flow of the river carries you downstream.
+In the magic boat you can see a tan label.
 
 >Time passes...
 
 The flow of the river carries you downstream.
+
+Frigid River (in the magic boat)
+The river turns a corner here making it impossible to see the Dam. The White Cliffs loom on the east bank and large rocks prevent landing on the west.
+
+In the magic boat you can see a tan label.
+
+>Time passes...
+
+>Time passes...
+
+The flow of the river carries you downstream.
+
+Frigid River (in the magic boat)
+The river descends here into a valley. There is a narrow beach on the west shore below the cliffs. In the distance a faint rumbling can be heard.
+
+In the magic boat you can see a tan label.
+
+>Time passes...
+
+The flow of the river carries you downstream.
+
+Frigid River (in the magic boat)
+The river is running faster here and the sound ahead appears to be that of rushing water. On the east shore is a sandy beach. A small area of beach can also be seen below the cliffs on the west shore.
+
+There is a red buoy here (probably a warning).
+
+In the magic boat you can see a tan label.
 
 >Taken.
 You notice something funny about the feel of the buoy.
@@ -1507,6 +1598,22 @@ You are in the kitchen of the white house. A table seems to have been used recen
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
+Your collection of treasures consists of:
+  a torch
+  a huge diamond
+  a sapphire-encrusted bracelet
+  a jade figurine
+  a crystal trident
+  a trunk of jewels
+  a pot of gold
+  a sceptre
+  a gold coffin
+  a crystal skull
+  a platinum bar
+  a painting
+  a jewel-encrusted egg
+  an ancient map
+
 >You put the large emerald into the trophy case.
 
 [Your score has just gone up by ten points.]
@@ -1585,10 +1692,12 @@ This room has an exit on the northwest, and a staircase leading up.
 
 The east wall, previously solid, now has a cyclops-sized opening in it.
 
->Treasure Room
+>You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
+
+Treasure Room
 This is a large room, whose east wall is solid granite. A number of discarded bags, which crumble at your touch, are scattered about on the floor. There is an exit down a staircase.
 
-You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
+There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
 
 [Your score has just gone up by twenty-five points.]
 
@@ -1600,10 +1709,12 @@ This room has an exit on the northwest, and a staircase leading up.
 
 The east wall, previously solid, now has a cyclops-sized opening in it.
 
->Treasure Room
+>You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
+
+Treasure Room
 This is a large room, whose east wall is solid granite. A number of discarded bags, which crumble at your touch, are scattered about on the floor. There is an exit down a staircase.
 
-You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
+There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
 
 >A good stroke, but it's too slow; the thief dodges.
 >The thief is struck on the arm; blood begins to trickle down.
@@ -1615,8 +1726,15 @@ Almost as soon as the thief breathes his last breath, a cloud of sinister black 
 
 
 As the thief dies, the power of his magic decreases, and his treasures reappear:
-  A chalice
   A jewel-encrusted egg, with a golden clockwork canary
+  A stiletto
+  A zorkmid
+  A teeth
+  A stairs
+  A blast of air
+  A pair of hands
+  A lurking grue
+  A granite wall
 
 The chalice is now safe to take.
 
@@ -1658,6 +1776,23 @@ This is a long passage. To the west is one entrance. On the east there is an old
 >
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
+
+Your collection of treasures consists of:
+  a beautiful jeweled scarab
+  a large emerald
+  a torch
+  a huge diamond
+  a sapphire-encrusted bracelet
+  a jade figurine
+  a crystal trident
+  a trunk of jewels
+  a pot of gold
+  a sceptre
+  a gold coffin
+  a crystal skull
+  a platinum bar
+  a painting
+  an ancient map
 
 >The brass lantern is now off.
 
@@ -1709,6 +1844,25 @@ You are in the kitchen of the white house. A table seems to have been used recen
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
+Your collection of treasures consists of:
+  a chalice
+  a leather bag of coins
+  a beautiful jeweled scarab
+  a large emerald
+  a torch
+  a huge diamond
+  a sapphire-encrusted bracelet
+  a jade figurine
+  a crystal trident
+  a trunk of jewels
+  a pot of gold
+  a sceptre
+  a gold coffin
+  a crystal skull
+  a platinum bar
+  a painting
+  an ancient map
+
 >You put the jewel-encrusted egg into the trophy case.
 
 [Your score has just gone up by five points.]
@@ -1726,6 +1880,28 @@ An almost inaudible voice whispers in your ear, "Look to your treasures for the 
 
 >Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
+
+Your collection of treasures consists of:
+  a beautiful brass bauble
+  a golden clockwork canary
+  a jewel-encrusted egg
+  a chalice
+  a leather bag of coins
+  a beautiful jeweled scarab
+  a large emerald
+  a torch
+  a huge diamond
+  a sapphire-encrusted bracelet
+  a jade figurine
+  a crystal trident
+  a trunk of jewels
+  a pot of gold
+  a sceptre
+  a gold coffin
+  a crystal skull
+  a platinum bar
+  a painting
+  an ancient map
 
 >Taken.
 

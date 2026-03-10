@@ -12,13 +12,9 @@ Each version includes playable games, browsable source code, and annotated walkt
 
 ## Version History
 
-### v4 — Modern IF (Current)
+### v3 — Multimedia (Current)
 
-Applying modern interactive fiction writing best practices — richer parser responses, smoother player interactions, better default messages, and more helpful feedback. Includes CSS atmospheric effects: zone-reactive mood color palettes, CRT terminal intro, animated tree canopy and falling leaves, golden egg explosion, reversed status bar, and synchronized color transitions.
-
-### v3 — Making It My Own
-
-The first version that intentionally diverges from the original. Adds ambient audio — zone-based background music and sound effects via native Glk/blorb sound (`.gblorb` binary with embedded `.ogg` audio played through Parchment's Emglken WASM engine).
+The first version that intentionally diverges from the original. Adds ambient audio — zone-based background music and sound effects via native Glk/blorb sound (`.gblorb` binary with embedded `.ogg` audio played through Parchment's Emglken WASM engine). Also includes CSS atmospheric effects: zone-reactive mood color palettes, CRT terminal intro, animated tree canopy and falling leaves, golden egg explosion, sword glow vignette, and synchronized color transitions.
 
 ### v2 — Bug Fixes & Testing
 
@@ -49,8 +45,7 @@ versions/          Frozen version snapshots
   v0/              Original ZIL — source browser + playable game
   v1/              Inform 7 port — 1:1 translation
   v2/              Bug fixes and testing
-  v3/              New features (ambient audio)
-  v4/              Modern IF (CSS effects, better parser)
+  v3/              Multimedia (sound + CSS atmospheric effects)
 _site/             Assembled deploy directory (gitignored)
 ```
 
