@@ -1,0 +1,386 @@
+ West of House                                                                                                                                                                                           Score: 0        Moves: 0
+
+ZORK I: The Great Underground Empire
+Infocom interactive fiction - a fantasy story
+Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 1 / Serial number 260217
+
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+There is a small mailbox here.
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 1
+
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+There is a small mailbox here.
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 2
+
+That's difficult unless your eyes are prehensile.
+
+>I don't know the word "sky".
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 3
+
+There's nothing special about the ground.
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 4
+
+There's nothing special about the forest.
+
+>What do you want to listen to?
+
+>What do you want to smell?
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 5
+
+Wheeeeeeeeee!!!!!
+
+>I don't know the word "sing".
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 6
+
+If you pray enough, your prayers may be answered.
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 7
+
+Aaaarrrrgggghhhh!
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 8
+
+You are in perfect health.
+You can be killed by a serious wound.
+
+>Your score is 0 (total of 350 points), in 8 moves.
+This gives you the rank of Beginner.
+
+> West of House                                                                                                                                                                                           Score: 0        Moves: 9
+
+You are empty-handed.
+
+>Maximum verbosity.
+
+> North of House                                                                                                                                                                                          Score: 0        Moves: 10
+
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+> North of House                                                                                                                                                                                          Score: 0        Moves: 11
+
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+> Forest Path                                                                                                                                                                                             Score: 0        Moves: 12
+
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+> Forest Path                                                                                                                                                                                             Score: 0        Moves: 13
+
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+> Forest Path                                                                                                                                                                                             Score: 0        Moves: 14
+
+You can't see any window here!
+
+> Forest Path                                                                                                                                                                                             Score: 0        Moves: 15
+
+You can't see any window here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 16
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+You hear in the distance the chirping of a song bird.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 17
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 18
+
+You can't see any table here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 19
+
+You can't see any sack here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 20
+
+You can't see any sack here!
+You hear in the distance the chirping of a song bird.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 21
+
+You can't see any garlic here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 22
+
+You can't see any garlic here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 23
+
+You would need a machete to go further west.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 24
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 25
+
+You can't see any rug here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 26
+
+You can't see any rug here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 27
+
+You can't see any sword here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 28
+
+You can't see any sword here!
+You hear in the distance the chirping of a song bird.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 29
+
+You can't see any sword here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 30
+
+You can't see any lantern here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 31
+
+You can't see any lantern here!
+
+>You don't have that!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 32
+
+You can't see any lantern here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 33
+
+You can't see any case here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 34
+
+You can't see any case here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 35
+
+You can't see any door here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 36
+
+You can't see any chimney here!
+
+> Forest Path                                                                                                                                                                                             Score: 0        Moves: 37
+
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 38
+
+Forest
+This is a dimly lit forest, with large trees all around.
+You hear in the distance the chirping of a song bird.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 39
+
+Clearing
+You are in a small clearing in a well marked forest path that extends to the east and west.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 40
+
+Clearing
+You are in a small clearing in a well marked forest path that extends to the east and west.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 41
+
+Forest
+This is a dimly lit forest, with large trees all around.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 42
+
+Forest
+This is a dimly lit forest, with large trees all around.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 43
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+You hear in the distance the chirping of a song bird.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 44
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 45
+
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+On the ground is a pile of leaves.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 46
+
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+On the ground is a pile of leaves.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 47
+
+You can't go that way.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 48
+
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+On the ground is a pile of leaves.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 49
+
+You can't see any egg here!
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 50
+
+You can't see any egg here!
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 51
+
+You can't go that way.
+
+> Forest Path                                                                                                                                                                                             Score: 0        Moves: 52
+
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 53
+
+Forest
+This is a dimly lit forest, with large trees all around.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 54
+
+The forest becomes impenetrable to the north.
+
+> Forest Path                                                                                                                                                                                             Score: 0        Moves: 55
+
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 56
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+
+>You don't have that!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 57
+
+You can't see any rug here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 58
+
+You can't see any trap door here!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 59
+
+You can't go that way.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 60
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 61
+
+You can't see any door here!
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 62
+
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+On the ground is a pile of leaves.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 63
+
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+On the ground is a pile of leaves.
+
+> Clearing                                                                                                                                                                                                Score: 0        Moves: 64
+
+You can't see any troll here!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+>You don't have that!
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 65
+
+Forest
+This is a dimly lit forest, with large trees all around.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 66
+
+Forest
+This is a dimly lit forest, with large trees all around.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 67
+
+Forest
+The forest thins out, revealing impassable mountains.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 68
+
+Forest
+The forest thins out, revealing impassable mountains.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 69
+
+You can't go that way.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 70
+
+Forest
+The forest thins out, revealing impassable mountains.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 71
+
+The mountains are impassable.
+
+> Forest                                                                                                                                                                                                  Score: 0        Moves: 72
+
+Forest
+The forest thins out, revealing impassable mountains.
+
+>

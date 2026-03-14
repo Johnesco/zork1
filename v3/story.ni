@@ -1146,7 +1146,6 @@ The carrying capacity of the trophy case is 100.
 Instead of taking the trophy case:
 	say "The trophy case is securely fastened to the wall."
 
-Instead of closing the trophy case: say "[dummy]".
 
 After looking when the location is Living Room and the number of things in the trophy case is greater than 0:
 	say "Your collection of treasures consists of:";

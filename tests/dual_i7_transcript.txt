@@ -1,0 +1,249 @@
+Welcome to the Cheap Glk Implementation, library version 1.0.7.
+
+
+
+
+
+ZORK I: The Great Underground Empire
+Infocom interactive fiction - a fantasy story
+Copyright (c) 1981, 1982, 1983, 1984, 1985, 1986 Infocom, Inc. All rights reserved.
+ZORK is a registered trademark of Infocom, Inc.
+Release 88 / Serial number 840726
+
+Do you want sound? (y/n) Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> Please answer yes or no.> 
+Sound disabled. Type SOUND ON during play to enable it.
+
+Zork I - The Great Underground Empire
+An Interactive Fiction by Infocom (translated to Inform 7)
+Release 1 / Serial number 260303 / Inform 7 v10.1.2 / D
+
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+>West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+>
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+>North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+>The windows are all boarded up.
+
+>The windows are boarded and can't be opened.
+
+>
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+>West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
+
+>Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+>
+Forest
+This is a dimly lit forest, with large trees all around. The canopy here is thick, allowing only thin shafts of light to reach the forest floor. A carpet of pine needles muffles your footsteps.
+
+>
+Clearing
+You are in a small clearing in a well marked forest path that extends to the east and west.
+
+>Clearing
+You are in a small clearing in a well marked forest path that extends to the east and west.
+
+>
+Forest
+This is a dimly lit forest, with large trees all around. Gnarled roots break through the soil underfoot, and the air is heavy with the smell of wet bark. Somewhere nearby, water drips steadily from the leaves.
+
+You hear in the distance the chirping of a song bird.
+
+>Forest
+This is a dimly lit forest, with large trees all around. Gnarled roots break through the soil underfoot, and the air is heavy with the smell of wet bark. Somewhere nearby, water drips steadily from the leaves.
+
+You hear in the distance the chirping of a song bird.
+
+>
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
+
+>Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
+
+>
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+
+On the ground is a pile of leaves.
+
+>Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+
+On the ground is a pile of leaves.
+
+You hear in the distance the chirping of a song bird.
+
+>You can't go that way.
+
+>Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+
+On the ground is a pile of leaves.
+
+You hear in the distance the chirping of a song bird.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>The grating is closed!
+
+>
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+>
+Forest
+This is a dimly lit forest, with large trees all around. The canopy here is thick, allowing only thin shafts of light to reach the forest floor. A carpet of pine needles muffles your footsteps.
+
+>The forest becomes impenetrable to the north.
+
+>
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+>
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't go that way.
+
+>Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
+
+>You can't see any such thing.
+
+>
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+
+On the ground is a pile of leaves.
+
+>Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+
+On the ground is a pile of leaves.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>
+Forest
+This is a dimly lit forest, with large trees all around. The canopy here is thick, allowing only thin shafts of light to reach the forest floor. A carpet of pine needles muffles your footsteps.
+
+>Forest
+This is a dimly lit forest, with large trees all around. The canopy here is thick, allowing only thin shafts of light to reach the forest floor. A carpet of pine needles muffles your footsteps.
+
+>
+Forest
+The forest thins out, revealing impassable mountains.
+
+>Forest
+The forest thins out, revealing impassable mountains.
+
+>You can't go that way.
+
+>Forest
+The forest thins out, revealing impassable mountains.
+
+>The mountains are impassable.
+
+>Forest
+The forest thins out, revealing impassable mountains.
+
+>
+<end of input>
