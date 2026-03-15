@@ -561,6 +561,28 @@ body.sword-glow-bright::after {
               inset 0 0 200px 50px rgba(60, 110, 240, 0.2),
               inset 0 0 300px 80px rgba(40, 80, 200, 0.1);
 }
+
+/* ── Platform theme override: suppress overlay effects ── */
+body.platform-theme-active .crt-scanbar,
+body.platform-theme-active .leaf,
+body.platform-theme-active .egg-overlay,
+body.platform-theme-active .egg-overlay-2,
+body.platform-theme-active .egg-ring,
+body.platform-theme-active .egg-spark { display: none !important; }
+
+body.platform-theme-active #gameport::before,
+body.platform-theme-active #gameport::after { display: none !important; }
+
+body.platform-theme-active::after { display: none !important; }
+
+body.platform-theme-active .BufferWindowInner::after { display: none !important; }
+
+body.platform-theme-active .BufferLine { animation: none !important; }
+
+/* Suppress mood palette — let platform-theme-override style take full control */
+body.platform-theme-active div#gameport { transition: none !important; }
+body.platform-theme-active .BufferWindow { transition: none !important; }
+body.platform-theme-active .Input { color: inherit !important; caret-color: inherit !important; transition: none !important; }
 </style>
 
 <script src="lib/parchment/jquery.min.js?v=1772720882"></script>
@@ -964,6 +986,85 @@ body.sword-glow-bright::after {
     document.addEventListener('DOMContentLoaded', init);
   } else {
     init();
+  }
+})();
+</script>
+
+<script>
+/* ── IF Hub theme listener ── */
+(function() {
+  function ensureRetroFonts() {
+    if (document.getElementById('retro-platform-fonts')) return;
+    var link = document.createElement('link');
+    link.id = 'retro-platform-fonts';
+    link.rel = 'stylesheet';
+    link.href = 'https://fonts.googleapis.com/css2?family=Pixelify+Sans&family=Press+Start+2P&family=Silkscreen&family=Sixtyfour&family=Tiny5&family=VT323&family=Workbench&display=swap';
+    document.head.appendChild(link);
+  }
+
+  function applyPlatformTheme(g, sb) {
+    ensureRetroFonts();
+    var el = document.getElementById('platform-theme-override');
+    if (el) el.remove();
+    var style = document.createElement('style');
+    style.id = 'platform-theme-override';
+    style.textContent =
+      'body, html { background: ' + g.bodyBg + ' !important; }\n' +
+      '.BufferWindow { color: ' + g.bufferFg + ' !important; background-color: ' + g.bufferBg + ' !important; font-family: ' + g.monoFamily + ' !important; font-size: ' + g.bufferSize + ' !important; line-height: ' + g.bufferLineHeight + ' !important; }\n' +
+      '.BufferWindow span { color: ' + g.bufferFg + ' !important; }\n' +
+      '.BufferWindow span.reverse { color: ' + g.bufferBg + ' !important; background-color: ' + g.bufferFg + ' !important; }\n' +
+      '.BufferWindow .Style_input { color: ' + g.inputFg + ' !important; }\n' +
+      '.BufferWindow .Style_emphasized { color: ' + g.emphFg + ' !important; }\n' +
+      '.BufferWindow .Style_header { color: ' + g.headerFg + ' !important; }\n' +
+      '.BufferWindow .Style_subheader,\n' +
+      '.BufferWindow .Style_alert { color: ' + g.headerFg + ' !important; }\n' +
+      '.BufferWindow .Input,\n' +
+      '.BufferWindow textarea.Input { color: ' + g.inputFg + ' !important; caret-color: ' + g.inputFg + '; font-family: ' + g.monoFamily + ' !important; }\n' +
+      '.GridWindow { color: ' + g.gridFg + ' !important; background-color: ' + g.gridBg + ' !important; font-family: ' + g.monoFamily + ' !important; font-size: ' + g.gridSize + ' !important; line-height: ' + g.gridLineHeight + ' !important; padding: 4px 12px !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; margin: 0 !important; width: 100% !important; box-sizing: border-box !important; }\n' +
+      '.GridWindow span { color: ' + g.gridFg + ' !important; background-color: ' + g.gridBg + ' !important; }\n' +
+      '.GridWindow span.reverse { color: ' + g.gridFg + ' !important; background-color: ' + g.gridBg + ' !important; }\n' +
+      '#loadingpane { color: ' + g.bufferFg + '; background: ' + g.bodyBg + '; font-family: ' + g.monoFamily + '; }\n' +
+      '.WindowFrame { background: transparent !important; }\n' +
+      'div#gameport { background: linear-gradient(to bottom, ' + g.gridBg + ' 0px, ' + g.gridBg + ' ' + ((parseInt(g.gridLineHeight) || 20) + 10) + 'px, ' + g.bufferBg + ' ' + ((parseInt(g.gridLineHeight) || 20) + 10) + 'px) !important; }\n' +
+      '* { scrollbar-color: ' + sb.thumb + ' ' + sb.track + '; }\n' +
+      '::-webkit-scrollbar { width: 10px; background: ' + sb.track + '; }\n' +
+      '::-webkit-scrollbar-thumb { background: ' + sb.thumb + '; border-radius: 4px; }\n' +
+      '::-webkit-scrollbar-thumb:hover { background: ' + sb.thumbHover + '; }\n';
+    document.head.appendChild(style);
+    setTimeout(function() { window.dispatchEvent(new Event('resize')); }, 50);
+  }
+
+  function removePlatformTheme() {
+    var el = document.getElementById('platform-theme-override');
+    if (el) el.remove();
+    setTimeout(function() { window.dispatchEvent(new Event('resize')); }, 50);
+  }
+
+  window.addEventListener('message', function(e) {
+    if (!e.data) return;
+    if (e.data.type === 'ifhub:applyTheme') {
+      document.body.classList.add('platform-theme-active');
+      applyPlatformTheme(e.data.game, e.data.scrollbar);
+    }
+    if (e.data.type === 'ifhub:restoreOverlay') {
+      document.body.classList.remove('platform-theme-active');
+      removePlatformTheme();
+    }
+  });
+
+  // Auto-apply theme from URL param (full-page mode from hub)
+  var urlTheme = new URLSearchParams(window.location.search).get('theme');
+  if (urlTheme && urlTheme !== 'classic') {
+    var s = document.createElement('script');
+    s.src = '/ifhub/themes.js';
+    s.onload = function() {
+      var t = getTheme(urlTheme);
+      if (t) {
+        document.body.classList.add('platform-theme-active');
+        applyPlatformTheme(t.game, t.scrollbar);
+      }
+    };
+    document.head.appendChild(s);
   }
 })();
 </script>
