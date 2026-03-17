@@ -35,17 +35,7 @@ scenarios/         Scenario guides and transcripts
 
 ## Inform 7 Shared Tools (External)
 
-Compiler conventions, shared test framework, and reference docs live in the shared hub:
-
-```
-C:\code\ifhub\
-├── CLAUDE.md              ← Inform 7 conventions and compiler paths
-├── tools/
-│   ├── regtest.py         ← Shared test runner
-│   ├── interpreters/      ← Native Windows glulxe.exe + dfrotz.exe (built locally)
-│   └── testing/           ← Generic testing framework (walkthroughs, seed sweeps)
-└── reference/             ← Syntax + formatting docs
-```
+Compiler conventions, shared test framework, and reference docs live in the shared hub. For standard build/test/publish workflows, see `C:\code\ifhub\reference\project-guide.md`.
 
 **Compiler**: System-wide install at `C:\Program Files\Inform 7\` (see `C:\code\ifhub\CLAUDE.md` for CLI usage).
 
