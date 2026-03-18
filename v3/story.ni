@@ -244,6 +244,10 @@ Rule for printing the description of a dark room:
 	otherwise:
 		say "It is pitch black.[line break]" instead.
 
+Rule for implicitly taking something (called the thing taken):
+	say "(Taken)[command clarification break]";
+	silently try taking the thing taken.
+
 To grue-death:
 	play the sound of grue-sfx as sfx;
 	let R be a random number between 1 and 3;
@@ -1139,7 +1143,7 @@ Living Room is a room. Living Room is in House Interior.
 
 The description of Living Room is "You are in the living room. There is a doorway to the east[if the magic-flag is true]. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, [otherwise], a wooden door with strange gothic lettering to the west, which appears to be nailed shut, [end if]a trophy case, [if the rug-moved is false]and a large oriental rug in the center of the room.[otherwise if the trap door is open]and a rug lying beside an open trap door.[otherwise]and a closed trap door at your feet.[end if]"
 
-The trophy case is a transparent openable open container in Living Room. The trophy case is scenery. "The trophy case is mounted firmly to the wall."
+The trophy case is a transparent openable closed container in Living Room. The trophy case is scenery. "The trophy case is mounted firmly to the wall."
 Understand "case" and "trophy" as the trophy case.
 The carrying capacity of the trophy case is 100.
 
@@ -1160,6 +1164,11 @@ The treasure-value of the sword is 0.
 
 The brass lantern is in Living Room. "A battery-powered brass lantern is on the trophy case."
 Understand "lamp" and "lantern" and "light" and "brass" as the brass lantern.
+
+After printing the name of the brass lantern:
+	if the lamp-burned-out is false and the brass lantern is not lit:
+		say " (battery-powered)".
+
 The description of the brass lantern is "[if the lamp-burned-out is true]The lamp has burned out.[otherwise if the brass lantern is lit]The lamp is on.[otherwise]The lamp is turned off.[end if]".
 
 Instead of switching on the brass lantern:
@@ -1908,8 +1917,16 @@ To skeleton-curse:
 		if the treasure-value of item is greater than 0:
 			now item is in Land of the Dead.
 
+The rusty knife is in Maze5. "Beside the skeleton is a rusty knife."
+Understand "knife" and "rusty" as the rusty knife.
+The rusty knife is a weapon.
+
 The burned-out lantern is in Maze5. "The deceased adventurer's useless lantern is here."
 Understand "lantern" and "lamp" and "rusty" and "burned" and "dead" and "useless" as the burned-out lantern when the burned-out lantern is visible.
+
+The skeleton key is in Maze5. "There is a skeleton key here."
+Understand "key" and "skeleton" as the skeleton key.
+The description of the skeleton key is "It's a rusty old skeleton key."
 
 The leather bag of coins is in Maze5. "An old leather bag, bulging with coins, is here."
 Understand "bag" and "coins" and "old" and "leather" as the leather bag of coins.
@@ -1920,13 +1937,6 @@ Instead of opening the leather bag of coins: say "The coins are safely inside; t
 Instead of closing the leather bag of coins: say "The coins are safely inside; there[apostrophe]s no need to do that."
 Instead of inserting something into the leather bag of coins: say "Don[apostrophe]t be silly. It wouldn[apostrophe]t be a leather bag of coins anymore."
 Instead of searching the leather bag of coins: say "There are lots of coins in there."
-
-The skeleton key is in Maze5. Understand "key" and "skeleton" as the skeleton key.
-The description of the skeleton key is "It's a rusty old skeleton key."
-
-The rusty knife is in Maze5. "Beside the skeleton is a rusty knife."
-Understand "knife" and "rusty" as the rusty knife.
-The rusty knife is a weapon.
 
 Dead End 2 is a dark room. The printed name of Dead End 2 is "Dead End". "You have come to a dead end in the maze."
 Dead End 2 is in the Underground.
@@ -2522,10 +2532,10 @@ Instead of inserting something into the tool chests:
 	remove the tool chests from play;
 	say "The chests are so rusty and corroded that they crumble when you touch them."
 
-The wrench is in Maintenance Room. Understand "wrench" and "tool" as the wrench.
+The wrench is in Maintenance Room. "There is a wrench here." Understand "wrench" and "tool" as the wrench.
 The description of the wrench is "It's a wrench."
 
-The screwdriver is in Maintenance Room. Understand "screwdriver" and "tool" and "driver" as the screwdriver.
+The screwdriver is in Maintenance Room. "There is a screwdriver here." Understand "screwdriver" and "tool" and "driver" as the screwdriver.
 The description of the screwdriver is "It's a screwdriver."
 
 The tube is in Maintenance Room. "There is an object which looks like a tube of toothpaste here."
@@ -2595,7 +2605,7 @@ Instead of crossing the stream-pseudo:
 Instead of swimming when the player is in Stream View or the player is in In-Stream:
 	say "You can't swim in the stream."
 
-The hand-held air pump is in Reservoir-North. "There is a small pump here."
+The hand-held air pump is in Reservoir-North. "There is a hand-held air pump here."
 Understand "pump" and "air-pump" and "tool" and "small" and "hand-held" as the hand-held air pump.
 The description of the hand-held air pump is "It's a small hand-held air pump."
 
@@ -2639,11 +2649,11 @@ Instead of mirror-rubbing the mirror-two with something when the mirror-mung is 
 
 Instead of rubbing the mirror-one:
 	say "There is a rumble from deep within the earth and the room shakes.";
-	move the player to Mirror Room 2.
+	move the player to Mirror Room 2, without printing a room description.
 
 Instead of rubbing the mirror-two:
 	say "There is a rumble from deep within the earth and the room shakes.";
-	move the player to Mirror Room 1.
+	move the player to Mirror Room 1, without printing a room description.
 
 Instead of taking the mirror-one: say "The mirror is many times your size. Give up."
 Instead of taking the mirror-two: say "The mirror is many times your size. Give up."
@@ -2748,7 +2758,8 @@ Instead of tying the rope to the wooden railing:
 		now the rope is in Dome Room;
 		say "The rope drops over the side and comes within ten feet of the floor."
 
-Rule for writing a paragraph about the rope when the dome-flag is true: do nothing.
+Rule for writing a paragraph about the rope when the dome-flag is true:
+	now the rope is mentioned.
 
 Understand "tie [something] to [something]" as tying it to.
 Carry out tying it to:
@@ -2811,7 +2822,7 @@ Down from North Temple is Egypt Room. East of North Temple is Egypt Room. North 
 Up from North Temple is Torch-Room.
 South of North Temple is South Temple.
 
-The brass bell is in North Temple.
+The brass bell is in North Temple. "There is a brass bell here."
 Understand "bell" and "small" and "brass" as the brass bell.
 The description of the brass bell is "It's a small brass bell."
 
@@ -2832,6 +2843,11 @@ The altar is a supporter in South Temple. The altar is scenery.
 Understand "altar" as the altar.
 The description of the altar is "It's a massive stone altar."
 
+The pair of candles is on the altar. "On the two ends of the altar are burning candles."
+Understand "candles" and "pair" and "burning" as the pair of candles.
+The pair of candles is lit.
+The description of the pair of candles is "[if the candles-burned-out is true]Alas, there's not much left of the candles. Certainly not enough to burn.[otherwise if the pair of candles is lit]The candles are burning.[otherwise]The candles are out.[end if]".
+
 The black book is on the altar. "On the altar is a large black book, open to page 569."
 Understand "book" and "prayer" and "page" and "large" and "black" as the black book.
 Instead of closing the black book:
@@ -2851,11 +2867,6 @@ Instead of burning the black book:
 	die saying "A booming voice says [quotation mark]Wrong, cretin![quotation mark] and you notice that you have turned into a pile of dust. How, I can't imagine."
 
 The description of the black book is "Commandment #12592[paragraph break]Oh ye who go about saying unto each: 'Hello sailor':[line break]Dost thou know the magnitude of thy sin before the gods?[line break]Yea, verily, thou shalt be ground between two stones.[line break]Shall the angry gods cast thy body into the whirlpool?[line break]Surely, thy eye shall be put out with a sharp stick![line break]Even unto the ends of the earth shalt thou wander and[line break]Unto the land of the dead shalt thou be sent at last.[line break]Surely thou shalt repent of thy cunning."
-
-The pair of candles is on the altar. "On the two ends of the altar are burning candles."
-Understand "candles" and "pair" and "burning" as the pair of candles.
-The pair of candles is lit.
-The description of the pair of candles is "[if the candles-burned-out is true]Alas, there's not much left of the candles. Certainly not enough to burn.[otherwise if the pair of candles is lit]The candles are burning.[otherwise]The candles are out.[end if]".
 
 Egypt Room is a dark room. The printed name of Egypt Room is "Egyptian Room". "This is a room which looks like an Egyptian tomb. There is an ascending staircase to the west."
 Egypt Room is in the Underground.
@@ -3230,22 +3241,32 @@ After going to River5:
 	continue the action.
 
 After going to Shore:
+	if the river-current-active is true:
+		say "The magic boat comes to a rest on the shore.[paragraph break]";
 	now the river-current-active is false;
 	continue the action.
 
 After going to Sandy Beach:
+	if the river-current-active is true:
+		say "The magic boat comes to a rest on the shore.[paragraph break]";
 	now the river-current-active is false;
 	continue the action.
 
 After going to White Cliffs North:
+	if the river-current-active is true:
+		say "The magic boat comes to a rest on the shore.[paragraph break]";
 	now the river-current-active is false;
 	continue the action.
 
 After going to White Cliffs South:
+	if the river-current-active is true:
+		say "The magic boat comes to a rest on the shore.[paragraph break]";
 	now the river-current-active is false;
 	continue the action.
 
 After going to Dam-Base:
+	if the river-current-active is true:
+		say "The magic boat comes to a rest on the shore.[paragraph break]";
 	now the river-current-active is false;
 	continue the action.
 
@@ -3257,7 +3278,7 @@ Sandy Beach is a room. "You are on a large sandy beach on the east shore of the 
 Sandy Beach is in the Underground.
 Northeast of Sandy Beach is Sandy Cave. South of Sandy Beach is Shore.
 
-The shovel is in Sandy Beach. Understand "shovel" and "tool" as the shovel.
+The shovel is in Sandy Beach. "There is a shovel here." Understand "shovel" and "tool" as the shovel.
 The description of the shovel is "It's a sturdy shovel."
 
 Sandy Cave is a room. "This is a small, low-ceilinged cave nearly filled with fine white sand. The walls are rough limestone, worn smooth in places by ancient water. The only exit is a narrow passage to the southwest."
@@ -3451,6 +3472,7 @@ Instead of going north in Bat-Room:
 The description of Bat-Room is "You are in a small room which has doors only to the east and south. [if the clove of garlic is enclosed by the player]In the corner of the room on the ceiling is a large vampire bat who is obviously deranged and holding his nose.[otherwise]A large vampire bat, hanging from the ceiling, swoops down at you![end if]".
 
 The jade figurine is in Bat-Room. "There is an exquisite jade figurine here."
+The printed name of the jade figurine is "exquisite jade figurine".
 Understand "figurine" and "jade" and "exquisite" as the jade figurine.
 The treasure-value of the jade figurine is 5.
 The point-value of the jade figurine is 5.
@@ -3501,7 +3523,7 @@ Every turn when the player is in Gas Room (this is the gas room explosion rule):
 	if the match-lit is true:
 		die saying "Oh dear. It appears that the smell coming from this room was coal gas. I would have thought twice about carrying flaming objects in here.[paragraph break]   ** BOOOOOOOOOOOM **".
 
-The sapphire-encrusted bracelet is in Gas Room.
+The sapphire-encrusted bracelet is in Gas Room. "There is a sapphire-encrusted bracelet here."
 Understand "bracelet" and "jewel" and "sapphire" as the sapphire-encrusted bracelet.
 The treasure-value of the sapphire-encrusted bracelet is 5.
 The point-value of the sapphire-encrusted bracelet is 5.
@@ -3534,7 +3556,7 @@ Dead End 5 is a dark room. The printed name of Dead End 5 is "Dead End". "You ha
 Dead End 5 is in the Underground.
 North of Dead End 5 is Ladder Bottom.
 
-The small pile of coal is in Dead End 5.
+The small pile of coal is in Dead End 5. "There is a small pile of coal here."
 Understand "coal" and "pile" and "heap" and "small" as the small pile of coal.
 The description of the small pile of coal is "It's a small pile of coal."
 
@@ -3651,6 +3673,14 @@ Instead of taking the machine: say "It is far too large to carry."
 Instead of opening the machine when the machine is open: say "[dummy]".
 Instead of closing the machine when the machine is not open: say "[dummy]".
 
+Report opening the machine:
+	if the number of things in the machine is greater than 0:
+		say "The lid opens, revealing [a list of things in the machine]." instead;
+	say "The lid opens." instead.
+
+Report closing the machine:
+	say "The lid closes." instead.
+
 The machine switch is scenery in Machine-Room. Understand "switch" as the machine switch.
 The description of the machine switch is "It's a switch on the machine."
 
@@ -3725,7 +3755,7 @@ Instead of going down in Slide Room:
 	say "You tumble down the slide....";
 	move the player to Cellar.
 
-The broken timber is in Timber Room.
+The broken timber is in Timber Room. "There is a broken timber here."
 Understand "timbers" and "pile" and "wooden" and "broken" as the broken timber.
 The description of the broken timber is "They're just a pile of broken timbers."
 
@@ -4869,7 +4899,7 @@ Instead of exiting when the player is in the magic boat:
 		say "You realize that getting out here would be fatal.";
 	otherwise:
 		say "You are on your own feet again.";
-		move the player to here.
+		move the player to here, without printing a room description.
 
 Chapter 11 - Boat System
 
@@ -4966,6 +4996,9 @@ Instead of dropping a weapon when the player is in the magic boat and on-water:
 	otherwise:
 		die saying "[line break]In other words, fighting the fierce currents of the Frigid River. You manage to hold your own for a bit, but then you are carried over a waterfall and into some nasty rocks. Ouch!"
 
+Report entering the magic boat:
+	say "You are now in the magic boat." instead.
+
 Before entering the magic boat:
 	let sharp-items be false;
 	if the player carries the sword:
@@ -5048,6 +5081,9 @@ The red buoy is in River4. "There is a red buoy here (probably a warning)."
 Understand "buoy" and "red" as the red buoy.
 The red buoy is a closed openable container. The carrying capacity of the red buoy is 3.
 
+Report opening the red buoy when the large emerald is in the red buoy:
+	say "Opening the red buoy reveals a large emerald." instead.
+
 The large emerald is in the red buoy.
 Understand "emerald" and "large" as the large emerald.
 The treasure-value of the large emerald is 10.
@@ -5055,7 +5091,7 @@ The point-value of the large emerald is 5.
 
 Chapter 13 - Trunk of Jewels
 
-The trunk of jewels is in Reservoir. The trunk of jewels is zil-invisible.
+The trunk of jewels is in Reservoir. "Lying half buried in the mud is an old trunk, bulging with jewels." The trunk of jewels is zil-invisible.
 Understand "trunk" and "chest" and "jewels" and "old" as the trunk of jewels.
 The treasure-value of the trunk of jewels is 5.
 The point-value of the trunk of jewels is 15.

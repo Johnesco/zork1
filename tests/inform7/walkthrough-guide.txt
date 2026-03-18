@@ -86,7 +86,7 @@
 > w
 
 # With a great effort, the rug is moved to one side of the room, revealing the
-#   dusty cover of a closed trap door. Your sword is no longer glowing.
+#   dusty cover of a closed trap door.
 > move rug
 # Open the trap door
 # The door reluctantly opens to reveal a rickety staircase descending into
@@ -123,7 +123,7 @@
 #   a forbidding hole leading west.
 > n
 # Combat: troll (12 attempts)
-# Your sword crashes down, knocking the troll into dreamland.
+# You charge, but the troll jumps nimbly aside.
 > kill troll with sword
 > kill troll with sword
 > kill troll with sword
@@ -484,8 +484,7 @@
 
 > pray
 
-# The brass lantern is now off. You hear in the distance the chirping of a
-#   song bird.
+# The brass lantern is now off.
 > turn off lamp
 > drop lamp
 > drop screwdriver
@@ -623,9 +622,6 @@
 ## Atlantis Room
 
 > n
-
-# Pick up the trident
-# +4 points
 > take trident
 
 ## Reservoir North
@@ -635,9 +631,6 @@
 ## Reservoir
 
 > s
-
-# Pick up the trunk
-# +15 points
 > take trunk
 
 ## Reservoir South
@@ -689,12 +682,8 @@
 # The brass lantern is now off.
 > turn off lamp
 # Store the trunk in the case
-# +5 points
-# You put the trunk of jewels into the trophy case.
 > put trunk in case
 # Store the trident in the case
-# +11 points
-# You put the crystal trident into the trophy case.
 > put trident in case
 
 ## Kitchen
@@ -718,7 +707,6 @@
 > w
 
 # Pick up the screwdriver
-# You hear in the distance the chirping of a song bird.
 > take screwdriver
 
 ## Forest Path
@@ -746,7 +734,7 @@
 > take torch from case
 # The brass lantern is now on.
 > turn on lamp
-# Look around.
+# Too late for that.
 > open trap door
 
 ## Stage 4
@@ -1034,7 +1022,7 @@
 > turn off lamp
 # Store the jade in the case
 # +5 points
-# You put the jade figurine into the trophy case.
+# You put the exquisite jade figurine into the trophy case.
 > put jade in case
 # Store the bracelet in the case
 # +5 points
@@ -1145,7 +1133,7 @@
 > drop buoy
 
 # Open the buoy
-# You open the red buoy, revealing a large emerald.
+# Opening the red buoy reveals a large emerald.
 > open buoy
 # Pick up the emerald
 # +5 points
@@ -1210,7 +1198,7 @@
 > take egg from case
 # The brass lantern is now on.
 > turn on lamp
-# Look around.
+# Too late for that.
 > open trap door
 
 ## Cellar
@@ -1229,10 +1217,6 @@
 > s
 > e
 > u
-
-# Pick up the coins
-# +10 points
-# The lamp is definitely dimmer now.
 > take coins
 > sw
 > e
@@ -1252,11 +1236,12 @@
 > give egg to thief
 > d
 
-# You hear a scream of anguish as you violate the robber's hideaway. Using
-#   passages unknown to you, he rushes to its defense.
+## Treasure Room
+
 > u
+
 # Combat: thief (12 attempts)
-# A good stroke, but it's too slow; the thief dodges.
+# Your bloody axe pinks the thief on the wrist, but it's not serious.
 > kill thief with axe
 > kill thief with axe
 > kill thief with axe
@@ -1280,6 +1265,9 @@
 # Pick up the egg
 > take egg
 > take painting
+
+## Cyclops Room
+
 > d
 
 ## Strange Passage
@@ -1293,8 +1281,6 @@
 # The brass lantern is now off.
 > turn off lamp
 # Store the coins in the case
-# +5 points
-# You put the leather bag of coins into the trophy case.
 > put coins in case
 # Store the chalice in the case
 # +5 points
@@ -1355,8 +1341,7 @@
 > put canary in case
 # Store the bauble in the case
 # +1 points
-# You put the beautiful brass bauble into the trophy case. An almost inaudible
-#   voice whispers in your ear, "Look to your treasures for the final secret.
+# You put the beautiful brass bauble into the trophy case.
 > put bauble in case
 > look
 
@@ -1381,12 +1366,5 @@
 ## West of House
 
 > w
-
-## Stone Barrow
-
 > sw
-
-## Inside the Barrow
-
-# GAME WON
 > enter barrow
