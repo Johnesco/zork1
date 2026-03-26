@@ -1,0 +1,25 @@
+look
+n
+e
+open window
+w
+w
+take sword
+take lantern
+turn on lantern
+push rug
+open trap door
+down
+n
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+attack troll
+e
+e
+s
+s
+e
+d

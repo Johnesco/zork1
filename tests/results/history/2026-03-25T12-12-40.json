@@ -1,0 +1,30 @@
+{
+  "game": "Zork I",
+  "timestamp": "2026-03-25T17:12:40+00:00",
+  "binary_hash": "ea21565b",
+  "duration_seconds": 33.8,
+  "layers": {
+    "plotex": {
+      "status": "skip",
+      "detail": "not configured"
+    },
+    "regtest": {
+      "status": "fail",
+      "detail": "* startup\n* mailbox\n* enter-house\n* living-room\n* attic\n* kitchen-items\n* cellar\n* troll\n* round-room\n* echo\n* dam\n* boat\n* mirror\n* hades-path\n* cyclops-path\n* cyclops-odysseus\n* forest-loop\n* house-"
+    },
+    "scenarios": {
+      "status": "pass",
+      "total": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "wins": 1,
+      "win_scenarios": [
+        "full-run"
+      ],
+      "duration": 14.5,
+      "primary_walkthrough": "full-run"
+    }
+  },
+  "overall": "fail"
+}

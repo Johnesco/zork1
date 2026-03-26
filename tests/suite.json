@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "game": "zork1",
+  "layers": {
+    "plotex":     { "enabled": false },
+    "scenarios":  {
+      "enabled": true,
+      "regtest_file": "zork1.regtest",
+      "index": "scenarios/index.json",
+      "categories": {
+        "smoke":        { "seed_sensitive": false },
+        "navigation":   { "seed_sensitive": false },
+        "puzzles":      { "seed_sensitive": false },
+        "combat":       { "seed_sensitive": true, "min_seeds": 3 },
+        "behavior":     { "seed_sensitive": false },
+        "fdesc":        { "seed_sensitive": false },
+        "deaths":       { "seed_sensitive": "varies" },
+        "edge-cases":   { "seed_sensitive": true },
+        "alternatives": { "seed_sensitive": true }
+      }
+    },
+    "branches": {
+      "enabled": false,
+      "definitions": [
+        {
+          "name": "cyclops-solutions",
+          "fork_point": "cyclops-path",
+          "paths": [
+            { "name": "odysseus", "scenario": "cyclops-odysseus" },
+            { "name": "feed", "scenario": "cyclops-feed" }
+          ]
+        },
+        {
+          "name": "echo-room",
+          "fork_point": "round-room",
+          "paths": [
+            { "name": "solve-first", "scenario": "echo" },
+            { "name": "attempt-before", "scenario": "echo-before-solve" }
+          ]
+        }
+      ]
+    },
+    "browser":    { "enabled": false }
+  },
+  "coverage": {
+    "rooms_total": 110,
+    "items_total": 45,
+    "puzzles_total": 12,
+    "deaths_known": 8,
+    "score_max": 350
+  }
+}

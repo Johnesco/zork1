@@ -1,0 +1,8 @@
+look
+n
+n
+up
+take nest
+take egg
+d
+attack egg

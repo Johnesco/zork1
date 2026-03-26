@@ -1,0 +1,9 @@
+look
+n
+e
+open window
+w
+take bottle
+take sack
+open sack
+look in sack

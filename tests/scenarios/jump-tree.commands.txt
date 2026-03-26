@@ -1,0 +1,6 @@
+look
+n
+n
+up
+jump
+look

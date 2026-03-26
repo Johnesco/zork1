@@ -766,3 +766,540 @@ Taken
 > z
 /carries you downstream
 /Frigid River
+
+# ============================================================
+# Full winning playthrough (437 commands, 350/350 points)
+# ============================================================
+
+* full-run
+# === Phase 1: Surface gathering ===
+> n
+> n
+> u
+{vital}
+/Up a Tree
+> take egg
+Taken
+> d
+> s
+> e
+/Behind House
+> open window
+> w
+{vital}
+/Kitchen
+> take sack
+> take bottle
+> w
+{vital}
+/Living Room
+> take sword
+> take lamp
+> open case
+> put egg in case
+/score has just gone up
+> e
+> turn on lamp
+/now on
+> u
+{vital}
+/Attic
+> take rope
+Taken
+> d
+> open sack
+> take garlic
+> w
+> move rug
+/trap door
+> open trap door
+> d
+{vital}
+/Cellar
+
+# === Phase 2: Gallery painting + troll ===
+> s
+> drop sack
+> drop bottle
+> drop rope
+> e
+/Gallery
+> take painting
+Taken
+> w
+> n
+> n
+/Troll Room
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> drop sword
+
+# === Phase 3: Echo room + dam ===
+> e
+> e
+> e
+{vital}
+/Loud Room
+> echo
+/acoustics of the room change
+> take platinum bar
+Taken
+!clanging
+> w
+> n
+> ne
+> e
+> n
+/Dam Lobby
+> take matchbook
+> n
+{vital}
+/Maintenance Room
+> push yellow button
+> take wrench
+> take screwdriver
+> s
+> s
+> turn bolt
+> drop wrench
+> s
+> sw
+> s
+
+# === Phase 4: Cyclops + treasure room deposit 1 ===
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+/Cyclops Room
+> odysseus
+{vital}
+/flees the room
+> e
+> e
+/Living Room
+> turn off lamp
+> put painting in case
+> put platinum bar in case
+/score has just gone up
+
+# === Phase 5: Temple + Hades ===
+> turn on lamp
+> open trap door
+> d
+> s
+> take rope
+> n
+> n
+> e
+> e
+> se
+> e
+{vital}
+/Dome Room
+> tie rope to railing
+> d
+/Torch Room
+> take torch
+> s
+> take bell
+> s
+> take book
+> take candles
+> d
+> d
+{vital}
+/Entrance to Hades
+> ring bell
+> take candles
+> light match
+> light candles with match
+> read book
+> drop book
+> drop candles
+> s
+> take skull
+Taken
+> n
+> u
+
+# === Phase 6: Deposit 2 ===
+> n
+> n
+> n
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+> e
+> e
+> turn off lamp
+> put torch in case
+> put skull in case
+/score has just gone up
+
+# === Phase 7: Egyptian room + Altar ===
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> se
+> e
+> d
+> s
+> d
+{vital}
+/Egyptian Room
+> take coffin
+> open coffin
+/sceptre
+> take sceptre
+> u
+> s
+{vital}
+/Altar
+> pray
+> turn off lamp
+> drop lamp
+> drop screwdriver
+
+# === Phase 8: Reservoir + pot of gold ===
+> s
+> n
+> e
+> d
+> d
+> n
+> wave sceptre
+/rainbow appears to become solid
+> take pot of gold
+Taken
+> sw
+> u
+> u
+> nw
+> s
+> w
+> take lamp
+> e
+> s
+> e
+
+# === Phase 9: Deposit 3 ===
+> w
+> w
+> put coffin in case
+> put sceptre in case
+> put pot of gold in case
+/score has just gone up
+
+# === Phase 10: Reservoir treasures ===
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> n
+> ne
+> nw
+> n
+> n
+> take pump
+> n
+> take trident
+Taken
+> s
+> s
+> take trunk
+> s
+> se
+> sw
+> s
+
+# === Phase 11: Deposit 4 ===
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+> e
+> e
+> turn off lamp
+> put trunk in case
+> put trident in case
+/score has just gone up
+
+# === Phase 12: Mirror teleport + mine ===
+> e
+> e
+> nw
+> n
+> w
+> take screwdriver
+> e
+> s
+> e
+> w
+> w
+> take torch from case
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> s
+> s
+/Mirror Room
+> rub mirror
+/rumble
+> n
+> w
+> n
+> w
+> n
+> take jade
+> e
+> put torch in basket
+> put screwdriver in basket
+> n
+> d
+> take bracelet
+Taken
+> e
+> ne
+> se
+> sw
+> d
+> d
+> s
+> take coal
+> n
+> u
+> u
+> n
+> e
+> s
+> n
+> u
+> s
+> put coal in basket
+> lower basket
+> n
+> d
+> e
+> ne
+> se
+> sw
+> d
+> d
+> w
+> drop lamp
+> drop jade
+> drop bracelet
+> drop pump
+> w
+> take torch
+> take coal
+> take screwdriver
+> s
+> open lid
+> put coal in machine
+> close lid
+> turn on switch
+> drop screwdriver
+> open lid
+> take diamond
+Taken
+> n
+> put diamond in basket
+> put torch in basket
+> raise basket
+> e
+> take lamp
+> take jade
+> take bracelet
+> take pump
+> e
+> u
+> u
+> n
+> e
+> s
+> n
+> u
+> s
+
+# === Phase 13: Deposit 5 ===
+> take diamond
+> take torch
+> w
+> s
+> e
+> s
+> d
+> up
+> turn off lamp
+> put jade in case
+> put bracelet in case
+> put diamond in case
+> put torch in case
+/score has just gone up
+
+# === Phase 14: River + beach treasures ===
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> n
+> ne
+> e
+> turn off lamp
+> d
+/Dam Base
+> inflate plastic with pump
+> drop pump
+> turn on lamp
+> enter boat
+> launch
+/push off
+> wait
+> wait
+> wait
+> wait
+> take buoy
+> east
+> exit
+> take shovel
+> ne
+> dig sand
+> dig sand
+> dig sand
+> dig sand
+> take scarab
+Taken
+> drop shovel
+> sw
+> drop buoy
+> open buoy
+> take emerald
+Taken
+
+# === Phase 15: Deposit 6 + thief ===
+> s
+> s
+> w
+> w
+> sw
+> u
+> u
+> nw
+> w
+> w
+> w
+> put emerald in case
+> put scarab in case
+> take egg from case
+> turn on lamp
+> open trap door
+> d
+> n
+> take axe
+> w
+> s
+> e
+> u
+> take coins
+> sw
+> e
+> s
+> se
+> u
+> give egg to thief
+> d
+> u
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> drop axe
+> take canary
+> take chalice
+> take egg
+> take painting
+
+# === Phase 16: Final deposits + endgame ===
+> d
+> e
+> e
+> turn off lamp
+> put coins in case
+> put chalice in case
+/score has just gone up
+> put painting in case
+> e
+> e
+> nw
+> n
+> wind canary
+/bauble
+> take bauble
+> s
+> e
+> w
+> w
+> put egg in case
+> put canary in case
+> put bauble in case
+/score has just gone up
+> look
+> take map
+> read map
+> e
+> e
+> s
+> w
+> sw
+> enter barrow
+{vital}
+/Congratulations

@@ -25,6 +25,7 @@
     { "name": "jump-altar-fatal", "title": "Altar Jump with Coffin", "category": "Behavior Tests" },
     { "name": "fdesc-egg", "title": "Egg in Bird's Nest", "category": "FDESC Tests" },
     { "name": "fdesc-sceptre", "title": "Sceptre in Coffin", "category": "FDESC Tests" },
-    { "name": "fdesc-canary", "title": "Canary in Egg", "category": "FDESC Tests" }
+    { "name": "fdesc-canary", "title": "Canary in Egg", "category": "FDESC Tests" },
+    { "name": "full-run", "title": "Complete Winning Playthrough (350/350)", "category": "Win Paths", "primary": true }
   ]
 }

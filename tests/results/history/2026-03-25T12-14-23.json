@@ -1,0 +1,13 @@
+{
+  "game": "Zork I",
+  "timestamp": "2026-03-25T17:14:23+00:00",
+  "binary_hash": "ea21565b",
+  "duration_seconds": 20.7,
+  "layers": {
+    "regtest": {
+      "status": "fail",
+      "detail": "* startup\n* mailbox\n* enter-house\n* living-room\n* attic\n* kitchen-items\n* cellar\n* troll\n* round-room\n* echo\n* dam\n* boat\n* mirror\n* hades-path\n* cyclops-path\n* cyclops-odysseus\n* forest-loop\n* house-"
+    }
+  },
+  "overall": "fail"
+}
