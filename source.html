@@ -20,6 +20,7 @@ html, body {
 .container {
   display: flex;
   height: 100%;
+  position: relative;
 }
 
 /* --- Sidebar --- */
@@ -266,6 +267,47 @@ tr.highlight td.ln {
 /* --- Responsive --- */
 @media (max-width: 700px) {
   .sidebar { display: none; }
+  .sidebar.sidebar-open {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 15;
+    box-shadow: 4px 0 12px rgba(0,0,0,0.5);
+  }
+  .sidebar-toggle.visible { display: flex; }
+}
+
+/* --- Sidebar toggle --- */
+.sidebar-toggle {
+  background: none;
+  border: 1px solid #2a2418;
+  border-radius: 4px;
+  color: #887755;
+  font-size: 1em;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
+  padding: 0;
+  line-height: 1;
+  font-family: inherit;
+}
+
+.sidebar-toggle:hover {
+  color: #c4b48a;
+  border-color: #5a4a30;
+}
+
+.sidebar-toggle.visible { display: flex; }
+
+.sidebar.collapsed {
+  display: none;
 }
 </style>
 </head>
@@ -280,6 +322,7 @@ tr.highlight td.ln {
   </div>
   <div class="main">
     <div class="toolbar">
+      <button class="sidebar-toggle" id="sidebar-toggle" title="Toggle outline">&#9664;</button>
       <span class="file-path">story.ni</span>
       <input type="text" class="search-box" id="search" placeholder="Search... (Ctrl+F)">
       <span class="line-count" id="line-count"></span>
@@ -590,6 +633,27 @@ async function init() {
 }
 
 init();
+
+  // --- Sidebar toggle ---
+  var toggleBtn = document.getElementById('sidebar-toggle');
+  var sidebarEl = document.querySelector('.sidebar');
+  if (toggleBtn && sidebarEl) {
+    var navEl = document.getElementById('nav');
+    var hasNav = navEl && navEl.children.length > 0;
+    if (hasNav) {
+      toggleBtn.classList.add('visible');
+    }
+    toggleBtn.addEventListener('click', function() {
+      var isNarrow = window.matchMedia('(max-width: 700px)').matches;
+      if (isNarrow) {
+        var open = sidebarEl.classList.toggle('sidebar-open');
+        toggleBtn.innerHTML = open ? '&#9664;' : '&#9654;';
+      } else {
+        var collapsed = sidebarEl.classList.toggle('collapsed');
+        toggleBtn.innerHTML = collapsed ? '&#9654;' : '&#9664;';
+      }
+    });
+  }
 </script>
 
 </body>
