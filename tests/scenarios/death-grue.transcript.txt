@@ -68,10 +68,6 @@ Your collection of treasures consists of:
 Taken.
 
 
-> take lantern
-Taken.
-
-
 > push rug
 With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.
 
@@ -91,24 +87,23 @@ Your sword is glowing with a faint blue glow.
 [Your score has just gone up by twenty-five points.]
 
 
-> inventory
-You are carrying:
-  a brass lantern (battery-powered)
-  a sword
+> n
+Oh, no! You have walked into the slavering fangs of a lurking grue!
 
+    ****  You have died  ****
 
-> turn on lantern
-The brass lantern is now on.
+Now, let's take a look here...
+Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.
 
-Cellar
-You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
 
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
 
-> look
-Cellar
-You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
+[Your score has just gone down by ten points.]
 
 
 > score
-Your score is 35 (total of 350 points), in 15 moves.
+Your score is 25 (total of 350 points), in 12 moves.
 This gives you the rank of Amateur Adventurer.

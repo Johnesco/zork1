@@ -70,7 +70,3 @@ In the brown sack are a lunch and a clove of garlic.
 > score
 Your score is 10 (total of 350 points), in 10 moves.
 This gives you the rank of Beginner.
-
-
-> quit
-Are you sure you want to quit? 

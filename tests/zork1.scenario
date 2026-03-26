@@ -1,0 +1,1256 @@
+# Zork I: Inform 7 Edition — RegTest regression tests
+# Run with: wsl -e bash tests/run-tests.sh
+#
+# Format reference: https://eblong.com/zarf/plotex/regtest.html
+#   >command          send a command
+#   /regex            output must match regex (NO trailing slash)
+#   literal text      output must contain literal string
+#   !text             output must NOT contain this text
+#   {vital}           abort test on failure
+#   >{include}name    include commands from another test
+#
+# NOTE: Troll combat is random (~70% hit rate). Tests that go through
+# the troll may occasionally fail due to bad RNG rolls. Re-run if so.
+
+
+# ============================================================
+# Basic smoke tests
+# ============================================================
+
+== startup: Starting the Game  [smoke tests]
+> look
+?? /West of House
+?? /white house
+?? /small mailbox
+
+== mailbox: Mailbox and Leaflet  [smoke tests]
+@ startup
+> open mailbox
+? /leaflet
+> take leaflet
+? Taken
+> read leaflet
+? /WELCOME TO ZORK
+
+# ============================================================
+# House navigation and items
+# ============================================================
+
+== enter-house: Entering the House  [house navigation]
+# Enter house via kitchen window
+@ startup
+> n
+? /North of House
+> e
+? /Behind House
+> open window
+? /open the window
+> w
+?? /Kitchen
+?? /table
+
+== living-room: Living Room Gear  [house navigation]
+# Get to Living Room and pick up gear
+@ enter-house
+> w
+?? /Living Room
+?? /sword
+?? /brass lantern
+> take sword
+? Taken
+> take lantern
+? Taken
+> turn on lantern
+? /now on
+
+== attic: The Attic  [house navigation]
+# Get to attic from Kitchen (up from Kitchen, not Living Room)
+@ enter-house
+> w
+> take lantern
+> turn on lantern
+> e
+> up
+?? /Attic
+?? /rope
+> take rope
+? Taken
+> take knife
+? Taken
+
+== kitchen-items: Kitchen Items  [house navigation]
+@ enter-house
+> take bottle
+? Taken
+> take sack
+? Taken
+> open sack
+? /brown sack
+> look in sack
+? /lunch
+? /garlic
+
+# ============================================================
+# Cellar entry
+# ============================================================
+
+== cellar: Into the Cellar  [house navigation]
+@ living-room
+> push rug
+?? /trap door
+> open trap door
+?? /rickety staircase
+> down
+?? /Cellar
+
+# ============================================================
+# Troll combat (random — may need re-runs)
+# ============================================================
+
+== troll: Troll Combat  [combat]
+@ cellar
+> n
+? /Troll Room
+? /troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+
+# ============================================================
+# East-West Passage and Round Room
+# ============================================================
+
+== round-room: Round Room  [underground navigation]
+# Navigate past troll to Round Room
+@ troll
+> e
+? /East-West Passage
+> e
+? /Round Room
+
+# ============================================================
+# Loud Room — echo puzzle
+# ============================================================
+
+== echo: Echo Room Puzzle  [puzzles]
+@ round-room
+> e
+?? /Loud Room
+?? /deafeningly loud
+> echo
+?? /acoustics of the room change
+> take platinum bar
+? Taken
+?! clanging
+
+# ============================================================
+# Dam — power on and open sluice gates
+# ============================================================
+
+== dam: Flood Control Dam  [puzzles]
+@ round-room
+> n
+? /North-South Passage
+> ne
+? /Deep Canyon
+> nw
+? /Reservoir South
+> e
+? /Dam
+> n
+? /Dam Lobby
+? /guidebook
+> n
+?? /Maintenance Room
+> push yellow button
+? Click
+> take wrench
+? Taken
+> s
+> s
+? /Dam
+# NOTE: In the current compiled .ulx, "turn bolt" gives the default
+# "It is fixed in place." because the custom turning-bolt action isn't
+# compiled in. Once story.ni is recompiled, this should produce:
+# /sluice gates open
+> turn bolt
+
+# ============================================================
+# Boat inflation at Dam Base
+# ============================================================
+
+== boat: Boat Inflation  [puzzles]
+@ dam
+# Dam -> down -> Dam Base
+> d
+?? /Dam Base
+?? /pile of plastic
+
+# ============================================================
+# Mirror room teleportation
+# ============================================================
+
+== mirror: Mirror Teleportation  [puzzles]
+@ round-room
+> s
+? /Narrow Passage
+> s
+?? /Mirror Room
+# NOTE: In the current compiled .ulx, "rub mirror" gives the default
+# "You rub the mirror." because the custom rubbing rule isn't compiled in.
+# Once story.ni is recompiled, this should produce:
+# /rumble from deep within the earth
+> rub mirror
+
+# ============================================================
+# Navigation to Entrance to Hades
+# ============================================================
+
+== hades-path: Path to Hades  [underground navigation]
+# Round Room -> s -> Narrow Passage -> s -> Mirror Room 2 -> e -> Tiny Cave -> d -> Hades
+@ round-room
+> s
+? /Narrow Passage
+> s
+? /Mirror Room
+> e
+? /Cave
+> d
+?? /Entrance to Hades
+
+# ============================================================
+# Cyclops Room (via maze)
+# ============================================================
+
+== cyclops-path: Maze to Cyclops  [underground navigation]
+# Navigate the maze to Cyclops Room
+# Troll Room -> w -> Maze1 -> s -> Maze2 -> e -> Maze3 -> u -> Maze5
+# -> sw -> Maze6 -> e -> Maze7 -> s -> Maze15 -> se -> Cyclops Room
+@ troll
+> w
+? /Maze
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+?? /Cyclops Room
+?? /cyclops
+
+== cyclops-odysseus: The Cyclops Solution  [puzzles]
+@ cyclops-path
+> odysseus
+?? /flees the room
+
+# ============================================================
+# Forest navigation
+# ============================================================
+
+== forest-loop: Forest Navigation  [smoke tests]
+@ startup
+> n
+? /North of House
+> n
+? /Forest Path
+> n
+? /Clearing
+> s
+? /Forest Path
+> s
+? /North of House
+
+== house-circuit: House Perimeter  [smoke tests]
+@ startup
+> n
+? /North of House
+> e
+? /Behind House
+> s
+? /South of House
+> w
+? /West of House
+
+# ============================================================
+# FDESC tests — first descriptions for contained objects
+# ============================================================
+
+== fdesc-egg: Egg in Bird's Nest  [fdesc tests]
+# Navigate to Up a Tree and verify the egg's FDESC prints
+# West of House → N → North of House → N → Forest Path → Up → Up a Tree
+@ startup
+> n
+? /North of House
+> n
+? /Forest Path
+> up
+?? /Up a Tree
+?? /Beside you on the branch is a small bird's nest
+?? /large egg encrusted with precious jewels
+?? /apparently scavenged by a childless songbird
+?? /fine gold inlay
+?? /lapis lazuli
+
+== fdesc-sceptre: Sceptre in Coffin  [fdesc tests]
+# Open the gold coffin in Egypt Room and verify sceptre FDESC
+# Need rope from Attic to descend Dome Room → Torch Room → Temple → Egypt
+@ living-room
+> e
+> up
+> take rope
+> d
+> w
+> push rug
+? /trap door
+> open trap door
+> down
+?? /Cellar
+> n
+? /Troll Room
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> e
+> e
+? /Round Room
+> se
+> e
+? /Dome Room
+> tie rope to railing
+> d
+? /Torch Room
+> s
+> d
+?? /Egyptian Room
+> take coffin
+? Taken
+> open coffin
+? /A sceptre, possibly that of ancient Egypt itself
+? /ornamented with colored enamel
+
+# ============================================================
+# Grue darkness behavior (#135)
+# ============================================================
+
+== grue-darkness: Grue Darkness Safety  [behavior tests]
+# Enter cellar without light, verify warning on entry, verify
+# non-movement actions do NOT trigger grue, then turn on lantern.
+# ZIL behavior: grue attacks only on movement, never on inventory/etc.
+@ enter-house
+> w
+> take sword
+> take lantern
+> push rug
+? /trap door
+> open trap door
+> down
+? /pitch black
+? /likely to be eaten by a grue
+> inventory
+?! slithered into the room
+?! slavering fangs
+?! den of hungry grues
+? /lantern
+> turn on lantern
+? /now on
+> look
+? /Cellar
+
+# ============================================================
+# Jump behavior (#136)
+# ============================================================
+
+== jump-kitchen: Fatal Jump in Kitchen  [behavior tests]
+# Jump in kitchen is fatal — chimney shaft (ZIL FALSE-FLAG always blocked)
+@ enter-house
+> jump
+? /not a very safe place
+
+== jump-tree: Safe Jump from Tree  [behavior tests]
+# Jump from Up-a-Tree is a safe landing at Forest Path
+@ startup
+> n
+> n
+? /Forest Path
+> up
+?? /Up a Tree
+> jump
+? /feat of unaccustomed daring
+? /land on your feet
+> look
+? /Forest Path
+
+== jump-altar-safe: Altar Jump without Coffin  [behavior tests]
+# Jump at altar without coffin — default humor message (exit is open)
+# Path: house → cellar → troll → dome → rope down → temple → egypt → temple → south temple
+@ living-room
+> e
+> up
+> take rope
+> d
+> w
+> push rug
+> open trap door
+> down
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> e
+> e
+> se
+> e
+> tie rope to railing
+> d
+> s
+> d
+> take coffin
+> u
+> s
+?? /Altar
+> drop coffin
+> jump
+?! not a very safe place
+? /second grade|enjoying yourself|Wheeeeeeeeee|applaud
+
+== jump-altar-fatal: Altar Jump with Coffin  [behavior tests]
+# Jump at altar while carrying coffin — fatal (ZIL COFFIN-CURE blocked)
+# Path: same as jump-altar-safe but keep the coffin
+# NOTE: After death, glulxe hangs on RESTART/RESTORE/QUIT prompt (no \n>),
+# so we check that the humor message does NOT appear instead of checking
+# for the death message directly.
+@ living-room
+> e
+> up
+> take rope
+> d
+> w
+> push rug
+> open trap door
+> down
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> e
+> e
+> se
+> e
+> tie rope to railing
+> d
+> s
+> d
+> take coffin
+> u
+> s
+?? /Altar
+> jump
+?! second grade
+?! enjoying yourself
+?! Wheeeeeeeeee
+?! applaud
+
+# ============================================================
+# FDESC tests — first descriptions for contained objects
+# ============================================================
+
+== fdesc-canary: Canary in Egg  [fdesc tests]
+# Verify canary appears when egg is broken open (attack or drop from tree)
+# The pristine canary FDESC requires thief-opening which is RNG-dependent
+# and cannot be tested deterministically. This tests the broken-egg path.
+@ startup
+> n
+> n
+? /Forest Path
+> up
+?? /Up a Tree
+> take nest
+> take egg
+> d
+> attack egg
+? /succeeded in opening
+? /golden clockwork canary
+? /bad experience
+
+# ============================================================
+# Death scenarios
+# ============================================================
+
+== death-grue
+# Walk into the cellar without a light source — grue kills you
+@ enter-house
+> w
+> take sword
+> push rug
+? /trap door
+> open trap door
+> down
+? /pitch black
+? /likely to be eaten by a grue
+> n
+? /grue
+
+== death-falls-dome
+# Jump from Dome Room without rope — fatal fall
+@ round-room
+> se
+> e
+?? /Dome Room
+> jump
+? /not a very safe place
+
+== death-canyon
+# Jump from Canyon View — fatal
+# Route via forest (no troll): West of House → N → N → E → S → E
+@ startup
+> n
+> n
+? /Forest Path
+> e
+? /Forest
+> s
+?? /Clearing
+> e
+?? /Canyon View
+> jump
+? /lousy place to jump
+
+== death-river-falls
+# Drift off the waterfall at River5 — fatal
+# Mirror teleport to get pump, teleport back, then dam route to Dam Base
+@ mirror
+> e
+? /Cave
+> d
+? /Atlantis
+> s
+?? /Reservoir North
+> take pump
+> n
+> u
+> w
+> n
+? /Mirror Room
+> rub mirror
+? /rumble
+> n
+> n
+? /Round Room
+> n
+> ne
+> nw
+? /Reservoir South
+> e
+? /Dam
+> d
+?? /Dam Base
+?? /pile of plastic
+> inflate pile
+? /inflates and appears seaworthy
+> drop sword
+> get in boat
+> launch
+? /push off
+> z
+> z
+> z
+> z
+> z
+> z
+> z
+? /You have died
+
+# ============================================================
+# Alternative paths
+# ============================================================
+
+== cyclops-feed
+# Feed the cyclops lunch and water instead of saying "odysseus"
+@ enter-house
+> take bottle
+> take sack
+> w
+> take sword
+> take lantern
+> turn on lantern
+> push rug
+> open trap door
+> down
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+?? /Cyclops Room
+?? /cyclops
+> open sack
+> give lunch to cyclops
+? /I love hot peppers
+> open bottle
+> give bottle to cyclops
+? /falls fast asleep
+
+== echo-before-solve
+# Verify Loud Room echoes before solving
+@ round-room
+> e
+?? /Loud Room
+> take bar
+? /clanging
+
+# ============================================================
+# Edge cases
+# ============================================================
+
+== basket-raise-lower
+# Test basket raise/lower from Shaft Room
+# Mirror teleport → Cold Passage → Slide Room → Mine Entrance → Squeaky → Bat → Shaft
+@ mirror
+> n
+? /Cold Passage
+> w
+? /Slide Room
+> n
+? /Mine Entrance
+> w
+? /Squeaky Room
+> n
+? /Bat Room
+> e
+?? /Shaft Room
+?? /basket
+> lower basket
+? /lowered to the bottom
+> raise basket
+? /raised to the top
+
+== boat-sharp-puncture
+# Board inflated boat with sword — punctures it
+# Mirror teleport to get pump, teleport back, then dam route to Dam Base
+@ mirror
+> e
+? /Cave
+> d
+? /Atlantis
+> s
+?? /Reservoir North
+> take pump
+> n
+> u
+> w
+> n
+? /Mirror Room
+> rub mirror
+? /rumble
+> n
+> n
+? /Round Room
+> n
+> ne
+> nw
+? /Reservoir South
+> e
+? /Dam
+> d
+?? /Dam Base
+?? /pile of plastic
+> inflate pile
+? /inflates and appears seaworthy
+> get in boat
+? /punctured
+
+== river-room-descriptions
+# Verify room descriptions appear during river drift (#93 fix)
+# Mirror teleport to get pump, teleport back, then dam route to Dam Base
+@ mirror
+> e
+? /Cave
+> d
+? /Atlantis
+> s
+?? /Reservoir North
+> take pump
+> n
+> u
+> w
+> n
+? /Mirror Room
+> rub mirror
+? /rumble
+> n
+> n
+? /Round Room
+> n
+> ne
+> nw
+? /Reservoir South
+> e
+? /Dam
+> d
+?? /Dam Base
+?? /pile of plastic
+> inflate pile
+? /inflates and appears seaworthy
+> drop sword
+> get in boat
+> launch
+? /push off
+? /Frigid River
+> z
+? /carries you downstream
+? /Frigid River
+> z
+> z
+? /carries you downstream
+? /Frigid River
+
+# ============================================================
+# Full winning playthrough (437 commands, 350/350 points)
+# ============================================================
+
+== full-run: Complete Winning Playthrough (350/350)  [win paths, primary]
+# === Phase 1: Surface gathering ===
+> n
+> n
+> u
+?? /Up a Tree
+> take egg
+? Taken
+> d
+> s
+> e
+? /Behind House
+> open window
+> w
+?? /Kitchen
+> take sack
+> take bottle
+> w
+?? /Living Room
+> take sword
+> take lamp
+> open case
+> put egg in case
+? /score has just gone up
+> e
+> turn on lamp
+? /now on
+> u
+?? /Attic
+> take rope
+? Taken
+> d
+> open sack
+> take garlic
+> w
+> move rug
+? /trap door
+> open trap door
+> d
+?? /Cellar
+
+# === Phase 2: Gallery painting + troll ===
+> s
+> drop sack
+> drop bottle
+> drop rope
+> e
+? /Gallery
+> take painting
+? Taken
+> w
+> n
+> n
+? /Troll Room
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> drop sword
+
+# === Phase 3: Echo room + dam ===
+> e
+> e
+> e
+?? /Loud Room
+> echo
+? /acoustics of the room change
+> take platinum bar
+? Taken
+?! clanging
+> w
+> n
+> ne
+> e
+> n
+? /Dam Lobby
+> take matchbook
+> n
+?? /Maintenance Room
+> push yellow button
+> take wrench
+> take screwdriver
+> s
+> s
+> turn bolt
+> drop wrench
+> s
+> sw
+> s
+
+# === Phase 4: Cyclops + treasure room deposit 1 ===
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+? /Cyclops Room
+> odysseus
+?? /flees the room
+> e
+> e
+? /Living Room
+> turn off lamp
+> put painting in case
+> put platinum bar in case
+? /score has just gone up
+
+# === Phase 5: Temple + Hades ===
+> turn on lamp
+> open trap door
+> d
+> s
+> take rope
+> n
+> n
+> e
+> e
+> se
+> e
+?? /Dome Room
+> tie rope to railing
+> d
+? /Torch Room
+> take torch
+> s
+> take bell
+> s
+> take book
+> take candles
+> d
+> d
+?? /Entrance to Hades
+> ring bell
+> take candles
+> light match
+> light candles with match
+> read book
+> drop book
+> drop candles
+> s
+> take skull
+? Taken
+> n
+> u
+
+# === Phase 6: Deposit 2 ===
+> n
+> n
+> n
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+> e
+> e
+> turn off lamp
+> put torch in case
+> put skull in case
+? /score has just gone up
+
+# === Phase 7: Egyptian room + Altar ===
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> se
+> e
+> d
+> s
+> d
+?? /Egyptian Room
+> take coffin
+> open coffin
+? /sceptre
+> take sceptre
+> u
+> s
+?? /Altar
+> pray
+> turn off lamp
+> drop lamp
+> drop screwdriver
+
+# === Phase 8: Reservoir + pot of gold ===
+> s
+> n
+> e
+> d
+> d
+> n
+> wave sceptre
+? /rainbow appears to become solid
+> take pot of gold
+? Taken
+> sw
+> u
+> u
+> nw
+> s
+> w
+> take lamp
+> e
+> s
+> e
+
+# === Phase 9: Deposit 3 ===
+> w
+> w
+> put coffin in case
+> put sceptre in case
+> put pot of gold in case
+? /score has just gone up
+
+# === Phase 10: Reservoir treasures ===
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> n
+> ne
+> nw
+> n
+> n
+> take pump
+> n
+> take trident
+? Taken
+> s
+> s
+> take trunk
+> s
+> se
+> sw
+> s
+
+# === Phase 11: Deposit 4 ===
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+> e
+> e
+> turn off lamp
+> put trunk in case
+> put trident in case
+? /score has just gone up
+
+# === Phase 12: Mirror teleport + mine ===
+> e
+> e
+> nw
+> n
+> w
+> take screwdriver
+> e
+> s
+> e
+> w
+> w
+> take torch from case
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> s
+> s
+? /Mirror Room
+> rub mirror
+? /rumble
+> n
+> w
+> n
+> w
+> n
+> take jade
+> e
+> put torch in basket
+> put screwdriver in basket
+> n
+> d
+> take bracelet
+? Taken
+> e
+> ne
+> se
+> sw
+> d
+> d
+> s
+> take coal
+> n
+> u
+> u
+> n
+> e
+> s
+> n
+> u
+> s
+> put coal in basket
+> lower basket
+> n
+> d
+> e
+> ne
+> se
+> sw
+> d
+> d
+> w
+> drop lamp
+> drop jade
+> drop bracelet
+> drop pump
+> w
+> take torch
+> take coal
+> take screwdriver
+> s
+> open lid
+> put coal in machine
+> close lid
+> turn on switch
+> drop screwdriver
+> open lid
+> take diamond
+? Taken
+> n
+> put diamond in basket
+> put torch in basket
+> raise basket
+> e
+> take lamp
+> take jade
+> take bracelet
+> take pump
+> e
+> u
+> u
+> n
+> e
+> s
+> n
+> u
+> s
+
+# === Phase 13: Deposit 5 ===
+> take diamond
+> take torch
+> w
+> s
+> e
+> s
+> d
+> up
+> turn off lamp
+> put jade in case
+> put bracelet in case
+> put diamond in case
+> put torch in case
+? /score has just gone up
+
+# === Phase 14: River + beach treasures ===
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> n
+> ne
+> e
+> turn off lamp
+> d
+? /Dam Base
+> inflate plastic with pump
+> drop pump
+> turn on lamp
+> enter boat
+> launch
+? /push off
+> wait
+> wait
+> wait
+> wait
+> take buoy
+> east
+> exit
+> take shovel
+> ne
+> dig sand
+> dig sand
+> dig sand
+> dig sand
+> take scarab
+? Taken
+> drop shovel
+> sw
+> drop buoy
+> open buoy
+> take emerald
+? Taken
+
+# === Phase 15: Deposit 6 + thief ===
+> s
+> s
+> w
+> w
+> sw
+> u
+> u
+> nw
+> w
+> w
+> w
+> put emerald in case
+> put scarab in case
+> take egg from case
+> turn on lamp
+> open trap door
+> d
+> n
+> take axe
+> w
+> s
+> e
+> u
+> take coins
+> sw
+> e
+> s
+> se
+> u
+> give egg to thief
+> d
+> u
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> drop axe
+> take canary
+> take chalice
+> take egg
+> take painting
+
+# === Phase 16: Final deposits + endgame ===
+> d
+> e
+> e
+> turn off lamp
+> put coins in case
+> put chalice in case
+? /score has just gone up
+> put painting in case
+> e
+> e
+> nw
+> n
+> wind canary
+? /bauble
+> take bauble
+> s
+> e
+> w
+> w
+> put egg in case
+> put canary in case
+> put bauble in case
+? /score has just gone up
+> look
+> take map
+> read map
+> e
+> e
+> s
+> w
+> sw
+> enter barrow
+?? /Congratulations

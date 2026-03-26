@@ -194,7 +194,3 @@ Your sword has begun to glow very brightly.
 > score
 Your score is 35 (total of 350 points), in 27 moves.
 This gives you the rank of Amateur Adventurer.
-
-
-> quit
-Are you sure you want to quit? 

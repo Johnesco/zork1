@@ -166,7 +166,3 @@ There is a rumble from deep within the earth and the room shakes.
 > score
 Your score is 40 (total of 350 points), in 24 moves.
 This gives you the rank of Amateur Adventurer.
-
-
-> quit
-Are you sure you want to quit? 

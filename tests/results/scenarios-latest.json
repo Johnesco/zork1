@@ -1,8 +1,8 @@
 {
   "game": "Zork I",
-  "regtest_file": "zork1/tests/zork1.regtest",
+  "regtest_file": "C:/code/text-games/i7/zork1/tests/zork1.regtest",
   "seed": "26",
-  "duration_seconds": 14.6,
+  "duration_seconds": 15.2,
   "total": 27,
   "passed": 27,
   "failed": 0,
@@ -12,16 +12,50 @@
     "full-run"
   ],
   "primary": "full-run",
+  "assertions": {
+    "total": 474,
+    "passed": 474,
+    "failed": 0
+  },
   "scenarios": [
     {
       "name": "startup",
-      "commands": 1,
-      "transcript_lines": 32,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\startup.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\startup.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 1,
+      "transcript_lines": 28,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\startup.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\startup.commands.txt",
+      "assertions": {
+        "total": 3,
+        "passed": 3,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          }
+        ]
+      },
       "score": "0/350",
       "win": false,
       "won_text": false,
@@ -38,13 +72,63 @@
     },
     {
       "name": "mailbox",
-      "commands": 4,
-      "transcript_lines": 51,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\mailbox.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\mailbox.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 4,
+      "transcript_lines": 47,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\mailbox.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\mailbox.commands.txt",
+      "assertions": {
+        "total": 6,
+        "passed": 6,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/leaflet",
+            "command": "open mailbox",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "You open the small mailbox, revealing a leaflet."
+          },
+          {
+            "check": "Taken",
+            "command": "take leaflet",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/WELCOME TO ZORK",
+            "command": "read leaflet",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "WELCOME TO ZORK!\n\nZORK is a game of adventure, danger, and low cunning. In it you will explore some of the most amazing territory ever seen by mortals. No computer should be without one!\n\n(v4: Modern IF - An Inform 7 translation)\nTranslated to Inform 7 by John Escobedo\nOriginal by Marc Blank, Dave L..."
+          }
+        ]
+      },
       "score": "0/350",
       "win": false,
       "won_text": false,
@@ -61,13 +145,77 @@
     },
     {
       "name": "forest-loop",
-      "commands": 6,
-      "transcript_lines": 64,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\forest-loop.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\forest-loop.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 6,
+      "transcript_lines": 60,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\forest-loop.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\forest-loop.commands.txt",
+      "assertions": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Forest Path",
+            "command": "n",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Forest Path\nThis is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path."
+          },
+          {
+            "check": "/Clearing",
+            "command": "n",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Clearing\nYou are in a clearing, with a forest surrounding you on all sides. A path leads south.\n\nOn the ground is a pile of leaves."
+          },
+          {
+            "check": "/Forest Path",
+            "command": "s",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Forest Path\nThis is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path."
+          },
+          {
+            "check": "/North of House",
+            "command": "s",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          }
+        ]
+      },
       "score": "0/350",
       "win": false,
       "won_text": false,
@@ -84,13 +232,70 @@
     },
     {
       "name": "house-circuit",
-      "commands": 5,
-      "transcript_lines": 58,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\house-circuit.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\house-circuit.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 5,
+      "transcript_lines": 54,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\house-circuit.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\house-circuit.commands.txt",
+      "assertions": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/South of House",
+            "command": "s",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "South of House\nYou are facing the south side of a white house. There is no door here, and all the windows are boarded."
+          },
+          {
+            "check": "/West of House",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          }
+        ]
+      },
       "score": "0/350",
       "win": false,
       "won_text": false,
@@ -107,13 +312,77 @@
     },
     {
       "name": "enter-house",
-      "commands": 5,
-      "transcript_lines": 60,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\enter-house.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\enter-house.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 5,
+      "transcript_lines": 56,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\enter-house.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\enter-house.commands.txt",
+      "assertions": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          }
+        ]
+      },
       "score": "10/350",
       "win": false,
       "won_text": false,
@@ -130,13 +399,119 @@
     },
     {
       "name": "living-room",
-      "commands": 9,
-      "transcript_lines": 85,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\living-room.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\living-room.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 9,
+      "transcript_lines": 81,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\living-room.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\living-room.commands.txt",
+      "assertions": {
+        "total": 14,
+        "passed": 14,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          }
+        ]
+      },
       "score": "10/350",
       "win": false,
       "won_text": true,
@@ -153,13 +528,105 @@
     },
     {
       "name": "attic",
-      "commands": 12,
-      "transcript_lines": 109,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\attic.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\attic.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 12,
+      "transcript_lines": 105,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\attic.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\attic.commands.txt",
+      "assertions": {
+        "total": 12,
+        "passed": 12,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Attic",
+            "command": "up",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "Attic\nThis is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down.\n\nOn a table is a nasty-looking knife.\n\nA large coil of rope is lying..."
+          },
+          {
+            "check": "/rope",
+            "command": "up",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "Attic\nThis is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down.\n\nOn a table is a nasty-looking knife.\n\nA large coil of rope is lying..."
+          },
+          {
+            "check": "Taken",
+            "command": "take rope",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take knife",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "Taken."
+          }
+        ]
+      },
       "score": "10/350",
       "win": false,
       "won_text": true,
@@ -176,13 +643,112 @@
     },
     {
       "name": "kitchen-items",
-      "commands": 9,
-      "transcript_lines": 76,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\kitchen-items.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\kitchen-items.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 9,
+      "transcript_lines": 72,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\kitchen-items.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\kitchen-items.commands.txt",
+      "assertions": {
+        "total": 13,
+        "passed": 13,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "Taken",
+            "command": "take bottle",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take sack",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/brown sack",
+            "command": "open sack",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "You open the brown sack, revealing a lunch and a clove of garlic."
+          },
+          {
+            "check": "/lunch",
+            "command": "look in sack",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "In the brown sack are a lunch and a clove of garlic."
+          },
+          {
+            "check": "/garlic",
+            "command": "look in sack",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "In the brown sack are a lunch and a clove of garlic."
+          }
+        ]
+      },
       "score": "10/350",
       "win": false,
       "won_text": false,
@@ -199,13 +765,140 @@
     },
     {
       "name": "cellar",
-      "commands": 12,
-      "transcript_lines": 104,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\cellar.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\cellar.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 12,
+      "transcript_lines": 100,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\cellar.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\cellar.commands.txt",
+      "assertions": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          }
+        ]
+      },
       "score": "35/350",
       "win": false,
       "won_text": true,
@@ -222,13 +915,154 @@
     },
     {
       "name": "troll",
-      "commands": 19,
-      "transcript_lines": 138,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\troll.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\troll.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 19,
+      "transcript_lines": 134,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\troll.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\troll.commands.txt",
+      "assertions": {
+        "total": 19,
+        "passed": 19,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          }
+        ]
+      },
       "score": "35/350",
       "win": false,
       "won_text": true,
@@ -245,13 +1079,168 @@
     },
     {
       "name": "round-room",
-      "commands": 21,
-      "transcript_lines": 154,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\round-room.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\round-room.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 21,
+      "transcript_lines": 150,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\round-room.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\round-room.commands.txt",
+      "assertions": {
+        "total": 21,
+        "passed": 21,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/East-West Passage",
+            "command": "e",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "East-West Passage\nThis is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/Round Room",
+            "command": "e",
+            "cmd_idx": 21,
+            "passed": true,
+            "response": "Round Room\nThis is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.\n\nYour sword is glowing with a faint blue glow."
+          }
+        ]
+      },
       "score": "40/350",
       "win": false,
       "won_text": true,
@@ -268,13 +1257,196 @@
     },
     {
       "name": "hades-path",
-      "commands": 25,
-      "transcript_lines": 185,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\hades-path.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\hades-path.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 25,
+      "transcript_lines": 181,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\hades-path.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\hades-path.commands.txt",
+      "assertions": {
+        "total": 25,
+        "passed": 25,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/East-West Passage",
+            "command": "e",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "East-West Passage\nThis is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/Round Room",
+            "command": "e",
+            "cmd_idx": 21,
+            "passed": true,
+            "response": "Round Room\nThis is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.\n\nYour sword is glowing with a faint blue glow."
+          },
+          {
+            "check": "/Narrow Passage",
+            "command": "s",
+            "cmd_idx": 22,
+            "passed": true,
+            "response": "Narrow Passage\nThis is a long and narrow corridor where a long north-south passageway briefly narrows even further.\n\nYour sword is no longer glowing."
+          },
+          {
+            "check": "/Mirror Room",
+            "command": "s",
+            "cmd_idx": 23,
+            "passed": true,
+            "response": "Mirror Room\nYou are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room."
+          },
+          {
+            "check": "/Cave",
+            "command": "e",
+            "cmd_idx": 24,
+            "passed": true,
+            "response": "Cave\nThis is a tiny cave with entrances west and north, and a dark, forbidding staircase leading down."
+          },
+          {
+            "check": "/Entrance to Hades",
+            "command": "d",
+            "cmd_idx": 25,
+            "passed": true,
+            "response": "Entrance to Hades\nYou are outside a large gateway, on which is inscribed\n\n  Abandon every hope all ye who enter here!\n\nThe gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.\nThe way through t..."
+          }
+        ]
+      },
       "score": "40/350",
       "win": false,
       "won_text": true,
@@ -291,13 +1463,175 @@
     },
     {
       "name": "cyclops-path",
-      "commands": 27,
-      "transcript_lines": 200,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\cyclops-path.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\cyclops-path.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 27,
+      "transcript_lines": 196,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\cyclops-path.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\cyclops-path.commands.txt",
+      "assertions": {
+        "total": 22,
+        "passed": 22,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/Maze",
+            "command": "w",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "Maze\nThis is part of a maze of twisty little passages, all alike."
+          },
+          {
+            "check": "/Cyclops Room",
+            "command": "se",
+            "cmd_idx": 27,
+            "passed": true,
+            "response": "Cyclops Room\nThis room has an exit on the northwest, and a staircase leading up.\n\nA cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes peopl..."
+          },
+          {
+            "check": "/cyclops",
+            "command": "se",
+            "cmd_idx": 27,
+            "passed": true,
+            "response": "Cyclops Room\nThis room has an exit on the northwest, and a staircase leading up.\n\nA cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes peopl..."
+          }
+        ]
+      },
       "score": "35/350",
       "win": false,
       "won_text": true,
@@ -314,13 +1648,203 @@
     },
     {
       "name": "echo",
-      "commands": 24,
-      "transcript_lines": 174,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\echo.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\echo.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 24,
+      "transcript_lines": 170,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\echo.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\echo.commands.txt",
+      "assertions": {
+        "total": 26,
+        "passed": 26,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/East-West Passage",
+            "command": "e",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "East-West Passage\nThis is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/Round Room",
+            "command": "e",
+            "cmd_idx": 21,
+            "passed": true,
+            "response": "Round Room\nThis is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.\n\nYour sword is glowing with a faint blue glow."
+          },
+          {
+            "check": "/Loud Room",
+            "command": "e",
+            "cmd_idx": 22,
+            "passed": true,
+            "response": "Loud Room\nThis is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it di..."
+          },
+          {
+            "check": "/deafeningly loud",
+            "command": "e",
+            "cmd_idx": 22,
+            "passed": true,
+            "response": "Loud Room\nThis is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it di..."
+          },
+          {
+            "check": "/acoustics of the room change",
+            "command": "echo",
+            "cmd_idx": 23,
+            "passed": true,
+            "response": "The acoustics of the room change subtly."
+          },
+          {
+            "check": "Taken",
+            "command": "take platinum bar",
+            "cmd_idx": 24,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "!clanging",
+            "command": "take platinum bar",
+            "cmd_idx": 24,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by ten points.]"
+          }
+        ]
+      },
       "score": "50/350",
       "win": false,
       "won_text": true,
@@ -337,13 +1861,238 @@
     },
     {
       "name": "dam",
-      "commands": 32,
-      "transcript_lines": 242,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\dam.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\dam.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 32,
+      "transcript_lines": 238,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\dam.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\dam.commands.txt",
+      "assertions": {
+        "total": 31,
+        "passed": 31,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/East-West Passage",
+            "command": "e",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "East-West Passage\nThis is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/Round Room",
+            "command": "e",
+            "cmd_idx": 21,
+            "passed": true,
+            "response": "Round Room\nThis is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.\n\nYour sword is glowing with a faint blue glow."
+          },
+          {
+            "check": "/North-South Passage",
+            "command": "n",
+            "cmd_idx": 22,
+            "passed": true,
+            "response": "North-South Passage\nThis is a high north-south passage, which forks to the northeast.\n\nYour sword is no longer glowing."
+          },
+          {
+            "check": "/Deep Canyon",
+            "command": "ne",
+            "cmd_idx": 23,
+            "passed": true,
+            "response": "Deep Canyon\nYou are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. You can hear the sound of flowing water from below."
+          },
+          {
+            "check": "/Reservoir South",
+            "command": "nw",
+            "cmd_idx": 24,
+            "passed": true,
+            "response": "Reservoir South\nYou are in a long room on the south shore of a large lake, far too deep and wide for crossing.\n\nThere is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast."
+          },
+          {
+            "check": "/Dam",
+            "command": "e",
+            "cmd_idx": 25,
+            "passed": true,
+            "response": "Dam\nYou are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.\n\nThe sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over t..."
+          },
+          {
+            "check": "/Dam Lobby",
+            "command": "n",
+            "cmd_idx": 26,
+            "passed": true,
+            "response": "Dam Lobby\nThis room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked \"Private\", and there is a path leading south over the top of the dam.\n\nSome guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.\n\nThere is ..."
+          },
+          {
+            "check": "/guidebook",
+            "command": "n",
+            "cmd_idx": 26,
+            "passed": true,
+            "response": "Dam Lobby\nThis room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked \"Private\", and there is a path leading south over the top of the dam.\n\nSome guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.\n\nThere is ..."
+          },
+          {
+            "check": "/Maintenance Room",
+            "command": "n",
+            "cmd_idx": 27,
+            "passed": true,
+            "response": "Maintenance Room\nThis is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways ..."
+          },
+          {
+            "check": "Click",
+            "command": "push yellow button",
+            "cmd_idx": 28,
+            "passed": true,
+            "response": "Click."
+          },
+          {
+            "check": "Taken",
+            "command": "take wrench",
+            "cmd_idx": 29,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/Dam",
+            "command": "s",
+            "cmd_idx": 31,
+            "passed": true,
+            "response": "Dam\nYou are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.\n\nThe sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over t..."
+          }
+        ]
+      },
       "score": "40/350",
       "win": false,
       "won_text": true,
@@ -360,13 +2109,252 @@
     },
     {
       "name": "boat",
-      "commands": 33,
-      "transcript_lines": 250,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\boat.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\boat.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 33,
+      "transcript_lines": 246,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\boat.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\boat.commands.txt",
+      "assertions": {
+        "total": 33,
+        "passed": 33,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/East-West Passage",
+            "command": "e",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "East-West Passage\nThis is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/Round Room",
+            "command": "e",
+            "cmd_idx": 21,
+            "passed": true,
+            "response": "Round Room\nThis is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.\n\nYour sword is glowing with a faint blue glow."
+          },
+          {
+            "check": "/North-South Passage",
+            "command": "n",
+            "cmd_idx": 22,
+            "passed": true,
+            "response": "North-South Passage\nThis is a high north-south passage, which forks to the northeast.\n\nYour sword is no longer glowing."
+          },
+          {
+            "check": "/Deep Canyon",
+            "command": "ne",
+            "cmd_idx": 23,
+            "passed": true,
+            "response": "Deep Canyon\nYou are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. You can hear the sound of flowing water from below."
+          },
+          {
+            "check": "/Reservoir South",
+            "command": "nw",
+            "cmd_idx": 24,
+            "passed": true,
+            "response": "Reservoir South\nYou are in a long room on the south shore of a large lake, far too deep and wide for crossing.\n\nThere is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast."
+          },
+          {
+            "check": "/Dam",
+            "command": "e",
+            "cmd_idx": 25,
+            "passed": true,
+            "response": "Dam\nYou are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.\n\nThe sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over t..."
+          },
+          {
+            "check": "/Dam Lobby",
+            "command": "n",
+            "cmd_idx": 26,
+            "passed": true,
+            "response": "Dam Lobby\nThis room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked \"Private\", and there is a path leading south over the top of the dam.\n\nSome guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.\n\nThere is ..."
+          },
+          {
+            "check": "/guidebook",
+            "command": "n",
+            "cmd_idx": 26,
+            "passed": true,
+            "response": "Dam Lobby\nThis room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked \"Private\", and there is a path leading south over the top of the dam.\n\nSome guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.\n\nThere is ..."
+          },
+          {
+            "check": "/Maintenance Room",
+            "command": "n",
+            "cmd_idx": 27,
+            "passed": true,
+            "response": "Maintenance Room\nThis is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways ..."
+          },
+          {
+            "check": "Click",
+            "command": "push yellow button",
+            "cmd_idx": 28,
+            "passed": true,
+            "response": "Click."
+          },
+          {
+            "check": "Taken",
+            "command": "take wrench",
+            "cmd_idx": 29,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/Dam",
+            "command": "s",
+            "cmd_idx": 31,
+            "passed": true,
+            "response": "Dam\nYou are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.\n\nThe sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over t..."
+          },
+          {
+            "check": "/Dam Base",
+            "command": "d",
+            "cmd_idx": 33,
+            "passed": true,
+            "response": "Dam Base\nYou are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream.\n\nThere i..."
+          },
+          {
+            "check": "/pile of plastic",
+            "command": "d",
+            "cmd_idx": 33,
+            "passed": true,
+            "response": "Dam Base\nYou are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream.\n\nThere i..."
+          }
+        ]
+      },
       "score": "40/350",
       "win": false,
       "won_text": true,
@@ -383,13 +2371,182 @@
     },
     {
       "name": "mirror",
-      "commands": 24,
-      "transcript_lines": 172,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\mirror.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\mirror.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 24,
+      "transcript_lines": 168,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\mirror.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\mirror.commands.txt",
+      "assertions": {
+        "total": 23,
+        "passed": 23,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/East-West Passage",
+            "command": "e",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "East-West Passage\nThis is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/Round Room",
+            "command": "e",
+            "cmd_idx": 21,
+            "passed": true,
+            "response": "Round Room\nThis is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.\n\nYour sword is glowing with a faint blue glow."
+          },
+          {
+            "check": "/Narrow Passage",
+            "command": "s",
+            "cmd_idx": 22,
+            "passed": true,
+            "response": "Narrow Passage\nThis is a long and narrow corridor where a long north-south passageway briefly narrows even further.\n\nYour sword is no longer glowing."
+          },
+          {
+            "check": "/Mirror Room",
+            "command": "s",
+            "cmd_idx": 23,
+            "passed": true,
+            "response": "Mirror Room\nYou are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room."
+          }
+        ]
+      },
       "score": "40/350",
       "win": false,
       "won_text": true,
@@ -406,13 +2563,182 @@
     },
     {
       "name": "cyclops-odysseus",
-      "commands": 28,
-      "transcript_lines": 206,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\cyclops-odysseus.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\cyclops-odysseus.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 28,
+      "transcript_lines": 202,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\cyclops-odysseus.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\cyclops-odysseus.commands.txt",
+      "assertions": {
+        "total": 23,
+        "passed": 23,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 10,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/rickety staircase",
+            "command": "open trap door",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The door reluctantly opens to reveal a rickety staircase descending into darkness."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/troll",
+            "command": "n",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nYour sword has begun to glow very..."
+          },
+          {
+            "check": "/Maze",
+            "command": "w",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "Maze\nThis is part of a maze of twisty little passages, all alike."
+          },
+          {
+            "check": "/Cyclops Room",
+            "command": "se",
+            "cmd_idx": 27,
+            "passed": true,
+            "response": "Cyclops Room\nThis room has an exit on the northwest, and a staircase leading up.\n\nA cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes peopl..."
+          },
+          {
+            "check": "/cyclops",
+            "command": "se",
+            "cmd_idx": 27,
+            "passed": true,
+            "response": "Cyclops Room\nThis room has an exit on the northwest, and a staircase leading up.\n\nA cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes peopl..."
+          },
+          {
+            "check": "/flees the room",
+            "command": "odysseus",
+            "cmd_idx": 28,
+            "passed": true,
+            "response": "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down the wall on the east of the room.\n\nYour sword is no longer glowing."
+          }
+        ]
+      },
       "score": "35/350",
       "win": false,
       "won_text": true,
@@ -429,13 +2755,140 @@
     },
     {
       "name": "grue-darkness",
-      "commands": 14,
-      "transcript_lines": 118,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\grue-darkness.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\grue-darkness.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 14,
+      "transcript_lines": 114,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\grue-darkness.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\grue-darkness.commands.txt",
+      "assertions": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/pitch black",
+            "command": "down",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nDarkness\nIt is pitch black. You are likely to be eaten by a grue.\n\nYour sword is glowing with a faint blue glow.\n\n[Your score has just gone up by twenty-five points.]"
+          },
+          {
+            "check": "/likely to be eaten by a grue",
+            "command": "down",
+            "cmd_idx": 11,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nDarkness\nIt is pitch black. You are likely to be eaten by a grue.\n\nYour sword is glowing with a faint blue glow.\n\n[Your score has just gone up by twenty-five points.]"
+          },
+          {
+            "check": "!slithered into the room",
+            "command": "inventory",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "You are carrying:\n  a brass lantern (battery-powered)\n  a sword"
+          },
+          {
+            "check": "!slavering fangs",
+            "command": "inventory",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "You are carrying:\n  a brass lantern (battery-powered)\n  a sword"
+          },
+          {
+            "check": "!den of hungry grues",
+            "command": "inventory",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "You are carrying:\n  a brass lantern (battery-powered)\n  a sword"
+          },
+          {
+            "check": "/lantern",
+            "command": "inventory",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "You are carrying:\n  a brass lantern (battery-powered)\n  a sword"
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 13,
+            "passed": true,
+            "response": "The brass lantern is now on.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable."
+          },
+          {
+            "check": "/Cellar",
+            "command": "look",
+            "cmd_idx": 14,
+            "passed": true,
+            "response": "Cellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable."
+          }
+        ]
+      },
       "score": "35/350",
       "win": false,
       "won_text": true,
@@ -452,13 +2905,84 @@
     },
     {
       "name": "jump-kitchen",
-      "commands": 6,
-      "transcript_lines": 76,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\jump-kitchen.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\jump-kitchen.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 6,
+      "transcript_lines": 72,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\jump-kitchen.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\jump-kitchen.commands.txt",
+      "assertions": {
+        "total": 9,
+        "passed": 9,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/not a very safe place",
+            "command": "jump",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "This was not a very safe place to try jumping.\nYou should have looked before you leaped.\n\n\n    ****  You have died  ****\n\nNow, let's take a look here...\nWell, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.\n\nForest\nThis is a forest, with trees..."
+          }
+        ]
+      },
       "score": "0/350",
       "win": false,
       "won_text": false,
@@ -475,13 +2999,77 @@
     },
     {
       "name": "jump-tree",
-      "commands": 6,
-      "transcript_lines": 65,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\jump-tree.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\jump-tree.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 6,
+      "transcript_lines": 61,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\jump-tree.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\jump-tree.commands.txt",
+      "assertions": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/Forest Path",
+            "command": "n",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Forest Path\nThis is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path."
+          },
+          {
+            "check": "/Up a Tree",
+            "command": "up",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          },
+          {
+            "check": "/feat of unaccustomed daring",
+            "command": "jump",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "In a feat of unaccustomed daring, you manage to land on your feet without killing yourself.\n\nForest Path\nThis is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path."
+          },
+          {
+            "check": "/land on your feet",
+            "command": "jump",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "In a feat of unaccustomed daring, you manage to land on your feet without killing yourself.\n\nForest Path\nThis is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path."
+          },
+          {
+            "check": "/Forest Path",
+            "command": "look",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Forest Path\nThis is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path."
+          }
+        ]
+      },
       "score": "0/350",
       "win": false,
       "won_text": false,
@@ -498,13 +3086,140 @@
     },
     {
       "name": "jump-altar-safe",
-      "commands": 37,
-      "transcript_lines": 273,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\jump-altar-safe.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\jump-altar-safe.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 37,
+      "transcript_lines": 269,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\jump-altar-safe.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\jump-altar-safe.commands.txt",
+      "assertions": {
+        "total": 17,
+        "passed": 17,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/Altar",
+            "command": "s",
+            "cmd_idx": 35,
+            "passed": true,
+            "response": "Altar\nThis is the south end of a large temple. In front of you is what appears to be an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it.\n\nOn the two ends of the altar are burning candles.\n\nOn the altar is a large black book, open to ..."
+          },
+          {
+            "check": "!not a very safe place",
+            "command": "jump",
+            "cmd_idx": 37,
+            "passed": true,
+            "response": "Very good. Now you can go to the second grade."
+          },
+          {
+            "check": "/second grade|enjoying yourself|Wheeeeeeeeee|applaud",
+            "command": "jump",
+            "cmd_idx": 37,
+            "passed": true,
+            "response": "Very good. Now you can go to the second grade."
+          }
+        ]
+      },
       "score": "50/350",
       "win": false,
       "won_text": true,
@@ -521,13 +3236,154 @@
     },
     {
       "name": "jump-altar-fatal",
-      "commands": 36,
-      "transcript_lines": 285,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\jump-altar-fatal.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\jump-altar-fatal.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 36,
+      "transcript_lines": 281,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\jump-altar-fatal.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\jump-altar-fatal.commands.txt",
+      "assertions": {
+        "total": 19,
+        "passed": 19,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/Altar",
+            "command": "s",
+            "cmd_idx": 35,
+            "passed": true,
+            "response": "Altar\nThis is the south end of a large temple. In front of you is what appears to be an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it.\n\nOn the two ends of the altar are burning candles.\n\nOn the altar is a large black book, open to ..."
+          },
+          {
+            "check": "!second grade",
+            "command": "jump",
+            "cmd_idx": 36,
+            "passed": true,
+            "response": "This was not a very safe place to try jumping.\nGeronimo...\n\n\n    ****  You have died  ****\n\nAs you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. ..."
+          },
+          {
+            "check": "!enjoying yourself",
+            "command": "jump",
+            "cmd_idx": 36,
+            "passed": true,
+            "response": "This was not a very safe place to try jumping.\nGeronimo...\n\n\n    ****  You have died  ****\n\nAs you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. ..."
+          },
+          {
+            "check": "!Wheeeeeeeeee",
+            "command": "jump",
+            "cmd_idx": 36,
+            "passed": true,
+            "response": "This was not a very safe place to try jumping.\nGeronimo...\n\n\n    ****  You have died  ****\n\nAs you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. ..."
+          },
+          {
+            "check": "!applaud",
+            "command": "jump",
+            "cmd_idx": 36,
+            "passed": true,
+            "response": "This was not a very safe place to try jumping.\nGeronimo...\n\n\n    ****  You have died  ****\n\nAs you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. ..."
+          }
+        ]
+      },
       "score": "",
       "win": false,
       "won_text": true,
@@ -544,13 +3400,98 @@
     },
     {
       "name": "fdesc-egg",
-      "commands": 4,
-      "transcript_lines": 53,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\fdesc-egg.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\fdesc-egg.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 4,
+      "transcript_lines": 49,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\fdesc-egg.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\fdesc-egg.commands.txt",
+      "assertions": {
+        "total": 11,
+        "passed": 11,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Forest Path",
+            "command": "n",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Forest Path\nThis is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path."
+          },
+          {
+            "check": "/Up a Tree",
+            "command": "up",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          },
+          {
+            "check": "/Beside you on the branch is a small bird's nest",
+            "command": "up",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          },
+          {
+            "check": "/large egg encrusted with precious jewels",
+            "command": "up",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          },
+          {
+            "check": "/apparently scavenged by a childless songbird",
+            "command": "up",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          },
+          {
+            "check": "/fine gold inlay",
+            "command": "up",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          },
+          {
+            "check": "/lapis lazuli",
+            "command": "up",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          }
+        ]
+      },
       "score": "0/350",
       "win": false,
       "won_text": false,
@@ -567,13 +3508,189 @@
     },
     {
       "name": "fdesc-sceptre",
-      "commands": 34,
-      "transcript_lines": 252,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\fdesc-sceptre.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\fdesc-sceptre.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 34,
+      "transcript_lines": 248,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\fdesc-sceptre.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\fdesc-sceptre.commands.txt",
+      "assertions": {
+        "total": 24,
+        "passed": 24,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/North of House",
+            "command": "n",
+            "cmd_idx": 2,
+            "passed": true,
+            "response": "North of House\nYou are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees."
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/open the window",
+            "command": "open window",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "With great effort, you open the window far enough to allow entry."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/table",
+            "command": "w",
+            "cmd_idx": 5,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/sword",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/brass lantern",
+            "command": "w",
+            "cmd_idx": 6,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "Taken",
+            "command": "take sword",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "Taken",
+            "command": "take lantern",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lantern",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/trap door",
+            "command": "push rug",
+            "cmd_idx": 15,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door."
+          },
+          {
+            "check": "/Cellar",
+            "command": "down",
+            "cmd_idx": 17,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 18,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nThe troll swings his axe, but it ..."
+          },
+          {
+            "check": "/Round Room",
+            "command": "e",
+            "cmd_idx": 26,
+            "passed": true,
+            "response": "Round Room\nThis is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins."
+          },
+          {
+            "check": "/Dome Room",
+            "command": "e",
+            "cmd_idx": 28,
+            "passed": true,
+            "response": "Dome Room\nYou are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing which circles the dome."
+          },
+          {
+            "check": "/Torch Room",
+            "command": "d",
+            "cmd_idx": 30,
+            "passed": true,
+            "response": "Torch Room\nThis is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal.\nA piece of rope descends from the railing above, ending some five ..."
+          },
+          {
+            "check": "/Egyptian Room",
+            "command": "d",
+            "cmd_idx": 32,
+            "passed": true,
+            "response": "Egyptian Room\nThis is a room which looks like an Egyptian tomb. There is an ascending staircase to the west.\n\nThe solid-gold coffin used for the burial of Ramses II is here."
+          },
+          {
+            "check": "Taken",
+            "command": "take coffin",
+            "cmd_idx": 33,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "/A sceptre, possibly that of ancient Egypt itself",
+            "command": "open coffin",
+            "cmd_idx": 34,
+            "passed": true,
+            "response": "The gold coffin opens.\nA sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point."
+          },
+          {
+            "check": "/ornamented with colored enamel",
+            "command": "open coffin",
+            "cmd_idx": 34,
+            "passed": true,
+            "response": "The gold coffin opens.\nA sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point."
+          }
+        ]
+      },
       "score": "50/350",
       "win": false,
       "won_text": true,
@@ -590,13 +3707,77 @@
     },
     {
       "name": "fdesc-canary",
-      "commands": 8,
-      "transcript_lines": 74,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\fdesc-canary.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\fdesc-canary.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 8,
+      "transcript_lines": 70,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\fdesc-canary.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\fdesc-canary.commands.txt",
+      "assertions": {
+        "total": 8,
+        "passed": 8,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/West of House",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/white house",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/small mailbox",
+            "command": "look",
+            "cmd_idx": 1,
+            "passed": true,
+            "response": "West of House\nYou are standing in an open field west of a white house, with a boarded front door.\n\nThere is a small mailbox here."
+          },
+          {
+            "check": "/Forest Path",
+            "command": "n",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Forest Path\nThis is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path."
+          },
+          {
+            "check": "/Up a Tree",
+            "command": "up",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          },
+          {
+            "check": "/succeeded in opening",
+            "command": "attack egg",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Your rather indelicate handling of the egg has caused it some damage, although you have succeeded in opening it.\n There is a golden clockwork canary nestled in the egg. It seems to have recently had a bad experience. The mountings for its jewel-like eyes are empty, and its silver beak is crumpled. T..."
+          },
+          {
+            "check": "/golden clockwork canary",
+            "command": "attack egg",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Your rather indelicate handling of the egg has caused it some damage, although you have succeeded in opening it.\n There is a golden clockwork canary nestled in the egg. It seems to have recently had a bad experience. The mountings for its jewel-like eyes are empty, and its silver beak is crumpled. T..."
+          },
+          {
+            "check": "/bad experience",
+            "command": "attack egg",
+            "cmd_idx": 8,
+            "passed": true,
+            "response": "Your rather indelicate handling of the egg has caused it some damage, although you have succeeded in opening it.\n There is a golden clockwork canary nestled in the egg. It seems to have recently had a bad experience. The mountings for its jewel-like eyes are empty, and its silver beak is crumpled. T..."
+          }
+        ]
+      },
       "score": "5/350",
       "win": false,
       "won_text": false,
@@ -613,13 +3794,371 @@
     },
     {
       "name": "full-run",
-      "commands": 437,
-      "transcript_lines": 2821,
-      "exit_code": 0,
-      "output_file": "zork1\\tests\\scenarios\\full-run.transcript.txt",
-      "commands_file": "zork1\\tests\\scenarios\\full-run.commands.txt",
-      "seed": "26",
       "status": "pass",
+      "seed": "26",
+      "commands": 437,
+      "transcript_lines": 2818,
+      "exit_code": 0,
+      "transcript_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\full-run.transcript.txt",
+      "commands_file": "C:\\code\\text-games\\i7\\zork1\\tests\\scenarios\\full-run.commands.txt",
+      "assertions": {
+        "total": 50,
+        "passed": 50,
+        "failed": 0,
+        "failures": [],
+        "details": [
+          {
+            "check": "/Up a Tree",
+            "command": "u",
+            "cmd_idx": 3,
+            "passed": true,
+            "response": "Up a Tree\nYou are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.\n\nBeside you on the branch is a small bird's nest.\nIn the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The ..."
+          },
+          {
+            "check": "Taken",
+            "command": "take egg",
+            "cmd_idx": 4,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/Behind House",
+            "command": "e",
+            "cmd_idx": 7,
+            "passed": true,
+            "response": "Behind House\nYou are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar."
+          },
+          {
+            "check": "/Kitchen",
+            "command": "w",
+            "cmd_idx": 9,
+            "passed": true,
+            "response": "Kitchen\nYou are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.\n\nA bottle is sitting on the..."
+          },
+          {
+            "check": "/Living Room",
+            "command": "w",
+            "cmd_idx": 12,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.\n\nAbove the trophy case hangs an elvish sword of great antiquity.\n\nA bat..."
+          },
+          {
+            "check": "/score has just gone up",
+            "command": "put egg in case",
+            "cmd_idx": 16,
+            "passed": true,
+            "response": "You put the jewel-encrusted egg into the trophy case.\n\n[Your score has just gone up by nine points.]"
+          },
+          {
+            "check": "/now on",
+            "command": "turn on lamp",
+            "cmd_idx": 18,
+            "passed": true,
+            "response": "The brass lantern is now on."
+          },
+          {
+            "check": "/Attic",
+            "command": "u",
+            "cmd_idx": 19,
+            "passed": true,
+            "response": "Attic\nThis is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down.\n\nOn a table is a nasty-looking knife.\n\nA large coil of rope is lying..."
+          },
+          {
+            "check": "Taken",
+            "command": "take rope",
+            "cmd_idx": 20,
+            "passed": true,
+            "response": "Taken."
+          },
+          {
+            "check": "/trap door",
+            "command": "move rug",
+            "cmd_idx": 25,
+            "passed": true,
+            "response": "With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.\n\nYour sword is no longer glowing."
+          },
+          {
+            "check": "/Cellar",
+            "command": "d",
+            "cmd_idx": 27,
+            "passed": true,
+            "response": "The trap door crashes shut, and you hear someone barring it.\n\nCellar\nYou are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.\n\nYour sword is glowing with a faint blue glow.\n\n[Your scor..."
+          },
+          {
+            "check": "/Gallery",
+            "command": "e",
+            "cmd_idx": 32,
+            "passed": true,
+            "response": "Gallery\nThis is an art gallery. Most of the paintings have been stolen by vandals with exceptional taste. The vandals left through either the north or west exits.\n\nFortunately, there is still one chance for you to be a vandal, for on the far wall is a painting of unparalleled beauty."
+          },
+          {
+            "check": "Taken",
+            "command": "take painting",
+            "cmd_idx": 33,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by four points.]"
+          },
+          {
+            "check": "/Troll Room",
+            "command": "n",
+            "cmd_idx": 36,
+            "passed": true,
+            "response": "The Troll Room\nThis is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.\n\nA nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.\n\nThe axe sweeps past as you jump a..."
+          },
+          {
+            "check": "/Loud Room",
+            "command": "e",
+            "cmd_idx": 52,
+            "passed": true,
+            "response": "Loud Room\nThis is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it di..."
+          },
+          {
+            "check": "/acoustics of the room change",
+            "command": "echo",
+            "cmd_idx": 53,
+            "passed": true,
+            "response": "The acoustics of the room change subtly."
+          },
+          {
+            "check": "Taken",
+            "command": "take platinum bar",
+            "cmd_idx": 54,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "!clanging",
+            "command": "take platinum bar",
+            "cmd_idx": 54,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "/Dam Lobby",
+            "command": "n",
+            "cmd_idx": 59,
+            "passed": true,
+            "response": "Dam Lobby\nThis room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked \"Private\", and there is a path leading south over the top of the dam.\n\nSome guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.\n\nThere is ..."
+          },
+          {
+            "check": "/Maintenance Room",
+            "command": "n",
+            "cmd_idx": 61,
+            "passed": true,
+            "response": "Maintenance Room\nThis is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways ..."
+          },
+          {
+            "check": "/Cyclops Room",
+            "command": "se",
+            "cmd_idx": 81,
+            "passed": true,
+            "response": "Cyclops Room\nThis room has an exit on the northwest, and a staircase leading up.\n\nA cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes peopl..."
+          },
+          {
+            "check": "/flees the room",
+            "command": "odysseus",
+            "cmd_idx": 82,
+            "passed": true,
+            "response": "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down the wall on the east of the room."
+          },
+          {
+            "check": "/Living Room",
+            "command": "e",
+            "cmd_idx": 84,
+            "passed": true,
+            "response": "Living Room\nYou are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a closed trap door at your feet.\n\nYour collection of treasures consists of:\n  a jewel-encrusted egg\n..."
+          },
+          {
+            "check": "/score has just gone up",
+            "command": "put platinum bar in case",
+            "cmd_idx": 87,
+            "passed": true,
+            "response": "You put the platinum bar into the trophy case.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/Dome Room",
+            "command": "e",
+            "cmd_idx": 98,
+            "passed": true,
+            "response": "Dome Room\nYou are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing which circles the dome."
+          },
+          {
+            "check": "/Torch Room",
+            "command": "d",
+            "cmd_idx": 100,
+            "passed": true,
+            "response": "Torch Room\nThis is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal.\nA piece of rope descends from the railing above, ending some five ..."
+          },
+          {
+            "check": "/Entrance to Hades",
+            "command": "d",
+            "cmd_idx": 108,
+            "passed": true,
+            "response": "Entrance to Hades\nYou are outside a large gateway, on which is inscribed\n\n  Abandon every hope all ye who enter here!\n\nThe gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.\nThe way through t..."
+          },
+          {
+            "check": "Taken",
+            "command": "take skull",
+            "cmd_idx": 117,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "/score has just gone up",
+            "command": "put skull in case",
+            "cmd_idx": 137,
+            "passed": true,
+            "response": "You put the crystal skull into the trophy case.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "/Egyptian Room",
+            "command": "d",
+            "cmd_idx": 148,
+            "passed": true,
+            "response": "Egyptian Room\nThis is a room which looks like an Egyptian tomb. There is an ascending staircase to the west.\n\nThe solid-gold coffin used for the burial of Ramses II is here."
+          },
+          {
+            "check": "/sceptre",
+            "command": "open coffin",
+            "cmd_idx": 150,
+            "passed": true,
+            "response": "The gold coffin opens.\nA sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point."
+          },
+          {
+            "check": "/Altar",
+            "command": "s",
+            "cmd_idx": 153,
+            "passed": true,
+            "response": "Altar\nThis is the south end of a large temple. In front of you is what appears to be an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it."
+          },
+          {
+            "check": "/rainbow appears to become solid",
+            "command": "wave sceptre",
+            "cmd_idx": 164,
+            "passed": true,
+            "response": "Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).\n\nA shimmering pot of gold appears at the end of the rainbow."
+          },
+          {
+            "check": "Taken",
+            "command": "take pot of gold",
+            "cmd_idx": 165,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "/score has just gone up",
+            "command": "put pot of gold in case",
+            "cmd_idx": 180,
+            "passed": true,
+            "response": "You put the pot of gold into the trophy case.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "Taken",
+            "command": "take trident",
+            "cmd_idx": 194,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by four points.]"
+          },
+          {
+            "check": "/score has just gone up",
+            "command": "put trident in case",
+            "cmd_idx": 216,
+            "passed": true,
+            "response": "You put the crystal trident into the trophy case.\n\n[Your score has just gone up by eleven points.]"
+          },
+          {
+            "check": "/Mirror Room",
+            "command": "s",
+            "cmd_idx": 236,
+            "passed": true,
+            "response": "Mirror Room\nYou are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room."
+          },
+          {
+            "check": "/rumble",
+            "command": "rub mirror",
+            "cmd_idx": 237,
+            "passed": true,
+            "response": "There is a rumble from deep within the earth and the room shakes."
+          },
+          {
+            "check": "Taken",
+            "command": "take bracelet",
+            "cmd_idx": 249,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "Taken",
+            "command": "take diamond",
+            "cmd_idx": 293,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by ten points.]"
+          },
+          {
+            "check": "/score has just gone up",
+            "command": "put torch in case",
+            "cmd_idx": 324,
+            "passed": true,
+            "response": "You put the torch into the trophy case.\n\n[Your score has just gone up by six points.]"
+          },
+          {
+            "check": "/Dam Base",
+            "command": "d",
+            "cmd_idx": 335,
+            "passed": true,
+            "response": "Dam Base\nYou are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream.\n\nThere i..."
+          },
+          {
+            "check": "/push off",
+            "command": "launch",
+            "cmd_idx": 340,
+            "passed": true,
+            "response": "You push off from the shore.\n\nFrigid River (in the magic boat)\nYou are on the Frigid River in the vicinity of the Dam. The river flows quietly here. There is a landing on the west shore.\n\nIn the magic boat you can see a tan label."
+          },
+          {
+            "check": "Taken",
+            "command": "take scarab",
+            "cmd_idx": 354,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "Taken",
+            "command": "take emerald",
+            "cmd_idx": 359,
+            "passed": true,
+            "response": "Taken.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/score has just gone up",
+            "command": "put chalice in case",
+            "cmd_idx": 414,
+            "passed": true,
+            "response": "You put the chalice into the trophy case.\n\n[Your score has just gone up by five points.]"
+          },
+          {
+            "check": "/bauble",
+            "command": "wind canary",
+            "cmd_idx": 420,
+            "passed": true,
+            "response": "The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the greenery flies a lovely songbird. It perches on a limb just over your head and opens its beak to sing. As it does so a beautiful brass bauble drops from its mouth, bounces off the top of your head, and lands glimmer..."
+          },
+          {
+            "check": "/score has just gone up",
+            "command": "put bauble in case",
+            "cmd_idx": 428,
+            "passed": true,
+            "response": "You put the beautiful brass bauble into the trophy case.\n\n\nAn almost inaudible voice whispers in your ear, \"Look to your treasures for the final secret.\"\n\n[Your score has just gone up by one point.]"
+          },
+          {
+            "check": "/Congratulations",
+            "command": "enter barrow",
+            "cmd_idx": 437,
+            "passed": true,
+            "response": "Inside the Barrow\nAs you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridg..."
+          }
+        ]
+      },
       "score": "350/350",
       "win": true,
       "won_text": true,

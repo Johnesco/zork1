@@ -145,12 +145,98 @@ This is a circular stone room with passages in all directions. Several of them h
 Your sword is glowing with a faint blue glow.
 
 
+> s
+
+Narrow Passage
+This is a long and narrow corridor where a long north-south passageway briefly narrows even further.
+
+Your sword is no longer glowing.
+
+
+> s
+
+Mirror Room
+You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
+
+
+> rub mirror
+There is a rumble from deep within the earth and the room shakes.
+
+
+> e
+
+Cave
+This is a tiny cave with entrances west and north, and a staircase leading down.
+
+
+> d
+
+Atlantis Room
+This is an ancient room, long under water. There is an exit to the south and a staircase leading up.
+
+On the shore lies Poseidon's own crystal trident.
+
+
+> s
+
+Reservoir North
+You are in a large cavernous room, north of a large lake.
+
+There is a slimy stairway leaving the room to the north.
+
+There is a hand-held air pump here.
+
+
+> take pump
+Taken.
+
+
+> n
+
+Atlantis Room
+This is an ancient room, long under water. There is an exit to the south and a staircase leading up.
+
+On the shore lies Poseidon's own crystal trident.
+
+
+> u
+
+Cave
+This is a tiny cave with entrances west and north, and a staircase leading down.
+
+
+> w
+
+Twisting Passage
+This is a winding passage. It seems that there are only exits on the east and north.
+
+
+> n
+
+Mirror Room
+You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
+
+
+> rub mirror
+There is a rumble from deep within the earth and the room shakes.
+
+
+> n
+
+Narrow Passage
+This is a long and narrow corridor where a long north-south passageway briefly narrows even further.
+
+
+> n
+
+Round Room
+This is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.
+
+
 > n
 
 North-South Passage
 This is a high north-south passage, which forks to the northeast.
-
-Your sword is no longer glowing.
 
 
 > ne
@@ -177,62 +263,6 @@ The sluice gates on the dam are closed. Behind the dam, there can be seen a wide
 There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green plastic bubble.
 
 
-> n
-
-Dam Lobby
-This room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked "Private", and there is a path leading south over the top of the dam.
-
-Some guidebooks entitled "Flood Control Dam #3" are on the reception desk.
-
-There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
-
-
-> n
-
-Maintenance Room
-This is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways to the west and south.
-
-There is a group of tool chests here.
-
-There is a wrench here.
-
-There is a screwdriver here.
-
-There is an object which looks like a tube of toothpaste here.
-
-
-> push yellow button
-Click.
-
-
-> take wrench
-Taken.
-
-
-> s
-
-Dam Lobby
-This room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked "Private", and there is a path leading south over the top of the dam.
-
-Some guidebooks entitled "Flood Control Dam #3" are on the reception desk.
-
-There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
-
-
-> s
-
-Dam
-You are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.
-
-The sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over the top of the now abandoned dam.
-
-There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green plastic bubble which is glowing serenely.
-
-
-> turn bolt
-The sluice gates open and water pours through the dam.
-
-
 > d
 
 Dam Base
@@ -241,6 +271,15 @@ You are at the base of Flood Control Dam #3, which looms above you and to the no
 There is a folded pile of plastic here which has a small valve attached.
 
 
+> inflate pile
+The boat inflates and appears seaworthy.
+A tan label is lying inside the boat.
+
+
+> get in boat
+Oops! Something sharp seems to have slipped and punctured the boat. The boat deflates to the sounds of hissing, sputtering, and cursing.
+
+
 > score
-Your score is 40 (total of 350 points), in 33 moves.
+Your score is 40 (total of 350 points), in 42 moves.
 This gives you the rank of Amateur Adventurer.

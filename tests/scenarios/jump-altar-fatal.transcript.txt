@@ -279,7 +279,3 @@ You can't even do that.
 
 > score
 You're dead! How can you think of your score?
-
-
-> quit
-Are you sure you want to quit? 

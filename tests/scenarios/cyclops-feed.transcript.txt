@@ -51,6 +51,14 @@ On the table is an elongated brown sack, smelling of hot peppers.
 [Your score has just gone up by ten points.]
 
 
+> take bottle
+Taken.
+
+
+> take sack
+Taken.
+
+
 > w
 
 Living Room
@@ -106,20 +114,17 @@ Your sword has begun to glow very brightly.
 
 
 > attack troll
-You charge, but the troll jumps nimbly aside.
-The troll's axe barely misses your ear.
-
-> attack troll
-Your sword misses the troll by an inch.
-
-> attack troll
-The troll is struck on the arm; blood begins to trickle down.
+Clang! Crash! The troll parries.
 
 > attack troll
 You charge, but the troll jumps nimbly aside.
 
 > attack troll
-It's curtains for the troll as your sword removes his head.
+Your sword crashes down, knocking the troll into dreamland.
+
+> attack troll
+The unconscious troll cannot defend himself: He dies.
+
 Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 
 Your sword is no longer glowing.
@@ -129,53 +134,108 @@ Your sword is no longer glowing.
 You can't see any such thing.
 
 
+> attack troll
+You can't see any such thing.
+
+
+> attack troll
+You can't see any such thing.
+
+
+> attack troll
+You can't see any such thing.
+
+
+> attack troll
+You can't see any such thing.
+
+
+> attack troll
+You can't see any such thing.
+
+
+> w
+Maze
+This is part of a maze of twisty little passages, all alike.
+
+
+> s
+
+Maze
+This is part of a maze of twisty little passages, all alike.
+
+
 > e
 
-East-West Passage
-This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.
+Maze
+This is part of a maze of twisty little passages, all alike.
 
-[Your score has just gone up by five points.]
+
+> u
+
+Maze
+This is part of a maze of twisty little passages, all alike.
+A skeleton, probably the remains of a luckless adventurer, lies here.
+
+Beside the skeleton is a rusty knife.
+
+The deceased adventurer's useless lantern is here.
+
+There is a skeleton key here.
+
+An old leather bag, bulging with coins, is here.
+
+
+> sw
+
+Maze
+This is part of a maze of twisty little passages, all alike.
 
 
 > e
 
-Round Room
-This is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.
+Maze
+This is part of a maze of twisty little passages, all alike.
+
+
+> s
+
+Maze
+This is part of a maze of twisty little passages, all alike.
 
 Your sword is glowing with a faint blue glow.
 
 
-> s
+> se
 
-Narrow Passage
-This is a long and narrow corridor where a long north-south passageway briefly narrows even further.
+Cyclops Room
+This room has an exit on the northwest, and a staircase leading up.
 
-Your sword is no longer glowing.
+A cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes people.
 
-
-> s
-
-Mirror Room
-You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
+Your sword has begun to glow very brightly.
 
 
-> e
-
-Cave
-This is a tiny cave with entrances west and north, and a dark, forbidding staircase leading down.
+> open sack
+You open the brown sack, revealing a lunch and a clove of garlic.
 
 
-> d
+> give lunch to cyclops
+(Taken)
+The cyclops says "Mmm Mmm. I love hot peppers! But oh, could I use a drink. Perhaps I could drink the blood of that thing." From the gleam in his eye, it could be surmised that you are "that thing."
+The cyclops, having eaten the hot peppers, appears to be gasping. His enflamed tongue protrudes from his man-sized mouth.
 
-Entrance to Hades
-You are outside a large gateway, on which is inscribed
 
-  Abandon every hope all ye who enter here!
+> open bottle
+You open the glass bottle.
 
-The gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.
-The way through the gate is barred by evil spirits, who jeer at your attempts to pass.
+The cyclops, having eaten the hot peppers, appears to be gasping. His enflamed tongue protrudes from his man-sized mouth.
+
+
+> give bottle to cyclops
+The cyclops takes the bottle, checks that it's open, and drinks the water. A moment later, he lets out a yawn that nearly blows you over, and then falls fast asleep (what did you put in that drink, anyway?).
 
 
 > score
-Your score is 40 (total of 350 points), in 25 moves.
+Your score is 35 (total of 350 points), in 32 moves.
 This gives you the rank of Amateur Adventurer.

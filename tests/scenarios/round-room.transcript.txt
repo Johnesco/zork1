@@ -148,7 +148,3 @@ Your sword is glowing with a faint blue glow.
 > score
 Your score is 40 (total of 350 points), in 21 moves.
 This gives you the rank of Amateur Adventurer.
-
-
-> quit
-Are you sure you want to quit? 

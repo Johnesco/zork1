@@ -59,7 +59,3 @@ This is a path winding through a dimly lit forest. The path heads north-south he
 > score
 Your score is 0 (total of 350 points), in 7 moves.
 This gives you the rank of Beginner.
-
-
-> quit
-Are you sure you want to quit? 

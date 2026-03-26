@@ -145,102 +145,72 @@ This is a circular stone room with passages in all directions. Several of them h
 Your sword is glowing with a faint blue glow.
 
 
-> n
+> s
 
-North-South Passage
-This is a high north-south passage, which forks to the northeast.
+Narrow Passage
+This is a long and narrow corridor where a long north-south passageway briefly narrows even further.
 
 Your sword is no longer glowing.
 
 
-> ne
+> s
 
-Deep Canyon
-You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. You can hear the sound of flowing water from below.
+Mirror Room
+You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
 
 
-> nw
+> rub mirror
+There is a rumble from deep within the earth and the room shakes.
 
-Reservoir South
-You are in a long room on the south shore of a large lake, far too deep and wide for crossing.
 
-There is a path along the stream to the east or west, a steep pathway climbing southwest along the edge of a chasm, and a path leading into a canyon to the southeast.
+> n
+
+Cold Passage
+This is a cold and damp corridor where a long east-west passageway turns into a southward path.
+
+
+> w
+
+Slide Room
+This is a small chamber, which appears to have been part of a coal mine. On the south wall of the chamber the letters "Granite Wall" are etched in the rock. To the east is a long passage, and there is a steep metal slide twisting downward. To the north is a small opening.
+
+
+> n
+
+Mine Entrance
+You are standing at the entrance of what might have been a coal mine. The shaft enters the west wall, and there is another exit on the south end of the room.
+
+
+> w
+
+Squeaky Room
+You are in a small room. Strange squeaky sounds may be heard coming from the passage at the north end. You may also escape to the east.
+
+
+> n
+
+Bat Room
+You are in a small room which has doors only to the east and south. A large vampire bat, hanging from the ceiling, swoops down at you!
+
+There is an exquisite jade figurine here.
 
 
 > e
 
-Dam
-You are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.
+Shaft Room
+This is a large room, in the middle of which is a small shaft descending through the floor into darkness below. To the west and the north are exits from this room. Constructed over the top of the shaft is a metal framework to which a heavy iron chain is attached.
 
-The sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over the top of the now abandoned dam.
-
-There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green plastic bubble.
+At the end of the chain is a basket.
 
 
-> n
-
-Dam Lobby
-This room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked "Private", and there is a path leading south over the top of the dam.
-
-Some guidebooks entitled "Flood Control Dam #3" are on the reception desk.
-
-There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
+> lower basket
+The basket is lowered to the bottom of the shaft.
 
 
-> n
-
-Maintenance Room
-This is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways to the west and south.
-
-There is a group of tool chests here.
-
-There is a wrench here.
-
-There is a screwdriver here.
-
-There is an object which looks like a tube of toothpaste here.
-
-
-> push yellow button
-Click.
-
-
-> take wrench
-Taken.
-
-
-> s
-
-Dam Lobby
-This room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked "Private", and there is a path leading south over the top of the dam.
-
-Some guidebooks entitled "Flood Control Dam #3" are on the reception desk.
-
-There is a matchbook whose cover says "Visit Beautiful FCD#3" here.
-
-
-> s
-
-Dam
-You are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.
-
-The sluice gates on the dam are closed. Behind the dam, there can be seen a wide reservoir. Water is pouring over the top of the now abandoned dam.
-
-There is a control panel here, on which a large metal bolt is mounted. Directly above the bolt is a small green plastic bubble which is glowing serenely.
-
-
-> turn bolt
-The sluice gates open and water pours through the dam.
-
-
-> d
-
-Dam Base
-You are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream.
-
-There is a folded pile of plastic here which has a small valve attached.
+> raise basket
+The basket is raised to the top of the shaft.
 
 
 > score
-Your score is 40 (total of 350 points), in 33 moves.
+Your score is 40 (total of 350 points), in 32 moves.
 This gives you the rank of Amateur Adventurer.

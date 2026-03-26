@@ -168,7 +168,3 @@ Taken.
 > score
 Your score is 50 (total of 350 points), in 24 moves.
 This gives you the rank of Novice Adventurer.
-
-
-> quit
-Are you sure you want to quit? 

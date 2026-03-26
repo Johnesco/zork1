@@ -103,7 +103,3 @@ Taken.
 > score
 Your score is 10 (total of 350 points), in 13 moves.
 This gives you the rank of Beginner.
-
-
-> quit
-Are you sure you want to quit? 

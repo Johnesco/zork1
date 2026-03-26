@@ -1,8 +1,8 @@
 {
   "game": "zork1",
-  "timestamp": "2026-03-26T08:26:54+00:00",
+  "timestamp": "2026-03-26T08:08:37+00:00",
   "binary_hash": "ea21565b",
-  "duration_seconds": 15.4,
+  "duration_seconds": 15.8,
   "layers": {
     "plotex": {
       "status": "skip",
@@ -23,7 +23,7 @@
         "passed": 474,
         "failed": 0
       },
-      "duration": 15.2,
+      "duration": 15.6,
       "primary_walkthrough": "full-run"
     }
   },

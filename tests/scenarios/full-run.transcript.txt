@@ -2816,6 +2816,3 @@ Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?
  Please give one of the answers above.
 
 Would you like to RESTART, RESTORE a saved game, QUIT or UNDO the last command?
-
-> quit
- 

@@ -246,7 +246,3 @@ A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre 
 > score
 Your score is 50 (total of 350 points), in 32 moves.
 This gives you the rank of Novice Adventurer.
-
-
-> quit
-Are you sure you want to quit? 

@@ -58,7 +58,3 @@ You are facing the north side of a white house. There is no door here, and all t
 > score
 Your score is 0 (total of 350 points), in 7 moves.
 This gives you the rank of Beginner.
-
-
-> quit
-Are you sure you want to quit? 

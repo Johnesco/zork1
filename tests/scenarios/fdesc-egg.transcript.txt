@@ -47,7 +47,3 @@ In the bird's nest is a large egg encrusted with precious jewels, apparently sca
 > score
 Your score is 0 (total of 350 points), in 5 moves.
 This gives you the rank of Beginner.
-
-
-> quit
-Are you sure you want to quit? 

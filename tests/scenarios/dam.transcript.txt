@@ -236,7 +236,3 @@ The sluice gates open and water pours through the dam.
 > score
 Your score is 40 (total of 350 points), in 32 moves.
 This gives you the rank of Amateur Adventurer.
-
-
-> quit
-Are you sure you want to quit? 
