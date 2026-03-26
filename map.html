@@ -1,495 +1,621 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zork I &mdash; Interactive Map</title>
+<meta charset="utf-8">
+<title>Map — Zork I - The Great Underground Empire</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#1a1a2e;color:#e0e0e0;font-family:'Segoe UI',Arial,sans-serif;overflow:hidden;height:100vh}
-#controls{background:#16213e;padding:8px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #333;z-index:10;position:relative;flex-wrap:wrap}
-#controls label{font-size:13px;color:#aaa}
-#controls select,#controls input,#controls button{background:#0f3460;color:#e0e0e0;border:1px solid #444;padding:4px 8px;border-radius:4px;font-size:13px;cursor:pointer}
-#controls button:hover{background:#1a4a7a}
-#controls input{width:160px;cursor:text}
-.title{font-size:15px;font-weight:600;color:#e0c080;margin-right:16px}
-#status{margin-left:auto;font-size:12px;color:#888}
-#graph-container{width:100%;height:calc(100vh - 44px);overflow:hidden;cursor:grab;position:relative}
-#graph-container.dragging{cursor:grabbing}
-#graph-container svg{position:absolute;transform-origin:0 0}
-#loading{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:18px;color:#666}
-#legend{position:absolute;bottom:12px;left:12px;background:rgba(22,33,62,0.92);padding:10px 14px;border-radius:6px;font-size:11px;line-height:1.9;border:1px solid #333}
-.leg{display:flex;align-items:center;gap:6px}
-.sw{display:inline-block;width:14px;height:14px;border-radius:2px;border:1px solid #666}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  background: #0a0a0a;
+  color: #d4c5a9;
+  font-family: Georgia, "Times New Roman", serif;
+  overflow: hidden;
+}
+
+/* --- Layout --- */
+.container {
+  display: flex;
+  height: 100%;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+  width: 280px;
+  min-width: 280px;
+  background: #0e0e0c;
+  border-right: 1px solid #1e1a14;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid #1e1a14;
+}
+
+.sidebar-header h1 {
+  font-size: 0.95em;
+  color: #c4b48a;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.sidebar-header a {
+  font-size: 0.8em;
+  color: #887755;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.sidebar-header a:hover {
+  color: #aa9966;
+  border-bottom-color: #aa9966;
+}
+
+.stats {
+  padding: 10px 16px;
+  border-bottom: 1px solid #1e1a14;
+  font-size: 0.8em;
+  color: #776655;
+  line-height: 1.6;
+}
+
+.stats strong {
+  color: #aa9966;
+}
+
+.room-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+
+.room-list::-webkit-scrollbar { width: 6px; }
+.room-list::-webkit-scrollbar-track { background: #0e0e0c; }
+.room-list::-webkit-scrollbar-thumb { background: #2a2418; border-radius: 3px; }
+
+.room-item {
+  display: block;
+  padding: 6px 16px;
+  font-size: 0.85em;
+  color: #998866;
+  text-decoration: none;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.1s, color 0.1s;
+}
+
+.room-item:hover {
+  background: #151510;
+  color: #c4b48a;
+}
+
+.room-item.active {
+  background: #18160f;
+  color: #e8d090;
+  border-left-color: #e8d090;
+}
+
+.room-item .visit-count {
+  font-size: 0.8em;
+  color: #554433;
+  margin-left: 4px;
+}
+
+.room-item.start-room::before {
+  content: "\25B6 ";
+  font-size: 0.7em;
+  color: #8bab6e;
+}
+
+/* --- Map area --- */
+.map-area {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  background: #0a0a0a;
+}
+
+.map-toolbar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+
+.map-toolbar button {
+  background: #1a1810;
+  border: 1px solid #2a2418;
+  border-radius: 4px;
+  color: #887755;
+  font-family: "SF Mono", "Fira Code", Consolas, "Courier New", monospace;
+  font-size: 0.85em;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.map-toolbar button:hover {
+  background: #2a2010;
+  color: #c4b48a;
+  border-color: #4a3a20;
+}
+
+.map-svg {
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+}
+
+.map-svg:active {
+  cursor: grabbing;
+}
+
+/* SVG room styling */
+.map-svg .room-box {
+  cursor: pointer;
+}
+
+.map-svg .room-box rect {
+  transition: stroke 0.15s, fill 0.15s;
+}
+
+.map-svg .room-box:hover rect {
+  stroke: #aa9966;
+  fill: #2a2418;
+}
+
+.map-svg .room-box.highlighted rect {
+  stroke: #e8d090;
+  fill: #2a2418;
+  stroke-width: 2;
+}
+
+.map-svg .room-box.start rect {
+  stroke: #8bab6e;
+}
+
+.map-svg .edge-line {
+  transition: stroke 0.15s;
+}
+
+.map-svg .edge-line.highlighted {
+  stroke: #e8d090 !important;
+  stroke-width: 2;
+}
+
+/* --- Floor labels --- */
+.floor-label {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  fill: #554433;
+  font-style: italic;
+}
+
+/* --- Tooltip --- */
+.tooltip {
+  position: absolute;
+  background: #1a1810;
+  border: 1px solid #3a3020;
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 0.8em;
+  color: #d4c5a9;
+  pointer-events: none;
+  z-index: 20;
+  max-width: 300px;
+  display: none;
+}
+
+.tooltip .tt-name {
+  color: #e8d8b0;
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.tooltip .tt-desc {
+  color: #998866;
+  font-size: 0.9em;
+  line-height: 1.3;
+}
+
+/* --- Responsive --- */
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+}
 </style>
 </head>
 <body>
-<div id="controls">
- <span class="title">Zork I Map</span>
- <label for="engine">Engine:</label>
- <select id="engine">
-  <option value="neato" selected>neato (compass-accurate)</option>
-  <option value="fdp">fdp (force-directed)</option>
-  <option value="sfdp">sfdp (scaled force)</option>
-  <option value="dot">dot (hierarchical)</option>
- </select>
- <label for="search">Search:</label>
- <input id="search" type="text" placeholder="Room name...">
- <button id="fit-btn">Fit</button>
- <button id="reset-btn">Reset</button>
- <span id="status">Loading engine&hellip;</span>
-</div>
-<div id="graph-container"><div id="loading">Loading Graphviz engine&hellip;</div></div>
-<div id="legend">
- <div class="leg"><span class="sw" style="background:#2a2a3d"></span> Dark room</div>
- <div class="leg"><span class="sw" style="background:#f5f0e1"></span> Light room</div>
- <div class="leg"><span class="sw" style="background:#4caf50;border-color:#4caf50"></span> Start room</div>
- <div class="leg"><span style="color:#888;font-size:13px">&#x25C0;&#x2500;&#x25B6;</span> Bidirectional <span style="color:#aaa;font-size:10px">(N/S/E/W labels)</span></div>
- <div class="leg"><span style="color:#e6a23c;font-size:13px">&#x2500;&#x2500;&#x25B6;</span> Asymmetric <span style="color:#e6a23c;font-size:10px">(return blocked &#x2717;)</span></div>
- <div class="leg"><span style="color:#cc6666;font-size:13px">&#x2500;&#x2500;&#x25B6;</span> One-way <span style="color:#cc6666;font-size:10px">(no return)</span></div>
- <div class="leg"><span style="color:#e6882a;font-size:13px">&#x21BA;</span> Self-loop</div>
- <div class="leg"><span style="color:#888">- - -</span> Conditional</div>
+
+<div class="container">
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h1>Map</h1>
+      <a href="./">&larr; Zork I - The Great Underground Empire</a>
+    </div>
+    <div class="stats">
+      <strong>69</strong> rooms &middot; <strong>77</strong> connections
+    </div>
+    <div class="room-list" id="room-list"></div>
+  </div>
+
+  <div class="map-area">
+    <div class="map-toolbar">
+      <button id="btn-zoom-in" title="Zoom in (+)">+</button>
+      <button id="btn-zoom-out" title="Zoom out (-)">−</button>
+      <button id="btn-reset" title="Reset view (R)">Reset</button>
+    </div>
+    <svg class="map-svg" id="map-svg">
+      <defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5"
+          markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#776655"/>
+  </marker>
+  <marker id="arrow-hi" viewBox="0 0 10 10" refX="10" refY="5"
+          markerWidth="8" markerHeight="6" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#e8d090"/>
+  </marker>
+</defs>
+<line x1="1200.0" y1="831.0" x2="1200.0" y2="849.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="west-of-house" data-to="north-of-house"/>
+<line x1="1200.0" y1="711.0" x2="1200.0" y2="729.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="north-of-house" data-to="forest-path"/>
+<line x1="1200.0" y1="591.0" x2="1200.0" y2="609.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="forest-path" data-to="up-a-tree"/>
+<line x1="1269.0" y1="780.0" x2="1291.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="north-of-house" data-to="behind-house"/>
+<line x1="1291.0" y1="780.0" x2="1109.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="behind-house" data-to="kitchen"/>
+<line x1="971.0" y1="780.0" x2="949.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="kitchen" data-to="living-room"/>
+<line x1="1001.7256864604592" y1="722.5885296906888" x2="918.2743135395408" y2="597.4114703093112" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="kitchen" data-to="attic"/>
+<line x1="880.0" y1="849.0" x2="880.0" y2="831.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="living-room" data-to="east-of-chasm"/>
+<line x1="949.0" y1="900.0" x2="971.0" y2="900.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="east-of-chasm" data-to="gallery"/>
+<line x1="880.0" y1="969.0" x2="880.0" y2="951.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="east-of-chasm" data-to="cellar"/>
+<line x1="949.0" y1="1020.0" x2="1131.0" y2="1020.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="cellar" data-to="east-west-passage"/>
+<line x1="1269.0" y1="1020.0" x2="1291.0" y2="1020.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="east-west-passage" data-to="round-room"/>
+<line x1="1429.0" y1="1020.0" x2="1451.0" y2="1020.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="round-room" data-to="loud-room"/>
+<line x1="1398.2743135395408" y1="962.5885296906888" x2="1481.7256864604592" y2="837.4114703093112" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="round-room" data-to="north-south-passage"/>
+<line x1="1575.2" y1="738.6" x2="1624.8" y2="701.4" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="north-south-passage" data-to="deep-canyon"/>
+<line x1="1749.0" y1="660.0" x2="1771.0" y2="660.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="deep-canyon" data-to="dam"/>
+<line x1="1840.0" y1="591.0" x2="1840.0" y2="609.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="dam" data-to="dam-lobby"/>
+<line x1="1840.0" y1="471.0" x2="1840.0" y2="489.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="dam-lobby" data-to="maintenance-room"/>
+<line x1="1771.0" y1="660.0" x2="1749.0" y2="660.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="dam" data-to="deep-canyon"/>
+<line x1="1131.0" y1="1020.0" x2="789.0" y2="1020.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="east-west-passage" data-to="maze"/>
+<line x1="775.2" y1="1061.4" x2="824.8" y2="1098.6" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="maze" data-to="cyclops-room"/>
+<line x1="949.0" y1="1140.0" x2="971.0" y2="1140.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="cyclops-room" data-to="strange-passage"/>
+<line x1="1011.9764458423122" y1="1076.9470031452022" x2="908.0235541576878" y2="843.0529968547977" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="strange-passage" data-to="living-room"/>
+<line x1="880.0" y1="849.0" x2="880.0" y2="951.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="living-room" data-to="cellar"/>
+<line x1="1415.2" y1="1061.4" x2="1464.8" y2="1098.6" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="round-room" data-to="engravings-cave"/>
+<line x1="1589.0" y1="1140.0" x2="1611.0" y2="1140.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="engravings-cave" data-to="dome-room"/>
+<line x1="1680.0" y1="1209.0" x2="1680.0" y2="1191.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="dome-room" data-to="torch-room"/>
+<line x1="1680.0" y1="1329.0" x2="1680.0" y2="1311.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="torch-room" data-to="temple"/>
+<line x1="1680.0" y1="1449.0" x2="1680.0" y2="1431.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="temple" data-to="altar"/>
+<line x1="1680.0" y1="1569.0" x2="1680.0" y2="1671.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="altar" data-to="cave"/>
+<line x1="1680.0" y1="1809.0" x2="1680.0" y2="1791.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="cave" data-to="entrance-to-hades"/>
+<line x1="1680.0" y1="1929.0" x2="1680.0" y2="1911.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="entrance-to-hades" data-to="land-of-the-dead"/>
+<line x1="1641.7256864604592" y1="1682.5885296906888" x2="1398.2743135395408" y2="1317.4114703093112" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="cave" data-to="mirror-room"/>
+<line x1="1360.0" y1="1191.0" x2="1360.0" y2="1209.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="mirror-room" data-to="narrow-passage"/>
+<line x1="1360.0" y1="1071.0" x2="1360.0" y2="1089.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="narrow-passage" data-to="round-room"/>
+<line x1="1680.0" y1="1449.0" x2="1680.0" y2="1551.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="temple" data-to="egyptian-room"/>
+<line x1="1638.1830181468629" y1="1445.1152113177575" x2="1081.8169818531371" y2="714.8847886822424" stroke="#3a3520" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow)" class="edge-line" data-from="altar" data-to="forest"/>
+<text x="1360.0" y="1068.0" text-anchor="middle" fill="#665544" font-family="sans-serif" font-size="10" font-style="italic">pray</text>
+<line x1="1040.0" y1="591.0" x2="1040.0" y2="609.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="forest" data-to="clearing"/>
+<line x1="1109.0" y1="540.0" x2="1291.0" y2="540.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="clearing" data-to="canyon-view"/>
+<line x1="1360.0" y1="609.0" x2="1360.0" y2="591.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="canyon-view" data-to="rocky-ledge"/>
+<line x1="1429.0" y1="660.0" x2="1451.0" y2="660.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="rocky-ledge" data-to="canyon-bottom"/>
+<line x1="1520.0" y1="591.0" x2="1520.0" y2="609.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="canyon-bottom" data-to="end-of-rainbow"/>
+<line x1="1520.0" y1="609.0" x2="1520.0" y2="591.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="end-of-rainbow" data-to="canyon-bottom"/>
+<line x1="1291.0" y1="540.0" x2="1109.0" y2="540.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="canyon-view" data-to="clearing"/>
+<line x1="1109.0" y1="660.0" x2="1131.0" y2="660.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="forest" data-to="forest-path"/>
+<line x1="1624.8" y1="618.6" x2="1415.2" y2="461.4" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="deep-canyon" data-to="reservoir-south"/>
+<line x1="1360.0" y1="351.0" x2="1360.0" y2="369.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="reservoir-south" data-to="reservoir"/>
+<line x1="1360.0" y1="231.0" x2="1360.0" y2="249.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="reservoir" data-to="reservoir-north"/>
+<line x1="1360.0" y1="111.0" x2="1360.0" y2="129.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="reservoir-north" data-to="atlantis-room"/>
+<line x1="1291.0" y1="780.0" x2="1269.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="behind-house" data-to="north-of-house"/>
+<line x1="1304.8" y1="1218.6" x2="1255.2" y2="1181.4" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="mirror-room" data-to="cold-passage"/>
+<line x1="1135.3932867477358" y1="1164.227517469599" x2="944.6067132522641" y2="1235.772482530401" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="cold-passage" data-to="slide-room"/>
+<line x1="824.8" y1="1218.6" x2="775.2" y2="1181.4" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="slide-room" data-to="mine-entrance"/>
+<line x1="651.0" y1="1140.0" x2="629.0" y2="1140.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="mine-entrance" data-to="squeaky-room"/>
+<line x1="560.0" y1="1071.0" x2="560.0" y2="1089.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="squeaky-room" data-to="bat-room"/>
+<line x1="560.0" y1="951.0" x2="560.0" y2="969.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="bat-room" data-to="shaft-room"/>
+<line x1="560.0" y1="831.0" x2="560.0" y2="849.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="shaft-room" data-to="smelly-room"/>
+<line x1="491.0" y1="780.0" x2="469.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="smelly-room" data-to="gas-room"/>
+<line x1="469.0" y1="780.0" x2="651.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="gas-room" data-to="coal-mine"/>
+<line x1="720.0" y1="849.0" x2="720.0" y2="831.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="coal-mine" data-to="ladder-top"/>
+<line x1="651.0" y1="900.0" x2="469.0" y2="900.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="ladder-top" data-to="ladder-bottom"/>
+<line x1="400.0" y1="969.0" x2="400.0" y2="951.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="ladder-bottom" data-to="dead-end"/>
+<line x1="651.0" y1="780.0" x2="469.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="coal-mine" data-to="gas-room"/>
+<line x1="331.0" y1="900.0" x2="309.0" y2="900.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="ladder-bottom" data-to="timber-room"/>
+<line x1="171.0" y1="900.0" x2="149.0" y2="900.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="timber-room" data-to="drafty-room"/>
+<line x1="80.0" y1="969.0" x2="80.0" y2="951.0" stroke="#3a3520" stroke-width="1.5" class="edge-line" data-from="drafty-room" data-to="machine-room"/>
+<line x1="880.0" y1="1191.0" x2="880.0" y2="849.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="slide-room" data-to="living-room"/>
+<line x1="1840.0" y1="729.0" x2="1840.0" y2="711.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="dam" data-to="dam-base"/>
+<line x1="1909.0" y1="780.0" x2="1931.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow)" class="edge-line" data-from="dam-base" data-to="time-passes"/>
+<text x="1920.0" y="768.0" text-anchor="middle" fill="#665544" font-family="sans-serif" font-size="10" font-style="italic">wait</text>
+<line x1="2069.0" y1="780.0" x2="2091.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="time-passes" data-to="sandy-beach-in-the-magic-boat"/>
+<line x1="2229.0" y1="780.0" x2="2251.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="sandy-beach-in-the-magic-boat" data-to="sandy-cave"/>
+<line x1="2389.0" y1="780.0" x2="2411.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="sandy-cave" data-to="sandy-beach"/>
+<line x1="2549.0" y1="780.0" x2="2571.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="sandy-beach" data-to="shore"/>
+<line x1="2709.0" y1="780.0" x2="2731.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="shore" data-to="aragain-falls"/>
+<line x1="2869.0" y1="780.0" x2="2891.0" y2="780.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="aragain-falls" data-to="on-the-rainbow"/>
+<line x1="2891.938819255582" y1="768.6564698759304" x2="1588.061180744418" y2="551.3435301240696" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="on-the-rainbow" data-to="end-of-rainbow"/>
+<line x1="1095.2" y1="581.4" x2="1304.8" y2="738.6" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="clearing" data-to="behind-house"/>
+<line x1="811.0" y1="1020.0" x2="789.0" y2="1020.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="cellar" data-to="maze"/>
+<line x1="1360.0" y1="849.0" x2="1360.0" y2="831.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="behind-house" data-to="south-of-house"/>
+<line x1="1291.0" y1="900.0" x2="1269.0" y2="900.0" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="south-of-house" data-to="west-of-house"/>
+<line x1="1144.8" y1="941.4" x2="1095.2" y2="978.6" stroke="#3a3520" stroke-width="1.5" marker-end="url(#arrow)" class="edge-line" data-from="west-of-house" data-to="stone-barrow"/>
+<line x1="1040.0" y1="1089.0" x2="1040.0" y2="1191.0" stroke="#3a3520" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow)" class="edge-line" data-from="stone-barrow" data-to="inside-the-barrow"/>
+<text x="1040.0" y="1128.0" text-anchor="middle" fill="#665544" font-family="sans-serif" font-size="10" font-style="italic">enter barrow</text>
+<g class="room-box start" data-room="west-of-house"><rect x="1135" y="878" width="130" height="44" rx="6" ry="6" fill="#1a1810" stroke="#8bab6e" stroke-width="1.5"/><text x="1200" y="901" text-anchor="middle" dominant-baseline="central" fill="#e8d8b0" font-family="Georgia, serif" font-size="12">West of House</text></g>
+<g class="room-box" data-room="north-of-house"><rect x="1135" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1200" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">North of House</text></g>
+<g class="room-box" data-room="forest-path"><rect x="1135" y="638" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1200" y="661" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Forest Path</text></g>
+<g class="room-box" data-room="up-a-tree"><rect x="1135" y="518" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1200" y="541" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Up a Tree</text></g>
+<g class="room-box" data-room="behind-house"><rect x="1295" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Behind House</text></g>
+<g class="room-box" data-room="kitchen"><rect x="975" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1040" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Kitchen</text></g>
+<g class="room-box" data-room="living-room"><rect x="815" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="880" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Living Room</text></g>
+<g class="room-box" data-room="attic"><rect x="815" y="518" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="880" y="541" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Attic</text></g>
+<g class="room-box" data-room="east-of-chasm"><rect x="815" y="878" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="880" y="901" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">East of Chasm</text></g>
+<g class="room-box" data-room="gallery"><rect x="975" y="878" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1040" y="901" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Gallery</text></g>
+<g class="room-box" data-room="cellar"><rect x="815" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="880" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Cellar</text></g>
+<g class="room-box" data-room="east-west-passage"><rect x="1135" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1200" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">East-West Passa…</text></g>
+<g class="room-box" data-room="round-room"><rect x="1295" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Round Room</text></g>
+<g class="room-box" data-room="loud-room"><rect x="1455" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1520" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Loud Room</text></g>
+<g class="room-box" data-room="north-south-passage"><rect x="1455" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1520" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">North-South Pas…</text></g>
+<g class="room-box" data-room="deep-canyon"><rect x="1615" y="638" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="661" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Deep Canyon</text></g>
+<g class="room-box" data-room="dam"><rect x="1775" y="638" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1840" y="661" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Dam</text></g>
+<g class="room-box" data-room="dam-lobby"><rect x="1775" y="518" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1840" y="541" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Dam Lobby</text></g>
+<g class="room-box" data-room="maintenance-room"><rect x="1775" y="398" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1840" y="421" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Maintenance Room</text></g>
+<g class="room-box" data-room="maze"><rect x="655" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="720" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Maze</text></g>
+<g class="room-box" data-room="cyclops-room"><rect x="815" y="1118" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="880" y="1141" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Cyclops Room</text></g>
+<g class="room-box" data-room="strange-passage"><rect x="975" y="1118" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1040" y="1141" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Strange Passage</text></g>
+<g class="room-box" data-room="engravings-cave"><rect x="1455" y="1118" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1520" y="1141" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Engravings Cave</text></g>
+<g class="room-box" data-room="dome-room"><rect x="1615" y="1118" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="1141" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Dome Room</text></g>
+<g class="room-box" data-room="torch-room"><rect x="1615" y="1238" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="1261" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Torch Room</text></g>
+<g class="room-box" data-room="temple"><rect x="1615" y="1358" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="1381" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Temple</text></g>
+<g class="room-box" data-room="altar"><rect x="1615" y="1478" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="1501" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Altar</text></g>
+<g class="room-box" data-room="cave"><rect x="1615" y="1718" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="1741" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Cave</text></g>
+<g class="room-box" data-room="entrance-to-hades"><rect x="1615" y="1838" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="1861" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Entrance to Had…</text></g>
+<g class="room-box" data-room="land-of-the-dead"><rect x="1615" y="1958" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="1981" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Land of the Dead</text></g>
+<g class="room-box" data-room="mirror-room"><rect x="1295" y="1238" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="1261" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Mirror Room</text></g>
+<g class="room-box" data-room="narrow-passage"><rect x="1295" y="1118" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="1141" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Narrow Passage</text></g>
+<g class="room-box" data-room="egyptian-room"><rect x="1615" y="1598" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1680" y="1621" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Egyptian Room</text></g>
+<g class="room-box" data-room="forest"><rect x="975" y="638" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1040" y="661" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Forest</text></g>
+<g class="room-box" data-room="clearing"><rect x="975" y="518" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1040" y="541" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Clearing</text></g>
+<g class="room-box" data-room="canyon-view"><rect x="1295" y="518" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="541" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Canyon View</text></g>
+<g class="room-box" data-room="rocky-ledge"><rect x="1295" y="638" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="661" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Rocky Ledge</text></g>
+<g class="room-box" data-room="canyon-bottom"><rect x="1455" y="638" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1520" y="661" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Canyon Bottom</text></g>
+<g class="room-box" data-room="end-of-rainbow"><rect x="1455" y="518" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1520" y="541" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">End of Rainbow</text></g>
+<g class="room-box" data-room="reservoir-south"><rect x="1295" y="398" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="421" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Reservoir South</text></g>
+<g class="room-box" data-room="reservoir"><rect x="1295" y="278" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="301" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Reservoir</text></g>
+<g class="room-box" data-room="reservoir-north"><rect x="1295" y="158" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="181" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Reservoir North</text></g>
+<g class="room-box" data-room="atlantis-room"><rect x="1295" y="38" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="61" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Atlantis Room</text></g>
+<g class="room-box" data-room="cold-passage"><rect x="1135" y="1118" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1200" y="1141" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Cold Passage</text></g>
+<g class="room-box" data-room="slide-room"><rect x="815" y="1238" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="880" y="1261" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Slide Room</text></g>
+<g class="room-box" data-room="mine-entrance"><rect x="655" y="1118" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="720" y="1141" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Mine Entrance</text></g>
+<g class="room-box" data-room="squeaky-room"><rect x="495" y="1118" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="560" y="1141" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Squeaky Room</text></g>
+<g class="room-box" data-room="bat-room"><rect x="495" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="560" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Bat Room</text></g>
+<g class="room-box" data-room="shaft-room"><rect x="495" y="878" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="560" y="901" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Shaft Room</text></g>
+<g class="room-box" data-room="smelly-room"><rect x="495" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="560" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Smelly Room</text></g>
+<g class="room-box" data-room="gas-room"><rect x="335" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="400" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Gas Room</text></g>
+<g class="room-box" data-room="coal-mine"><rect x="655" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="720" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Coal Mine</text></g>
+<g class="room-box" data-room="ladder-top"><rect x="655" y="878" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="720" y="901" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Ladder Top</text></g>
+<g class="room-box" data-room="ladder-bottom"><rect x="335" y="878" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="400" y="901" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Ladder Bottom</text></g>
+<g class="room-box" data-room="dead-end"><rect x="335" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="400" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Dead End</text></g>
+<g class="room-box" data-room="timber-room"><rect x="175" y="878" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="240" y="901" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Timber Room</text></g>
+<g class="room-box" data-room="drafty-room"><rect x="15" y="878" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="80" y="901" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Drafty Room</text></g>
+<g class="room-box" data-room="machine-room"><rect x="15" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="80" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Machine Room</text></g>
+<g class="room-box" data-room="dam-base"><rect x="1775" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1840" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Dam Base</text></g>
+<g class="room-box" data-room="time-passes"><rect x="1935" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="2000" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Time passes...</text></g>
+<g class="room-box" data-room="sandy-beach-in-the-magic-boat"><rect x="2095" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="2160" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Sandy Beach (in…</text></g>
+<g class="room-box" data-room="sandy-cave"><rect x="2255" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="2320" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Sandy Cave</text></g>
+<g class="room-box" data-room="sandy-beach"><rect x="2415" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="2480" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Sandy Beach</text></g>
+<g class="room-box" data-room="shore"><rect x="2575" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="2640" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Shore</text></g>
+<g class="room-box" data-room="aragain-falls"><rect x="2735" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="2800" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Aragain Falls</text></g>
+<g class="room-box" data-room="on-the-rainbow"><rect x="2895" y="758" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="2960" y="781" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">On the Rainbow</text></g>
+<g class="room-box" data-room="south-of-house"><rect x="1295" y="878" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1360" y="901" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">South of House</text></g>
+<g class="room-box" data-room="stone-barrow"><rect x="975" y="998" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1040" y="1021" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Stone Barrow</text></g>
+<g class="room-box" data-room="inside-the-barrow"><rect x="975" y="1238" width="130" height="44" rx="6" ry="6" fill="#141210" stroke="#3a3520" stroke-width="1"/><text x="1040" y="1261" text-anchor="middle" dominant-baseline="central" fill="#c4b48a" font-family="Georgia, serif" font-size="12">Inside the Barr…</text></g>
+    </svg>
+    <div class="tooltip" id="tooltip">
+      <div class="tt-name"></div>
+      <div class="tt-desc"></div>
+    </div>
+  </div>
 </div>
 
-<script src="https://unpkg.com/@viz-js/viz@3.4.0/lib/viz-standalone.js"></script>
 <script>
-const DOT = `digraph ZorkI {
-    graph [splines=curved, sep="+15", esep="+8",
-           outputorder=edgesfirst, bgcolor="transparent",
-           nodesep=0.8, ranksep=1.0];
-    node [shape=box, style="rounded,filled",
-          fontname="Segoe UI, Arial, sans-serif", fontsize=9,
-          fixedsize=false, margin="0.11,0.055"];
-    edge [fontname="Segoe UI, Arial, sans-serif", fontsize=7,
-          color="#888888", penwidth=1.2, labeldistance=2.0,
-          labelfontsize=7];
+var MAP_DATA = {"title": "Zork I - The Great Underground Empire", "startRoom": "west-of-house", "rooms": [{"id": "west-of-house", "name": "West of House", "description": "You are standing in an open field west of a white house, with a boarded front door.", "visits": 2, "x": 7, "y": 7, "cx": 1200, "cy": 900}, {"id": "north-of-house", "name": "North of House", "description": "You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.", "visits": 7, "x": 7, "y": 6, "cx": 1200, "cy": 780}, {"id": "forest-path", "name": "Forest Path", "description": "This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.", "visits": 6, "x": 7, "y": 5, "cx": 1200, "cy": 660}, {"id": "up-a-tree", "name": "Up a Tree", "description": "You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.", "visits": 1, "x": 7, "y": 4, "cx": 1200, "cy": 540}, {"id": "behind-house", "name": "Behind House", "description": "You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is slightly ajar.", "visits": 8, "x": 8, "y": 6, "cx": 1360, "cy": 780}, {"id": "kitchen", "name": "Kitchen", "description": "You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.", "visits": 10, "x": 6, "y": 6, "cx": 1040, "cy": 780}, {"id": "living-room", "name": "Living Room", "description": "You are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.", "visits": 12, "x": 5, "y": 6, "cx": 880, "cy": 780}, {"id": "attic", "name": "Attic", "description": "This is the attic, a low-ceilinged room thick with dust and the faint smell of old wood. Exposed rafters run overhead, and pale light filters through cracks in the boarded-up windows. The only exit is a stairway leading down.", "visits": 1, "x": 5, "y": 4, "cx": 880, "cy": 540}, {"id": "east-of-chasm", "name": "East of Chasm", "description": "You are on the east edge of a chasm, the bottom of which cannot be seen. A narrow passage goes north, and the path you are on continues to the east.", "visits": 3, "x": 5, "y": 7, "cx": 880, "cy": 900}, {"id": "gallery", "name": "Gallery", "description": "This is an art gallery. Most of the paintings have been stolen by vandals with exceptional taste. The vandals left through either the north or west exits.", "visits": 1, "x": 6, "y": 7, "cx": 1040, "cy": 900}, {"id": "cellar", "name": "Cellar", "description": "You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.", "visits": 8, "x": 5, "y": 8, "cx": 880, "cy": 1020}, {"id": "east-west-passage", "name": "East-West Passage", "description": "This is a narrow east-west passageway. There is a narrow stairway leading down at the north end of the room.", "visits": 9, "x": 7, "y": 8, "cx": 1200, "cy": 1020}, {"id": "round-room", "name": "Round Room", "description": "This is a circular stone room with passages in all directions. Several of them have unfortunately been blocked by cave-ins.", "visits": 10, "x": 8, "y": 8, "cx": 1360, "cy": 1020}, {"id": "loud-room", "name": "Loud Room", "description": "This is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it difficult even to think.", "visits": 1, "x": 9, "y": 8, "cx": 1520, "cy": 1020}, {"id": "north-south-passage", "name": "North-South Passage", "description": "This is a high north-south passage, which forks to the northeast.", "visits": 5, "x": 9, "y": 6, "cx": 1520, "cy": 780}, {"id": "deep-canyon", "name": "Deep Canyon", "description": "You are on the south edge of a deep canyon. Passages lead off to the east, northwest and southwest. A stairway leads down. You can hear the sound of flowing water from below.", "visits": 5, "x": 10, "y": 5, "cx": 1680, "cy": 660}, {"id": "dam", "name": "Dam", "description": "You are standing on the top of Flood Control Dam #3, which was quite a tourist attraction in times far distant. There are paths to the north, south, and west, and a scramble down.", "visits": 3, "x": 11, "y": 5, "cx": 1840, "cy": 660}, {"id": "dam-lobby", "name": "Dam Lobby", "description": "This room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked \"Private\", and there is a path leading south over the top of the dam.", "visits": 2, "x": 11, "y": 4, "cx": 1840, "cy": 540}, {"id": "maintenance-room", "name": "Maintenance Room", "description": "This is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways to the west and south.", "visits": 1, "x": 11, "y": 3, "cx": 1840, "cy": 420}, {"id": "maze", "name": "Maze", "description": "This is part of a maze of twisty little passages, all alike.", "visits": 28, "x": 4, "y": 8, "cx": 720, "cy": 1020}, {"id": "cyclops-room", "name": "Cyclops Room", "description": "This room has an exit on the northwest, and a staircase leading up.", "visits": 6, "x": 5, "y": 9, "cx": 880, "cy": 1140}, {"id": "strange-passage", "name": "Strange Passage", "description": "This is a long passage. To the west is one entrance. On the east there is an old wooden door, with a large opening in it (about cyclops sized).", "visits": 4, "x": 6, "y": 9, "cx": 1040, "cy": 1140}, {"id": "engravings-cave", "name": "Engravings Cave", "description": "You have entered a low cave with passages leading northwest and east.", "visits": 2, "x": 9, "y": 9, "cx": 1520, "cy": 1140}, {"id": "dome-room", "name": "Dome Room", "description": "You are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing which circles the dome.", "visits": 2, "x": 10, "y": 9, "cx": 1680, "cy": 1140}, {"id": "torch-room", "name": "Torch Room", "description": "This is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal. A piece of rope descends from the railing above, ending some five feet above your head.", "visits": 2, "x": 10, "y": 10, "cx": 1680, "cy": 1260}, {"id": "temple", "name": "Temple", "description": "This is the north end of a large temple. On the east wall is an ancient inscription, probably a prayer in a long-forgotten language. Below the prayer is a staircase leading down. The west wall is solid granite. The exit to the north end of the room is through huge marble pillars.", "visits": 3, "x": 10, "y": 11, "cx": 1680, "cy": 1380}, {"id": "altar", "name": "Altar", "description": "This is the south end of a large temple. In front of you is what appears to be an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it.", "visits": 2, "x": 10, "y": 12, "cx": 1680, "cy": 1500}, {"id": "cave", "name": "Cave", "description": "This is a tiny cave with entrances west and north, and a dark, forbidding staircase leading down.", "visits": 2, "x": 10, "y": 14, "cx": 1680, "cy": 1740}, {"id": "entrance-to-hades", "name": "Entrance to Hades", "description": "You are outside a large gateway, on which is inscribed", "visits": 2, "x": 10, "y": 15, "cx": 1680, "cy": 1860}, {"id": "land-of-the-dead", "name": "Land of the Dead", "description": "You have entered the Land of the Living Dead. Thousands of lost souls can be heard weeping and moaning. In the corner are stacked the remains of dozens of previous adventurers less fortunate than yourself. A passage exits to the north.", "visits": 1, "x": 10, "y": 16, "cx": 1680, "cy": 1980}, {"id": "mirror-room", "name": "Mirror Room", "description": "You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.", "visits": 2, "x": 8, "y": 10, "cx": 1360, "cy": 1260}, {"id": "narrow-passage", "name": "Narrow Passage", "description": "This is a long and narrow corridor where a long north-south passageway briefly narrows even further.", "visits": 2, "x": 8, "y": 9, "cx": 1360, "cy": 1140}, {"id": "egyptian-room", "name": "Egyptian Room", "description": "This is a room which looks like an Egyptian tomb. There is an ascending staircase to the west.", "visits": 1, "x": 10, "y": 13, "cx": 1680, "cy": 1620}, {"id": "forest", "name": "Forest", "description": "This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.", "visits": 5, "x": 6, "y": 5, "cx": 1040, "cy": 660}, {"id": "clearing", "name": "Clearing", "description": "You are in a small clearing in a well marked forest path that extends to the east and west.", "visits": 3, "x": 6, "y": 4, "cx": 1040, "cy": 540}, {"id": "canyon-view", "name": "Canyon View", "description": "You are at the top of the Great Canyon on its west wall. From here there is a marvelous view of the canyon and parts of the Frigid River upstream. Across the canyon, the walls of the White Cliffs join the mighty ramparts of the Flathead Mountains to the east. Following the Canyon upstream to the north, Aragain Falls may be seen, complete with rainbow. The mighty Frigid River flows out from a great dark cavern. To the west and south can be seen an immense forest, stretching for miles around. A path leads northwest. It is possible to climb down into the canyon from here.", "visits": 3, "x": 8, "y": 4, "cx": 1360, "cy": 540}, {"id": "rocky-ledge", "name": "Rocky Ledge", "description": "You are on a ledge about halfway up the wall of the river canyon. You can see from here that the main flow from Aragain Falls twists along a passage which it is impossible for you to enter. Below you is the canyon bottom. Above you is more cliff, which appears climbable.", "visits": 3, "x": 8, "y": 5, "cx": 1360, "cy": 660}, {"id": "canyon-bottom", "name": "Canyon Bottom", "description": "You are beneath the walls of the river canyon which may be climbable here. The lesser part of the runoff of Aragain Falls flows by below. To the north is a narrow path.", "visits": 3, "x": 9, "y": 5, "cx": 1520, "cy": 660}, {"id": "end-of-rainbow", "name": "End of Rainbow", "description": "You are on a small, rocky beach on the continuation of the Frigid River past the Falls. The beach is narrow due to the presence of the White Cliffs. The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the east and a narrow path continues to the southwest.", "visits": 2, "x": 9, "y": 4, "cx": 1520, "cy": 540}, {"id": "reservoir-south", "name": "Reservoir South", "description": "You are in a long room, to the north of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through the center of the room.", "visits": 2, "x": 8, "y": 3, "cx": 1360, "cy": 420}, {"id": "reservoir", "name": "Reservoir", "description": "You are on what used to be a large lake, but which is now a large mud pile. There are \"shores\" to the north and south.", "visits": 2, "x": 8, "y": 2, "cx": 1360, "cy": 300}, {"id": "reservoir-north", "name": "Reservoir North", "description": "You are in a large cavernous room, the south of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through there.", "visits": 2, "x": 8, "y": 1, "cx": 1360, "cy": 180}, {"id": "atlantis-room", "name": "Atlantis Room", "description": "This is an ancient room, long under water. There is an exit to the south and a staircase leading up.", "visits": 1, "x": 8, "y": 0, "cx": 1360, "cy": 60}, {"id": "cold-passage", "name": "Cold Passage", "description": "This is a cold and damp corridor where a long east-west passageway turns into a southward path.", "visits": 1, "x": 7, "y": 9, "cx": 1200, "cy": 1140}, {"id": "slide-room", "name": "Slide Room", "description": "This is a small chamber, which appears to have been part of a coal mine. On the south wall of the chamber the letters \"Granite Wall\" are etched in the rock. To the east is a long passage, and there is a steep metal slide twisting downward. To the north is a small opening.", "visits": 2, "x": 5, "y": 10, "cx": 880, "cy": 1260}, {"id": "mine-entrance", "name": "Mine Entrance", "description": "You are standing at the entrance of what might have been a coal mine. The shaft enters the west wall, and there is another exit on the south end of the room.", "visits": 2, "x": 4, "y": 9, "cx": 720, "cy": 1140}, {"id": "squeaky-room", "name": "Squeaky Room", "description": "You are in a small room. Strange squeaky sounds may be heard coming from the passage at the north end. You may also escape to the east.", "visits": 2, "x": 3, "y": 9, "cx": 560, "cy": 1140}, {"id": "bat-room", "name": "Bat Room", "description": "You are in a small room which has doors only to the east and south. In the corner of the room on the ceiling is a large vampire bat who is obviously deranged and holding his nose.", "visits": 2, "x": 3, "y": 8, "cx": 560, "cy": 1020}, {"id": "shaft-room", "name": "Shaft Room", "description": "This is a large room, in the middle of which is a small shaft descending through the floor into darkness below. To the west and the north are exits from this room. Constructed over the top of the shaft is a metal framework to which a heavy iron chain is attached.", "visits": 3, "x": 3, "y": 7, "cx": 560, "cy": 900}, {"id": "smelly-room", "name": "Smelly Room", "description": "This is a small nondescript room. However, from the direction of a small descending staircase a foul odor can be detected. To the south is a narrow tunnel.", "visits": 4, "x": 3, "y": 6, "cx": 560, "cy": 780}, {"id": "gas-room", "name": "Gas Room", "description": "This is a small room which smells strongly of coal gas. There is a short climb up some stairs and a narrow tunnel leading east.", "visits": 4, "x": 2, "y": 6, "cx": 400, "cy": 780}, {"id": "coal-mine", "name": "Coal Mine", "description": "This is a nondescript part of a coal mine.", "visits": 16, "x": 4, "y": 6, "cx": 720, "cy": 780}, {"id": "ladder-top", "name": "Ladder Top", "description": "This is a very small room. In the corner is a rickety wooden ladder, leading downward. It might be safe to descend. There is also a staircase leading upward.", "visits": 4, "x": 4, "y": 7, "cx": 720, "cy": 900}, {"id": "ladder-bottom", "name": "Ladder Bottom", "description": "This is a rather wide room. On one side is the bottom of a narrow wooden ladder. To the west and the south are passages leaving the room.", "visits": 4, "x": 2, "y": 7, "cx": 400, "cy": 900}, {"id": "dead-end", "name": "Dead End", "description": "You have come to a dead end in the mine.", "visits": 1, "x": 2, "y": 8, "cx": 400, "cy": 1020}, {"id": "timber-room", "name": "Timber Room", "description": "This is a long and narrow passage, which is cluttered with broken timbers. A wide passage comes from the east and turns at the west end of the room into a very narrow passageway. From the west comes a strong draft.", "visits": 2, "x": 1, "y": 7, "cx": 240, "cy": 900}, {"id": "drafty-room", "name": "Drafty Room", "description": "This is a small drafty room in which is the bottom of a long shaft. To the south is a passageway and to the east a very narrow passage. In the shaft can be seen a heavy iron chain.", "visits": 2, "x": 0, "y": 7, "cx": 80, "cy": 900}, {"id": "machine-room", "name": "Machine Room", "description": "This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled \"START\". The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is closed.", "visits": 1, "x": 0, "y": 8, "cx": 80, "cy": 1020}, {"id": "dam-base", "name": "Dam Base", "description": "You are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream.", "visits": 1, "x": 11, "y": 6, "cx": 1840, "cy": 780}, {"id": "time-passes", "name": "Time passes...", "description": "The flow of the river carries you downstream.", "visits": 3, "x": 12, "y": 6, "cx": 2000, "cy": 780}, {"id": "sandy-beach-in-the-magic-boat", "name": "Sandy Beach (in the magic boat)", "description": "You are on a large sandy beach on the east shore of the river, which is flowing quickly by. A path runs beside the river to the south here, and a passage is partially buried in sand to the northeast.", "visits": 1, "x": 13, "y": 6, "cx": 2160, "cy": 780}, {"id": "sandy-cave", "name": "Sandy Cave", "description": "This is a small, low-ceilinged cave nearly filled with fine white sand. The walls are rough limestone, worn smooth in places by ancient water. The only exit is a narrow passage to the southwest.", "visits": 1, "x": 14, "y": 6, "cx": 2320, "cy": 780}, {"id": "sandy-beach", "name": "Sandy Beach", "description": "You are on a large sandy beach on the east shore of the river, which is flowing quickly by. A path runs beside the river to the south here, and a passage is partially buried in sand to the northeast.", "visits": 1, "x": 15, "y": 6, "cx": 2480, "cy": 780}, {"id": "shore", "name": "Shore", "description": "You are on the east shore of the river. The water here seems somewhat treacherous. A path travels from north to south here, the south end quickly turning around a sharp corner.", "visits": 1, "x": 16, "y": 6, "cx": 2640, "cy": 780}, {"id": "aragain-falls", "name": "Aragain Falls", "description": "You are at the top of Aragain Falls, an enormous waterfall with a drop of about 450 feet. The only path here is on the north end. A solid rainbow spans the falls.", "visits": 1, "x": 17, "y": 6, "cx": 2800, "cy": 780}, {"id": "on-the-rainbow", "name": "On the Rainbow", "description": "You are on top of a rainbow (I bet you never thought you would walk on a rainbow), with a magnificent view of the Falls. The rainbow travels east-west here.", "visits": 1, "x": 18, "y": 6, "cx": 2960, "cy": 780}, {"id": "south-of-house", "name": "South of House", "description": "You are facing the south side of a white house. There is no door here, and all the windows are boarded.", "visits": 1, "x": 8, "y": 7, "cx": 1360, "cy": 900}, {"id": "stone-barrow", "name": "Stone Barrow", "description": "You are standing in front of a massive barrow of stone. In the east face is a huge stone door which is open. You cannot see into the dark of the tomb.", "visits": 1, "x": 6, "y": 8, "cx": 1040, "cy": 1020}, {"id": "inside-the-barrow", "name": "Inside the Barrow", "description": "As you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridge, floating in the air, is a large sign. It reads: All ye who stand before this bridge have completed a great and perilous adventure which has tested your wit and courage. You have mastered the first part of the ZORK trilogy. Those who pass over this bridge must be prepared to undertake an even greater adventure that will severely test your skill and bravery!", "visits": 1, "x": 6, "y": 10, "cx": 1040, "cy": 1260}], "edges": [{"from": "west-of-house", "to": "north-of-house", "direction": "n", "isStandard": true, "bidirectional": false}, {"from": "north-of-house", "to": "forest-path", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "forest-path", "to": "up-a-tree", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "up-a-tree", "to": "forest-path", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "forest-path", "to": "north-of-house", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "north-of-house", "to": "behind-house", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "behind-house", "to": "kitchen", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "kitchen", "to": "living-room", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "living-room", "to": "kitchen", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "kitchen", "to": "attic", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "attic", "to": "kitchen", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "living-room", "to": "east-of-chasm", "direction": "s", "isStandard": true, "bidirectional": false}, {"from": "east-of-chasm", "to": "gallery", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "gallery", "to": "east-of-chasm", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "east-of-chasm", "to": "cellar", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "cellar", "to": "east-west-passage", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "east-west-passage", "to": "round-room", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "round-room", "to": "loud-room", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "loud-room", "to": "round-room", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "round-room", "to": "north-south-passage", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "north-south-passage", "to": "deep-canyon", "direction": "ne", "isStandard": true, "bidirectional": true}, {"from": "deep-canyon", "to": "dam", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "dam", "to": "dam-lobby", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "dam-lobby", "to": "maintenance-room", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "maintenance-room", "to": "dam-lobby", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "dam-lobby", "to": "dam", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "dam", "to": "deep-canyon", "direction": "s", "isStandard": true, "bidirectional": false}, {"from": "deep-canyon", "to": "north-south-passage", "direction": "sw", "isStandard": true, "bidirectional": true}, {"from": "north-south-passage", "to": "round-room", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "round-room", "to": "east-west-passage", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "east-west-passage", "to": "maze", "direction": "w", "isStandard": true, "bidirectional": false}, {"from": "maze", "to": "cyclops-room", "direction": "se", "isStandard": true, "bidirectional": false}, {"from": "cyclops-room", "to": "strange-passage", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "strange-passage", "to": "living-room", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "living-room", "to": "cellar", "direction": "d", "isStandard": true, "bidirectional": false}, {"from": "cellar", "to": "east-of-chasm", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "round-room", "to": "engravings-cave", "direction": "se", "isStandard": true, "bidirectional": false}, {"from": "engravings-cave", "to": "dome-room", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "dome-room", "to": "torch-room", "direction": "d", "isStandard": true, "bidirectional": false}, {"from": "torch-room", "to": "temple", "direction": "s", "isStandard": true, "bidirectional": false}, {"from": "temple", "to": "altar", "direction": "s", "isStandard": true, "bidirectional": false}, {"from": "altar", "to": "cave", "direction": "d", "isStandard": true, "bidirectional": false}, {"from": "cave", "to": "entrance-to-hades", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "entrance-to-hades", "to": "land-of-the-dead", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "land-of-the-dead", "to": "entrance-to-hades", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "entrance-to-hades", "to": "cave", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "cave", "to": "mirror-room", "direction": "n", "isStandard": true, "bidirectional": false}, {"from": "mirror-room", "to": "narrow-passage", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "narrow-passage", "to": "round-room", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "temple", "to": "egyptian-room", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "egyptian-room", "to": "temple", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "altar", "to": "forest", "direction": "pray", "isStandard": false, "bidirectional": false}, {"from": "forest", "to": "clearing", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "clearing", "to": "canyon-view", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "canyon-view", "to": "rocky-ledge", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "rocky-ledge", "to": "canyon-bottom", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "canyon-bottom", "to": "end-of-rainbow", "direction": "n", "isStandard": true, "bidirectional": false}, {"from": "end-of-rainbow", "to": "canyon-bottom", "direction": "sw", "isStandard": true, "bidirectional": false}, {"from": "canyon-bottom", "to": "rocky-ledge", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "rocky-ledge", "to": "canyon-view", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "canyon-view", "to": "clearing", "direction": "nw", "isStandard": true, "bidirectional": false}, {"from": "clearing", "to": "forest", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "forest", "to": "forest-path", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "deep-canyon", "to": "reservoir-south", "direction": "nw", "isStandard": true, "bidirectional": true}, {"from": "reservoir-south", "to": "reservoir", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "reservoir", "to": "reservoir-north", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "reservoir-north", "to": "atlantis-room", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "atlantis-room", "to": "reservoir-north", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "reservoir-north", "to": "reservoir", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "reservoir", "to": "reservoir-south", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "reservoir-south", "to": "deep-canyon", "direction": "se", "isStandard": true, "bidirectional": true}, {"from": "kitchen", "to": "behind-house", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "behind-house", "to": "north-of-house", "direction": "nw", "isStandard": true, "bidirectional": false}, {"from": "forest-path", "to": "forest", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "round-room", "to": "narrow-passage", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "narrow-passage", "to": "mirror-room", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "mirror-room", "to": "cold-passage", "direction": "n", "isStandard": true, "bidirectional": false}, {"from": "cold-passage", "to": "slide-room", "direction": "w", "isStandard": true, "bidirectional": false}, {"from": "slide-room", "to": "mine-entrance", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "mine-entrance", "to": "squeaky-room", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "squeaky-room", "to": "bat-room", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "bat-room", "to": "shaft-room", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "shaft-room", "to": "smelly-room", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "smelly-room", "to": "gas-room", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "gas-room", "to": "coal-mine", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "coal-mine", "to": "ladder-top", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "ladder-top", "to": "ladder-bottom", "direction": "d", "isStandard": true, "bidirectional": true}, {"from": "ladder-bottom", "to": "dead-end", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "dead-end", "to": "ladder-bottom", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "ladder-bottom", "to": "ladder-top", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "ladder-top", "to": "coal-mine", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "coal-mine", "to": "gas-room", "direction": "n", "isStandard": true, "bidirectional": false}, {"from": "gas-room", "to": "smelly-room", "direction": "u", "isStandard": true, "bidirectional": true}, {"from": "smelly-room", "to": "shaft-room", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "ladder-bottom", "to": "timber-room", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "timber-room", "to": "drafty-room", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "drafty-room", "to": "machine-room", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "machine-room", "to": "drafty-room", "direction": "n", "isStandard": true, "bidirectional": true}, {"from": "drafty-room", "to": "timber-room", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "timber-room", "to": "ladder-bottom", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "shaft-room", "to": "bat-room", "direction": "w", "isStandard": true, "bidirectional": true}, {"from": "bat-room", "to": "squeaky-room", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "squeaky-room", "to": "mine-entrance", "direction": "e", "isStandard": true, "bidirectional": true}, {"from": "mine-entrance", "to": "slide-room", "direction": "s", "isStandard": true, "bidirectional": true}, {"from": "slide-room", "to": "living-room", "direction": "u", "isStandard": true, "bidirectional": false}, {"from": "dam", "to": "dam-base", "direction": "d", "isStandard": true, "bidirectional": false}, {"from": "dam-base", "to": "time-passes", "direction": "wait", "isStandard": false, "bidirectional": false}, {"from": "time-passes", "to": "sandy-beach-in-the-magic-boat", "direction": "e", "isStandard": true, "bidirectional": false}, {"from": "sandy-beach-in-the-magic-boat", "to": "sandy-cave", "direction": "ne", "isStandard": true, "bidirectional": false}, {"from": "sandy-cave", "to": "sandy-beach", "direction": "sw", "isStandard": true, "bidirectional": false}, {"from": "sandy-beach", "to": "shore", "direction": "s", "isStandard": true, "bidirectional": false}, {"from": "shore", "to": "aragain-falls", "direction": "s", "isStandard": true, "bidirectional": false}, {"from": "aragain-falls", "to": "on-the-rainbow", "direction": "w", "isStandard": true, "bidirectional": false}, {"from": "on-the-rainbow", "to": "end-of-rainbow", "direction": "w", "isStandard": true, "bidirectional": false}, {"from": "clearing", "to": "behind-house", "direction": "w", "isStandard": true, "bidirectional": false}, {"from": "cellar", "to": "maze", "direction": "w", "isStandard": true, "bidirectional": false}, {"from": "behind-house", "to": "south-of-house", "direction": "s", "isStandard": true, "bidirectional": false}, {"from": "south-of-house", "to": "west-of-house", "direction": "w", "isStandard": true, "bidirectional": false}, {"from": "west-of-house", "to": "stone-barrow", "direction": "sw", "isStandard": true, "bidirectional": false}, {"from": "stone-barrow", "to": "inside-the-barrow", "direction": "enter barrow", "isStandard": false, "bidirectional": false}], "viewBox": [-45, -22, 3130, 2084]};
 
-    "Stone Barrow" [label="Stone Barrow", fillcolor="#f5f0e1", fontcolor="#333333", color="#ef5350", penwidth=2, pos="10.8,7.2!"];
-    "Loud Room" [label="Loud Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="12.6,-12.6!"];
-    "Damp Cave" [label="Damp Cave", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="14.4,-12.6!"];
-    "North-South Passage" [label="North South Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-7.2!"];
-    "Chasm" [label="Chasm", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-9.0!"];
-    "Cellar" [label="Cellar", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-7.2!"];
-    "Troll-Room" [label="The Troll Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-5.4!"];
-    "East-of-Chasm" [label="East of Chasm", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-9.0!"];
-    "Gallery" [label="Gallery", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,-9.0!"];
-    "Studio" [label="Studio", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,-7.2!"];
-    "East-West Passage" [label="East West Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,-5.4!"];
-    "Round Room" [label="Round Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-5.4!"];
-    "Mine Entrance" [label="Mine Entrance", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="0.0,-23.4!"];
-    "Squeaky Room" [label="Squeaky Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="-1.8,-23.4!"];
-    "Bat-Room" [label="Bat Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="-1.8,-21.6!"];
-    "Shaft Room" [label="Shaft Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="0.0,-21.6!"];
-    "Smelly Room" [label="Smelly Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-21.6!"];
-    "Gas Room" [label="Gas Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-19.8!"];
-    "Mine1" [label="Coal Mine", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-19.8!"];
-    "Mine2" [label="Coal Mine", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-18.0!"];
-    "Mine3" [label="Coal Mine", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-18.0!"];
-    "Mine4" [label="Coal Mine", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-19.8!"];
-    "Ladder Top" [label="Ladder Top", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-21.6!"];
-    "Ladder Bottom" [label="Ladder Bottom", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-23.4!"];
-    "Dead End 5" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="5.4,-25.2!"];
-    "Timber Room" [label="Timber Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-23.4!"];
-    "Drafty Room" [label="Drafty Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-23.4!"];
-    "Machine-Room" [label="Machine Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-25.2!"];
-    "Slide Room" [label="Slide Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="0.0,-25.2!"];
-    "Cyclops-Room" [label="Cyclops Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="39.6,-7.2!"];
-    "Strange Passage" [label="Strange Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="41.4,-7.2!"];
-    "Treasure Room" [label="Treasure Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="39.6,-5.4!"];
-    "Deep Canyon" [label="Deep Canyon", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,-14.4!"];
-    "Reservoir-South" [label="Reservoir South", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-12.6!"];
-    "Dam-Room" [label="Dam", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-14.4!"];
-    "Dam-Lobby" [label="Dam Lobby", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-12.6!"];
-    "Maintenance Room" [label="Maintenance Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-10.8!"];
-    "Reservoir" [label="Reservoir", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="18.0,-10.8!"];
-    "Reservoir-North" [label="Reservoir North", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="16.2,-7.2!"];
-    "Stream View" [label="Stream View", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="16.2,-12.6!"];
-    "Dam-Base" [label="Dam Base", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="23.4,-14.4!"];
-    "In-Stream" [label="Stream", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="16.2,-10.8!"];
-    "Aragain Falls" [label="Aragain Falls", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="5.4,-3.6!"];
-    "On-the-Rainbow" [label="On the Rainbow", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="3.6,-3.6!"];
-    "End of Rainbow" [label="End of Rainbow", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="1.8,-3.6!"];
-    "Canyon Bottom" [label="Canyon Bottom", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="0.0,-5.4!"];
-    "Rocky Ledge" [label="Rocky Ledge", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="0.0,-3.6!"];
-    "Forest1" [label="Forest", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="7.2,3.6!"];
-    "Forest2" [label="Forest", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="10.8,3.6!"];
-    "Mountains" [label="Forest", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="12.6,3.6!"];
-    "Forest3" [label="Forest", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="7.2,5.4!"];
-    "Forest Path" [label="Forest Path", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="9.0,3.6!"];
-    "Up a Tree" [label="Up a Tree", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="7.2,7.2!"];
-    "Clearing" [label="Clearing", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="10.8,1.8!"];
-    "Grating Clearing" [label="Clearing", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="9.0,5.4!"];
-    "Canyon View" [label="Canyon View", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="12.6,0.0!"];
-    "West-of-House" [label="West of House", fillcolor="#f5f0e1", fontcolor="#333333", color="#4caf50", penwidth=3, pos="14.4,0.0!"];
-    "North-of-House" [label="North of House", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="16.2,1.8!"];
-    "South-of-House" [label="South of House", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="16.2,-1.8!"];
-    "Behind House" [label="Behind House", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="16.2,0.0!"];
-    "Kitchen" [label="Kitchen", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="19.8,0.0!"];
-    "Attic" [label="Attic", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="19.8,1.8!"];
-    "Living Room" [label="Living Room", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="18.0,0.0!"];
-    "Maze1" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-7.2!"];
-    "Maze2" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-9.0!"];
-    "Maze3" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-9.0!"];
-    "Maze4" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-7.2!"];
-    "Dead End 1" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="32.4,-7.2!"];
-    "Maze5" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-10.8!"];
-    "Dead End 2" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="32.4,-10.8!"];
-    "Maze6" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-12.6!"];
-    "Maze7" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-12.6!"];
-    "Maze8" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="32.4,-12.6!"];
-    "Dead End 3" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="34.2,-14.4!"];
-    "Maze9" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-14.4!"];
-    "Maze10" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-14.4!"];
-    "Maze11" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="27.0,-14.4!"];
-    "Grating Room" [label="Grating Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="27.0,-12.6!"];
-    "Maze12" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="27.0,-16.2!"];
-    "Dead End 4" [label="Dead End", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="27.0,-18.0!"];
-    "Maze13" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-16.2!"];
-    "Maze14" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="30.6,-16.2!"];
-    "Maze15" [label="Maze", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="28.8,-18.0!"];
-    "Mirror Room 1" [label="Mirror Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="9.0,-19.8!"];
-    "Mirror Room 2" [label="Mirror Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="25.2,-27.0!"];
-    "Small Cave" [label="Cave", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="10.8,-19.8!"];
-    "Tiny Cave" [label="Cave", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="23.4,-27.0!"];
-    "Cold Passage" [label="Cold Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="9.0,-18.0!"];
-    "Narrow Passage" [label="Narrow Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="21.6,-3.6!"];
-    "Winding-Passage" [label="Winding Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="25.2,-28.8!"];
-    "Twisting Passage" [label="Twisting Passage", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="7.2,-19.8!"];
-    "Atlantis Room" [label="Atlantis Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="10.8,-21.6!"];
-    "River1" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-19.8!"];
-    "River2" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-21.6!"];
-    "River3" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-23.4!"];
-    "White Cliffs North" [label="White Cliffs Beach", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="25.2,-23.4!"];
-    "White Cliffs South" [label="White Cliffs Beach", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="25.2,-25.2!"];
-    "River4" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-25.2!"];
-    "River5" [label="Frigid River", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="27.0,-27.0!"];
-    "Shore" [label="Shore", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="28.8,-27.0!"];
-    "Sandy Beach" [label="Sandy Beach", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="28.8,-25.2!"];
-    "Sandy Cave" [label="Sandy Cave", fillcolor="#f5f0e1", fontcolor="#333333", color="#aa9977", pos="30.6,-23.4!"];
-    "Engravings Cave" [label="Engravings Cave", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-14.4!"];
-    "Dome Room" [label="Dome Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-14.4!"];
-    "Torch-Room" [label="Torch Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="3.6,-16.2!"];
-    "North Temple" [label="Temple", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-16.2!"];
-    "South Temple" [label="Altar", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="0.0,-16.2!"];
-    "Egypt Room" [label="Egyptian Room", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="1.8,-18.0!"];
-    "Entrance to Hades" [label="Entrance to Hades", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#555577", pos="23.4,-25.2!"];
-    "Land of the Dead" [label="Land of the Dead", fillcolor="#2a2a3d", fontcolor="#d4d4d4", color="#ef5350", penwidth=2, pos="23.4,-23.4!"];
+/* --- Pan & Zoom --- */
+var svg = document.getElementById('map-svg');
+var vb = MAP_DATA.viewBox; // [x, y, w, h]
+var viewBox = { x: vb[0], y: vb[1], w: vb[2], h: vb[3] };
+var origVB = { x: vb[0], y: vb[1], w: vb[2], h: vb[3] };
+var isPanning = false;
+var panStart = { x: 0, y: 0 };
+var panVBStart = { x: 0, y: 0 };
 
-    // Connections
-    "West-of-House":ne -> "North-of-House":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
-    "West-of-House":se -> "South-of-House":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=5, len=1.5];
-    "Behind House":n -> "North-of-House":s [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="N", labelfontcolor="#e6a23c", headlabel="S✗", weight=5, len=1.5];
-    "Behind House":s -> "South-of-House":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="S", labelfontcolor="#e6a23c", headlabel="N✗", weight=5, len=1.5];
-    "Behind House":sw -> "South-of-House":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
-    "Behind House":nw -> "North-of-House":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=5, len=1.5];
-    "South-of-House":e -> "Behind House":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "South-of-House":w -> "West-of-House":e [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="W", labelfontcolor="#e6a23c", headlabel="E✗", weight=5, len=1.5];
-    "North-of-House":e -> "Behind House":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "North-of-House":w -> "West-of-House":e [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="W", labelfontcolor="#e6a23c", headlabel="E✗", weight=5, len=1.5];
-    "Behind House":e -> "Clearing":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
-    "Forest3":nw -> "South-of-House":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=1, len=3.0];
-    "Forest3":w -> "Forest1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Forest1":s -> "Forest3":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "North-of-House":n -> "Forest Path":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=1, len=3.0];
-    "Forest Path":e -> "Forest2":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Forest Path":w -> "Forest1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Forest1":n -> "Grating Clearing":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Forest2":s -> "Clearing":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Forest2":e -> "Mountains":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Forest3":n -> "Clearing":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Forest Path":n -> "Grating Clearing":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Grating Clearing":e -> "Forest2":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Grating Clearing":w -> "Forest1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Kitchen":w -> "Living Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Cellar":n -> "Troll-Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Cellar":s -> "East-of-Chasm":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "East-of-Chasm":e -> "Gallery":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Gallery":n -> "Studio":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Maze1":n -> "Maze1" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="N", labelfontcolor="#e6882a"];
-    "Maze1":s -> "Maze2":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Maze1":w -> "Maze4":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Maze2":e -> "Maze3":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Maze3":n -> "Maze4":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Maze4":w -> "Maze3":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Maze4":n -> "Maze1":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Maze4":e -> "Dead End 1":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Dead End 1":s -> "Maze4":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Maze5":e -> "Dead End 2":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Maze5":n -> "Maze3":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Maze5":sw -> "Maze6":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
-    "Maze6":e -> "Maze7":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Maze6":w -> "Maze6" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="W", labelfontcolor="#e6882a"];
-    "Maze7":e -> "Maze8":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Maze7":s -> "Maze15":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Maze8":ne -> "Maze7":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
-    "Maze8":w -> "Maze8" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="W", labelfontcolor="#e6882a"];
-    "Maze8":se -> "Dead End 3":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=5, len=1.5];
-    "Dead End 3":n -> "Maze8":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Maze9":n -> "Maze6":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Maze9":e -> "Maze10":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Maze9":s -> "Maze13":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Maze9":w -> "Maze12":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Maze9":nw -> "Maze9" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="NW", labelfontcolor="#e6882a"];
-    "Maze10":w -> "Maze13":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Maze11":ne -> "Grating Room":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
-    "Maze11":nw -> "Maze13":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=5, len=1.5];
-    "Maze11":sw -> "Maze12":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
-    "Maze12":e -> "Maze13":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Maze12":n -> "Dead End 4":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Maze13":e -> "Maze9":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Maze13":s -> "Maze10":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Maze13":w -> "Maze11":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Maze14":w -> "Maze15":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Maze14":nw -> "Maze14" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="NW", labelfontcolor="#e6882a"];
-    "Maze14":ne -> "Maze7":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
-    "Maze14":s -> "Maze7":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Maze15":se -> "Cyclops-Room":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=1, len=3.0];
-    "Strange Passage":w -> "Cyclops-Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Strange Passage":e -> "Living Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
-    "East-West Passage":e -> "Round Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "East-West Passage":w -> "Troll-Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "East-West Passage":n -> "Chasm":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=1, len=3.0];
-    "Round Room":e -> "Loud Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
-    "Round Room":n -> "North-South Passage":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=1, len=3.0];
-    "Round Room":s -> "Narrow Passage":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=1, len=3.0];
-    "Round Room":se -> "Engravings Cave":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=1, len=3.0];
-    "Deep Canyon":nw -> "Reservoir-South":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=5, len=1.5];
-    "Deep Canyon":e -> "Dam-Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Deep Canyon":sw -> "North-South Passage":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=1, len=3.0];
-    "Loud Room":e -> "Damp Cave":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "North-South Passage":n -> "Chasm":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Chasm":ne -> "Reservoir-South":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=1, len=3.0];
-    "Chasm":sw -> "East-West Passage":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=1, len=3.0];
-    "Reservoir-South":e -> "Dam-Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Reservoir-South":w -> "Stream View":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Dam-Room":s -> "Deep Canyon":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Dam-Room":e -> "Dam-Base":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Dam-Room":n -> "Dam-Lobby":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Dam-Lobby":n -> "Maintenance Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Dam-Lobby":e -> "Maintenance Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Reservoir":n -> "Reservoir-North":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Reservoir":s -> "Reservoir-South":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Reservoir-North":n -> "Atlantis Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=1, len=3.0];
-    "Dam-Base":n -> "Dam-Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Mirror Room 1":n -> "Cold Passage":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Mirror Room 1":w -> "Twisting Passage":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Mirror Room 1":e -> "Small Cave":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Mirror Room 2":w -> "Winding-Passage":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Mirror Room 2":n -> "Narrow Passage":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Mirror Room 2":e -> "Tiny Cave":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Small Cave":n -> "Mirror Room 1":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Small Cave":s -> "Atlantis Room":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Small Cave":w -> "Twisting Passage":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Tiny Cave":n -> "Mirror Room 2":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Tiny Cave":w -> "Winding-Passage":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Cold Passage":w -> "Slide Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=1, len=3.0];
-    "Winding-Passage":n -> "Mirror Room 2":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Twisting Passage":n -> "Mirror Room 1":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Engravings Cave":e -> "Dome Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Torch-Room":s -> "North Temple":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "North Temple":e -> "Egypt Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "North Temple":s -> "South Temple":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Land of the Dead":n -> "Entrance to Hades":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "River1":w -> "Dam-Base":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=1, len=3.0];
-    "River3":w -> "White Cliffs North":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Damp Cave":e -> "White Cliffs North":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
-    "River4":w -> "White Cliffs South":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "River4":e -> "Sandy Beach":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "River5":e -> "Shore":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Shore":n -> "Sandy Beach":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Shore":s -> "Aragain Falls":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=1, len=3.0];
-    "Sandy Beach":ne -> "Sandy Cave":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
-    "On-the-Rainbow":w -> "End of Rainbow":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "On-the-Rainbow":e -> "Aragain Falls":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "End of Rainbow":sw -> "Canyon Bottom":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
-    "Canyon Bottom":n -> "End of Rainbow":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Canyon View":e -> "Rocky Ledge":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=1, len=3.0];
-    "Canyon View":nw -> "Clearing":se [dir=both, arrowsize=0.6, taillabel="NW", labelfontcolor="#aaaaaa", headlabel="SE", weight=5, len=1.5];
-    "Canyon View":w -> "Forest3":e [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="W", labelfontcolor="#e6a23c", headlabel="E✗", weight=5, len=1.5];
-    "Clearing":e -> "Canyon View":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Mine Entrance":s -> "Slide Room":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Mine Entrance":w -> "Squeaky Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Squeaky Room":n -> "Bat-Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Bat-Room":e -> "Shaft Room":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Shaft Room":n -> "Smelly Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Gas Room":e -> "Mine1":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Mine1":n -> "Gas Room":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Mine1":e -> "Mine1" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="E", labelfontcolor="#e6882a"];
-    "Mine1":ne -> "Mine2":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=5, len=1.5];
-    "Mine2":n -> "Mine2" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="N", labelfontcolor="#e6882a"];
-    "Mine2":s -> "Mine1":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Mine2":se -> "Mine3":nw [dir=both, arrowsize=0.6, taillabel="SE", labelfontcolor="#aaaaaa", headlabel="NW", weight=5, len=1.5];
-    "Mine3":s -> "Mine3" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="S", labelfontcolor="#e6882a"];
-    "Mine3":sw -> "Mine4":ne [dir=both, arrowsize=0.6, taillabel="SW", labelfontcolor="#aaaaaa", headlabel="NE", weight=5, len=1.5];
-    "Mine3":e -> "Mine2":w [dir=both, arrowsize=0.6, taillabel="E", labelfontcolor="#aaaaaa", headlabel="W", weight=5, len=1.5];
-    "Mine4":n -> "Mine3":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Mine4":w -> "Mine4" [dir=forward, color="#e6882a", penwidth=1.5, taillabel="W", labelfontcolor="#e6882a"];
-    "Ladder Bottom":s -> "Dead End 5":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Ladder Bottom":w -> "Timber Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "Drafty Room":s -> "Machine-Room":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=5, len=1.5];
-    "Stone Barrow":ne -> "West-of-House":sw [dir=both, arrowsize=0.6, taillabel="NE", labelfontcolor="#aaaaaa", headlabel="SW", weight=1, len=3.0];
-    "Reservoir":w -> "In-Stream":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=5, len=1.5];
-    "West-of-House":n -> "North-of-House":s [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="N", labelfontcolor="#e6a23c", headlabel="S✗", weight=5, len=1.5];
-    "West-of-House":s -> "South-of-House":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="S", labelfontcolor="#e6a23c", headlabel="N✗", weight=5, len=1.5];
-    "West-of-House":w -> "Forest1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=1, len=3.0];
-    "South-of-House":s -> "Forest3":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", weight=1, len=3.0];
-    "Mountains":n -> "Forest2":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", weight=5, len=1.5];
-    "Kitchen":n -> "Attic":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Maze3":n -> "Maze5":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Maze6":s -> "Maze5":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "Maze6":n -> "Maze9":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Maze7":n -> "Maze14":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Maze10":n -> "Maze11":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Maze12":n -> "Maze9":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Maze13":s -> "Maze12":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "Treasure Room":s -> "Cyclops-Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "East-West Passage":s -> "Chasm":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=1, len=3.0];
-    "Deep Canyon":s -> "Loud Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=1, len=3.0];
-    "Dam-Room":s -> "Dam-Base":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "Small Cave":s -> "Atlantis Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "Tiny Cave":s -> "Entrance to Hades":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=1, len=3.0];
-    "Torch-Room":s -> "North Temple":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "North Temple":s -> "Egypt Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "River1":s -> "River2":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="D", labelfontcolor="#e6a23c", headlabel="U✗", weight=5, len=1.5];
-    "River2":s -> "River3":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="D", labelfontcolor="#e6a23c", headlabel="U✗", weight=5, len=1.5];
-    "River3":s -> "River4":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="D", labelfontcolor="#e6a23c", headlabel="U✗", weight=5, len=1.5];
-    "River4":s -> "River5":n [dir=forward, color="#e6a23c", penwidth=1.5, taillabel="D", labelfontcolor="#e6a23c", headlabel="U✗", weight=5, len=1.5];
-    "Canyon Bottom":n -> "Rocky Ledge":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Rocky Ledge":n -> "Canyon View":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=1, len=3.0];
-    "Smelly Room":s -> "Gas Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "Mine4":s -> "Ladder Top":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "Ladder Top":s -> "Ladder Bottom":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", weight=5, len=1.5];
-    "Reservoir":n -> "In-Stream":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Forest Path":n -> "Up a Tree":s [dir=both, arrowsize=0.6, taillabel="U", labelfontcolor="#aaaaaa", headlabel="D", weight=5, len=1.5];
-    "Behind House":w -> "Kitchen":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", weight=1, len=3.0];
-    "Grating Clearing":s -> "Grating Room":n [dir=both, arrowsize=0.6, taillabel="D", labelfontcolor="#aaaaaa", headlabel="U", style="dashed", weight=1, len=3.0];
-    "Troll-Room":w -> "Maze1":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", style="dashed", weight=1, len=3.0];
-    "Maze2":s -> "Maze4":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=5, len=1.5];
-    "Maze7":s -> "Dead End 1":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=5, len=1.5];
-    "Maze9":s -> "Maze11":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=5, len=1.5];
-    "Maze12":s -> "Maze5":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=5, len=1.5];
-    "Dome Room":s -> "Torch-Room":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", style="dashed", weight=5, len=1.5];
-    "South Temple":s -> "Tiny Cave":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", style="dashed", weight=1, len=3.0];
-    "White Cliffs North":s -> "White Cliffs South":n [dir=both, arrowsize=0.6, taillabel="S", labelfontcolor="#aaaaaa", headlabel="N", style="dashed", weight=5, len=1.5];
-    "Bat-Room":n -> "Mine1":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
-    "Bat-Room":n -> "Mine2":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
-    "Bat-Room":n -> "Mine3":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
-    "Bat-Room":n -> "Mine4":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
-    "Bat-Room":n -> "Ladder Top":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
-    "Bat-Room":n -> "Ladder Bottom":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
-    "Bat-Room":n -> "Mine Entrance":s [dir=both, arrowsize=0.6, taillabel="N", labelfontcolor="#aaaaaa", headlabel="S", style="dashed", weight=5, len=1.5];
-    "Timber Room":w -> "Drafty Room":e [dir=both, arrowsize=0.6, taillabel="W", labelfontcolor="#aaaaaa", headlabel="E", style="dashed", weight=5, len=1.5];
-    "Slide Room":s -> "Cellar":n [dir=forward, color="#cc6666", penwidth=1.5, taillabel="D", labelfontcolor="#cc6666", weight=1, len=3.0];
-    "Studio":n -> "Kitchen":s [dir=forward, color="#cc6666", penwidth=1.5, taillabel="U", labelfontcolor="#cc6666", style="dashed", weight=1, len=3.0];
-}`;
+function applyViewBox() {
+  svg.setAttribute('viewBox', viewBox.x + ' ' + viewBox.y + ' ' + viewBox.w + ' ' + viewBox.h);
+}
+applyViewBox();
 
-let scale = 1, tx = 0, ty = 0;
-let dragging = false, sx = 0, sy = 0;
-let curSvg = null;
-const ctr = document.getElementById('graph-container');
-const stat = document.getElementById('status');
+svg.addEventListener('mousedown', function(e) {
+  if (e.target.closest('.room-box')) return;
+  isPanning = true;
+  panStart = { x: e.clientX, y: e.clientY };
+  panVBStart = { x: viewBox.x, y: viewBox.y };
+});
 
-async function render(engine) {
-    stat.textContent = 'Rendering (' + engine + ')...';
-    document.getElementById('loading').style.display = 'block';
-    try {
-        const viz = await Viz.instance();
-        const str = viz.renderString(DOT, {engine: engine, format: 'svg'});
-        if (curSvg) curSvg.remove();
-        const d = new DOMParser().parseFromString(str, 'image/svg+xml');
-        const svg = d.documentElement;
-        svg.style.position = 'absolute';
-        svg.style.transformOrigin = '0 0';
-        // force transparent bg so page bg shows through
-        svg.removeAttribute('style');
-        svg.style.position = 'absolute';
-        svg.style.transformOrigin = '0 0';
-        const pg = svg.querySelector('polygon');
-        if (pg) pg.setAttribute('fill', 'transparent');
-        ctr.appendChild(svg);
-        curSvg = svg;
-        document.getElementById('loading').style.display = 'none';
-        fitView();
-        const nn = svg.querySelectorAll('.node').length;
-        const ne = svg.querySelectorAll('.edge').length;
-        stat.textContent = nn + ' rooms, ' + ne + ' connections (' + engine + ')';
-    } catch(e) {
-        stat.textContent = 'Error: ' + e.message;
-        document.getElementById('loading').textContent = 'Error: ' + e.message;
-        console.error(e);
+window.addEventListener('mousemove', function(e) {
+  if (!isPanning) return;
+  var rect = svg.getBoundingClientRect();
+  var scaleX = viewBox.w / rect.width;
+  var scaleY = viewBox.h / rect.height;
+  viewBox.x = panVBStart.x - (e.clientX - panStart.x) * scaleX;
+  viewBox.y = panVBStart.y - (e.clientY - panStart.y) * scaleY;
+  applyViewBox();
+});
+
+window.addEventListener('mouseup', function() { isPanning = false; });
+
+svg.addEventListener('wheel', function(e) {
+  e.preventDefault();
+  var rect = svg.getBoundingClientRect();
+  var mx = (e.clientX - rect.left) / rect.width;
+  var my = (e.clientY - rect.top) / rect.height;
+  var factor = e.deltaY > 0 ? 1.15 : 0.87;
+  var newW = viewBox.w * factor;
+  var newH = viewBox.h * factor;
+  viewBox.x += (viewBox.w - newW) * mx;
+  viewBox.y += (viewBox.h - newH) * my;
+  viewBox.w = newW;
+  viewBox.h = newH;
+  applyViewBox();
+}, { passive: false });
+
+function zoomBy(factor) {
+  var cx = viewBox.x + viewBox.w / 2;
+  var cy = viewBox.y + viewBox.h / 2;
+  viewBox.w *= factor;
+  viewBox.h *= factor;
+  viewBox.x = cx - viewBox.w / 2;
+  viewBox.y = cy - viewBox.h / 2;
+  applyViewBox();
+}
+
+function resetView() {
+  viewBox = { x: origVB.x, y: origVB.y, w: origVB.w, h: origVB.h };
+  applyViewBox();
+}
+
+document.getElementById('btn-zoom-in').addEventListener('click', function() { zoomBy(0.75); });
+document.getElementById('btn-zoom-out').addEventListener('click', function() { zoomBy(1.33); });
+document.getElementById('btn-reset').addEventListener('click', resetView);
+
+/* --- Room list --- */
+var roomList = document.getElementById('room-list');
+var rooms = MAP_DATA.rooms;
+var edges = MAP_DATA.edges;
+
+rooms.sort(function(a, b) {
+  if (a.id === MAP_DATA.startRoom) return -1;
+  if (b.id === MAP_DATA.startRoom) return 1;
+  return a.name.localeCompare(b.name);
+});
+
+var html = '';
+for (var i = 0; i < rooms.length; i++) {
+  var r = rooms[i];
+  var cls = 'room-item' + (r.id === MAP_DATA.startRoom ? ' start-room' : '');
+  html += '<div class="' + cls + '" data-room="' + r.id + '">';
+  html += esc(r.name);
+  if (r.visits > 1) html += '<span class="visit-count">(' + r.visits + 'x)</span>';
+  html += '</div>';
+}
+roomList.innerHTML = html;
+
+/* --- Click room in sidebar --- */
+roomList.addEventListener('click', function(e) {
+  var item = e.target.closest('.room-item');
+  if (!item) return;
+  var roomId = item.dataset.room;
+  highlightRoom(roomId);
+  centerOnRoom(roomId);
+});
+
+/* --- Click room in SVG --- */
+svg.addEventListener('click', function(e) {
+  var box = e.target.closest('.room-box');
+  if (!box) return;
+  var roomId = box.dataset.room;
+  highlightRoom(roomId);
+  // Scroll sidebar
+  var sideItem = roomList.querySelector('[data-room="' + roomId + '"]');
+  if (sideItem) sideItem.scrollIntoView({ block: 'nearest' });
+});
+
+/* --- Tooltip --- */
+var tooltip = document.getElementById('tooltip');
+
+svg.addEventListener('mouseover', function(e) {
+  var box = e.target.closest('.room-box');
+  if (!box) { tooltip.style.display = 'none'; return; }
+  var roomId = box.dataset.room;
+  var room = MAP_DATA.rooms.find(function(r) { return r.id === roomId; });
+  if (!room) return;
+  tooltip.querySelector('.tt-name').textContent = room.name;
+  var desc = room.description || '';
+  if (desc.length > 120) desc = desc.slice(0, 120) + '...';
+  tooltip.querySelector('.tt-desc').textContent = desc;
+  tooltip.style.display = 'block';
+});
+
+svg.addEventListener('mousemove', function(e) {
+  if (tooltip.style.display === 'block') {
+    tooltip.style.left = (e.clientX + 12) + 'px';
+    tooltip.style.top = (e.clientY + 12) + 'px';
+  }
+});
+
+svg.addEventListener('mouseout', function(e) {
+  if (!e.target.closest('.room-box')) tooltip.style.display = 'none';
+});
+
+/* --- Highlight --- */
+var activeRoom = null;
+
+function highlightRoom(roomId) {
+  // Clear previous
+  svg.querySelectorAll('.room-box.highlighted').forEach(function(el) { el.classList.remove('highlighted'); });
+  svg.querySelectorAll('.edge-line.highlighted').forEach(function(el) { el.classList.remove('highlighted'); });
+  roomList.querySelectorAll('.room-item.active').forEach(function(el) { el.classList.remove('active'); });
+
+  if (activeRoom === roomId) { activeRoom = null; return; }
+  activeRoom = roomId;
+
+  // Highlight room box
+  var box = svg.querySelector('.room-box[data-room="' + roomId + '"]');
+  if (box) box.classList.add('highlighted');
+
+  // Highlight sidebar
+  var sideItem = roomList.querySelector('[data-room="' + roomId + '"]');
+  if (sideItem) sideItem.classList.add('active');
+
+  // Highlight connected edges
+  svg.querySelectorAll('.edge-line').forEach(function(el) {
+    if (el.dataset.from === roomId || el.dataset.to === roomId) {
+      el.classList.add('highlighted');
     }
+  });
 }
 
-function upXf() {
-    if (curSvg) curSvg.style.transform = 'translate('+tx+'px,'+ty+'px) scale('+scale+')';
+function centerOnRoom(roomId) {
+  var room = MAP_DATA.rooms.find(function(r) { return r.id === roomId; });
+  if (!room) return;
+  viewBox.x = room.cx - viewBox.w / 2;
+  viewBox.y = room.cy - viewBox.h / 2;
+  applyViewBox();
 }
 
-function fitView() {
-    if (!curSvg) return;
-    // get SVG dimensions from viewBox or width/height attributes
-    let svgW, svgH;
-    const vb = curSvg.getAttribute('viewBox');
-    if (vb) {
-        const p = vb.split(/[\s,]+/).map(Number);
-        svgW = p[2]; svgH = p[3];
-    } else {
-        svgW = parseFloat(curSvg.getAttribute('width')) || 1000;
-        svgH = parseFloat(curSvg.getAttribute('height')) || 800;
-    }
-    // remove fixed width/height so SVG scales via transform
-    curSvg.removeAttribute('width');
-    curSvg.removeAttribute('height');
-    curSvg.setAttribute('width', svgW);
-    curSvg.setAttribute('height', svgH);
-    const cw = ctr.clientWidth, ch = ctr.clientHeight;
-    scale = Math.min(cw / svgW, ch / svgH) * 0.95;
-    tx = (cw - svgW * scale) / 2;
-    ty = (ch - svgH * scale) / 2;
-    upXf();
+/* --- Keyboard --- */
+document.addEventListener('keydown', function(e) {
+  var panAmt = viewBox.w * 0.1;
+  if (e.key === 'ArrowLeft') { viewBox.x -= panAmt; applyViewBox(); }
+  else if (e.key === 'ArrowRight') { viewBox.x += panAmt; applyViewBox(); }
+  else if (e.key === 'ArrowUp') { viewBox.y -= panAmt; applyViewBox(); }
+  else if (e.key === 'ArrowDown') { viewBox.y += panAmt; applyViewBox(); }
+  else if (e.key === '+' || e.key === '=') { zoomBy(0.8); }
+  else if (e.key === '-') { zoomBy(1.25); }
+  else if (e.key === 'r' || e.key === 'R') { resetView(); }
+});
+
+function esc(s) {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
-
-// Pan
-ctr.addEventListener('mousedown', e => { dragging=true; sx=e.clientX-tx; sy=e.clientY-ty; ctr.classList.add('dragging'); });
-ctr.addEventListener('mousemove', e => { if(!dragging)return; tx=e.clientX-sx; ty=e.clientY-sy; upXf(); });
-ctr.addEventListener('mouseup', ()=>{ dragging=false; ctr.classList.remove('dragging'); });
-ctr.addEventListener('mouseleave', ()=>{ dragging=false; ctr.classList.remove('dragging'); });
-
-// Zoom toward cursor
-ctr.addEventListener('wheel', e => {
-    e.preventDefault();
-    const r = ctr.getBoundingClientRect();
-    const mx = e.clientX - r.left, my = e.clientY - r.top;
-    const f = e.deltaY > 0 ? 0.9 : 1.1;
-    const ns = scale * f;
-    tx = mx - (mx - tx) * (ns / scale);
-    ty = my - (my - ty) * (ns / scale);
-    scale = ns;
-    upXf();
-}, {passive:false});
-
-// Controls
-document.getElementById('engine').onchange = e => render(e.target.value);
-document.getElementById('fit-btn').onclick = fitView;
-document.getElementById('reset-btn').onclick = () => { scale=1; tx=0; ty=0; upXf(); };
-
-// Search highlight
-document.getElementById('search').oninput = e => {
-    const q = e.target.value.toLowerCase();
-    if (!curSvg) return;
-    curSvg.querySelectorAll('.node').forEach(nd => {
-        const t = nd.querySelector('title');
-        const nm = (t ? t.textContent : '').toLowerCase();
-        // find the shape element (polygon for box nodes in graphviz SVG)
-        const sh = nd.querySelector('polygon') || nd.querySelector('ellipse') || nd.querySelector('rect') || nd.querySelector('path');
-        if (q && nm.includes(q)) {
-            if (sh) { sh.setAttribute('stroke', '#ffeb3b'); sh.setAttribute('stroke-width', '3'); }
-        } else {
-            if (sh) { sh.removeAttribute('stroke'); sh.removeAttribute('stroke-width'); }
-        }
-    });
-};
-
-render('neato');
 </script>
+
 </body>
 </html>

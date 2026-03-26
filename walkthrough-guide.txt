@@ -50,8 +50,8 @@
 > take sword
 # Pick up the lamp
 > take lamp
+# You open the trophy case.
 > open case
-
 # Store the egg in the case
 # +9 points
 # You put the jewel-encrusted egg into the trophy case.
@@ -123,7 +123,8 @@
 #   a forbidding hole leading west.
 > n
 # Combat: troll (12 attempts)
-# You charge, but the troll jumps nimbly aside.
+# The blow lands, making a shallow gash in the troll's arm! The axe sweeps
+#   past as you jump aside.
 > kill troll with sword
 > kill troll with sword
 > kill troll with sword
@@ -461,15 +462,8 @@
 ## Egyptian Room
 
 > d
-
-# Pick up the coffin
-# +10 points
 > take coffin
-# The gold coffin opens. A sceptre, possibly that of ancient Egypt itself, is
-#   in the coffin.
 > open coffin
-# Pick up the sceptre
-# +4 points
 > take sceptre
 
 ## Temple
@@ -509,10 +503,8 @@
 ## End of Rainbow
 
 > n
-
-# Suddenly, the rainbow appears to become solid and, I venture, walkable (I
-#   think the giveaway was the stairs and bannister).
 > wave sceptre
+
 # Pick up the pot of gold
 # +10 points
 > take pot of gold
@@ -564,12 +556,8 @@
 > w
 
 # Store the coffin in the case
-# +15 points
-# You put the gold coffin into the trophy case.
 > put coffin in case
 # Store the sceptre in the case
-# +6 points
-# You put the sceptre into the trophy case.
 > put sceptre in case
 # Store the pot of gold in the case
 # +10 points
@@ -622,6 +610,9 @@
 ## Atlantis Room
 
 > n
+
+# Pick up the trident
+# +4 points
 > take trident
 
 ## Reservoir North
@@ -631,6 +622,9 @@
 ## Reservoir
 
 > s
+
+# Pick up the trunk
+# +15 points
 > take trunk
 
 ## Reservoir South
@@ -682,8 +676,12 @@
 # The brass lantern is now off.
 > turn off lamp
 # Store the trunk in the case
+# +5 points
+# You put the trunk of jewels into the trophy case.
 > put trunk in case
 # Store the trident in the case
+# +11 points
+# You put the crystal trident into the trophy case.
 > put trident in case
 
 ## Kitchen
@@ -763,8 +761,7 @@
 
 > s
 
-# There is a rumble from deep within the earth and the room shakes. Mirror
-#   Room You are in a large square room with tall ceilings.
+# There is a rumble from deep within the earth and the room shakes.
 > rub mirror
 
 ## Cold Passage
@@ -786,9 +783,6 @@
 ## Bat Room
 
 > n
-
-# Pick up the jade
-# +5 points
 > take jade
 
 ## Shaft Room
@@ -809,9 +803,6 @@
 ## Gas Room
 
 > d
-
-# Pick up the bracelet
-# +5 points
 > take bracelet
 
 ## Coal Mine
@@ -898,6 +889,8 @@
 > drop lamp
 > drop jade
 > drop bracelet
+
+# Dropped. The lamp appears a bit dimmer.
 > drop pump
 
 ## Drafty Room
@@ -915,12 +908,12 @@
 
 > s
 
-# You open the machine.
+# The lid opens.
 > open lid
 # Store the coal in the machine
 # (the machine) You put the small pile of coal into the machine.
 > put coal in machine
-# You close the machine.
+# The lid closes.
 > close lid
 # The machine comes to life (figuratively) with a dazzling display of colored
 #   lights and bizarre noises. After a few moments, the excitement abates.
@@ -928,7 +921,7 @@
 > drop screwdriver
 
 # Open the lid
-# You open the machine, revealing a huge diamond.
+# The lid opens, revealing a huge diamond.
 > open lid
 # Pick up the diamond
 # +10 points
@@ -953,10 +946,9 @@
 
 # Pick up the lamp
 > take lamp
-# Pick up the jade
 > take jade
-# Pick up the bracelet
 > take bracelet
+
 # Pick up the pump
 > take pump
 
@@ -1021,12 +1013,8 @@
 # The brass lantern is now off.
 > turn off lamp
 # Store the jade in the case
-# +5 points
-# You put the exquisite jade figurine into the trophy case.
 > put jade in case
 # Store the bracelet in the case
-# +5 points
-# You put the sapphire-encrusted bracelet into the trophy case.
 > put bracelet in case
 # Store the diamond in the case
 # +10 points
@@ -1083,7 +1071,7 @@
 
 # The brass lantern is now on.
 > turn on lamp
-# You get into the magic boat. In the magic boat you can see a tan label.
+# You are now in the magic boat.
 > enter boat
 # You push off from the shore. Frigid River (in the magic boat) You are on the
 #   Frigid River in the vicinity of the Dam. The river flows quietly here.
@@ -1100,13 +1088,10 @@
 # Pick up the buoy
 # You notice something funny about the feel of the buoy.
 > take buoy
-
-## Sandy Beach (in the magic boat)
-
+# The magic boat comes to a rest on the shore. Sandy Beach (in the magic boat)
+#   You are on a large sandy beach on the east shore of the river, which is...
 > east
-
-# You are on your own feet again. Sandy Beach You are on a large sandy beach
-#   on the east shore of the river, which is flowing quickly by.
+# You are on your own feet again.
 > exit
 # Pick up the shovel
 > take shovel
@@ -1146,74 +1131,42 @@
 ## Aragain Falls
 
 > s
-
-## On the Rainbow
-
 > w
-
-## End of Rainbow
-
 > w
-
-## Canyon Bottom
-
 > sw
-
-## Rocky Ledge
-
 > u
-
-## Canyon View
-
 > u
-
-## Clearing
-
 > nw
-
-## Stage 6
-
-## Behind House
-
 > w
-
-## Kitchen
-
 > w
-
-## Living Room
-
 > w
 
 # Store the emerald in the case
-# +10 points
-# You put the large emerald into the trophy case.
 > put emerald in case
 # Store the scarab in the case
-# +5 points
-# You put the beautiful jeweled scarab into the trophy case.
 > put scarab in case
-# Pick up the egg
-# -9 points
 > take egg from case
+
 # The brass lantern is now on.
 > turn on lamp
-# Too late for that.
 > open trap door
 
-## Cellar
-
+# It's a long way...
 > d
 
-# The Troll Room This is a small room with passages to the east and south and
-#   a forbidding hole leading west.
+## Shore
+
 > n
-# Pick up the axe
 > take axe
 
-## Maze
+## Frigid River
 
+# -10 points
+# DEATH
 > w
+
+## Darkness
+
 > s
 > e
 > u
@@ -1221,27 +1174,15 @@
 > sw
 > e
 > s
-
-## Cyclops Room
-
 > se
-
-# +25 points
-# You hear a scream of anguish as you violate the robber's hideaway. Using
-#   passages unknown to you, he rushes to its defense.
 > u
+
 # Give egg to thief
-# The thief is taken aback by your unexpected generosity, but accepts the
-#   jewel-encrusted egg and stops to admire its beauty.
 > give egg to thief
 > d
-
-## Treasure Room
-
 > u
 
 # Combat: thief (12 attempts)
-# Your bloody axe pinks the thief on the wrist, but it's not serious.
 > kill thief with axe
 > kill thief with axe
 > kill thief with axe
@@ -1255,116 +1196,46 @@
 > kill thief with axe
 > kill thief with axe
 > drop axe
-
-# Pick up the canary
-# +6 points
 > take canary
-# Pick up the chalice
-# +10 points
 > take chalice
-# Pick up the egg
 > take egg
 > take painting
-
-## Cyclops Room
-
 > d
-
-## Strange Passage
-
 > e
-
-## Living Room
-
 > e
-
-# The brass lantern is now off.
 > turn off lamp
+
 # Store the coins in the case
 > put coins in case
 # Store the chalice in the case
-# +5 points
-# You put the chalice into the trophy case.
 > put chalice in case
 # Store the painting in the case
-# The painting is already there.
 > put painting in case
-
-## Kitchen
-
 > e
-
-## Behind House
-
 > e
-
-## North of House
-
 > nw
-
-## Forest Path
-
 > n
-
-# The canary chirps, slightly off-key, an aria from a forgotten opera. From
-#   out of the greenery flies a lovely songbird.
 > wind canary
-# Pick up the bauble
-# +1 points
 > take bauble
-
-## Stage 7
-
-## North of House
-
 > s
-
-## Behind House
-
 > e
-
-## Kitchen
-
 > w
-
-## Living Room
-
 > w
 
 # Store the egg in the case
-# +5 points
-# You put the jewel-encrusted egg into the trophy case.
 > put egg in case
 # Store the canary in the case
-# +4 points
-# You put the golden clockwork canary into the trophy case.
 > put canary in case
 # Store the bauble in the case
-# +1 points
-# You put the beautiful brass bauble into the trophy case.
 > put bauble in case
+# Although there is no light, the room seems dimly illuminated. The room looks
+#   strange and unearthly. Darkness It is pitch black.
 > look
-
-# Pick up the map
 > take map
-# The map shows a forest with three clearings. The largest clearing contains a
-#   house. Three paths leave the large clearing.
 > read map
-
-## Kitchen
-
 > e
-
-## Behind House
-
 > e
-
-## South of House
-
 > s
-
-## West of House
-
 > w
 > sw
 > enter barrow

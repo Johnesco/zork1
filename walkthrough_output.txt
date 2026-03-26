@@ -4,7 +4,7 @@
 
 Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 4 / Serial number 260318 / Inform 7 v10.1.2 / D
+Release 4 / Serial number 260322 / Inform 7 v10.1.2 / D
 Current
 Translated to Inform 7 by John Escobedo
 Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
@@ -77,7 +77,7 @@ Your collection of treasures consists of:
 
 >Taken.
 
->That's already open.
+>You open the trophy case.
 
 >You put the jewel-encrusted egg into the trophy case.
 
@@ -168,18 +168,19 @@ This is a small room with passages to the east and south and a forbidding hole l
 
 A nasty-looking troll, brandishing a bloody axe, blocks all passages out of the room.
 
-The troll's axe barely misses your ear.
+The axe sweeps past as you jump aside.
 Your sword has begun to glow very brightly.
 
->You charge, but the troll jumps nimbly aside.
 >The blow lands, making a shallow gash in the troll's arm!
-The axe crashes against the rock, throwing sparks!
->The troll is knocked out!
->The unconscious troll cannot defend himself: He dies.
-
+The axe sweeps past as you jump aside.
+>The fatal blow strikes the troll square in the heart: He dies.
 Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 
 Your sword is no longer glowing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
 
 >You can't see any such thing.
 
@@ -257,9 +258,11 @@ This is what appears to have been the maintenance room for Flood Control Dam #3.
 
 There is a group of tool chests here.
 
-There is an object which looks like a tube of toothpaste here.
+There is a wrench here.
 
-You can also see a wrench and a screwdriver here.
+There is a screwdriver here.
+
+There is an object which looks like a tube of toothpaste here.
 
 >Click.
 
@@ -325,11 +328,11 @@ Maze
 This is part of a maze of twisty little passages, all alike.
 A skeleton, probably the remains of a luckless adventurer, lies here.
 
-The deceased adventurer's useless lantern is here.
-
 Beside the skeleton is a rusty knife.
 
-You can also see a skeleton key here.
+The deceased adventurer's useless lantern is here.
+
+There is a skeleton key here.
 
 >
 Maze
@@ -434,7 +437,7 @@ Sitting on the pedestal is a flaming torch, made of ivory.
 Temple
 This is the north end of a large temple. On the east wall is an ancient inscription, probably a prayer in a long-forgotten language. Below the prayer is a staircase leading down. The west wall is solid granite. The exit to the north end of the room is through huge marble pillars.
 
-You can see a brass bell here.
+There is a brass bell here.
 
 >Taken.
 
@@ -442,9 +445,9 @@ You can see a brass bell here.
 Altar
 This is the south end of a large temple. In front of you is what appears to be an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it.
 
-On the altar is a large black book, open to page 569.
-
 On the two ends of the altar are burning candles.
+
+On the altar is a large black book, open to page 569.
 
 >Taken.
 
@@ -452,6 +455,8 @@ On the two ends of the altar are burning candles.
 
 >Cave
 This is a tiny cave with entrances west and north, and a dark, forbidding staircase leading down.
+
+A gust of wind blows out your candles!
 
 >
 Entrance to Hades
@@ -548,11 +553,11 @@ Maze
 This is part of a maze of twisty little passages, all alike.
 A skeleton, probably the remains of a luckless adventurer, lies here.
 
-The deceased adventurer's useless lantern is here.
-
 Beside the skeleton is a rusty knife.
 
-You can also see a skeleton key here.
+The deceased adventurer's useless lantern is here.
+
+There is a skeleton key here.
 
 >
 Maze
@@ -642,18 +647,11 @@ This is the north end of a large temple. On the east wall is an ancient inscript
 Egyptian Room
 This is a room which looks like an Egyptian tomb. There is an ascending staircase to the west.
 
-The solid-gold coffin used for the burial of Ramses II is here.
+>You can't see any such thing.
 
->Taken.
+>You can't see any such thing.
 
-[Your score has just gone up by ten points.]
-
->The gold coffin opens.
-A sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point.
-
->Taken.
-
-[Your score has just gone up by four points.]
+>You can't see any such thing.
 
 >
 Temple
@@ -698,9 +696,7 @@ You are beneath the walls of the river canyon which may be climbable here. The l
 End of Rainbow
 You are on a small, rocky beach on the continuation of the Frigid River past the Falls. The beach is narrow due to the presence of the White Cliffs. The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the east and a narrow path continues to the southwest.
 
->Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).
-
-A shimmering pot of gold appears at the end of the rainbow.
+>You can't see any such thing.
 
 >Taken.
 
@@ -722,15 +718,19 @@ You are at the top of the Great Canyon on its west wall. From here there is a ma
 Clearing
 You are in a small clearing in a well marked forest path that extends to the east and west.
 
+You hear in the distance the chirping of a song bird.
+
 >
 Forest
 This is a dimly lit forest, with large trees all around. Gnarled roots break through the soil underfoot, and the air is heavy with the smell of wet bark. Somewhere nearby, water drips steadily from the leaves.
+
+You hear in the distance the chirping of a song bird.
 
 >
 Forest
 This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
 
-You can see a screwdriver and a brass lantern here.
+You can see a screwdriver and a brass lantern (battery-powered) here.
 
 >Taken.
 
@@ -762,13 +762,9 @@ Your collection of treasures consists of:
   a jewel-encrusted egg
   an ancient map
 
->You put the gold coffin into the trophy case.
+>You can't see any such thing.
 
-[Your score has just gone up by fifteen points.]
-
->You put the sceptre into the trophy case.
-
-[Your score has just gone up by six points.]
+>You can't see any such thing.
 
 >You put the pot of gold into the trophy case.
 
@@ -815,6 +811,8 @@ There is a path along the stream to the east or west, a steep pathway climbing s
 >Reservoir
 You are on what used to be a large lake, but which is now a large mud pile. There are "shores" to the north and south.
 
+Lying half buried in the mud is an old trunk, bulging with jewels.
+
 >
 Reservoir North
 You are in a large cavernous room, the south of which was formerly a lake. However, with the water level lowered, there is merely a wide stream running through there.
@@ -829,7 +827,11 @@ There is a hand-held air pump here.
 Atlantis Room
 This is an ancient room, long under water. There is an exit to the south and a staircase leading up.
 
->You can't see any such thing.
+On the shore lies Poseidon's own crystal trident.
+
+>Taken.
+
+[Your score has just gone up by four points.]
 
 >
 Reservoir North
@@ -840,7 +842,11 @@ There is a slimy stairway leaving the room to the north.
 >Reservoir
 You are on what used to be a large lake, but which is now a large mud pile. There are "shores" to the north and south.
 
->You can't see any such thing.
+Lying half buried in the mud is an old trunk, bulging with jewels.
+
+>Taken.
+
+[Your score has just gone up by fifteen points.]
 
 >
 Reservoir South
@@ -888,11 +894,11 @@ Maze
 This is part of a maze of twisty little passages, all alike.
 A skeleton, probably the remains of a luckless adventurer, lies here.
 
-The deceased adventurer's useless lantern is here.
-
 Beside the skeleton is a rusty knife.
 
-You can also see a skeleton key here.
+The deceased adventurer's useless lantern is here.
+
+There is a skeleton key here.
 
 >
 Maze
@@ -921,8 +927,6 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 Your collection of treasures consists of:
   a pot of gold
-  a sceptre
-  a gold coffin
   a crystal skull
   a torch
   a platinum bar
@@ -932,9 +936,13 @@ Your collection of treasures consists of:
 
 >The brass lantern is now off.
 
->You can't see any such thing.
+>You put the trunk of jewels into the trophy case.
 
->You can't see any such thing.
+[Your score has just gone up by five points.]
+
+>You put the crystal trident into the trophy case.
+
+[Your score has just gone up by eleven points.]
 
 >
 Kitchen
@@ -951,8 +959,6 @@ You are facing the north side of a white house. There is no door here, and all t
 >
 Forest Path
 This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
-
-You hear in the distance the chirping of a song bird.
 
 >
 Forest
@@ -985,9 +991,9 @@ Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
 Your collection of treasures consists of:
+  a crystal trident
+  a trunk of jewels
   a pot of gold
-  a sceptre
-  a gold coffin
   a crystal skull
   a torch
   a platinum bar
@@ -1033,9 +1039,6 @@ You are in a large square room with tall ceilings. On the south wall is an enorm
 
 >There is a rumble from deep within the earth and the room shakes.
 
-Mirror Room
-You are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.
-
 >
 Cold Passage
 This is a cold and damp corridor where a long east-west passageway turns into a southward path.
@@ -1056,11 +1059,7 @@ You are in a small room. Strange squeaky sounds may be heard coming from the pas
 Bat Room
 You are in a small room which has doors only to the east and south. In the corner of the room on the ceiling is a large vampire bat who is obviously deranged and holding his nose.
 
-There is an exquisite jade figurine here.
-
->Taken.
-
-[Your score has just gone up by five points.]
+>You can't see any such thing.
 
 >
 Shaft Room
@@ -1080,11 +1079,7 @@ This is a small nondescript room. However, from the direction of a small descend
 Gas Room
 This is a small room which smells strongly of coal gas. There is a short climb up some stairs and a narrow tunnel leading east.
 
-You can see a sapphire-encrusted bracelet here.
-
->Taken.
-
-[Your score has just gone up by five points.]
+>You can't see any such thing.
 
 >
 Coal Mine
@@ -1114,7 +1109,7 @@ This is a rather wide room. On one side is the bottom of a narrow wooden ladder.
 Dead End
 You have come to a dead end in the mine.
 
-You can see a small pile of coal here.
+There is a small pile of coal here.
 
 >Taken.
 
@@ -1137,6 +1132,8 @@ This is a nondescript part of a coal mine.
 >
 Coal Mine
 This is a nondescript part of a coal mine.
+
+There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
 
 >
 Coal Mine
@@ -1184,8 +1181,6 @@ This is a nondescript part of a coal mine.
 Coal Mine
 This is a nondescript part of a coal mine.
 
-The lamp appears a bit dimmer.
-
 >
 Ladder Top
 This is a very small room. In the corner is a rickety wooden ladder, leading downward. It might be safe to descend. There is also a staircase leading upward.
@@ -1198,15 +1193,17 @@ This is a rather wide room. On one side is the bottom of a narrow wooden ladder.
 Timber Room
 This is a long and narrow passage, which is cluttered with broken timbers. A wide passage comes from the east and turns at the west end of the room into a very narrow passageway. From the west comes a strong draft.
 
-You can see a broken timber here.
+There is a broken timber here.
 
 >Dropped.
 
->Dropped.
+>You can't see any such thing.
+
+>You can't see any such thing.
 
 >Dropped.
 
->Dropped.
+The lamp appears a bit dimmer.
 
 >Drafty Room
 This is a small drafty room in which is the bottom of a long shaft. To the south is a passageway and to the east a very narrow passage. In the shaft can be seen a heavy iron chain.
@@ -1223,18 +1220,18 @@ At the end of the chain is a basket.
 Machine Room
 This is a large, cold room whose sole exit is to the north. In one corner there is a machine which is reminiscent of a clothes dryer. On its face is a switch which is labelled "START". The switch does not appear to be manipulable by any human hand (unless the fingers are about 1/16 by 1/4 inch). On the front of the machine is a large lid, which is closed.
 
->You open the machine.
+>The lid opens.
 
 >(the machine)
 You put the small pile of coal into the machine.
 
->You close the machine.
+>The lid closes.
 
 >The machine comes to life (figuratively) with a dazzling display of colored lights and bizarre noises. After a few moments, the excitement abates.
 
 >Dropped.
 
->You open the machine, revealing a huge diamond.
+>The lid opens, revealing a huge diamond.
 
 >Taken.
 
@@ -1259,13 +1256,15 @@ It is now pitch dark in here!
 >Timber Room
 This is a long and narrow passage, which is cluttered with broken timbers. A wide passage comes from the east and turns at the west end of the room into a very narrow passageway. From the west comes a strong draft.
 
-You can see a hand-held air pump, a sapphire-encrusted bracelet, an exquisite jade figurine, a brass lantern (providing light) and a broken timber here.
+There is a broken timber here.
+
+You can also see a hand-held air pump and a brass lantern (providing light) here.
 
 >Taken.
 
->Taken.
+>You can't see any such thing.
 
->Taken.
+>You can't see any such thing.
 
 >Taken.
 
@@ -1276,8 +1275,6 @@ This is a rather wide room. On one side is the bottom of a narrow wooden ladder.
 >
 Ladder Top
 This is a very small room. In the corner is a rickety wooden ladder, leading downward. It might be safe to descend. There is also a staircase leading upward.
-
-There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
 
 >
 Coal Mine
@@ -1339,9 +1336,9 @@ Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
 Your collection of treasures consists of:
+  a crystal trident
+  a trunk of jewels
   a pot of gold
-  a sceptre
-  a gold coffin
   a crystal skull
   a platinum bar
   a painting
@@ -1350,13 +1347,9 @@ Your collection of treasures consists of:
 
 >The brass lantern is now off.
 
->You put the exquisite jade figurine into the trophy case.
+>You can't see any such thing.
 
-[Your score has just gone up by five points.]
-
->You put the sapphire-encrusted bracelet into the trophy case.
-
-[Your score has just gone up by five points.]
+>You can't see any such thing.
 
 >You put the huge diamond into the trophy case.
 
@@ -1425,9 +1418,7 @@ A tan label is lying inside the boat.
 
 >The brass lantern is now on.
 
->You get into the magic boat.
-
-In the magic boat you can see a tan label.
+>You are now in the magic boat.
 
 >You push off from the shore.
 
@@ -1472,20 +1463,16 @@ You notice something funny about the feel of the buoy.
 
 Taken.
 
->
+>The magic boat comes to a rest on the shore.
+
 Sandy Beach (in the magic boat)
 You are on a large sandy beach on the east shore of the river, which is flowing quickly by. A path runs beside the river to the south here, and a passage is partially buried in sand to the northeast.
 
-You can see a shovel here.
+There is a shovel here.
 
 In the magic boat you can see a tan label.
 
 >You are on your own feet again.
-
-Sandy Beach
-You are on a large sandy beach on the east shore of the river, which is flowing quickly by. A path runs beside the river to the south here, and a passage is partially buried in sand to the northeast.
-
-You can see a magic boat (in which is a tan label) and a shovel here.
 
 >Taken.
 
@@ -1528,177 +1515,88 @@ You are on the east shore of the river. The water here seems somewhat treacherou
 >
 Aragain Falls
 You are at the top of Aragain Falls, an enormous waterfall with a drop of about 450 feet. The only path here is on the north end.
-A solid rainbow spans the falls.
+A beautiful rainbow can be seen over the falls and to the west.
 
->On the Rainbow
-You are on top of a rainbow (I bet you never thought you would walk on a rainbow), with a magnificent view of the Falls. The rainbow travels east-west here.
+>You can't go that way.
 
->
-End of Rainbow
-You are on a small, rocky beach on the continuation of the Frigid River past the Falls. The beach is narrow due to the presence of the White Cliffs. The river canyon opens here and sunlight shines in from above. A rainbow crosses over the falls to the east and a narrow path continues to the southwest.
+>You can't go that way.
 
->
-Canyon Bottom
-You are beneath the walls of the river canyon which may be climbable here. The lesser part of the runoff of Aragain Falls flows by below. To the north is a narrow path.
+>You can't go that way.
 
->
-Rocky Ledge
-You are on a ledge about halfway up the wall of the river canyon. You can see from here that the main flow from Aragain Falls twists along a passage which it is impossible for you to enter. Below you is the canyon bottom. Above you is more cliff, which appears climbable.
+>You can't go that way.
 
->
-Canyon View
-You are at the top of the Great Canyon on its west wall. From here there is a marvelous view of the canyon and parts of the Frigid River upstream. Across the canyon, the walls of the White Cliffs join the mighty ramparts of the Flathead Mountains to the east. Following the Canyon upstream to the north, Aragain Falls may be seen, complete with rainbow. The mighty Frigid River flows out from a great dark cavern. To the west and south can be seen an immense forest, stretching for miles around. A path leads northwest. It is possible to climb down into the canyon from here.
+>You can't go that way.
 
->
-Clearing
-You are in a small clearing in a well marked forest path that extends to the east and west.
+>You can't go that way.
 
->
-Behind House
-You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is open.
+>You can't go that way.
 
->
-Kitchen
-You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.
+>You can't go that way.
 
->
-Living Room
-You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
+>You can't go that way.
 
-Your collection of treasures consists of:
-  a torch
-  a huge diamond
-  a sapphire-encrusted bracelet
-  an exquisite jade figurine
-  a pot of gold
-  a sceptre
-  a gold coffin
-  a crystal skull
-  a platinum bar
-  a painting
-  a jewel-encrusted egg
-  an ancient map
+>You can't see any such thing.
 
->You put the large emerald into the trophy case.
+>You can't see any such thing.
 
-[Your score has just gone up by ten points.]
-
->You put the beautiful jeweled scarab into the trophy case.
-
-[Your score has just gone up by five points.]
-
->Taken.
-
-[Your score has just gone down by nine points.]
+>You can't see any such thing.
 
 >The brass lantern is now on.
 
->Too late for that.
+>You can't see any such thing.
+
+>It's a long way...
 
 >
-Cellar
-You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
-
->
-The Troll Room
-This is a small room with passages to the east and south and a forbidding hole leading west. Bloodstains and deep scratches (perhaps made by an axe) mar the walls.
-
-There is a bloody axe here.
-
-You can also see a sword here.
-
->Taken.
-
->Maze
-This is part of a maze of twisty little passages, all alike.
-
->
-Maze
-This is part of a maze of twisty little passages, all alike.
-
->
-Maze
-This is part of a maze of twisty little passages, all alike.
-
->
-Maze
-This is part of a maze of twisty little passages, all alike.
-A skeleton, probably the remains of a luckless adventurer, lies here.
-
-The deceased adventurer's useless lantern is here.
-
-Beside the skeleton is a rusty knife.
-
-You can also see a skeleton key here.
+Shore
+You are on the east shore of the river. The water here seems somewhat treacherous. A path travels from north to south here, the south end quickly turning around a sharp corner.
 
 >You can't see any such thing.
 
 >
-Maze
-This is part of a maze of twisty little passages, all alike.
+Frigid River
+The sound of rushing water is nearly unbearable here. On the east shore is a large landing area.
 
-The lamp is definitely dimmer now.
+Unfortunately, the magic boat doesn't provide protection from the rocks and boulders one meets at the bottom of waterfalls. Including this one.
 
->
-Maze
-This is part of a maze of twisty little passages, all alike.
+    ****  You have died  ****
 
->
-Maze
-This is part of a maze of twisty little passages, all alike.
+As you take your last breath, you feel relieved of your burdens. The feeling passes as you find yourself before the gates of Hell, where the spirits jeer at you and deny you entry. Your senses are disturbed. The objects in the dungeon appear indistinct, bleached of color, even unreal.
 
->
-Cyclops Room
-This room has an exit on the northwest, and a staircase leading up.
+Although there is no light, the room seems dimly illuminated.
+The room looks strange and unearthly.
 
-The east wall, previously solid, now has a cyclops-sized opening in it.
 
->You hear a scream of anguish as you violate the robber's hideaway. Using passages unknown to you, he rushes to its defense.
+Darkness
+It is pitch black.
 
-Treasure Room
-This is a large room, whose east wall is solid granite. A number of discarded bags, which crumble at your touch, are scattered about on the floor. There is an exit down a staircase.
-
-There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
-
-[Your score has just gone up by twenty-five points.]
-
->The thief is taken aback by your unexpected generosity, but accepts the jewel-encrusted egg and stops to admire its beauty.
+[Your score has just gone down by ten points.]
 
 >
-Cyclops Room
-This room has an exit on the northwest, and a staircase leading up.
+Darkness
+It is pitch black.
 
-The east wall, previously solid, now has a cyclops-sized opening in it.
+>You can't go that way.
 
->Treasure Room
-This is a large room, whose east wall is solid granite. A number of discarded bags, which crumble at your touch, are scattered about on the floor. There is an exit down a staircase.
+>You can't go that way.
 
-There is a suspicious-looking individual, holding a bag, leaning against one wall. He is armed with a vicious-looking stiletto.
+>You can't see any such thing.
 
->Your bloody axe pinks the thief on the wrist, but it's not serious.
->The blow lands, making a shallow gash in the thief's arm!
->Clang! Crash! The thief parries.
->The thief is struck on the arm; blood begins to trickle down.
->The blow lands, making a shallow gash in the thief's arm!
->The fatal blow strikes the thief square in the heart: He dies.
-Almost as soon as the thief breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
+>You can't go that way.
 
+>You can't go that way.
 
-As the thief dies, the power of his magic decreases, and his treasures reappear:
-  A crystal trident
-  A leather bag of coins
-  A trunk of jewels
-  A jewel-encrusted egg, with a golden clockwork canary
-  A stiletto
-  A zorkmid
-  A teeth
-  A stairs
-  A blast of air
-  A pair of hands
-  A lurking grue
-  A granite wall
+>You can't go that way.
 
-The chalice is now safe to take.
+>You can't go that way.
+
+>You can't go that way.
+
+>You can't see any such thing.
+
+>You can't go that way.
+
+>You can't go that way.
 
 >You can't see any such thing.
 
@@ -1712,167 +1610,90 @@ The chalice is now safe to take.
 
 >You can't see any such thing.
 
->Dropped.
+>You can't see any such thing.
 
->Taken.
+>You can't see any such thing.
 
-[Your score has just gone up by six points.]
+>You can't see any such thing.
 
->Taken.
+>You can't see any such thing.
 
-[Your score has just gone up by ten points.]
+>You can't see any such thing.
 
->Taken.
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't go that way.
+
+>You can't go that way.
+
+>You can't go that way.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't see any such thing.
+
+>You can't go that way.
+
+>You can't go that way.
+
+>You can't go that way.
+
+>
+Darkness
+It is pitch black.
+
+>You can't see any such thing.
 
 >You can't see any such thing.
 
 >
-Cyclops Room
-This room has an exit on the northwest, and a staircase leading up.
+Darkness
+It is pitch black.
 
-The east wall, previously solid, now has a cyclops-sized opening in it.
+>You can't go that way.
 
->Strange Passage
-This is a long passage. To the west is one entrance. On the east there is an old wooden door, with a large opening in it (about cyclops sized).
+>You can't go that way.
 
->
-Living Room
-You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
-
-Your collection of treasures consists of:
-  a beautiful jeweled scarab
-  a large emerald
-  a torch
-  a huge diamond
-  a sapphire-encrusted bracelet
-  an exquisite jade figurine
-  a pot of gold
-  a sceptre
-  a gold coffin
-  a crystal skull
-  a platinum bar
-  a painting
-  an ancient map
-
->The brass lantern is now off.
+>You can't go that way.
 
 >You can't see any such thing.
 
->You put the chalice into the trophy case.
+>You can't see any such thing.
 
-[Your score has just gone up by five points.]
+>You can't see any such thing.
 
->The painting is already there.
+>Although there is no light, the room seems dimly illuminated.
+The room looks strange and unearthly.
 
->
-Kitchen
-You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.
 
->
-Behind House
-You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is open.
+Darkness
+It is pitch black.
 
->
-North of House
-You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+>You can't see any such thing.
 
->
-Forest Path
-This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+>You can't see any such thing.
 
->The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the greenery flies a lovely songbird. It perches on a limb just over your head and opens its beak to sing. As it does so a beautiful brass bauble drops from its mouth, bounces off the top of your head, and lands glimmering in the grass. As the canary winds down, the songbird flies away.
+>You can't go that way.
 
->Taken.
+>You can't go that way.
 
-[Your score has just gone up by one point.]
+>You can't go that way.
 
->
-North of House
-You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
-
->
-Behind House
-You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is open.
-
->
-Kitchen
-You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.
-
->
-Living Room
-You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
-
-Your collection of treasures consists of:
-  a chalice
-  a beautiful jeweled scarab
-  a large emerald
-  a torch
-  a huge diamond
-  a sapphire-encrusted bracelet
-  an exquisite jade figurine
-  a pot of gold
-  a sceptre
-  a gold coffin
-  a crystal skull
-  a platinum bar
-  a painting
-  an ancient map
-
->You put the jewel-encrusted egg into the trophy case.
-
-[Your score has just gone up by five points.]
-
->You put the golden clockwork canary into the trophy case.
-
-[Your score has just gone up by four points.]
-
->You put the beautiful brass bauble into the trophy case.
-
-[Your score has just gone up by one point.]
-
->Living Room
-You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
-
-Your collection of treasures consists of:
-  a beautiful brass bauble
-  a golden clockwork canary
-  a jewel-encrusted egg
-  a chalice
-  a beautiful jeweled scarab
-  a large emerald
-  a torch
-  a huge diamond
-  a sapphire-encrusted bracelet
-  an exquisite jade figurine
-  a pot of gold
-  a sceptre
-  a gold coffin
-  a crystal skull
-  a platinum bar
-  a painting
-  an ancient map
-
->Taken.
-
->The map shows a forest with three clearings. The largest clearing contains a house. Three paths leave the large clearing. One of these paths, leading southwest, is marked "To Stone Barrow".
-
->
-Kitchen
-You are in the kitchen of the white house. A table seems to have been used recently for the preparation of food. A passage leads to the west and a dark staircase can be seen leading upward. A dark chimney leads down and to the east is a small window which is open.
-
->
-Behind House
-You are behind the white house. A path leads into the forest to the east. In one corner of the house there is a small window which is open.
-
->
-South of House
-You are facing the south side of a white house. There is no door here, and all the windows are boarded.
-
->
-West of House
-You are standing in an open field west of a white house, with a boarded front door.
-
-There is a small mailbox here.
+>You can't go that way.
 
 >You can't go that way.
 
