@@ -1303,3 +1303,113 @@ Taken
 > enter barrow
 {vital}
 /Congratulations
+
+# ============================================================
+# Bug verification: ZIL bugs that may be fixed in I7
+# ============================================================
+
+* verify-165-leaves-ground
+# #165: Burning leaves on ground should NOT kill the player
+>{include} startup
+> n
+> n
+> n
+/Clearing
+/pile of leaves
+> burn leaves
+/The leaves burn
+!and so do you
+
+* verify-169-tree-single-item
+# #169: A single dropped item should be visible from Up a Tree
+>{include} startup
+> open mailbox
+> take leaflet
+Taken
+> n
+> n
+/Forest Path
+> drop leaflet
+> up
+/Up a Tree
+> look
+/On the ground below you can see
+/leaflet
+
+* verify-171-chimney-scoring
+# #171: Chimney climb to Kitchen uses move-the-player; should not double-score
+>{include} cellar
+> s
+> e
+/Gallery
+> n
+/Studio
+# Drop sword so we carry only lantern (1 item, <= 2)
+> drop sword
+> up
+/Kitchen
+# Kitchen was already visited via window entry, so no score message
+!score has just gone up
+
+* verify-167-invisible-trap-door
+# #167: zil-invisible things should not be accessible to the parser
+>{include} living-room
+# Trap door is zil-invisible until rug is pushed
+> open trap door
+/can't see any such thing
+> take trap door
+/can't see any such thing
+# Now reveal it
+> push rug
+/trap door
+> open trap door
+{vital}
+/rickety staircase
+
+* verify-170-painting-no-points
+# #170: Destroying painting then taking it should award no points
+>{include} cellar
+> s
+> e
+/Gallery
+> attack painting
+/destroyed one
+> take painting
+!score has just gone up
+
+# ============================================================
+# Bug #172 cosmetic fixes
+# ============================================================
+
+* verify-172-match-double-light
+# #172: Should refuse to light a second match while one is burning
+>{include} round-room
+> n
+> ne
+> nw
+> e
+> n
+/Dam Lobby
+/matchbook
+> take matchbook
+Taken
+> light match
+/starts to burn
+> light match
+/already have a lit match
+
+* verify-172-throw-hands
+# #172: Should not be able to throw body-part backdrops
+>{include} startup
+> throw hands at mailbox
+/can't throw that!
+
+* verify-172-enter-trap-door
+# #172: "enter trap door" should work as "go down"
+>{include} living-room
+> push rug
+> open trap door
+/rickety staircase
+> enter trap door
+{vital}
+/Cellar

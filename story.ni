@@ -354,6 +354,8 @@ Instead of switching on the matchbook:
 Carry out lighting-match:
 	if the player does not carry the matchbook:
 		say "You don't have the matchbook." instead;
+	if the match-lit is true:
+		say "You already have a lit match." instead;
 	if the match-count is 0:
 		say "I'm afraid that you have run out of matches." instead;
 	decrease the match-count by 1;
@@ -368,7 +370,9 @@ Every turn when the match-lit is true (this is the match burn timer rule):
 	decrease the match-timer by 1;
 	if the match-timer is at most 0:
 		now the match-lit is false;
-		say "The match has gone out.[line break]".
+		say "The match has gone out.[line break]";
+		if in darkness:
+			say "It's pitch black in here![line break]".
 
 Extinguishing-match is an action applying to nothing. Understand "blow out match" and "extinguish match" as extinguishing-match.
 
@@ -1263,8 +1267,13 @@ Before printing the locale description of a room (called the place):
 	repeat with item running through zil-invisible things in the place:
 		now item is mentioned.
 
-Before doing anything to the trap door when the trap door is zil-invisible:
+Before doing anything to a zil-invisible thing:
 	say "You can't see any such thing." instead.
+
+Before doing anything when the second noun is a zil-invisible thing:
+	say "You can't see any such thing." instead.
+
+Instead of entering the trap door: try going down.
 
 Before going down in Living Room:
 	if the rug-moved is false:
@@ -1273,8 +1282,6 @@ Before going down in Living Room:
 		say "The trap door is closed." instead.
 
 Instead of opening the trap door when the player is in Living Room:
-	if the trap door is zil-invisible:
-		say "You can't see any such thing." instead;
 	if the trap door is open:
 		say "[dummy]" instead;
 	now the trap door is open;
@@ -1914,7 +1921,9 @@ To skeleton-curse:
 	say "A ghost appears in the room and is appalled at your desecration of the remains of a fellow adventurer. He casts a curse on your valuables and banishes them to the Land of the Living Dead. The ghost leaves, muttering obscenities.";
 	repeat with item running through things carried by the player:
 		if the treasure-value of item is greater than 0:
-			now item is in Land of the Dead.
+			now item is in Land of the Dead;
+	if in darkness:
+		say "[line break]It's pitch black in here!".
 
 The rusty knife is in Maze5. "Beside the skeleton is a rusty knife."
 Understand "knife" and "rusty" as the rusty knife.
@@ -2681,7 +2690,7 @@ Tiny Cave is a dark room. The printed name of Tiny Cave is "Cave". "This is a ti
 Tiny Cave is in the Underground.
 North of Tiny Cave is Mirror Room 2. West of Tiny Cave is Winding-Passage. Down from Tiny Cave is Entrance to Hades.
 
-Every turn when the player is in Tiny Cave and the player carries the pair of candles and the pair of candles is lit (this is the drafty cave candle rule):
+Every turn when the player is in Tiny Cave and the location of the pair of candles is Tiny Cave and the pair of candles is lit (this is the drafty cave candle rule):
 	if a random chance of 50 in 100 succeeds:
 		now the pair of candles is not lit;
 		say "A gust of wind blows out your candles![line break]";
@@ -3386,7 +3395,7 @@ Instead of waving the sceptre:
 			now the rainbow-flag is true;
 			now the pot of gold is zil-visible;
 			say "Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).";
-			if the player is in End of Rainbow:
+			if the player is in End of Rainbow and the pot of gold is in End of Rainbow:
 				say "[line break]A shimmering pot of gold appears at the end of the rainbow.";
 		otherwise:
 			now the rainbow-flag is false;
@@ -3752,6 +3761,9 @@ Instead of inserting something into the slide-object:
 
 Instead of going down in Slide Room:
 	say "You tumble down the slide....";
+	if the cellar-visited is false:
+		now the cellar-visited is true;
+		increase the score by 25;
 	move the player to Cellar.
 
 The broken timber is in Timber Room. "There is a broken timber here."
@@ -4159,6 +4171,9 @@ Instead of going up in Studio:
 	otherwise if items-carried > 2:
 		say "You can't get up there with what you're carrying.";
 	otherwise if the player carries the brass lantern and items-carried <= 2:
+		if the kitchen-visited is false:
+			now the kitchen-visited is true;
+			increase the score by 10;
 		move the player to Kitchen;
 	otherwise:
 		say "You can't get up there with what you're carrying."
@@ -4707,11 +4722,17 @@ Carry out looking-on:
 
 Section 5 - Throwing Overrides
 
+Before throwing a backdrop at something:
+	say "You can't throw that!" instead.
+
 Instead of throwing something at yourself:
 	say "A terrific throw! The [noun] hits you squarely in the head. Normally, this wouldn[apostrophe]t do much damage, but by incredible mischance, you fall over backwards trying to duck, and break your neck, justice being swift and merciful in the Great Underground Empire.";
 	die saying ""
 
 Instead of throwing something at a person:
+	if the second noun is the thief and the thief-unconscious is true:
+		say "The thief is unconscious.";
+		now the noun is in the location of the player instead;
 	if the second noun is the thief and the noun is a weapon:
 		if a random chance of 1 in 10 succeeds:
 			say "You evidently frightened the robber, though you didn't hit him. He flees.";
