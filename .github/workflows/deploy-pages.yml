@@ -25,14 +25,15 @@ jobs:
       - uses: actions/configure-pages@v5
       - name: Assemble site
         run: |
+          shopt -s nullglob
           mkdir -p _site
           cp *.html _site/ 2>/dev/null || true
           cp *.txt _site/ 2>/dev/null || true
           cp story.ni _site/ 2>/dev/null || true
-          [ -d lib ] && cp -r lib _site/lib
-          [ -d scenarios ] && cp -r scenarios _site/scenarios
+          [ -d lib ] && cp -r lib _site/lib || true
+          [ -d scenarios ] && cp -r scenarios _site/scenarios || true
           for v in v[0-9]*/; do
-            [ -d "$v" ] && cp -r "$v" "_site/$v"
+            cp -r "$v" "_site/$v"
           done
       - uses: actions/upload-pages-artifact@v3
         with:
