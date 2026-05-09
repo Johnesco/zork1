@@ -1,0 +1,36 @@
+test: zork1-mailbox
+game: ../../zork1.ulx
+seed: 26
+---
+
+# Mailbox and Leaflet — basic smoke test.
+# Source: i7/zork1/tests/zork1.scenario (== mailbox + included == startup)
+
+> look
+
+# We start at West of House
+? /West of House/
+
+# White house is described
+? /white house/
+
+# Mailbox is mentioned in the room
+? /small mailbox/
+
+
+> open mailbox
+
+# Mailbox contains the leaflet
+? /leaflet/
+
+
+> take leaflet
+
+# Standard "Taken" confirmation
+? Taken
+
+
+> read leaflet
+
+# Leaflet text greets the player
+? /WELCOME TO ZORK/

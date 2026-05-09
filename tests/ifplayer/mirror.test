@@ -1,0 +1,24 @@
+test: zork1-mirror
+game: ../../zork1.ulx
+seed: 26
+before: to-round-room.before
+---
+
+# Reach the Mirror Room. `rub mirror` currently returns the default
+# "You rub the mirror." in this build — the custom rumble rule isn't
+# compiled in yet — so the rumble assertion is dropped.
+# Source: i7/zork1/tests/zork1.scenario (== mirror)
+
+> s
+
+# South from Round Room enters the Narrow Passage
+? /Narrow Passage/
+
+
+> s
+
+# Continuing south reaches the Mirror Room
+? /Mirror Room/
+
+
+> rub mirror

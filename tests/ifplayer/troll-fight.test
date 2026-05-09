@@ -1,0 +1,35 @@
+test: zork1-troll-fight
+game: ../../zork1.ulx
+seed: 26
+before: cellar-nav.before
+---
+
+# After cellar-nav: player is in the Cellar with sword and lit lamp.
+# The Troll Room is directly north. Walk in, kill the troll, drop the
+# sword, leave east into the East-West Passage.
+
+> n
+
+? Troll Room
+? troll
+
+
+# Seed 26 is deterministic; three swings is enough to drop the troll.
+# Test ends at T:31.
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+
+? /troll(,? mortally wounded| breathes his last|, dr(ops|opped)|.+(dies|expires|vanishe[ds]))/
+? Your sword is no longer glowing
+
+
+> drop sword
+
+? Dropped
+
+
+> e
+
+? East-West Passage
+?! troll

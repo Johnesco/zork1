@@ -1,0 +1,34 @@
+test: zork1-jump-tree
+game: ../../zork1.ulx
+seed: 26
+---
+
+# Jumping from Up a Tree is a safe landing on the Forest Path below.
+# Source: i7/zork1/tests/zork1.scenario (== jump-tree)
+
+> n
+> n
+
+# Forest Path reached
+? /Forest Path/
+
+
+> up
+
+# Up the tree
+? /Up a Tree/
+
+
+> jump
+
+# Jumping from the tree is described as a daring feat
+? /feat of unaccustomed daring/
+
+# Player lands safely on their feet
+? /land on your feet/
+
+
+> look
+
+# Now back at the Forest Path
+? /Forest Path/

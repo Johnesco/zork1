@@ -1,0 +1,35 @@
+test: zork1-death-river-falls
+game: ../../zork1.ulx
+seed: 26
+before: to-dam-base-pump-armed.before
+---
+
+# Drift past the waterfall — fatal plunge.
+# Source: i7/zork1/tests/zork1.scenario (== death-river-falls)
+
+> inflate pile
+
+# Boat inflates and is seaworthy
+? /inflates and appears seaworthy/
+
+
+> drop sword
+
+> get in boat
+
+> launch
+
+# Boat departs the dam base
+? /push off/
+
+
+> z
+> z
+> z
+> z
+> z
+> z
+> z
+
+# Drifting too far over the waterfall is fatal
+? /You have died/

@@ -1,0 +1,40 @@
+# Through the cellar, past troll, into the round room, mirror-teleport
+# to the second Mirror Room, then north through the cold passage and
+# coal mine into the Shaft Room.
+
+> n
+> e
+> open window
+> w
+> w
+> take sword
+> take lantern
+> turn on lantern
+> push rug
+> open trap door
+> d
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> drop sword
+> e
+> e
+> s
+> s
+> rub mirror
+> n
+> w
+> n
+> w
+> n
+> e

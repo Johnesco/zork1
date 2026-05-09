@@ -1,0 +1,31 @@
+# Through Cellar, past the troll, into the Round Room.
+# Sword dropped after the fight; player carries lantern (lit), garlic
+# is irrelevant here.
+
+> n
+> e
+> open window
+> w
+> w
+> take sword
+> take lantern
+> turn on lantern
+> push rug
+> open trap door
+> d
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> drop sword
+> e
+> e

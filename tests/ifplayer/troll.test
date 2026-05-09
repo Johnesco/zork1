@@ -1,0 +1,29 @@
+test: zork1-troll
+game: ../../zork1.ulx
+seed: 26
+before: to-cellar.before
+---
+
+# Troll combat — go north into the Troll Room and kill the troll.
+# Source: i7/zork1/tests/zork1.scenario (== troll)
+#
+# RNG-dependent: with seed 26 the troll falls in well under 12 swings.
+# We don't assert on the death-text turn (which one it lands on
+# varies); the stable post-conditions live in `round-room` which
+# requires a clear Troll Room to walk through.
+
+> n
+
+# North from Cellar enters the Troll Room
+? /Troll Room/
+
+# Troll is present blocking exits
+? /troll/
+
+
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll

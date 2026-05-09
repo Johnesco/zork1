@@ -1,0 +1,57 @@
+test: zork1-grue-darkness
+game: ../../zork1.ulx
+seed: 26
+before: to-kitchen.before
+---
+
+# Grue safety: enter the Cellar in darkness, take inventory (a non-
+# movement action), verify the grue does NOT attack on stationary
+# commands. ZIL behaviour: grues attack only on movement. Then turn
+# on the lantern.
+# Source: i7/zork1/tests/zork1.scenario (== grue-darkness)
+
+> w
+> take sword
+> take lantern
+> push rug
+
+# Pushing the rug reveals the trap door
+? /trap door/
+
+
+> open trap door
+
+> down
+
+# Cellar is pitch black
+? /pitch black/
+
+# Grue threat is mentioned
+? /likely to be eaten by a grue/
+
+
+> inventory
+
+# Inventory must NOT trigger a grue (no slither)
+?! slithered into the room
+
+# Inventory must NOT trigger a grue (no fangs)
+?! slavering fangs
+
+# Inventory must NOT trigger a grue (no den)
+?! den of hungry grues
+
+# Inventory still shows the lantern
+? /lantern/
+
+
+> turn on lantern
+
+# Lantern lights up
+? /now on/
+
+
+> look
+
+# With light, we can see we're in the Cellar
+? /Cellar/

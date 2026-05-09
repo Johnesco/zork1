@@ -1,0 +1,38 @@
+test: zork1-living-room
+game: ../../zork1.ulx
+seed: 26
+before: to-kitchen.before
+---
+
+# Living Room gear — west from Kitchen, pick up the sword and brass
+# lantern, light it.
+# Source: i7/zork1/tests/zork1.scenario (== living-room)
+
+> w
+
+# West from Kitchen is the Living Room
+? /Living Room/
+
+# Sword is visible in the room
+? /sword/
+
+# Brass lantern is also visible
+? /brass lantern/
+
+
+> take sword
+
+# Sword picked up
+? Taken
+
+
+> take lantern
+
+# Lantern picked up
+? Taken
+
+
+> turn on lantern
+
+# Lantern is now lit
+? /now on/

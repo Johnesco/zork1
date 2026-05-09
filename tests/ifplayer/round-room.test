@@ -1,0 +1,19 @@
+test: zork1-round-room
+game: ../../zork1.ulx
+seed: 26
+before: past-troll.before
+---
+
+# Past the troll, navigate East-West Passage → Round Room.
+# Source: i7/zork1/tests/zork1.scenario (== round-room)
+
+> e
+
+# East from Troll Room into the East-West Passage
+? /East-West Passage/
+
+
+> e
+
+# Continuing east reaches the Round Room
+? /Round Room/

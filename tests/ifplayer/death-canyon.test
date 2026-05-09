@@ -1,0 +1,38 @@
+test: zork1-death-canyon
+game: ../../zork1.ulx
+seed: 26
+---
+
+# Jump from Canyon View — fatal, far below.
+# Forest route avoids the troll: West of House → N → N → E → S → E.
+# Source: i7/zork1/tests/zork1.scenario (== death-canyon)
+
+> n
+> n
+
+# Reached the Forest Path
+? /Forest Path/
+
+
+> e
+
+# East enters the Forest
+? /Forest/
+
+
+> s
+
+# South from the Forest is the Clearing
+? /Clearing/
+
+
+> e
+
+# East from the Clearing is the Canyon View
+? /Canyon View/
+
+
+> jump
+
+# Jumping from Canyon View is described as a lousy idea
+? /lousy place to jump/

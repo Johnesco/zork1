@@ -1,0 +1,31 @@
+test: zork1-hades-path
+game: ../../zork1.ulx
+seed: 26
+before: to-round-room.before
+---
+
+# Round Room → Narrow Passage → Mirror Room → Tiny Cave → Hades.
+# Source: i7/zork1/tests/zork1.scenario (== hades-path)
+
+> s
+
+# South enters the Narrow Passage
+? /Narrow Passage/
+
+
+> s
+
+# Then the Mirror Room
+? /Mirror Room/
+
+
+> e
+
+# East leads into the Cave
+? /Cave/
+
+
+> d
+
+# Down from the Cave is the Entrance to Hades
+? /Entrance to Hades/

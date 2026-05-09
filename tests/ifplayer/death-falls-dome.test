@@ -1,0 +1,20 @@
+test: zork1-death-falls-dome
+game: ../../zork1.ulx
+seed: 26
+before: to-round-room.before
+---
+
+# Jump from the Dome Room without the rope tied — fatal fall.
+# Source: i7/zork1/tests/zork1.scenario (== death-falls-dome)
+
+> se
+> e
+
+# Reached the Dome Room
+? /Dome Room/
+
+
+> jump
+
+# Jump from the dome is unsafe (game halts the action)
+? /not a very safe place/

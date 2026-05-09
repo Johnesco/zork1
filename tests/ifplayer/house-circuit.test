@@ -1,0 +1,36 @@
+test: zork1-house-circuit
+game: ../../zork1.ulx
+seed: 26
+---
+
+# House perimeter walk — N → E → S → W returns to West of House.
+# Source: i7/zork1/tests/zork1.scenario (== house-circuit)
+
+> look
+
+# Game starts at the front of the house
+? /West of House/
+
+
+> n
+
+# North leads to the side path of the house
+? /North of House/
+
+
+> e
+
+# Behind the house — kitchen window in view
+? /Behind House/
+
+
+> s
+
+# Continuing the loop south of the house
+? /South of House/
+
+
+> w
+
+# Back to where we started
+? /West of House/

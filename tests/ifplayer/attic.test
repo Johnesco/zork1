@@ -1,0 +1,53 @@
+test: zork1-attic
+game: ../../zork1.ulx
+seed: 26
+before: to-kitchen.before
+---
+
+# Attic items — go upstairs from Kitchen, take rope and knife.
+# Source: i7/zork1/tests/zork1.scenario (== attic)
+# Setup leaves us in the Kitchen.
+
+> w
+
+# West from Kitchen reaches the Living Room
+? /Living Room/
+
+
+> take lantern
+
+# Lantern picked up
+? Taken
+
+
+> turn on lantern
+
+# Lantern is now lit
+? /now on/
+
+
+> e
+
+# Back into the Kitchen
+? /Kitchen/
+
+
+> up
+
+# Stairs lead to the Attic
+? /Attic/
+
+# Attic contains a rope
+? /rope/
+
+
+> take rope
+
+# Rope picked up
+? Taken
+
+
+> take knife
+
+# Knife also takeable in the Attic
+? Taken

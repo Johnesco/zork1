@@ -1,0 +1,25 @@
+test: zork1-cellar
+game: ../../zork1.ulx
+seed: 26
+before: to-living-room-armed.before
+---
+
+# Into the Cellar — push rug, open trap door, descend.
+# Source: i7/zork1/tests/zork1.scenario (== cellar)
+
+> push rug
+
+# Pushing the rug reveals the trap door
+? /trap door/
+
+
+> open trap door
+
+# Trap door reveals a rickety staircase
+? /rickety staircase/
+
+
+> down
+
+# Descending puts us in the Cellar
+? /Cellar/

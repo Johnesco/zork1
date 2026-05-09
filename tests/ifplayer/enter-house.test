@@ -1,0 +1,34 @@
+test: zork1-enter-house
+game: ../../zork1.ulx
+seed: 26
+---
+
+# Enter the house through the kitchen window. Verifies the navigation
+# path West of House → North of House → Behind House → window → Kitchen.
+# Source: i7/zork1/tests/zork1.scenario (== enter-house)
+
+> n
+
+# North of the house first
+? /North of House/
+
+
+> e
+
+# Behind the house with the window
+? /Behind House/
+
+
+> open window
+
+# Window opens; gives us access
+? /open the window/
+
+
+> w
+
+# We're inside the Kitchen
+? /Kitchen/
+
+# Kitchen has a table mentioned
+? /table/

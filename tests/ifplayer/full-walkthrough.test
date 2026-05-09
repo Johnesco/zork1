@@ -1,0 +1,575 @@
+test: zork1-full-walkthrough
+game: ../../zork1.ulx
+seed: 26
+---
+
+# Zork I — complete winning walkthrough (437 commands).
+# Lifted verbatim from text-games/i7/zork1/walkthrough.txt, the
+# canonical winning sequence for the current Inform 7 port. Section
+# headers added for orientation; underlying commands unchanged.
+#
+# With seed 26 + matching binary hash, ends with score 350/350.
+# Combat (troll, thief) is RNG-dependent — if the canonical 12 swings
+# isn't enough on a rebuilt binary, this is where the test will drift.
+
+
+# ─── 1. Above ground: egg, house entry, sword + lamp ───────────────
+
+> n
+> n
+> u
+> take egg
+
+? Taken
+
+> d
+> s
+> e
+> open window
+> w
+> take sack
+> take bottle
+> w
+> take sword
+> take lamp
+> open case
+> put egg in case
+
+? /score has (just )?gone up/
+
+> e
+> turn on lamp
+> u
+> take rope
+> d
+> open sack
+> take garlic
+
+
+# ─── 2. Cellar via trap door, kill troll ───────────────────────────
+
+> w
+> move rug
+> open trap door
+> d
+
+? Cellar
+
+> s
+> drop sack
+> drop bottle
+> drop rope
+> e
+> take painting
+> w
+> n
+> n
+
+? Troll Room
+
+# Combat is RNG. Twelve swings is enough; the sword stops glowing on
+# the killing blow so we can't pin a death-text assertion to a specific
+# turn. Stable post-condition: the test continues past this point only
+# if the troll is dead (otherwise we can't move on).
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+> kill troll with sword
+
+> drop sword
+
+? Dropped
+
+
+# ─── 3. East-West Passage → Loud Room (echo, platinum bar) ─────────
+
+> e
+> e
+> e
+
+? Loud Room
+
+> echo
+> take platinum bar
+
+
+# ─── 4. Round Room → Reservoir → Dam controls ──────────────────────
+
+> w
+> n
+> ne
+> e
+> n
+> take matchbook
+> n
+> push yellow button
+> take wrench
+> take screwdriver
+> s
+> s
+> turn bolt
+> drop wrench
+
+
+# ─── 5. Back to Living Room, deposit painting + platinum ──────────
+
+> s
+> sw
+> s
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+> odysseus
+> e
+> e
+> turn off lamp
+> put painting in case
+
+? /score has (just )?gone up/
+
+> put platinum bar in case
+
+? /score has (just )?gone up/
+
+
+# ─── 6. Cellar → Reservoir (now drained), get torch + bell ────────
+
+> turn on lamp
+> open trap door
+> d
+> s
+> take rope
+> n
+> n
+> e
+> e
+> se
+> e
+> tie rope to railing
+> d
+> take torch
+> s
+> take bell
+> s
+> take book
+> take candles
+> d
+> d
+> ring bell
+> take candles
+> light match
+> light candles with match
+> read book
+> drop book
+> drop candles
+> s
+> take skull
+
+
+# ─── 7. Back up, deposit torch + skull ─────────────────────────────
+
+> n
+> u
+> n
+> n
+> n
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+> e
+> e
+> turn off lamp
+> put torch in case
+
+? /score has (just )?gone up/
+
+> put skull in case
+
+? /score has (just )?gone up/
+
+
+# ─── 8. Egyptian / Land of the Dead → coffin, sceptre, pot of gold ─
+
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> se
+> e
+> d
+> s
+> d
+> take coffin
+> open coffin
+> take sceptre
+> u
+> s
+> pray
+> turn off lamp
+> drop lamp
+> drop screwdriver
+> s
+> n
+> e
+> d
+> d
+> n
+> wave sceptre
+> take pot of gold
+> sw
+> u
+> u
+> nw
+> s
+> w
+> take lamp
+> e
+> s
+> e
+> w
+> w
+> put coffin in case
+
+? /score has (just )?gone up/
+
+> put sceptre in case
+
+? /score has (just )?gone up/
+
+> put pot of gold in case
+
+? /score has (just )?gone up/
+
+
+# ─── 9. Reservoir north → trunk, trident, pump ─────────────────────
+
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> n
+> ne
+> nw
+> n
+> n
+> take pump
+> n
+> take trident
+> s
+> s
+> take trunk
+> s
+> se
+> sw
+> s
+> w
+> w
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+> e
+> e
+> turn off lamp
+> put trunk in case
+
+? /score has (just )?gone up/
+
+> put trident in case
+
+? /score has (just )?gone up/
+
+
+# ─── 10. Coal mine — get jade, bracelet, coal → diamond ───────────
+
+> e
+> e
+> nw
+> n
+> w
+> take screwdriver
+> e
+> s
+> e
+> w
+> w
+> take torch from case
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> s
+> s
+> rub mirror
+> n
+> w
+> n
+> w
+> n
+> take jade
+> e
+> put torch in basket
+> put screwdriver in basket
+> n
+> d
+> take bracelet
+> e
+> ne
+> se
+> sw
+> d
+> d
+> s
+> take coal
+> n
+> u
+> u
+> n
+> e
+> s
+> n
+> u
+> s
+> put coal in basket
+> lower basket
+> n
+> d
+> e
+> ne
+> se
+> sw
+> d
+> d
+> w
+> drop lamp
+> drop jade
+> drop bracelet
+> drop pump
+> w
+> take torch
+> take coal
+> take screwdriver
+> s
+> open lid
+> put coal in machine
+> close lid
+> turn on switch
+> drop screwdriver
+> open lid
+> take diamond
+> n
+> put diamond in basket
+> put torch in basket
+> raise basket
+> e
+> take lamp
+> take jade
+> take bracelet
+> take pump
+> e
+> u
+> u
+> n
+> e
+> s
+> n
+> u
+> s
+> take diamond
+> take torch
+> w
+> s
+> e
+> s
+> d
+> up
+> turn off lamp
+> put jade in case
+
+? /score has (just )?gone up/
+
+> put bracelet in case
+> put diamond in case
+> put torch in case
+
+
+# ─── 11. Inflatable boat → emerald, scarab ─────────────────────────
+
+> turn on lamp
+> open trap door
+> d
+> n
+> e
+> e
+> n
+> ne
+> e
+> turn off lamp
+> d
+> inflate plastic with pump
+> drop pump
+> turn on lamp
+> enter boat
+> launch
+> wait
+> wait
+> wait
+> wait
+> take buoy
+> east
+> exit
+> take shovel
+> ne
+> dig sand
+> dig sand
+> dig sand
+> dig sand
+> take scarab
+
+? Taken
+
+> drop shovel
+> sw
+> drop buoy
+> open buoy
+> take emerald
+
+? Taken
+
+> s
+> s
+> w
+> w
+> sw
+> u
+> u
+> nw
+> w
+> w
+> w
+> put emerald in case
+> put scarab in case
+
+
+# ─── 12. Bait the thief with the egg, get back canary + chalice ───
+
+> take egg from case
+> turn on lamp
+> open trap door
+> d
+> n
+> take axe
+> w
+> s
+> e
+> u
+> take coins
+> sw
+> e
+> s
+> se
+> u
+> give egg to thief
+> d
+> u
+# Same RNG concerns as the troll fight. The thief's death drops his
+# loot back into the room — `take canary` succeeds only if he's dead.
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+> kill thief with axe
+
+> drop axe
+> take canary
+
+? /score has (just )?gone up/
+
+> take chalice
+
+? /score has (just )?gone up/
+> take egg
+> take painting
+> d
+> e
+> e
+> turn off lamp
+> put coins in case
+> put chalice in case
+> put painting in case
+
+
+# ─── 13. Wind canary → bauble; final treasure deposit; map → barrow
+
+> e
+> e
+> nw
+> n
+> wind canary
+> take bauble
+
+? Taken
+
+> s
+> e
+> w
+> w
+> put egg in case
+> put canary in case
+> put bauble in case
+
+? /score has (just )?gone up/
+
+> look
+
+? map
+
+> take map
+> read map
+> e
+> e
+> s
+> w
+> sw
+> enter barrow
+
+? /(\*\*\* You have won|350 (out of|points)|Stone Barrow|all twenty)/

@@ -1,0 +1,35 @@
+# Pick up bottle and sack from Kitchen, then full path past troll,
+# through the maze, to the Cyclops Room. Cyclops is alive and blocking.
+
+> n
+> e
+> open window
+> w
+> take bottle
+> take sack
+> w
+> take sword
+> take lantern
+> turn on lantern
+> push rug
+> open trap door
+> d
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se

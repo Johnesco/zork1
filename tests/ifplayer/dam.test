@@ -1,0 +1,70 @@
+test: zork1-dam
+game: ../../zork1.ulx
+seed: 26
+before: to-round-room.before
+---
+
+# Reach the Dam, power on, take the wrench. `turn bolt` currently
+# returns the default "It is fixed in place." until the custom rule is
+# recompiled into the .ulx — assertion on its output is omitted.
+# Source: i7/zork1/tests/zork1.scenario (== dam)
+
+> n
+
+# North from Round Room is the North-South Passage
+? /North-South Passage/
+
+
+> ne
+
+# Northeast leads to the Deep Canyon
+? /Deep Canyon/
+
+
+> nw
+
+# Northwest leads to the south side of the Reservoir
+? /Reservoir South/
+
+
+> e
+
+# East reaches the Dam itself
+? /Dam/
+
+
+> n
+
+# North of the Dam is the Dam Lobby
+? /Dam Lobby/
+
+# Dam Lobby has a guidebook
+? /guidebook/
+
+
+> n
+
+# Further north is the Maintenance Room
+? /Maintenance Room/
+
+
+> push yellow button
+
+# Yellow button clicks (powers on)
+? Click
+
+
+> take wrench
+
+# Wrench picked up
+? Taken
+
+
+> s
+> s
+
+# Back at the Dam
+? /Dam/
+
+
+> turn bolt

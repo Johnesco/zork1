@@ -1,0 +1,18 @@
+test: zork1-fdesc-sceptre
+game: ../../zork1.ulx
+seed: 26
+before: to-egypt-with-coffin.before
+---
+
+# Open the gold coffin in the Egyptian Room and verify the sceptre's
+# first description. Setup gets us into Egypt with the coffin in
+# inventory.
+# Source: i7/zork1/tests/zork1.scenario (== fdesc-sceptre)
+
+> open coffin
+
+# Sceptre is ancient Egyptian
+? /A sceptre, possibly that of ancient Egypt itself/
+
+# Sceptre has colored enamel ornamentation
+? /ornamented with colored enamel/

@@ -1,0 +1,33 @@
+test: zork1-death-grue
+game: ../../zork1.ulx
+seed: 26
+before: to-kitchen.before
+---
+
+# Walk into the Cellar without a light source, then move further —
+# grue kills you. Verifies the death path is reachable.
+# Source: i7/zork1/tests/zork1.scenario (== death-grue)
+
+> w
+> take sword
+> push rug
+
+# Trap door revealed
+? /trap door/
+
+
+> open trap door
+
+> down
+
+# Cellar without light is pitch black
+? /pitch black/
+
+# Grue threat warning is shown
+? /likely to be eaten by a grue/
+
+
+> n
+
+# Moving in the dark triggers a grue
+? /grue/

@@ -1,0 +1,15 @@
+test: zork1-jump-kitchen
+game: ../../zork1.ulx
+seed: 26
+before: to-kitchen.before
+---
+
+# Jumping in the Kitchen lands you on the chimney shaft, which is
+# always blocked. Verifies the FALSE-FLAG safety check from the
+# original ZIL behaviour.
+# Source: i7/zork1/tests/zork1.scenario (== jump-kitchen)
+
+> jump
+
+# Jumping in the kitchen is blocked, not fatal
+? /not a very safe place/

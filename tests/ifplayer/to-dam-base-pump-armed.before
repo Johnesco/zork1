@@ -1,0 +1,52 @@
+# Through cellar, past troll, past Round Room, south to first Mirror
+# Room, rub mirror to teleport to the second Mirror Room, east-down-
+# south to Reservoir North to grab the pump, back via Cave/Atlantis,
+# rub mirror again to teleport back to first Mirror Room, then north
+# through Round Room and the dam route to the Dam Base. Boat is NOT
+# yet inflated (test bodies handle that). Sword still in inventory.
+
+> n
+> e
+> open window
+> w
+> w
+> take sword
+> take lantern
+> turn on lantern
+> push rug
+> open trap door
+> d
+> n
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> attack troll
+> e
+> e
+> s
+> s
+> rub mirror
+> e
+> d
+> s
+> take pump
+> n
+> u
+> w
+> n
+> rub mirror
+> n
+> n
+> n
+> ne
+> nw
+> e
+> d

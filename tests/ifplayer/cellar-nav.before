@@ -1,0 +1,38 @@
+# Zork I — navigate from West of House into the Cellar.
+#
+# At the end of this sequence the player is standing in the Cellar with
+# the sword, the lit brass lantern, rope, garlic, an opened trophy case
+# containing the jewel-encrusted egg, and food/bottle stashed in the
+# living room. Trapdoor is open. Ready for adventure.
+#
+# Lifted verbatim from the canonical I7 Zork I winning walkthrough
+# (walkthrough.txt commands 1–27). Seed-stable when paired with the
+# matching binary hash.
+
+> n
+> n
+> u
+> take egg
+> d
+> s
+> e
+> open window
+> w
+> take sack
+> take bottle
+> w
+> take sword
+> take lamp
+> open case
+> put egg in case
+> e
+> turn on lamp
+> u
+> take rope
+> d
+> open sack
+> take garlic
+> w
+> move rug
+> open trap door
+> d

@@ -1,0 +1,39 @@
+test: zork1-fdesc-egg
+game: ../../zork1.ulx
+seed: 26
+---
+
+# Up a Tree shows the egg's full first description on arrival.
+# Source: i7/zork1/tests/zork1.scenario (== fdesc-egg)
+
+> n
+
+# North reaches North of House
+? /North of House/
+
+
+> n
+
+# North again reaches the Forest Path
+? /Forest Path/
+
+
+> up
+
+# Up the tree lands on a branch
+? /Up a Tree/
+
+# A small bird's nest sits on the branch
+? /Beside you on the branch is a small bird's nest/
+
+# The egg is jewel-encrusted
+? /large egg encrusted with precious jewels/
+
+# The egg appears to be from a thieving songbird
+? /apparently scavenged by a childless songbird/
+
+# Egg has gold inlay
+? /fine gold inlay/
+
+# Egg has lapis lazuli detail
+? /lapis lazuli/

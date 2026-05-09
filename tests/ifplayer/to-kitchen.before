@@ -1,0 +1,6 @@
+# Get the player from West of House into the Kitchen via the open window.
+
+> n
+> e
+> open window
+> w

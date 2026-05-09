@@ -1,0 +1,46 @@
+test: zork1-river-room-descriptions
+game: ../../zork1.ulx
+seed: 26
+before: to-dam-base-pump-armed.before
+---
+
+# Drift downstream and verify the Frigid River room descriptions print
+# on each move (regression test for #93).
+# Source: i7/zork1/tests/zork1.scenario (== river-room-descriptions)
+
+> inflate pile
+
+# Boat inflates
+? /inflates and appears seaworthy/
+
+
+> drop sword
+
+> get in boat
+
+> launch
+
+# Boat pushes off into the river
+? /push off/
+
+# We're on the Frigid River
+? /Frigid River/
+
+
+> z
+
+# Drifting carries us downstream
+? /carries you downstream/
+
+# Still on the Frigid River
+? /Frigid River/
+
+
+> z
+> z
+
+# Continued drifting
+? /carries you downstream/
+
+# Still on the Frigid River
+? /Frigid River/

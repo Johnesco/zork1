@@ -1,0 +1,13 @@
+test: zork1-cyclops-odysseus
+game: ../../zork1.ulx
+seed: 26
+before: to-cyclops-room.before
+---
+
+# Solve the cyclops by saying "odysseus" — he flees in terror.
+# Source: i7/zork1/tests/zork1.scenario (== cyclops-odysseus)
+
+> odysseus
+
+# Mentioning Odysseus terrifies the cyclops
+? /flees the room/

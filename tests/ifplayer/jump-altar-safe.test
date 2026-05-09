@@ -1,0 +1,26 @@
+test: zork1-jump-altar-safe
+game: ../../zork1.ulx
+seed: 26
+before: to-altar-with-coffin.before
+---
+
+# Jumping at the Altar without the coffin gives a humorous safe message
+# (exit is open). The setup leaves us in the Temple holding the coffin;
+# the test moves south to the Altar, drops the coffin, and jumps.
+# Source: i7/zork1/tests/zork1.scenario (== jump-altar-safe)
+
+> s
+
+# South from Temple is the Altar
+? /Altar/
+
+
+> drop coffin
+
+> jump
+
+# Without the coffin, jump is NOT blocked by the safety check
+?! not a very safe place
+
+# Game responds with one of the humour variants
+? /second grade|enjoying yourself|Wheeeeeeeeee|applaud/

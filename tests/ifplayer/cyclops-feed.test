@@ -1,0 +1,33 @@
+test: zork1-cyclops-feed
+game: ../../zork1.ulx
+seed: 26
+before: to-cyclops-with-food.before
+---
+
+# Feed the cyclops lunch (hot peppers!) and water (knocks him out)
+# instead of saying "odysseus".
+# Source: i7/zork1/tests/zork1.scenario (== cyclops-feed)
+
+> look
+
+# Setup leaves us in the Cyclops Room
+? /Cyclops Room/
+
+# Cyclops still alive and blocking
+? /cyclops/
+
+
+> open sack
+
+> give lunch to cyclops
+
+# Cyclops loves the hot peppers
+? /I love hot peppers/
+
+
+> open bottle
+
+> give bottle to cyclops
+
+# Cyclops drinks and falls asleep
+? /falls fast asleep/

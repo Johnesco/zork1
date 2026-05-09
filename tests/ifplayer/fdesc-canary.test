@@ -1,0 +1,37 @@
+test: zork1-fdesc-canary
+game: ../../zork1.ulx
+seed: 26
+---
+
+# Up a Tree → take nest+egg → climb down → attack the egg open.
+# Verifies the canary's first description after the egg is forced.
+# (The pristine canary FDESC requires the thief opening it, which is
+# RNG-dependent and not deterministically testable.)
+# Source: i7/zork1/tests/zork1.scenario (== fdesc-canary)
+
+> n
+> n
+
+# Reached the Forest Path
+? /Forest Path/
+
+
+> up
+
+# Climbed Up a Tree
+? /Up a Tree/
+
+
+> take nest
+> take egg
+> d
+> attack egg
+
+# Forcing the egg open succeeds
+? /succeeded in opening/
+
+# Reveals a golden clockwork canary inside
+? /golden clockwork canary/
+
+# Canary has had a bad experience
+? /bad experience/

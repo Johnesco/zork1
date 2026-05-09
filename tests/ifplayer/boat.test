@@ -1,0 +1,26 @@
+test: zork1-boat
+game: ../../zork1.ulx
+seed: 26
+before: to-round-room.before
+---
+
+# Reach the Dam, descend to the Dam Base where the inflatable boat
+# (pile of plastic) sits.
+# Source: i7/zork1/tests/zork1.scenario (== boat) + path through dam
+
+> n
+> ne
+> nw
+> e
+
+# Now standing at the Dam itself
+? /Dam/
+
+
+> d
+
+# Down from the Dam reaches the Dam Base
+? /Dam Base/
+
+# Dam Base contains the pile of plastic (boat-to-be)
+? /pile of plastic/

@@ -1,0 +1,34 @@
+test: zork1-kitchen-items
+game: ../../zork1.ulx
+seed: 26
+before: to-kitchen.before
+---
+
+# Kitchen items — take the bottle and sack, open sack, look in it.
+# Source: i7/zork1/tests/zork1.scenario (== kitchen-items)
+
+> take bottle
+
+# Bottle picked up
+? Taken
+
+
+> take sack
+
+# Sack picked up
+? Taken
+
+
+> open sack
+
+# Sack opens — described as a brown sack
+? /brown sack/
+
+
+> look in sack
+
+# Sack contains lunch
+? /lunch/
+
+# Sack also contains garlic
+? /garlic/

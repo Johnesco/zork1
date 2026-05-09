@@ -1,0 +1,28 @@
+test: zork1-cyclops-path
+game: ../../zork1.ulx
+seed: 26
+before: past-troll.before
+---
+
+# Maze navigation from Troll Room to Cyclops Room.
+# Source: i7/zork1/tests/zork1.scenario (== cyclops-path)
+
+> w
+
+# West of Troll Room enters the Maze
+? /Maze/
+
+
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+
+# Final move arrives in the Cyclops Room
+? /Cyclops Room/
+
+# Cyclops is present in the room
+? /cyclops/

@@ -1,0 +1,28 @@
+test: zork1-boat-sharp-puncture
+game: ../../zork1.ulx
+seed: 26
+before: to-dam-base-pump-armed.before
+---
+
+# Boarding the inflated boat with the sword still in hand punctures it.
+# Source: i7/zork1/tests/zork1.scenario (== boat-sharp-puncture)
+
+> look
+
+# Setup leaves us at the Dam Base
+? /Dam Base/
+
+# Pile of plastic (the boat-to-be) is here
+? /pile of plastic/
+
+
+> inflate pile
+
+# Pile inflates into a usable boat
+? /inflates and appears seaworthy/
+
+
+> get in boat
+
+# Sharp sword punctures the inflated boat on entry
+? /punctured/

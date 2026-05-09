@@ -1,0 +1,26 @@
+test: zork1-jump-altar-fatal
+game: ../../zork1.ulx
+seed: 26
+before: to-altar-with-coffin.before
+---
+
+# Jumping at the Altar while holding the coffin is fatal — the ZIL
+# COFFIN-CURE blocks you with an iron taste of doom. We assert the
+# absence of the humorous safe-jump variants (the death message itself
+# is hard to capture because glulxe pauses on the RESTART/RESTORE/QUIT
+# prompt without a fresh `>`).
+# Source: i7/zork1/tests/zork1.scenario (== jump-altar-fatal)
+
+> s
+
+# South from Temple is the Altar (still holding coffin)
+? /Altar/
+
+
+> jump
+
+# Humour variants must NOT appear (would imply safe jump)
+?! second grade
+?! enjoying yourself
+?! Wheeeeeeeeee
+?! applaud

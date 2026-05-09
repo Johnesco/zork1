@@ -1,0 +1,32 @@
+test: zork1-echo
+game: ../../zork1.ulx
+seed: 26
+before: to-round-room.before
+---
+
+# Echo Room puzzle — `echo` solves the room and lets the platinum bar
+# be taken silently.
+# Source: i7/zork1/tests/zork1.scenario (== echo)
+
+> e
+
+# East from Round Room is the Loud Room
+? /Loud Room/
+
+# Loud Room is overwhelmingly noisy
+? /deafeningly loud/
+
+
+> echo
+
+# Echo command quiets the room
+? /acoustics of the room change/
+
+
+> take platinum bar
+
+# Platinum bar can now be taken
+? Taken
+
+# After echo, taking the bar is silent (no clanging warning)
+?! clanging

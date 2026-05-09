@@ -1,0 +1,20 @@
+test: zork1-echo-before-solve
+game: ../../zork1.ulx
+seed: 26
+before: to-round-room.before
+---
+
+# Loud Room with the echo NOT yet solved — taking the bar produces
+# clanging noise that gives the puzzle away.
+# Source: i7/zork1/tests/zork1.scenario (== echo-before-solve)
+
+> e
+
+# East from Round Room is the Loud Room
+? /Loud Room/
+
+
+> take bar
+
+# Without solving the echo first, taking the bar causes clanging
+? /clanging/

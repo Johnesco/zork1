@@ -1,0 +1,42 @@
+test: zork1-forest-loop
+game: ../../zork1.ulx
+seed: 26
+---
+
+# Forest navigation — verify N/S round-trip through the forest.
+# Source: i7/zork1/tests/zork1.scenario (== forest-loop)
+
+> look
+
+# Starting room is West of House
+? /West of House/
+
+
+> n
+
+# North move enters North of House
+? /North of House/
+
+
+> n
+
+# Continuing north reaches Forest Path
+? /Forest Path/
+
+
+> n
+
+# Forest Path leads to a Clearing
+? /Clearing/
+
+
+> s
+
+# Returning south brings us back to Forest Path
+? /Forest Path/
+
+
+> s
+
+# Final south returns to North of House
+? /North of House/

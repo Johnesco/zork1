@@ -1,0 +1,28 @@
+test: zork1-basket-raise-lower
+game: ../../zork1.ulx
+seed: 26
+before: to-shaft-room.before
+---
+
+# Test the basket lower/raise mechanism in the Shaft Room.
+# Source: i7/zork1/tests/zork1.scenario (== basket-raise-lower)
+
+> look
+
+# Setup leaves us in the Shaft Room
+? /Shaft Room/
+
+# Shaft Room contains the basket
+? /basket/
+
+
+> lower basket
+
+# Basket descends to the bottom of the shaft
+? /lowered to the bottom/
+
+
+> raise basket
+
+# Basket comes back up to the top
+? /raised to the top/
