@@ -2441,6 +2441,7 @@ The match-count is a number that varies. The match-count is 6.
 Instead of examining the matchbook when the match-lit is true:
 	say "The match is burning."
 
+Understand the command "read" as something new.
 Reading is an action applying to one thing. Understand "read [something]" as reading.
 
 Instead of reading the matchbook:
