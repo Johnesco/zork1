@@ -187,7 +187,7 @@ footer a { color: #887755; border-bottom-color: #3a3020; }
 <div class="version-entry primary" id="zork1">
   <h3>Current</h3>
   
-  <div class="version-action" data-gid="zork1" data-play="/zork1/play.html" data-source="/zork1/story.ni" data-walkthrough="/zork1/walkthrough.html">
+  <div class="version-action" data-gid="zork1" data-play="/zork1/play.html" data-source="/zork1/story.ni" data-walkthrough="/zork1/walkthrough.txt">
     <select class="va-action"><option value="play">Play Game</option><option value="source">View Source</option><option value="walkthrough">View Walkthrough</option></select>
     <label class="va-fs"><input type="checkbox"> Fullscreen</label>
     <button class="va-go" type="button">GO</button>
@@ -209,7 +209,7 @@ footer a { color: #887755; border-bottom-color: #3a3020; }
     <li><strong>Platform themes</strong>: in the IF Hub player, toggle between the native multimedia overlay and 10 retro platform styles (MS-DOS, Apple II, Commodore 64, and more)</li>
     <li>Inherits all v2 bug fixes and v1 content</li>
   </ul>
-  <div class="version-action" data-gid="zork1-v3" data-play="/zork1-v3/play.html" data-source="/zork1-v3/source.html" data-walkthrough="/zork1-v3/walkthrough.html">
+  <div class="version-action" data-gid="zork1-v3" data-play="/zork1-v3/play.html" data-source="/zork1-v3/story.ni" data-walkthrough="/zork1-v3/walkthrough.txt">
     <select class="va-action"><option value="play">Play Game</option><option value="source">View Source</option><option value="walkthrough">View Walkthrough</option></select>
     <label class="va-fs"><input type="checkbox"> Fullscreen</label>
     <button class="va-go" type="button">GO</button>
@@ -230,7 +230,7 @@ footer a { color: #887755; border-bottom-color: #3a3020; }
     <li>Fix: Weapon penalty applied even on combat misses (<a href="https://github.com/Johnesco/zork1/issues/4">#4</a>)</li>
     <li>Translation fixes: 12 behavioral differences found via transcript comparison (<a href="https://github.com/Johnesco/zork1/issues/63">#63</a>)</li>
   </ul>
-  <div class="version-action" data-gid="zork1-v2" data-play="/zork1-v2/play.html" data-source="/zork1-v2/source.html" data-walkthrough="/zork1-v2/walkthrough.html">
+  <div class="version-action" data-gid="zork1-v2" data-play="/zork1-v2/play.html" data-source="/zork1-v2/story.ni" data-walkthrough="/zork1-v2/walkthrough.txt">
     <select class="va-action"><option value="play">Play Game</option><option value="source">View Source</option><option value="walkthrough">View Walkthrough</option></select>
     <label class="va-fs"><input type="checkbox"> Fullscreen</label>
     <button class="va-go" type="button">GO</button>
@@ -248,8 +248,8 @@ footer a { color: #887755; border-bottom-color: #3a3020; }
     <li>Dead player ghost state &mdash; explore as spirit with dimly-lit rooms and prayer resurrection</li>
     <li>Sword glow scans adjacent rooms and detects all three villains, matching ZIL logic</li>
   </ul>
-  <div class="version-action" data-gid="zork1-v1" data-play="/zork1-v1/play.html" data-source="/zork1-v1/source.html" data-walkthrough="">
-    <select class="va-action"><option value="play">Play Game</option><option value="source">View Source</option></select>
+  <div class="version-action" data-gid="zork1-v1" data-play="/zork1-v1/play.html" data-source="/zork1-v1/story.ni" data-walkthrough="/zork1-v1/walkthrough.txt">
+    <select class="va-action"><option value="play">Play Game</option><option value="source">View Source</option><option value="walkthrough">View Walkthrough</option></select>
     <label class="va-fs"><input type="checkbox"> Fullscreen</label>
     <button class="va-go" type="button">GO</button>
   </div>
@@ -264,7 +264,7 @@ footer a { color: #887755; border-bottom-color: #3a3020; }
     <li>Playable game compiled from the original ZIL using <a href="https://foss.heptapod.net/zilf/zilf">ZILF</a>, the open-source ZIL compiler, producing a Z-machine story file (.z3)</li>
     <li>Runs in-browser via <a href="https://github.com/curiousdannii/parchment">Parchment</a>, a JavaScript Z-machine interpreter &mdash; no downloads required</li>
   </ul>
-  <div class="version-action" data-gid="zork1-v0" data-play="/zork1-v0/play.html" data-source="/zork1-v0/source.html" data-walkthrough="/zork1-v0/walkthrough.html">
+  <div class="version-action" data-gid="zork1-v0" data-play="/zork1-v0/play.html" data-source="/zork1-v0/source.html" data-walkthrough="/zork1-v0/walkthrough.txt">
     <select class="va-action"><option value="play">Play Game</option><option value="source">View Source</option><option value="walkthrough">View Walkthrough</option></select>
     <label class="va-fs"><input type="checkbox"> Fullscreen</label>
     <button class="va-go" type="button">GO</button>
@@ -291,7 +291,8 @@ document.addEventListener('click', function(ev) {
   var view = action === 'source' ? 'source'
            : action === 'walkthrough' ? 'walkthrough'
            : 'game';
-  window.location.href = fullscreen ? url : ('/ifhub/app.html?game=' + gid + '&view=' + view);
+  // Fullscreen opens the game's own play page; source and walkthrough are hub views.
+  window.location.href = (fullscreen && action === 'play') ? url : ('/ifhub/app.html?game=' + gid + '&view=' + view);
 });
 </script>
 

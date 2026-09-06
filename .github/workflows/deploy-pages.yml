@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -25,16 +25,22 @@ jobs:
       - uses: actions/configure-pages@v5
       - name: Assemble site
         run: |
-          shopt -s nullglob
           mkdir -p _site
+          [ -d web ] && cp -r web/* _site/ || true
+          [ -d lib ] && cp -r lib _site/ || true
+          [ -d assets ] && cp -r assets _site/ || true
+          [ -d audio ] && cp -r audio _site/ || true
+          [ -d sfx ] && cp -r sfx _site/ || true
+          [ -d src ] && cp -r src _site/ || true
           cp *.html _site/ 2>/dev/null || true
           cp *.txt _site/ 2>/dev/null || true
-          cp story.ni _site/ 2>/dev/null || true
-          [ -d lib ] && cp -r lib _site/lib || true
-          [ -d scenarios ] && cp -r scenarios _site/scenarios || true
-          for v in v[0-9]*/; do
-            cp -r "$v" "_site/$v"
-          done
+          cp *.ni _site/ 2>/dev/null || true
+          cp *.ink _site/ 2>/dev/null || true
+          cp *.json _site/ 2>/dev/null || true
+          cp *.bas _site/ 2>/dev/null || true
+          cp *.js _site/ 2>/dev/null || true
+          cp *.css _site/ 2>/dev/null || true
+          cp *.rez _site/ 2>/dev/null || true
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
