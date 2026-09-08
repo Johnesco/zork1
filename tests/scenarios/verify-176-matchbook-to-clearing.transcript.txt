@@ -367,17 +367,6 @@ On the ground is a pile of leaves.
 You hear in the distance the chirping of a song bird.
 
 
-> light match
-One of the matches starts to burn.
-
-
-> burn leaves with match
-With the leaves moved, a grating is revealed.
-The leaves burn.
-
-The match has gone out.
-
-
 > score
-Your score is 40 (total of 350 points), in 51 moves.
+Your score is 40 (total of 350 points), in 49 moves.
 This gives you the rank of Amateur Adventurer.

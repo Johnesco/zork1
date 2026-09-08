@@ -371,7 +371,8 @@ You hear in the distance the chirping of a song bird.
 One of the matches starts to burn.
 
 
-> burn leaves with match
+> burn leaves
+(with the matchbook)
 With the leaves moved, a grating is revealed.
 The leaves burn.
 

@@ -1,0 +1,75 @@
+
+
+
+
+Zork I - The Great Underground Empire
+An Interactive Fiction by Infocom (translated to Inform 7)
+Release 4 / Serial number 260908 / Inform 7 v10.1.2 / D
+Current
+Translated to Inform 7 by John Escobedo
+Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
+Copyright (c) 1981-1986 Infocom, Inc. ZIL source released under MIT License.
+
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+
+> look
+West of House
+You are standing in an open field west of a white house, with a boarded front door.
+
+There is a small mailbox here.
+
+
+> open mailbox
+You open the small mailbox, revealing a leaflet.
+
+
+> take leaflet
+Taken.
+
+
+> n
+
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+
+> n
+
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+
+> n
+
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+
+On the ground is a pile of leaves.
+
+
+> burn leaves
+What do you want to burn the pile of leaves with?
+
+
+> hands
+With a pair of hands??!?
+
+
+> burn leaves with leaflet
+With a leaflet??!?
+
+
+> look
+Clearing
+You are in a clearing, with a forest surrounding you on all sides. A path leads south.
+
+On the ground is a pile of leaves.
+
+
+> score
+Your score is 0 (total of 350 points), in 10 moves.
+This gives you the rank of Beginner.

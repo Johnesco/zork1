@@ -48,4 +48,4 @@ n
 n
 n
 light match
-burn leaves with match
+burn leaves
