@@ -1,0 +1,13 @@
+look
+n
+n
+up
+take nest
+d
+s
+e
+open window
+w
+w
+open case
+put nest in case

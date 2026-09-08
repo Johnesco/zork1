@@ -60,9 +60,6 @@ Above the trophy case hangs an elvish sword of great antiquity.
 
 A battery-powered brass lantern is on the trophy case.
 
-Your collection of treasures consists of:
-  an ancient map
-
 
 > take sword
 Taken.
@@ -320,9 +317,6 @@ Your sword has begun to glow very brightly.
 
 Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a closed trap door at your feet.
-
-Your collection of treasures consists of:
-  an ancient map
 
 Your sword is glowing with a faint blue glow.
 
