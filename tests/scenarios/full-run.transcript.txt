@@ -4,7 +4,7 @@
 
 Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 4 / Serial number 260322 / Inform 7 v10.1.2 / D
+Release 4 / Serial number 260908 / Inform 7 v10.1.2 / D
 Current
 Translated to Inform 7 by John Escobedo
 Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
@@ -94,9 +94,6 @@ Above the trophy case hangs an elvish sword of great antiquity.
 
 A battery-powered brass lantern is on the trophy case.
 
-Your collection of treasures consists of:
-  an ancient map
-
 
 > take sword
 Taken.
@@ -161,7 +158,6 @@ You are in the living room. There is a doorway to the east, a wooden door with s
 
 Your collection of treasures consists of:
   a jewel-encrusted egg
-  an ancient map
 
 Your sword is glowing with a faint blue glow.
 
@@ -539,7 +535,6 @@ You are in the living room. There is a doorway to the east. To the west is a cyc
 
 Your collection of treasures consists of:
   a jewel-encrusted egg
-  an ancient map
 
 
 > turn off lamp
@@ -866,7 +861,6 @@ Your collection of treasures consists of:
   a platinum bar
   a painting
   a jewel-encrusted egg
-  an ancient map
 
 
 > turn off lamp
@@ -1129,7 +1123,6 @@ Your collection of treasures consists of:
   a platinum bar
   a painting
   a jewel-encrusted egg
-  an ancient map
 
 
 > put coffin in case
@@ -1381,7 +1374,6 @@ Your collection of treasures consists of:
   a platinum bar
   a painting
   a jewel-encrusted egg
-  an ancient map
 
 
 > turn off lamp
@@ -1478,7 +1470,6 @@ Your collection of treasures consists of:
   a platinum bar
   a painting
   a jewel-encrusted egg
-  an ancient map
 
 
 > take torch from case
@@ -2014,7 +2005,6 @@ Your collection of treasures consists of:
   a platinum bar
   a painting
   a jewel-encrusted egg
-  an ancient map
 
 
 > turn off lamp
@@ -2343,7 +2333,6 @@ Your collection of treasures consists of:
   a platinum bar
   a painting
   a jewel-encrusted egg
-  an ancient map
 
 
 > put emerald in case
@@ -2605,7 +2594,6 @@ Your collection of treasures consists of:
   a crystal skull
   a platinum bar
   a painting
-  an ancient map
 
 
 > turn off lamp
@@ -2702,7 +2690,6 @@ Your collection of treasures consists of:
   a crystal skull
   a platinum bar
   a painting
-  an ancient map
 
 
 > put egg in case
@@ -2731,6 +2718,7 @@ Living Room
 You are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.
 
 Your collection of treasures consists of:
+  an ancient map
   a beautiful brass bauble
   a golden clockwork canary
   a jewel-encrusted egg
@@ -2750,7 +2738,6 @@ Your collection of treasures consists of:
   a crystal skull
   a platinum bar
   a painting
-  an ancient map
 
 
 > take map

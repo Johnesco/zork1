@@ -1245,7 +1245,9 @@
 > put bauble in case
 ? /score has just gone up
 > look
+? /an ancient map
 > take map
+? Taken
 > read map
 > e
 > e
@@ -1261,15 +1263,63 @@
 # once a .scenario file exists.
 # ============================================================
 
+== verify-176-matchbook-to-clearing: Matchbook fetched, back at the Clearing  [fidelity sweep]
+# Shared route for the burn pins: Dam Lobby matchbook, then back overground
+# to the Clearing. (ZIL BURN always needs a flame, so #165 needs one too.)
+@ round-room
+> n
+> ne
+> nw
+> e
+> n
+? /Dam Lobby
+> take matchbook
+? Taken
+> s
+? /Dam
+> s
+? /Deep Canyon
+> sw
+? /North-South Passage
+> s
+? /Round Room
+> w
+> w
+? /Troll Room
+# The trap door is barred behind you after the first descent, so return
+# through the maze and the Cyclops Room (odysseus opens the way to the Living Room).
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+?? /Cyclops Room
+> odysseus
+? /flees
+> e
+> e
+? /Living Room
+> e
+? /Kitchen
+> e
+? /Behind House
+> n
+> n
+? /Forest Path
+> n
+?? /Clearing
+?? /pile of leaves
+
 == verify-165-leaves-ground: Burning leaves on the ground is not fatal  [fidelity sweep]
 # #165: Burning leaves on the ground should NOT kill the player
-@ startup
-> n
-> n
-> n
-? /Clearing
-? /pile of leaves
-> burn leaves
+@ verify-176-matchbook-to-clearing
+> light match
+? /starts to burn
+> burn leaves with match
+? /With the leaves moved, a grating is revealed
 ? /The leaves burn
 ?! and so do you
 
@@ -1389,3 +1439,181 @@
 > examine bubble
 ? /nothing special
 ?! floating in the stream
+
+== verify-176-burn-carried: Burning leaves you are holding is fatal  [fidelity sweep]
+# #165/#176: the carry-check must survive the burn-with refactor
+@ verify-176-matchbook-to-clearing
+> take leaves
+? /grating is revealed
+> light match
+> burn leaves with match
+? /The leaves burn, and so do you
+
+== verify-176-burn-inference: Bare burn supplies the one flame in reach  [fidelity sweep]
+# #176 / ZIL GWIM: with exactly one FLAMEBIT object available the parser supplies it
+@ verify-176-matchbook-to-clearing
+> light match
+> burn leaves
+? /\(with the matchbook\)
+? /The leaves burn
+?! and so do you
+
+== verify-176-burn-prompt: Bare burn with no flame asks, then vets the answer  [fidelity sweep]
+# #176: the parser prompt, then PRE-BURN's "With a X??!?" for a non-flaming instrument
+@ startup
+> open mailbox
+> take leaflet
+> n
+> n
+> n
+?? /Clearing
+> burn leaves
+? /What do you want to burn the pile of leaves with
+> hands
+? /With a pair of hands\?\?!\?
+?! The leaves burn
+> burn leaves with leaflet
+? /With a leaflet\?\?!\?
+?! grating
+> look
+? /pile of leaves
+
+== verify-176-egg-examine: Examining the egg reports its state  [fidelity sweep]
+# #176: ZIL V-EXAMINE on a container with no TEXT is V-LOOK-INSIDE
+@ startup
+> n
+> n
+> up
+?? /Up a Tree
+> examine egg
+? /The jewel-encrusted egg is closed
+?! nothing special
+> take egg
+? Taken
+> examine egg
+? /The jewel-encrusted egg is closed
+
+== verify-175-map-hidden-until-win: Ancient map stays hidden before the win  [fidelity sweep]
+# #175: the ZIL-INVISIBLE map must not leak through the treasure listing, examine, or the parser
+@ living-room
+> look
+?! ancient map
+> open case
+> examine trophy case
+?! ancient map
+> take map
+? /can't see any such thing
+
+== verify-166-nested-treasure-scoring: Treasures nested in the trophy case score  [fidelity sweep]
+# #166: ZIL's OTVAL-FROB dropped nested values; I7 counts everything enclosed (nest 0 + egg 5 + canary 4)
+@ startup
+> n
+> n
+> up
+?? /Up a Tree
+> take nest
+? Taken
+> d
+> s
+> e
+? /Behind House
+> open window
+> w
+? /Kitchen
+> w
+? /Living Room
+> open case
+> put nest in case
+? /gone up by nine points
+
+== verify-172-walk-around-forest: Walk around forest answers once  [fidelity sweep]
+# #172: from the house exterior only "You aren't even in the forest."; in the forest the compass message
+@ startup
+> walk around forest
+? /aren't even in the forest
+?! compass directions
+> n
+> n
+? /Forest Path
+> walk around forest
+? /compass directions
+
+== verify-172-climb-bare: Bare climb up and climb down walk that way  [fidelity sweep]
+# #172: ZIL printed "The object#248 doesn't lead downward"; I7 parsed the direction as a noun
+@ startup
+> n
+> n
+> up
+?? /Up a Tree
+> climb down
+? /Forest Path
+> climb up
+? /Up a Tree
+
+== verify-172-tie-rope-to-self: Tie rope to me is refused properly  [fidelity sweep]
+# #172: the rope's own rule must not pre-empt "You can't tie anything to yourself."
+@ attic
+> tie rope to me
+? /can't tie anything to yourself
+
+== verify-172-go-through-trap-door: Go through trap door descends  [fidelity sweep]
+# #172: THROUGH could not resolve the function exit in ZIL
+@ living-room
+> push rug
+> open trap door
+? /rickety staircase
+> go through trap door
+?? /Cellar
+
+== verify-172-fill-sack-closed-bottle: Water does not leak from a closed bottle  [fidelity sweep]
+# #172: ZIL moved the water from a closed bottle into the sack; I7 has no such transfer
+@ kitchen-items
+> fill sack with water
+> look in sack
+?! water
+> open bottle
+> look in bottle
+? /water
+
+== verify-178-find-house-indoors: Find house from inside the house  [fidelity sweep]
+# #178 / #172: ZIL WHITE-HOUSE-F answers "Why not find your brains?" in the Kitchen, Living Room and Attic
+@ enter-house
+> find house
+? /find your brains
+
+== verify-172-slide-from-cellar: The slide is usable from its bottom end  [fidelity sweep]
+# #172: from the Cellar, things put in the slide land at your feet; entering or climbing it is the ramp
+@ cellar
+> put sword in slide
+? /lands at your feet
+> look
+? /sword
+> enter slide
+? /slide back down
+> climb slide
+? /slide back down
+
+== verify-177-read-not-examine: Read is not a synonym of examine  [fidelity sweep]
+# #177: ZIL V-READ prints TEXT for READBIT objects and "How does one read a X?" for anything else
+@ startup
+> read mailbox
+? /How does one read a small mailbox
+?! It's a small mailbox
+> read door
+? /There is no writing on this side
+> open mailbox
+> read leaflet
+? /WELCOME TO ZORK
+> n
+> e
+> open window
+> w
+> w
+? /Living Room
+> read sword
+? /How does one read a sword
+?! elvish
+> read door
+? /intentionally left blank
+> examine door
+? /intentionally left blank

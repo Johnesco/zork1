@@ -402,7 +402,7 @@ Every turn (this is the trophy case scoring rule):
 		now the trophy-case-score is new-score;
 	if the score is at least 350 and the won-flag is false:
 		now the won-flag is true;
-		now the ancient map is zil-visible;
+		now the ancient map is in the trophy case;
 		say "[line break]An almost inaudible voice whispers in your ear, [quotation mark]Look to your treasures for the final secret.[quotation mark][line break]".
 
 Chapter 8 - Treasure Values
@@ -689,8 +689,11 @@ West-of-House is a room. "You are standing in an open field west of a white hous
 The printed name of West-of-House is "West of House".
 West-of-House is in House Exterior.
 
+[ZIL WHITE-HOUSE is a local-global reachable from the Kitchen, Living Room and Attic too, where FIND answers "Why not find your brains?" (#178, #172). Placing it in parser scope there lets that rule fire without pretending the house is in the room.]
 The white house is a backdrop. The white house is in House Exterior and Forest Area. The description of the white house is "The house is a beautiful colonial house which is painted white. It is clear that the owners must have been extremely wealthy."
 Understand "house" and "white" and "beautiful" and "colonial" as the white house.
+After deciding the scope of the player when the location is in House Interior:
+	place the white house in scope.
 
 Instead of burning the white house:
 	say "You must be joking."
@@ -885,9 +888,9 @@ Every turn when the player is in the Forest Area (this is the songbird singing r
 
 Section 5a - Forest Pseudo-Object
 
-The forest-pseudo is a backdrop. The forest-pseudo is in Forest Area.
+The forest-pseudo is a backdrop. The forest-pseudo is in Forest Area and House Exterior.
 The printed name of the forest-pseudo is "forest".
-Understand "forest" as the forest-pseudo when the player is in Forest Area.
+Understand "forest" as the forest-pseudo when the player is in Forest Area or the player is in House Exterior.
 The description of the forest-pseudo is "You cannot see the forest for the trees."
 
 Instead of finding the forest-pseudo: say "You cannot see the forest for the trees."
@@ -1203,6 +1206,10 @@ Instead of throwing the brass lantern at something:
 The old wooden door is scenery in Living Room. Understand "door" and "wooden" and "gothic" and "strange" and "lettering" and "writing" as the old wooden door.
 The description of the old wooden door is "[if the magic-flag is true]The door has a cyclops-shaped opening in it.[otherwise]The engravings translate to 'This space intentionally left blank.'[end if]".
 
+[ZIL FRONT-DOOR-FCN, shared by both doors, answers READ in the Living Room with the engravings whatever the state of the door (#177).]
+Instead of reading the old wooden door:
+	say "The engravings translate to [quotation mark]This space intentionally left blank.[quotation mark]"
+
 Instead of opening the old wooden door:
 	if the magic-flag is true:
 		say "The door is already open -- the cyclops saw to that.";
@@ -1273,6 +1280,9 @@ Before doing anything to a zil-invisible thing:
 Before doing anything when the second noun is a zil-invisible thing:
 	say "You can't see any such thing." instead.
 
+[ZIL INVISIBLE objects are never parser candidates; the guards above reject them only after parsing, so a hidden trap door still provoked "Which do you mean, the trap door or the old wooden door?" (#167 follow-up, found by #177).]
+Does the player mean doing something to a zil-invisible thing: it is very unlikely.
+
 Instead of entering the trap door: try going down.
 
 Before going down in Living Room:
@@ -1317,6 +1327,8 @@ Rule for writing a paragraph about the bird's nest when the bird's nest is in Up
 		now the jewel-encrusted egg is mentioned.
 Understand "egg" and "jewel" and "encrusted" and "jeweled" and "bird's" as the jewel-encrusted egg.
 The jewel-encrusted egg is a closed openable container. The carrying capacity of the jewel-encrusted egg is 1.
+[ZIL V-EXAMINE on a CONTBIT object with no TEXT is V-LOOK-INSIDE: "The jewel-encrusted egg is closed." when shut; when open, the contents (or "is empty"), which the standard examine-containers rule supplies.]
+The description of the jewel-encrusted egg is "[if the jewel-encrusted egg is closed]The jewel-encrusted egg is closed.[end if]".
 The treasure-value of the jewel-encrusted egg is 5.
 The point-value of the jewel-encrusted egg is 5.
 
@@ -2054,14 +2066,21 @@ To reveal-grate-from-leaves (this is the leaves-appear rule):
 		now the grate-revealed is true;
 		now the grate is zil-visible.
 
-Instead of burning the pile of leaves:
-	if the player carries the pile of leaves:
-		die saying "The leaves burn, and so do you.";
-	reveal-grate-from-leaves;
-	if the grate-revealed is true and the grate is not open:
+[ZIL LEAF-PILE, BURN: PRE-BURN vets the instrument first (Chapter 10a); then LEAVES-APPEAR, the leaves are removed, and you die only if you were holding them. ZIL removed the leaves before that check, so it always killed you (#165); the carry-check is taken first here.]
+Instead of burning the pile of leaves with a flaming thing:
+	let held be whether or not the player carries the pile of leaves;
+	if the grate-revealed is false and the grate is not open:
+		reveal-grate-from-leaves;
 		say "With the leaves moved, a grating is revealed.[line break]";
 	remove the pile of leaves from play;
-	say "The leaves burn."
+	if held is true:
+		die saying "The leaves burn, and so do you.";
+	otherwise:
+		say "The leaves burn."
+
+[Bare "light leaves" still reaches the one-noun burning action (ZIL maps one-noun LIGHT to V-LAMP-ON; see #163). Until then, answer as the burn parser would.]
+Instead of burning the pile of leaves:
+	say "What do you want to burn the pile of leaves with?"
 
 Instead of cutting the pile of leaves:
 	say "You rustle the leaves around, making quite a mess.";
@@ -2317,6 +2336,10 @@ Instead of entering the damp-crack: say "You can't fit through the crack."
 Instead of going south in Damp Cave:
 	say "It is too narrow for most insects."
 
+[ZIL only checked the boat westbound from White Cliffs; the passage is just as narrow going east (#172).]
+Instead of going east in Damp Cave when the player carries the magic boat and the player does not carry the pile of plastic:
+	say "The path is too narrow with an inflated boat."
+
 North-South Passage is a dark room. "This is a high north-south passage, which forks to the northeast."
 North-South Passage is in the Underground.
 North of North-South Passage is Chasm. Northeast of North-South Passage is Deep Canyon. South of North-South Passage is Round Room.
@@ -2440,7 +2463,15 @@ The match-count is a number that varies. The match-count is 6.
 Instead of examining the matchbook when the match-lit is true:
 	say "The match is burning."
 
+[ZIL V-READ: READBIT objects print their TEXT; anything else gets "How does one read a X?". I7's Standard Rules make "read" a synonym of examining, which hid every reading rule in this source (#177). The command is reset so "read" reaches the reading action; the ten ZIL READBIT objects fall back to their examine text, which is where the translation keeps their TEXT.]
+Understand the command "read" as something new.
 Reading is an action applying to one thing. Understand "read [something]" as reading.
+
+Instead of reading a readable thing:
+	if in darkness:
+		say "It is impossible to read in the dark.";
+	otherwise:
+		try examining the noun.
 
 Instead of reading the matchbook:
 	say "[fixed letter spacing](Close cover before striking)[line break][line break]YOU too can make BIG MONEY in the exciting field of PAPER SHUFFLING![line break][line break]Mr. Anderson of Muddle, Mass. says: 'Before I took this course I was a lowly bit twiddler. Now with what I learned at GUE Tech I feel really important and can obfuscate and confuse with the best.'[line break][line break]Dr. Blank had this to say: 'Ten short days ago all I could look forward to was a dead-end job as a doctor. Now I have a promising future and make really big Zorkmids.'[line break][line break]GUE Tech can't promise these fantastic results to everyone. But when you earn your degree from GUE Tech, your future will be brighter.[variable letter spacing]"
@@ -2772,7 +2803,7 @@ Understand "tie [something] to [something]" as tying it to.
 Carry out tying it to:
 	say "You can't tie those things together."
 
-Instead of tying the rope to something when the second noun is not the wooden railing:
+Instead of tying the rope to something when the second noun is not the wooden railing and the second noun is not the player:
 	say "You can[apostrophe]t tie the rope to that."
 
 Instead of tying-up something:
@@ -3306,6 +3337,7 @@ Digging is an action applying to one thing. Understand "dig [something]" and "di
 Carry out digging:
 	say "The ground is too hard for digging here."
 
+[ZIL SAND-FUNCTION: BEACH-DIG resets to -1 when the hole collapses, and the scarab is hidden again if it is still lying in the cave; the reveal on the fourth dig happens only while the scarab has never been found. Without the reset every later dig was fatal, and a fourth dig after the scarab was taken re-summoned it from wherever it was; ZIL itself leaked V-DIG's "There's no reason to be digging here." at that point (#172).]
 Instead of digging the sand:
 	if the player does not carry the shovel:
 		say "You need a shovel to dig here.";
@@ -3318,10 +3350,16 @@ Instead of digging the sand:
 		otherwise if the dig-count is 3:
 			say "You are surrounded by a wall of sand on all sides.";
 		otherwise if the dig-count is 4:
-			now the beautiful jeweled scarab is zil-visible;
-			say "You can see a scarab here in the sand.";
-			now the beautiful jeweled scarab is in Sandy Cave;
+			if the beautiful jeweled scarab is zil-invisible:
+				now the beautiful jeweled scarab is zil-visible;
+				now the beautiful jeweled scarab is in Sandy Cave;
+				say "You can see a scarab here in the sand.";
+			otherwise:
+				say "You dig deeper, but the sand yields nothing more.";
 		otherwise:
+			now the dig-count is 0;
+			if the beautiful jeweled scarab is in Sandy Cave:
+				now the beautiful jeweled scarab is zil-invisible;
 			die saying "The hole collapses, smothering you."
 
 Aragain Falls is a room.
@@ -3747,13 +3785,19 @@ Slide Room is a dark room. "This is a small chamber, which appears to have been 
 Slide Room is in the Underground.
 East of Slide Room is Cold Passage. North of Slide Room is Mine Entrance.
 
-The slide-object is scenery in Slide Room. The printed name of the slide-object is "slide".
-Understand "slide" and "metal" and "steep" as the slide-object.
+[ZIL SLIDE: a local-global in both Slide Room and Cellar (synonyms CHUTE RAMP SLIDE). From the Cellar, entering or climbing it is a walk west (the ramp), and something dropped in lands at your feet instead of being "gone" (#172).]
+The slide-object is a backdrop. The slide-object is in Slide Room and Cellar. The printed name of the slide-object is "slide".
+Understand "slide" and "metal" and "steep" and "chute" and "ramp" and "twisting" as the slide-object.
 The description of the slide-object is "It's a steep metal slide twisting downward."
 Instead of entering the slide-object: try going down.
+Instead of entering the slide-object when the player is in Cellar: try going west.
+Instead of climbing the slide-object: try entering the slide-object.
 Instead of inserting something into the slide-object:
 	if the noun is fixed in place:
 		say "[yuks]";
+	otherwise if the player is in Cellar:
+		say "The [noun] falls into the slide and lands at your feet.";
+		now the noun is in Cellar;
 	otherwise:
 		say "The [noun] falls into the slide and is gone.";
 		now the noun is in Cellar.
@@ -3789,6 +3833,8 @@ Understand "barrow" and "tomb" and "massive" as the barrow-facade.
 The description of the barrow-facade is "It's a massive barrow of stone."
 Instead of entering the barrow-facade: try going inside.
 Instead of entering the barrow-door: try going inside.
+[ZIL V-THROUGH walks through a DOORBIT object via OTHER-SIDE; the barrow's door is a function exit, so it never resolved (#172).]
+Instead of going-through the barrow-door: try going inside.
 Instead of opening the barrow-door: say "The door is too heavy."
 Instead of closing the barrow-door: say "The door is too heavy."
 
@@ -4213,7 +4259,8 @@ After going to Drafty Room when the light-shaft-bonus is false and not in darkne
 
 Chapter 8 - Ancient Map
 
-The ancient map is in the trophy case. The ancient map is zil-invisible.
+[ZIL: INVISIBLE in the trophy case until the score reaches 350 (#175). Kept off-stage until then, so neither the "collection of treasures" paragraph nor "examine trophy case" can leak it; the win rule moves it into the case.]
+The ancient map is a thing.
 Understand "parchment" and "map" and "antique" and "old" and "ancient" as the ancient map.
 The description of the ancient map is "The map shows a forest with three clearings. The largest clearing contains a house. Three paths leave the large clearing. One of these paths, leading southwest, is marked 'To Stone Barrow'."
 
@@ -4360,7 +4407,24 @@ Instead of listening to something: say "The [noun] makes no sound."
 
 Chapter 10a - Burn Action
 
+[ZIL SYNTAX: BURN OBJECT (FIND BURNBIT) WITH OBJECT (FIND FLAMEBIT) = V-BURN PRE-BURN. Burning always takes an instrument: the parser supplies a lone FLAMEBIT object in reach ("(with the torch)"), otherwise asks "What do you want to burn X with?" and waits; then PRE-BURN rejects anything not on fire with "With a X??!?". Dropping the Standard one-noun "burn" grammar and keeping the action strictly two-noun makes the I7 parser ask the same question, and its guess for the missing instrument follows the "does the player mean" scores below, which reproduce the FLAMEBIT test. (A one-noun grammar line plus a "supplying a missing second noun" rule cannot fall back to the question, so that route is not used.)]
+Understand the command "burn" as something new.
 Burning it with is an action applying to two things. Understand "burn [something] with [something]" and "light [something] with [something]" as burning it with.
+
+Definition: a thing (called the item) is flaming:
+	if the item is the torch and the item is lit, decide yes;
+	if the item is the pair of candles and the item is lit, decide yes;
+	if the item is the matchbook and the match-lit is true, decide yes;
+	decide no.
+
+Does the player mean burning something with a flaming thing: it is very likely.
+Does the player mean burning something with something when the second noun is not flaming: it is very unlikely.
+
+Instead of burning something with something when the second noun is not flaming (this is the ZIL pre-burn rule):
+	say "With [a second noun]??!?"
+
+Instead of burning something with something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
 
 Instead of burning the pair of candles with the matchbook:
 	if the match-lit is true:
@@ -4371,8 +4435,29 @@ Instead of burning the pair of candles with the torch:
 	remove the pair of candles from play.
 Instead of burning the pair of candles with something:
 	say "You have to light them with something that[apostrophe]s burning, you know."
+
+[Two-noun forms of the one-noun burn handlers elsewhere in the source, which only "light X" reaches now.]
+Instead of burning the white house with a flaming thing:
+	say "You must be joking."
+
+Instead of burning the front door with a flaming thing:
+	say "You cannot burn this door."
+
+Instead of burning the black book with a flaming thing:
+	remove the black book from play;
+	die saying "A booming voice says [quotation mark]Wrong, cretin![quotation mark] and you notice that you have turned into a pile of dust. How, I can't imagine."
+
+Instead of burning the pair of candles with the matchbook when the player is in Gas Room and the match-lit is true:
+	die saying "How sad for an aspiring adventurer to light candles in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
+Instead of burning the pair of candles with the torch when the player is in Gas Room:
+	die saying "How sad for an aspiring adventurer to light candles in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
+Instead of burning the matchbook with a flaming thing when the player is in Gas Room:
+	die saying "How sad for an aspiring adventurer to light a match in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
 Carry out burning it with:
-	say "You can[apostrophe]t burn that."
+	say "You can[apostrophe]t burn [a noun]."
 
 Chapter 10b - Generic Verb Handlers
 
@@ -4508,6 +4593,22 @@ Carry out untieing: say "This cannot be tied, so it cannot be untied!"
 
 Walking-around is an action applying to nothing. Understand "walk around" as walking-around.
 Carry out walking-around: say "Use compass directions for movement."
+
+[ZIL FOREST-F / WHITE-HOUSE-F, WALK-AROUND: "walk around forest" from the house exterior said "You aren't even in the forest." and then, lacking an RTRUE, fell through to the compass message (#172). ZIL also walks the player along its FOREST-AROUND / HOUSE-AROUND / IN-HOUSE-AROUND cycles; that navigation is not translated yet and has its own ticket.]
+Walking-around-it is an action applying to one visible thing. Understand "walk around [something]" as walking-around-it.
+Carry out walking-around-it: say "Use compass directions for movement."
+Instead of walking-around-it the forest-pseudo when the location is in House Exterior:
+	say "You aren't even in the forest."
+Instead of walking-around-it the white house when the location is not in House Exterior and the location is not in House Interior:
+	say "You're not at the house."
+
+[ZIL V-CLIMB-UP / V-CLIMB-DOWN with no object: walk in that direction, or "You can't go that way." ZIL's CLIMB-DOWN handed the parser's ROOMS placeholder to the routine as if it were an object, printing "The object#248 doesn't lead downward" (#172). The Standard grammar is reset so the bare forms are not parsed as climbing the direction.]
+Understand the command "climb" as something new.
+Climbing-up is an action applying to nothing. Understand "climb up" as climbing-up.
+Carry out climbing-up: try going up.
+Climbing-down is an action applying to nothing. Understand "climb down" as climbing-down.
+Carry out climbing-down: try going down.
+Understand "climb [something]" and "climb up [something]" and "climb down [something]" as climbing.
 
 Instead of wearing something: say "You can't wear the [noun]."
 
@@ -4790,7 +4891,7 @@ Instead of reading something:
 	if in darkness:
 		say "It is impossible to read in the dark.";
 	otherwise:
-		say "How does one read a [noun]?"
+		say "How does one read [a noun]?"
 
 Section 10 - Alarm / Wake
 
@@ -5199,3 +5300,8 @@ Test machine with "n / d / take bracelet / e / ne / se / sw / d / d / s / take c
 
 Test boat with "ne / e / turn off lantern / d / inflate plastic / drop pump / turn on lantern / enter boat / launch" holding the brass lantern and the pile of plastic and the air pump.
 
+
+Chapter 12 - Readable Things
+
+[Declared last on purpose: naming an object before its own declaration makes Inform create it early, which changes object order and therefore the order of room listings (the tube and the altar candles moved when this sentence sat higher up).]
+A thing can be readable. The leaflet, the tan label, the black book, the engraved wall, the tour guidebook, the ancient map, the matchbook, the ZORK owner's manual, the prayer and the tube are readable.

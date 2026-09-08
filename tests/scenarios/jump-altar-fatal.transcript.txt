@@ -4,7 +4,7 @@
 
 Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 4 / Serial number 260322 / Inform 7 v10.1.2 / D
+Release 4 / Serial number 260908 / Inform 7 v10.1.2 / D
 Current
 Translated to Inform 7 by John Escobedo
 Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
@@ -60,9 +60,6 @@ Above the trophy case hangs an elvish sword of great antiquity.
 
 A battery-powered brass lantern is on the trophy case.
 
-Your collection of treasures consists of:
-  an ancient map
-
 
 > take sword
 Taken.
@@ -114,9 +111,6 @@ On the table is an elongated brown sack, smelling of hot peppers.
 
 Living Room
 You are in the living room. There is a doorway to the east, a wooden door with strange gothic lettering to the west, which appears to be nailed shut, a trophy case, and a large oriental rug in the center of the room.
-
-Your collection of treasures consists of:
-  an ancient map
 
 
 > push rug

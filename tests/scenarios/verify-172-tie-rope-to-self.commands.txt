@@ -1,0 +1,13 @@
+look
+n
+e
+open window
+w
+w
+take lantern
+turn on lantern
+e
+up
+take rope
+take knife
+tie rope to me
