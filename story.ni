@@ -1317,6 +1317,8 @@ Rule for writing a paragraph about the bird's nest when the bird's nest is in Up
 		now the jewel-encrusted egg is mentioned.
 Understand "egg" and "jewel" and "encrusted" and "jeweled" and "bird's" as the jewel-encrusted egg.
 The jewel-encrusted egg is a closed openable container. The carrying capacity of the jewel-encrusted egg is 1.
+[ZIL V-EXAMINE on a CONTBIT object with no TEXT is V-LOOK-INSIDE: "The jewel-encrusted egg is closed." when shut; when open, the contents (or "is empty"), which the standard examine-containers rule supplies.]
+The description of the jewel-encrusted egg is "[if the jewel-encrusted egg is closed]The jewel-encrusted egg is closed.[end if]".
 The treasure-value of the jewel-encrusted egg is 5.
 The point-value of the jewel-encrusted egg is 5.
 
@@ -2054,14 +2056,21 @@ To reveal-grate-from-leaves (this is the leaves-appear rule):
 		now the grate-revealed is true;
 		now the grate is zil-visible.
 
-Instead of burning the pile of leaves:
-	if the player carries the pile of leaves:
-		die saying "The leaves burn, and so do you.";
-	reveal-grate-from-leaves;
-	if the grate-revealed is true and the grate is not open:
+[ZIL LEAF-PILE, BURN: PRE-BURN vets the instrument first (Chapter 10a); then LEAVES-APPEAR, the leaves are removed, and you die only if you were holding them. ZIL removed the leaves before that check, so it always killed you (#165); the carry-check is taken first here.]
+Instead of burning the pile of leaves with a flaming thing:
+	let held be whether or not the player carries the pile of leaves;
+	if the grate-revealed is false and the grate is not open:
+		reveal-grate-from-leaves;
 		say "With the leaves moved, a grating is revealed.[line break]";
 	remove the pile of leaves from play;
-	say "The leaves burn."
+	if held is true:
+		die saying "The leaves burn, and so do you.";
+	otherwise:
+		say "The leaves burn."
+
+[Bare "light leaves" still reaches the one-noun burning action (ZIL maps one-noun LIGHT to V-LAMP-ON; see #163). Until then, answer as the burn parser would.]
+Instead of burning the pile of leaves:
+	say "What do you want to burn the pile of leaves with?"
 
 Instead of cutting the pile of leaves:
 	say "You rustle the leaves around, making quite a mess.";
@@ -4360,7 +4369,24 @@ Instead of listening to something: say "The [noun] makes no sound."
 
 Chapter 10a - Burn Action
 
+[ZIL SYNTAX: BURN OBJECT (FIND BURNBIT) WITH OBJECT (FIND FLAMEBIT) = V-BURN PRE-BURN. Burning always takes an instrument: the parser supplies a lone FLAMEBIT object in reach ("(with the torch)"), otherwise asks "What do you want to burn X with?" and waits; then PRE-BURN rejects anything not on fire with "With a X??!?". Dropping the Standard one-noun "burn" grammar and keeping the action strictly two-noun makes the I7 parser ask the same question, and its guess for the missing instrument follows the "does the player mean" scores below, which reproduce the FLAMEBIT test. (A one-noun grammar line plus a "supplying a missing second noun" rule cannot fall back to the question, so that route is not used.)]
+Understand the command "burn" as something new.
 Burning it with is an action applying to two things. Understand "burn [something] with [something]" and "light [something] with [something]" as burning it with.
+
+Definition: a thing (called the item) is flaming:
+	if the item is the torch and the item is lit, decide yes;
+	if the item is the pair of candles and the item is lit, decide yes;
+	if the item is the matchbook and the match-lit is true, decide yes;
+	decide no.
+
+Does the player mean burning something with a flaming thing: it is very likely.
+Does the player mean burning something with something when the second noun is not flaming: it is very unlikely.
+
+Instead of burning something with something when the second noun is not flaming (this is the ZIL pre-burn rule):
+	say "With [a second noun]??!?"
+
+Instead of burning something with something when the player-is-dead is true:
+	say "Even such an action is beyond your capabilities."
 
 Instead of burning the pair of candles with the matchbook:
 	if the match-lit is true:
@@ -4371,8 +4397,29 @@ Instead of burning the pair of candles with the torch:
 	remove the pair of candles from play.
 Instead of burning the pair of candles with something:
 	say "You have to light them with something that[apostrophe]s burning, you know."
+
+[Two-noun forms of the one-noun burn handlers elsewhere in the source, which only "light X" reaches now.]
+Instead of burning the white house with a flaming thing:
+	say "You must be joking."
+
+Instead of burning the front door with a flaming thing:
+	say "You cannot burn this door."
+
+Instead of burning the black book with a flaming thing:
+	remove the black book from play;
+	die saying "A booming voice says [quotation mark]Wrong, cretin![quotation mark] and you notice that you have turned into a pile of dust. How, I can't imagine."
+
+Instead of burning the pair of candles with the matchbook when the player is in Gas Room and the match-lit is true:
+	die saying "How sad for an aspiring adventurer to light candles in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
+Instead of burning the pair of candles with the torch when the player is in Gas Room:
+	die saying "How sad for an aspiring adventurer to light candles in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
+Instead of burning the matchbook with a flaming thing when the player is in Gas Room:
+	die saying "How sad for an aspiring adventurer to light a match in a room which reeks of gas. Fortunately, there is justice in the world.[paragraph break]   ** BOOOOOOOOOOOM **"
+
 Carry out burning it with:
-	say "You can[apostrophe]t burn that."
+	say "You can[apostrophe]t burn [a noun]."
 
 Chapter 10b - Generic Verb Handlers
 

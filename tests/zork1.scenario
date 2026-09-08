@@ -1261,15 +1261,63 @@
 # once a .scenario file exists.
 # ============================================================
 
+== verify-176-matchbook-to-clearing: Matchbook fetched, back at the Clearing  [fidelity sweep]
+# Shared route for the burn pins: Dam Lobby matchbook, then back overground
+# to the Clearing. (ZIL BURN always needs a flame, so #165 needs one too.)
+@ round-room
+> n
+> ne
+> nw
+> e
+> n
+? /Dam Lobby
+> take matchbook
+? Taken
+> s
+? /Dam
+> s
+? /Deep Canyon
+> sw
+? /North-South Passage
+> s
+? /Round Room
+> w
+> w
+? /Troll Room
+# The trap door is barred behind you after the first descent, so return
+# through the maze and the Cyclops Room (odysseus opens the way to the Living Room).
+> w
+> s
+> e
+> u
+> sw
+> e
+> s
+> se
+?? /Cyclops Room
+> odysseus
+? /flees
+> e
+> e
+? /Living Room
+> e
+? /Kitchen
+> e
+? /Behind House
+> n
+> n
+? /Forest Path
+> n
+?? /Clearing
+?? /pile of leaves
+
 == verify-165-leaves-ground: Burning leaves on the ground is not fatal  [fidelity sweep]
 # #165: Burning leaves on the ground should NOT kill the player
-@ startup
-> n
-> n
-> n
-? /Clearing
-? /pile of leaves
-> burn leaves
+@ verify-176-matchbook-to-clearing
+> light match
+? /starts to burn
+> burn leaves with match
+? /With the leaves moved, a grating is revealed
 ? /The leaves burn
 ?! and so do you
 
@@ -1389,3 +1437,56 @@
 > examine bubble
 ? /nothing special
 ?! floating in the stream
+
+== verify-176-burn-carried: Burning leaves you are holding is fatal  [fidelity sweep]
+# #165/#176: the carry-check must survive the burn-with refactor
+@ verify-176-matchbook-to-clearing
+> take leaves
+? /grating is revealed
+> light match
+> burn leaves with match
+? /The leaves burn, and so do you
+
+== verify-176-burn-inference: Bare burn supplies the one flame in reach  [fidelity sweep]
+# #176 / ZIL GWIM: with exactly one FLAMEBIT object available the parser supplies it
+@ verify-176-matchbook-to-clearing
+> light match
+> burn leaves
+? /\(with the matchbook\)
+? /The leaves burn
+?! and so do you
+
+== verify-176-burn-prompt: Bare burn with no flame asks, then vets the answer  [fidelity sweep]
+# #176: the parser prompt, then PRE-BURN's "With a X??!?" for a non-flaming instrument
+@ startup
+> open mailbox
+> take leaflet
+> n
+> n
+> n
+?? /Clearing
+> burn leaves
+? /What do you want to burn the pile of leaves with
+> hands
+? /With a pair of hands\?\?!\?
+?! The leaves burn
+> burn leaves with leaflet
+? /With a leaflet\?\?!\?
+?! grating
+> look
+? /pile of leaves
+
+== verify-176-egg-examine: Examining the egg reports its state  [fidelity sweep]
+# #176: ZIL V-EXAMINE on a container with no TEXT is V-LOOK-INSIDE
+@ startup
+> n
+> n
+> up
+?? /Up a Tree
+> examine egg
+? /The jewel-encrusted egg is closed
+?! nothing special
+> take egg
+? Taken
+> examine egg
+? /The jewel-encrusted egg is closed

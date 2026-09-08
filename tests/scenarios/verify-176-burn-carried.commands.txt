@@ -47,5 +47,6 @@ e
 n
 n
 n
+take leaves
 light match
 burn leaves with match

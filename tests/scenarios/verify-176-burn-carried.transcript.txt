@@ -367,17 +367,30 @@ On the ground is a pile of leaves.
 You hear in the distance the chirping of a song bird.
 
 
+> take leaves
+In disturbing the pile of leaves, a grating is revealed.
+
+Taken.
+
+
 > light match
 One of the matches starts to burn.
 
 
 > burn leaves with match
-With the leaves moved, a grating is revealed.
-The leaves burn.
+The leaves burn, and so do you.
 
-The match has gone out.
+    ****  You have died  ****
+
+Now, let's take a look here...
+Well, you probably deserve another chance. I can't quite fix you up completely, but you can't have everything.
+
+Forest
+This is a forest, with trees in all directions. To the east, there appears to be sunlight. A faint breeze stirs the branches overhead, carrying the earthy scent of decaying leaves and damp moss.
+
+[Your score has just gone down by ten points.]
 
 
 > score
-Your score is 40 (total of 350 points), in 51 moves.
+Your score is 30 (total of 350 points), in 52 moves.
 This gives you the rank of Amateur Adventurer.

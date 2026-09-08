@@ -1,0 +1,7 @@
+look
+n
+n
+up
+examine egg
+take egg
+examine egg
