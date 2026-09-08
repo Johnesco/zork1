@@ -86,7 +86,7 @@
 > w
 
 # With a great effort, the rug is moved to one side of the room, revealing the
-#   dusty cover of a closed trap door.
+#   dusty cover of a closed trap door. Your sword is no longer glowing.
 > move rug
 # Open the trap door
 # The door reluctantly opens to reveal a rickety staircase descending into
@@ -123,8 +123,7 @@
 #   a forbidding hole leading west.
 > n
 # Combat: troll (12 attempts)
-# The blow lands, making a shallow gash in the troll's arm! The axe sweeps
-#   past as you jump aside.
+# Your sword crashes down, knocking the troll into dreamland.
 > kill troll with sword
 > kill troll with sword
 > kill troll with sword
@@ -462,8 +461,15 @@
 ## Egyptian Room
 
 > d
+
+# Pick up the coffin
+# +10 points
 > take coffin
+# The gold coffin opens. A sceptre, possibly that of ancient Egypt itself, is
+#   in the coffin.
 > open coffin
+# Pick up the sceptre
+# +4 points
 > take sceptre
 
 ## Temple
@@ -478,7 +484,8 @@
 
 > pray
 
-# The brass lantern is now off.
+# The brass lantern is now off. You hear in the distance the chirping of a
+#   song bird.
 > turn off lamp
 > drop lamp
 > drop screwdriver
@@ -503,8 +510,10 @@
 ## End of Rainbow
 
 > n
-> wave sceptre
 
+# Suddenly, the rainbow appears to become solid and, I venture, walkable (I
+#   think the giveaway was the stairs and bannister).
+> wave sceptre
 # Pick up the pot of gold
 # +10 points
 > take pot of gold
@@ -556,8 +565,12 @@
 > w
 
 # Store the coffin in the case
+# +15 points
+# You put the gold coffin into the trophy case.
 > put coffin in case
 # Store the sceptre in the case
+# +6 points
+# You put the sceptre into the trophy case.
 > put sceptre in case
 # Store the pot of gold in the case
 # +10 points
@@ -705,6 +718,7 @@
 > w
 
 # Pick up the screwdriver
+# You hear in the distance the chirping of a song bird.
 > take screwdriver
 
 ## Forest Path
@@ -732,7 +746,7 @@
 > take torch from case
 # The brass lantern is now on.
 > turn on lamp
-# Too late for that.
+# Look around.
 > open trap door
 
 ## Stage 4
@@ -783,6 +797,9 @@
 ## Bat Room
 
 > n
+
+# Pick up the jade
+# +5 points
 > take jade
 
 ## Shaft Room
@@ -803,6 +820,9 @@
 ## Gas Room
 
 > d
+
+# Pick up the bracelet
+# +5 points
 > take bracelet
 
 ## Coal Mine
@@ -889,8 +909,6 @@
 > drop lamp
 > drop jade
 > drop bracelet
-
-# Dropped. The lamp appears a bit dimmer.
 > drop pump
 
 ## Drafty Room
@@ -946,9 +964,10 @@
 
 # Pick up the lamp
 > take lamp
+# Pick up the jade
 > take jade
+# Pick up the bracelet
 > take bracelet
-
 # Pick up the pump
 > take pump
 
@@ -1013,8 +1032,12 @@
 # The brass lantern is now off.
 > turn off lamp
 # Store the jade in the case
+# +5 points
+# You put the exquisite jade figurine into the trophy case.
 > put jade in case
 # Store the bracelet in the case
+# +5 points
+# You put the sapphire-encrusted bracelet into the trophy case.
 > put bracelet in case
 # Store the diamond in the case
 # +10 points
@@ -1131,58 +1154,105 @@
 ## Aragain Falls
 
 > s
+
+## On the Rainbow
+
 > w
+
+## End of Rainbow
+
 > w
+
+## Canyon Bottom
+
 > sw
+
+## Rocky Ledge
+
 > u
+
+## Canyon View
+
 > u
+
+## Clearing
+
 > nw
+
+## Stage 6
+
+## Behind House
+
 > w
+
+## Kitchen
+
 > w
+
+## Living Room
+
 > w
 
 # Store the emerald in the case
+# +10 points
+# You put the large emerald into the trophy case.
 > put emerald in case
 # Store the scarab in the case
+# +5 points
+# You put the beautiful jeweled scarab into the trophy case.
 > put scarab in case
+# Pick up the egg
+# -9 points
 > take egg from case
-
 # The brass lantern is now on.
 > turn on lamp
+# Look around.
 > open trap door
 
-# It's a long way...
+## Cellar
+
 > d
 
-## Shore
-
+# The Troll Room This is a small room with passages to the east and south and
+#   a forbidding hole leading west.
 > n
+# Pick up the axe
 > take axe
 
-## Frigid River
+## Maze
 
-# -10 points
-# DEATH
 > w
-
-## Darkness
-
 > s
 > e
 > u
+
+# Pick up the coins
+# +10 points
+# The lamp is definitely dimmer now.
 > take coins
 > sw
 > e
 > s
-> se
-> u
 
+## Cyclops Room
+
+> se
+
+# +25 points
+# You hear a scream of anguish as you violate the robber's hideaway. Using
+#   passages unknown to you, he rushes to its defense.
+> u
 # Give egg to thief
+# The thief is taken aback by your unexpected generosity, but accepts the
+#   jewel-encrusted egg and stops to admire its beauty.
 > give egg to thief
 > d
-> u
 
+# You hear a scream of anguish as you violate the robber's hideaway. Using
+#   passages unknown to you, he rushes to its defense.
+> u
 # Combat: thief (12 attempts)
+# A good stroke, but it's too slow; the thief dodges.
 > kill thief with axe
 > kill thief with axe
 > kill thief with axe
@@ -1196,46 +1266,123 @@
 > kill thief with axe
 > kill thief with axe
 > drop axe
+
+# Pick up the canary
+# +6 points
 > take canary
+# Pick up the chalice
+# +10 points
 > take chalice
+# Pick up the egg
 > take egg
 > take painting
 > d
-> e
-> e
-> turn off lamp
 
+## Strange Passage
+
+> e
+
+## Living Room
+
+> e
+
+# The brass lantern is now off.
+> turn off lamp
 # Store the coins in the case
+# +5 points
+# You put the leather bag of coins into the trophy case.
 > put coins in case
 # Store the chalice in the case
+# +5 points
+# You put the chalice into the trophy case.
 > put chalice in case
 # Store the painting in the case
+# The painting is already there.
 > put painting in case
+
+## Kitchen
+
 > e
+
+## Behind House
+
 > e
+
+## North of House
+
 > nw
+
+## Forest Path
+
 > n
+
+# The canary chirps, slightly off-key, an aria from a forgotten opera. From
+#   out of the greenery flies a lovely songbird.
 > wind canary
+# Pick up the bauble
+# +1 points
 > take bauble
+
+## Stage 7
+
+## North of House
+
 > s
+
+## Behind House
+
 > e
+
+## Kitchen
+
 > w
+
+## Living Room
+
 > w
 
 # Store the egg in the case
+# +5 points
+# You put the jewel-encrusted egg into the trophy case.
 > put egg in case
 # Store the canary in the case
+# +4 points
+# You put the golden clockwork canary into the trophy case.
 > put canary in case
 # Store the bauble in the case
+# +1 points
+# You put the beautiful brass bauble into the trophy case. An almost inaudible
+#   voice whispers in your ear, "Look to your treasures for the final secret.
 > put bauble in case
-# Although there is no light, the room seems dimly illuminated. The room looks
-#   strange and unearthly. Darkness It is pitch black.
 > look
+
+# Pick up the map
 > take map
+# The map shows a forest with three clearings. The largest clearing contains a
+#   house. Three paths leave the large clearing.
 > read map
+
+## Kitchen
+
 > e
+
+## Behind House
+
 > e
+
+## South of House
+
 > s
+
+## West of House
+
 > w
+
+## Stone Barrow
+
 > sw
+
+## Inside the Barrow
+
+# GAME WON
 > enter barrow
