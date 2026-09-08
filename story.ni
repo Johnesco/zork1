@@ -689,8 +689,11 @@ West-of-House is a room. "You are standing in an open field west of a white hous
 The printed name of West-of-House is "West of House".
 West-of-House is in House Exterior.
 
+[ZIL WHITE-HOUSE is a local-global reachable from the Kitchen, Living Room and Attic too, where FIND answers "Why not find your brains?" (#178, #172). Placing it in parser scope there lets that rule fire without pretending the house is in the room.]
 The white house is a backdrop. The white house is in House Exterior and Forest Area. The description of the white house is "The house is a beautiful colonial house which is painted white. It is clear that the owners must have been extremely wealthy."
 Understand "house" and "white" and "beautiful" and "colonial" as the white house.
+After deciding the scope of the player when the location is in House Interior:
+	place the white house in scope.
 
 Instead of burning the white house:
 	say "You must be joking."
@@ -885,9 +888,9 @@ Every turn when the player is in the Forest Area (this is the songbird singing r
 
 Section 5a - Forest Pseudo-Object
 
-The forest-pseudo is a backdrop. The forest-pseudo is in Forest Area.
+The forest-pseudo is a backdrop. The forest-pseudo is in Forest Area and House Exterior.
 The printed name of the forest-pseudo is "forest".
-Understand "forest" as the forest-pseudo when the player is in Forest Area.
+Understand "forest" as the forest-pseudo when the player is in Forest Area or the player is in House Exterior.
 The description of the forest-pseudo is "You cannot see the forest for the trees."
 
 Instead of finding the forest-pseudo: say "You cannot see the forest for the trees."
@@ -2326,6 +2329,10 @@ Instead of entering the damp-crack: say "You can't fit through the crack."
 Instead of going south in Damp Cave:
 	say "It is too narrow for most insects."
 
+[ZIL only checked the boat westbound from White Cliffs; the passage is just as narrow going east (#172).]
+Instead of going east in Damp Cave when the player carries the magic boat and the player does not carry the pile of plastic:
+	say "The path is too narrow with an inflated boat."
+
 North-South Passage is a dark room. "This is a high north-south passage, which forks to the northeast."
 North-South Passage is in the Underground.
 North of North-South Passage is Chasm. Northeast of North-South Passage is Deep Canyon. South of North-South Passage is Round Room.
@@ -2781,7 +2788,7 @@ Understand "tie [something] to [something]" as tying it to.
 Carry out tying it to:
 	say "You can't tie those things together."
 
-Instead of tying the rope to something when the second noun is not the wooden railing:
+Instead of tying the rope to something when the second noun is not the wooden railing and the second noun is not the player:
 	say "You can[apostrophe]t tie the rope to that."
 
 Instead of tying-up something:
@@ -3315,6 +3322,7 @@ Digging is an action applying to one thing. Understand "dig [something]" and "di
 Carry out digging:
 	say "The ground is too hard for digging here."
 
+[ZIL SAND-FUNCTION: BEACH-DIG resets to -1 when the hole collapses, and the scarab is hidden again if it is still lying in the cave; the reveal on the fourth dig happens only while the scarab has never been found. Without the reset every later dig was fatal, and a fourth dig after the scarab was taken re-summoned it from wherever it was; ZIL itself leaked V-DIG's "There's no reason to be digging here." at that point (#172).]
 Instead of digging the sand:
 	if the player does not carry the shovel:
 		say "You need a shovel to dig here.";
@@ -3327,10 +3335,16 @@ Instead of digging the sand:
 		otherwise if the dig-count is 3:
 			say "You are surrounded by a wall of sand on all sides.";
 		otherwise if the dig-count is 4:
-			now the beautiful jeweled scarab is zil-visible;
-			say "You can see a scarab here in the sand.";
-			now the beautiful jeweled scarab is in Sandy Cave;
+			if the beautiful jeweled scarab is zil-invisible:
+				now the beautiful jeweled scarab is zil-visible;
+				now the beautiful jeweled scarab is in Sandy Cave;
+				say "You can see a scarab here in the sand.";
+			otherwise:
+				say "You dig deeper, but the sand yields nothing more.";
 		otherwise:
+			now the dig-count is 0;
+			if the beautiful jeweled scarab is in Sandy Cave:
+				now the beautiful jeweled scarab is zil-invisible;
 			die saying "The hole collapses, smothering you."
 
 Aragain Falls is a room.
@@ -3756,13 +3770,19 @@ Slide Room is a dark room. "This is a small chamber, which appears to have been 
 Slide Room is in the Underground.
 East of Slide Room is Cold Passage. North of Slide Room is Mine Entrance.
 
-The slide-object is scenery in Slide Room. The printed name of the slide-object is "slide".
-Understand "slide" and "metal" and "steep" as the slide-object.
+[ZIL SLIDE: a local-global in both Slide Room and Cellar (synonyms CHUTE RAMP SLIDE). From the Cellar, entering or climbing it is a walk west (the ramp), and something dropped in lands at your feet instead of being "gone" (#172).]
+The slide-object is a backdrop. The slide-object is in Slide Room and Cellar. The printed name of the slide-object is "slide".
+Understand "slide" and "metal" and "steep" and "chute" and "ramp" and "twisting" as the slide-object.
 The description of the slide-object is "It's a steep metal slide twisting downward."
 Instead of entering the slide-object: try going down.
+Instead of entering the slide-object when the player is in Cellar: try going west.
+Instead of climbing the slide-object: try entering the slide-object.
 Instead of inserting something into the slide-object:
 	if the noun is fixed in place:
 		say "[yuks]";
+	otherwise if the player is in Cellar:
+		say "The [noun] falls into the slide and lands at your feet.";
+		now the noun is in Cellar;
 	otherwise:
 		say "The [noun] falls into the slide and is gone.";
 		now the noun is in Cellar.
@@ -3798,6 +3818,8 @@ Understand "barrow" and "tomb" and "massive" as the barrow-facade.
 The description of the barrow-facade is "It's a massive barrow of stone."
 Instead of entering the barrow-facade: try going inside.
 Instead of entering the barrow-door: try going inside.
+[ZIL V-THROUGH walks through a DOORBIT object via OTHER-SIDE; the barrow's door is a function exit, so it never resolved (#172).]
+Instead of going-through the barrow-door: try going inside.
 Instead of opening the barrow-door: say "The door is too heavy."
 Instead of closing the barrow-door: say "The door is too heavy."
 
@@ -4556,6 +4578,22 @@ Carry out untieing: say "This cannot be tied, so it cannot be untied!"
 
 Walking-around is an action applying to nothing. Understand "walk around" as walking-around.
 Carry out walking-around: say "Use compass directions for movement."
+
+[ZIL FOREST-F / WHITE-HOUSE-F, WALK-AROUND: "walk around forest" from the house exterior said "You aren't even in the forest." and then, lacking an RTRUE, fell through to the compass message (#172). ZIL also walks the player along its FOREST-AROUND / HOUSE-AROUND / IN-HOUSE-AROUND cycles; that navigation is not translated yet and has its own ticket.]
+Walking-around-it is an action applying to one visible thing. Understand "walk around [something]" as walking-around-it.
+Carry out walking-around-it: say "Use compass directions for movement."
+Instead of walking-around-it the forest-pseudo when the location is in House Exterior:
+	say "You aren't even in the forest."
+Instead of walking-around-it the white house when the location is not in House Exterior and the location is not in House Interior:
+	say "You're not at the house."
+
+[ZIL V-CLIMB-UP / V-CLIMB-DOWN with no object: walk in that direction, or "You can't go that way." ZIL's CLIMB-DOWN handed the parser's ROOMS placeholder to the routine as if it were an object, printing "The object#248 doesn't lead downward" (#172). The Standard grammar is reset so the bare forms are not parsed as climbing the direction.]
+Understand the command "climb" as something new.
+Climbing-up is an action applying to nothing. Understand "climb up" as climbing-up.
+Carry out climbing-up: try going up.
+Climbing-down is an action applying to nothing. Understand "climb down" as climbing-down.
+Carry out climbing-down: try going down.
+Understand "climb [something]" and "climb up [something]" and "climb down [something]" as climbing.
 
 Instead of wearing something: say "You can't wear the [noun]."
 
