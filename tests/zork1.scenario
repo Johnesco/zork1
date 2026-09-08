@@ -1246,6 +1246,7 @@
 ? /score has just gone up
 > look
 > take map
+? Taken
 > read map
 > e
 > e
@@ -1490,3 +1491,36 @@
 ? Taken
 > examine egg
 ? /The jewel-encrusted egg is closed
+
+== verify-175-map-hidden-until-win: Ancient map stays hidden before the win  [fidelity sweep]
+# #175: the ZIL-INVISIBLE map must not leak through the treasure listing, examine, or the parser
+@ living-room
+> look
+?! ancient map
+> open case
+> examine trophy case
+?! ancient map
+> take map
+? /can't see any such thing
+
+== verify-166-nested-treasure-scoring: Treasures nested in the trophy case score  [fidelity sweep]
+# #166: ZIL's OTVAL-FROB dropped nested values; I7 counts everything enclosed (nest 0 + egg 5 + canary 4)
+@ startup
+> n
+> n
+> up
+?? /Up a Tree
+> take nest
+? Taken
+> d
+> s
+> e
+? /Behind House
+> open window
+> w
+? /Kitchen
+> w
+? /Living Room
+> open case
+> put nest in case
+? /gone up by nine points

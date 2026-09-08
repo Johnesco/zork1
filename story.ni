@@ -402,7 +402,7 @@ Every turn (this is the trophy case scoring rule):
 		now the trophy-case-score is new-score;
 	if the score is at least 350 and the won-flag is false:
 		now the won-flag is true;
-		now the ancient map is zil-visible;
+		now the ancient map is in the trophy case;
 		say "[line break]An almost inaudible voice whispers in your ear, [quotation mark]Look to your treasures for the final secret.[quotation mark][line break]".
 
 Chapter 8 - Treasure Values
@@ -4222,7 +4222,8 @@ After going to Drafty Room when the light-shaft-bonus is false and not in darkne
 
 Chapter 8 - Ancient Map
 
-The ancient map is in the trophy case. The ancient map is zil-invisible.
+[ZIL: INVISIBLE in the trophy case until the score reaches 350 (#175). Kept off-stage until then, so neither the "collection of treasures" paragraph nor "examine trophy case" can leak it; the win rule moves it into the case.]
+The ancient map is a thing.
 Understand "parchment" and "map" and "antique" and "old" and "ancient" as the ancient map.
 The description of the ancient map is "The map shows a forest with three clearings. The largest clearing contains a house. Three paths leave the large clearing. One of these paths, leading southwest, is marked 'To Stone Barrow'."
 

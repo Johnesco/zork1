@@ -29,6 +29,37 @@ North of House
 You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
 
 
+> n
+
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+
+> up
+
+Up a Tree
+You are about 10 feet above the ground nestled among some large branches. The nearest branch above you is above your reach.
+
+Beside you on the branch is a small bird's nest.
+In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. The egg appears extremely fragile.
+
+
+> take nest
+Taken.
+
+
+> d
+
+Forest Path
+This is a path winding through a dimly lit forest. The path heads north-south here. One particularly large tree with some low branches stands at the edge of the path.
+
+
+> s
+
+North of House
+You are facing the north side of a white house. There is no door here, and all the windows are boarded up. To the north a narrow path winds through the trees.
+
+
 > e
 
 Behind House
@@ -61,61 +92,16 @@ Above the trophy case hangs an elvish sword of great antiquity.
 A battery-powered brass lantern is on the trophy case.
 
 
-> take sword
-Taken.
+> open case
+You open the trophy case.
 
 
-> take lantern
-Taken.
+> put nest in case
+You put the bird's nest into the trophy case.
 
-
-> turn on lantern
-The brass lantern is now on.
-
-
-> push rug
-With a great effort, the rug is moved to one side of the room, revealing the dusty cover of a closed trap door.
-
-
-> open trap door
-The door reluctantly opens to reveal a rickety staircase descending into darkness.
-
-
-> down
-The trap door crashes shut, and you hear someone barring it.
-
-Cellar
-You are in a dark and damp cellar with a narrow passageway leading north, and a crawlway to the south. On the west is the bottom of a steep metal ramp which is unclimbable.
-
-Your sword is glowing with a faint blue glow.
-
-[Your score has just gone up by twenty-five points.]
-
-
-> s
-
-East of Chasm
-You are on the east edge of a chasm, the bottom of which cannot be seen. A narrow passage goes north, and the path you are on continues to the east.
-
-Your sword is no longer glowing.
-
-
-> e
-
-Gallery
-This is an art gallery. Most of the paintings have been stolen by vandals with exceptional taste. The vandals left through either the north or west exits.
-
-Fortunately, there is still one chance for you to be a vandal, for on the far wall is a painting of unparalleled beauty.
-
-
-> attack painting
-Congratulations! Unlike the other vandals, who merely stole the artist's masterpieces, you have destroyed one.
-
-
-> take painting
-Taken.
+[Your score has just gone up by nine points.]
 
 
 > score
-Your score is 35 (total of 350 points), in 17 moves.
-This gives you the rank of Amateur Adventurer.
+Your score is 19 (total of 350 points), in 14 moves.
+This gives you the rank of Beginner.
