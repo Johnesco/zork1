@@ -1,0 +1,13 @@
+look
+read mailbox
+read door
+open mailbox
+read leaflet
+n
+e
+open window
+w
+w
+read sword
+read door
+examine door

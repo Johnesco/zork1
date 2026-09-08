@@ -1592,3 +1592,28 @@
 ? /slide back down
 > climb slide
 ? /slide back down
+
+== verify-177-read-not-examine: Read is not a synonym of examine  [fidelity sweep]
+# #177: ZIL V-READ prints TEXT for READBIT objects and "How does one read a X?" for anything else
+@ startup
+> read mailbox
+? /How does one read a small mailbox
+?! It's a small mailbox
+> read door
+? /There is no writing on this side
+> open mailbox
+> read leaflet
+? /WELCOME TO ZORK
+> n
+> e
+> open window
+> w
+> w
+? /Living Room
+> read sword
+? /How does one read a sword
+?! elvish
+> read door
+? /intentionally left blank
+> examine door
+? /intentionally left blank
