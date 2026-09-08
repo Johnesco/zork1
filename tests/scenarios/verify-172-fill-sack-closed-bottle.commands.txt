@@ -1,0 +1,13 @@
+look
+n
+e
+open window
+w
+take bottle
+take sack
+open sack
+look in sack
+fill sack with water
+look in sack
+open bottle
+look in bottle
