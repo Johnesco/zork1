@@ -1310,7 +1310,7 @@ The description of the bird's nest is "The bird's nest is a rough collection of 
 
 The jewel-encrusted egg is in the bird's nest. "In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. The egg appears extremely fragile."
 
-Rule for writing a paragraph about the bird's nest:
+Rule for writing a paragraph about the bird's nest when the bird's nest is in Up a Tree and the bird's nest is not handled:
 	say "Beside you on the branch is a small bird's nest.[line break]";
 	if the jewel-encrusted egg is in the bird's nest and the jewel-encrusted egg is not handled:
 		say "In the bird's nest is a large egg encrusted with precious jewels, apparently scavenged by a childless songbird. The egg is covered with fine gold inlay, and ornamented in lapis lazuli and mother-of-pearl. Unlike most eggs, this one is hinged and closed with a delicate looking clasp. The egg appears extremely fragile.[line break]";
@@ -2419,7 +2419,6 @@ The description of the bolt is "It's a large metal bolt attached to the dam stru
 Instead of taking the bolt: say "It is an integral part of the control panel."
 
 The green bubble is scenery in Dam-Room. Understand "bubble" and "small" and "green" and "plastic" as the green bubble.
-The description of the green bubble is "A small green plastic bubble is floating in the stream."
 Instead of taking the green bubble: say "It is an integral part of the control panel."
 
 The control panel is scenery in Dam-Room. Understand "panel" and "control" as the control panel.

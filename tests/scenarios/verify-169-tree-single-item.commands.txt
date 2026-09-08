@@ -1,0 +1,8 @@
+look
+open mailbox
+take leaflet
+n
+n
+drop leaflet
+up
+look

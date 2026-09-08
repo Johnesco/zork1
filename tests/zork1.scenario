@@ -1254,3 +1254,138 @@
 > sw
 > enter barrow
 ?? /Congratulations
+
+# ============================================================
+# Bug verification — v4 Fidelity Sweep (regression pins)
+# Ported from tests/zork1.regtest, which the runner no longer reads
+# once a .scenario file exists.
+# ============================================================
+
+== verify-165-leaves-ground: Burning leaves on the ground is not fatal  [fidelity sweep]
+# #165: Burning leaves on the ground should NOT kill the player
+@ startup
+> n
+> n
+> n
+? /Clearing
+? /pile of leaves
+> burn leaves
+? /The leaves burn
+?! and so do you
+
+== verify-169-tree-single-item: Single ground item visible from tree  [fidelity sweep]
+# #169: A single dropped item should be visible from Up a Tree
+@ startup
+> open mailbox
+> take leaflet
+? Taken
+> n
+> n
+? /Forest Path
+> drop leaflet
+> up
+? /Up a Tree
+> look
+? /On the ground below you can see
+? /leaflet
+
+== verify-171-chimney-scoring: Chimney climb does not double-score  [fidelity sweep]
+# #171: Chimney climb to Kitchen uses move-the-player; should not double-score
+@ cellar
+> s
+> e
+? /Gallery
+> n
+? /Studio
+# Drop sword so we carry only lantern (1 item, <= 2)
+> drop sword
+> up
+? /Kitchen
+# Kitchen was already visited via window entry, so no score message
+?! score has just gone up
+
+== verify-167-invisible-trap-door: Hidden trap door is out of parser scope  [fidelity sweep]
+# #167: zil-invisible things should not be accessible to the parser
+@ living-room
+# Trap door is zil-invisible until rug is pushed
+> open trap door
+? /can't see any such thing
+> take trap door
+? /can't see any such thing
+# Now reveal it
+> push rug
+? /trap door
+> open trap door
+?? /rickety staircase
+
+== verify-170-painting-no-points: Destroyed painting awards no points  [fidelity sweep]
+# #170: Destroying painting then taking it should award no points
+@ cellar
+> s
+> e
+? /Gallery
+> attack painting
+? /destroyed one
+> take painting
+?! score has just gone up
+
+== verify-172-match-double-light: No second match while one burns  [fidelity sweep]
+# #172: Should refuse to light a second match while one is burning
+@ round-room
+> n
+> ne
+> nw
+> e
+> n
+? /Dam Lobby
+? /matchbook
+> take matchbook
+? Taken
+> light match
+? /starts to burn
+> light match
+? /already have a lit match
+
+== verify-172-throw-hands: Cannot throw body parts  [fidelity sweep]
+# #172: Should not be able to throw body-part backdrops
+@ startup
+> throw hands at mailbox
+? /can't throw that!
+
+== verify-172-enter-trap-door: Enter trap door goes down  [fidelity sweep]
+# #172: "enter trap door" should work as "go down"
+@ living-room
+> push rug
+> open trap door
+? /rickety staircase
+> enter trap door
+?? /Cellar
+
+== verify-173-nest-fdesc: Nest FDESC only prints untouched in the tree  [fidelity sweep]
+# #173: "Beside you on the branch..." must only print while the nest is
+# untouched at Up a Tree; once taken it falls back to standard listing.
+@ startup
+> n
+> n
+? /Forest Path
+> up
+?? /Up a Tree
+? /Beside you on the branch
+> take nest
+? Taken
+> look
+?! Beside you on the branch
+> d
+? /Forest Path
+> drop nest
+> look
+? /bird's nest
+?! Beside you on the branch
+
+== verify-174-bubble-no-stream: Green bubble has no invented stream text  [fidelity sweep]
+# #174: "examine bubble" must not claim the bubble floats in a stream;
+# ZIL has no examine text, so I7's default "nothing special" applies.
+@ dam
+> examine bubble
+? /nothing special
+?! floating in the stream

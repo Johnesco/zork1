@@ -1,0 +1,9 @@
+look
+n
+n
+up
+take nest
+look
+d
+drop nest
+look
