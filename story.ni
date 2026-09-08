@@ -1206,6 +1206,10 @@ Instead of throwing the brass lantern at something:
 The old wooden door is scenery in Living Room. Understand "door" and "wooden" and "gothic" and "strange" and "lettering" and "writing" as the old wooden door.
 The description of the old wooden door is "[if the magic-flag is true]The door has a cyclops-shaped opening in it.[otherwise]The engravings translate to 'This space intentionally left blank.'[end if]".
 
+[ZIL FRONT-DOOR-FCN, shared by both doors, answers READ in the Living Room with the engravings whatever the state of the door (#177).]
+Instead of reading the old wooden door:
+	say "The engravings translate to [quotation mark]This space intentionally left blank.[quotation mark]"
+
 Instead of opening the old wooden door:
 	if the magic-flag is true:
 		say "The door is already open -- the cyclops saw to that.";
@@ -1275,6 +1279,9 @@ Before doing anything to a zil-invisible thing:
 
 Before doing anything when the second noun is a zil-invisible thing:
 	say "You can't see any such thing." instead.
+
+[ZIL INVISIBLE objects are never parser candidates; the guards above reject them only after parsing, so a hidden trap door still provoked "Which do you mean, the trap door or the old wooden door?" (#167 follow-up, found by #177).]
+Does the player mean doing something to a zil-invisible thing: it is very unlikely.
 
 Instead of entering the trap door: try going down.
 
@@ -2456,7 +2463,15 @@ The match-count is a number that varies. The match-count is 6.
 Instead of examining the matchbook when the match-lit is true:
 	say "The match is burning."
 
+[ZIL V-READ: READBIT objects print their TEXT; anything else gets "How does one read a X?". I7's Standard Rules make "read" a synonym of examining, which hid every reading rule in this source (#177). The command is reset so "read" reaches the reading action; the ten ZIL READBIT objects fall back to their examine text, which is where the translation keeps their TEXT.]
+Understand the command "read" as something new.
 Reading is an action applying to one thing. Understand "read [something]" as reading.
+
+Instead of reading a readable thing:
+	if in darkness:
+		say "It is impossible to read in the dark.";
+	otherwise:
+		try examining the noun.
 
 Instead of reading the matchbook:
 	say "[fixed letter spacing](Close cover before striking)[line break][line break]YOU too can make BIG MONEY in the exciting field of PAPER SHUFFLING![line break][line break]Mr. Anderson of Muddle, Mass. says: 'Before I took this course I was a lowly bit twiddler. Now with what I learned at GUE Tech I feel really important and can obfuscate and confuse with the best.'[line break][line break]Dr. Blank had this to say: 'Ten short days ago all I could look forward to was a dead-end job as a doctor. Now I have a promising future and make really big Zorkmids.'[line break][line break]GUE Tech can't promise these fantastic results to everyone. But when you earn your degree from GUE Tech, your future will be brighter.[variable letter spacing]"
@@ -4876,7 +4891,7 @@ Instead of reading something:
 	if in darkness:
 		say "It is impossible to read in the dark.";
 	otherwise:
-		say "How does one read a [noun]?"
+		say "How does one read [a noun]?"
 
 Section 10 - Alarm / Wake
 
@@ -5285,3 +5300,8 @@ Test machine with "n / d / take bracelet / e / ne / se / sw / d / d / s / take c
 
 Test boat with "ne / e / turn off lantern / d / inflate plastic / drop pump / turn on lantern / enter boat / launch" holding the brass lantern and the pile of plastic and the air pump.
 
+
+Chapter 12 - Readable Things
+
+[Declared last on purpose: naming an object before its own declaration makes Inform create it early, which changes object order and therefore the order of room listings (the tube and the altar candles moved when this sentence sat higher up).]
+A thing can be readable. The leaflet, the tan label, the black book, the engraved wall, the tour guidebook, the ancient map, the matchbook, the ZORK owner's manual, the prayer and the tube are readable.
