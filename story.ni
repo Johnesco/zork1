@@ -2467,7 +2467,6 @@ Instead of examining the matchbook when the match-lit is true:
 Understand the command "read" as something new.
 Reading is an action applying to one thing. Understand "read [something]" as reading.
 
-A thing can be readable. The leaflet, the tan label, the black book, the engraved wall, the tour guidebook, the ancient map, the matchbook, the ZORK owner's manual, the prayer and the tube are readable.
 Instead of reading a readable thing:
 	if in darkness:
 		say "It is impossible to read in the dark.";
@@ -5301,3 +5300,8 @@ Test machine with "n / d / take bracelet / e / ne / se / sw / d / d / s / take c
 
 Test boat with "ne / e / turn off lantern / d / inflate plastic / drop pump / turn on lantern / enter boat / launch" holding the brass lantern and the pile of plastic and the air pump.
 
+
+Chapter 12 - Readable Things
+
+[Declared last on purpose: naming an object before its own declaration makes Inform create it early, which changes object order and therefore the order of room listings (the tube and the altar candles moved when this sentence sat higher up).]
+A thing can be readable. The leaflet, the tan label, the black book, the engraved wall, the tour guidebook, the ancient map, the matchbook, the ZORK owner's manual, the prayer and the tube are readable.
