@@ -239,7 +239,7 @@ footer a {
   </tr>
   <tr>
     <td>Shell Scripts</td>
-    <td><code>run-walkthrough.sh</code>, <code>find-seeds.sh</code>, <code>run-tests.sh</code></td>
+    <td><code>run_walkthrough.py</code>, <code>find_seeds.py</code>, <code>run_tests.py</code></td>
     <td>Automation wrappers with diagnostics</td>
   </tr>
 </table>
@@ -269,7 +269,7 @@ footer a {
   <li><strong>Endgame reached</strong> &mdash; confirmation the game was won</li>
 </ul>
 
-<pre>$ wsl -e bash tests/run-walkthrough.sh --seed 30
+<pre>$ python C:/code/text-games/i7/tools/run_walkthrough.py --config tests/project.conf --seed 30
 
 === Zork I Walkthrough Test ===
 Engine:  glulxe (inform7)
@@ -298,11 +298,11 @@ dfrotz:3:2cfd8723:2026-02-18</pre>
 
 <p>
   When the compiled binary changes (new code), the hash check warns that the golden
-  seed may no longer work. If it doesn't, <code>find-seeds.sh</code> sweeps
+  seed may no longer work. If it doesn't, <code>find_seeds.py</code> sweeps
   seeds 1 through 200 to find a new one:
 </p>
 
-<pre>$ wsl -e bash tests/find-seeds.sh
+<pre>$ python C:/code/text-games/i7/tools/find_seeds.py --config tests/project.conf
 
 === Zork I Seed Sweep ===
 Mode:    Inform 7 (glulxe)
@@ -351,7 +351,7 @@ Hash:    a1b2c3d4</pre>
   <li><strong>house-circuit</strong> &mdash; Exterior house traversal</li>
 </ul>
 
-<pre>$ wsl -e bash tests/run-tests.sh
+<pre>$ python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf --all
 
 RegTest: running 14 tests...
   startup: passed
@@ -397,7 +397,7 @@ All tests passed.</pre>
     (<code>inform6.exe</code>). Compilation errors are caught here.
   </li>
   <li>
-    <strong>Walkthrough test</strong> &mdash; Run <code>run-walkthrough.sh --seed 30</code>.
+    <strong>Walkthrough test</strong> &mdash; Run <code>run_walkthrough.py --seed 30</code>.
     Must achieve 350/350 with zero deaths. This is the gate: no commit happens
     unless the walkthrough passes.
   </li>

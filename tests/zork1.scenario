@@ -1,16 +1,23 @@
-# Zork I: Inform 7 Edition — RegTest regression tests
-# Run with: wsl -e bash tests/run-tests.sh
+# Zork I: Inform 7 Edition — scenario tests
+# Run with:
+#   python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf --all
+#   python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf --all --category fidelity
+#   python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf <scenario-name>
 #
-# Format reference: https://eblong.com/zarf/plotex/regtest.html
-#   >command          send a command
-#   /regex            output must match regex (NO trailing slash)
-#   literal text      output must contain literal string
-#   !text             output must NOT contain this text
-#   {vital}           abort test on failure
-#   >{include}name    include commands from another test
+# Format (parsed by tools/run_tests.py):
+#   == name: Title  [category]    scenario header; [category, primary] marks the primary walkthrough
+#   @ other-name                  include another scenario's commands first
+#   > command                     game input
+#   ? text                        the response must contain this text
+#   ? /regex                      the response must match this regular expression (case-insensitive)
+#   ?! text                       the response must NOT contain this text (also ?! /regex)
+#   ?? text                       vital: abort the scenario if this check fails (??! for vital negated)
+#   # comment                     ignored
+# Each run writes tests/scenarios/<name>.commands.txt and .transcript.txt; the transcript's
+# serial number is normalised so rebuilds do not churn tracked files.
 #
-# NOTE: Troll combat is random (~70% hit rate). Tests that go through
-# the troll may occasionally fail due to bad RNG rolls. Re-run if so.
+# NOTE: Troll combat is random (~70% hit rate). Every scenario runs with the golden seed from
+# tests/seeds.conf, so results are deterministic; pass --seed to explore other rolls.
 
 
 # ============================================================
