@@ -2,7 +2,7 @@
 """Run a command sequence against multiple Zork versions in parallel and diff outputs.
 
 Usage:
-  python tools/multi_play.py <commands_file> [--versions v0,v1,v2,v4]
+  python tools/multi_play.py <commands_file> [--versions v1,v2,v3,v4]
 
 Reads commands from <commands_file> (one per line). Runs each version with the same
 commands as stdin. Captures transcripts to tests/scratch/<version>.txt.
@@ -17,16 +17,19 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-INTERP_DIR = Path("C:/code/ifhub/tools/interpreters")
+ROOT = Path(__file__).resolve().parent.parent   # this repo — Current (v4)
+WORKSPACE = ROOT.parent                        # C:/code/text-games/i7
+INTERP_DIR = WORKSPACE / "tools" / "interpreters"
 GLULXE = INTERP_DIR / "glulxe.exe"
 DFROTZ = INTERP_DIR / "dfrotz.exe"
 
+# Frozen versions live in sibling repos. v0 needs a raw .z3; the workspace only
+# ships the Parchment-encoded zork1.z3.js, so that lane is skipped (#193).
 VERSIONS = {
-    "v0": {"interp": DFROTZ, "binary": ROOT / "zork1-v0.z3", "args": ["-w", "200"], "prefix": ""},
-    "v1": {"interp": GLULXE, "binary": ROOT / "v1" / "zork1.ulx", "args": [], "prefix": ""},
-    "v2": {"interp": GLULXE, "binary": ROOT / "v2" / "zork1.ulx", "args": [], "prefix": ""},
-    "v3": {"interp": GLULXE, "binary": ROOT / "v3" / "zork1.ulx", "args": [], "prefix": ""},
+    "v0": {"interp": DFROTZ, "binary": WORKSPACE / "zork1-v0" / "zork1.z3", "args": ["-w", "200"], "prefix": ""},
+    "v1": {"interp": GLULXE, "binary": WORKSPACE / "zork1-v1" / "zork1-v1.ulx", "args": [], "prefix": ""},
+    "v2": {"interp": GLULXE, "binary": WORKSPACE / "zork1-v2" / "zork1-v2.ulx", "args": [], "prefix": ""},
+    "v3": {"interp": GLULXE, "binary": WORKSPACE / "zork1-v3" / "zork1-v3.ulx", "args": [], "prefix": ""},
     "v4": {"interp": GLULXE, "binary": ROOT / "zork1.ulx", "args": [], "prefix": ""},
 }
 
@@ -70,6 +73,24 @@ def main() -> int:
     commands = Path(args.commands_file).read_text(encoding="utf-8").splitlines()
     commands = [c.strip() for c in commands if c.strip() and not c.strip().startswith("#")]
     versions = args.versions.split(",")
+
+    unknown = [v for v in versions if v not in VERSIONS]
+    if unknown:
+        print(f"Unknown version(s): {','.join(unknown)}; known: {','.join(VERSIONS)}", file=sys.stderr)
+        return 2
+    available = []
+    for v in versions:
+        cfg = VERSIONS[v]
+        for label, path in (("interpreter", cfg["interp"]), ("binary", cfg["binary"])):
+            if not path.exists():
+                print(f"[skip] {v}: no {label} at {path}", file=sys.stderr)
+                break
+        else:
+            available.append(v)
+    if not available:
+        print("No versions left to run.", file=sys.stderr)
+        return 1
+    versions = available
 
     # Build stdin for each: commands + quit
     stdin = "\n".join(commands) + "\nquit\ny\n"
