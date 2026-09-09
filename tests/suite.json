@@ -5,7 +5,7 @@
     "plotex":     { "enabled": false },
     "scenarios":  {
       "enabled": true,
-      "regtest_file": "zork1.regtest",
+      "regtest_file": "zork1.scenario",
       "index": "scenarios/index.json",
       "categories": {
         "smoke":        { "seed_sensitive": false },

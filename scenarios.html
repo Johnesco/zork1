@@ -1079,7 +1079,7 @@ function showTranscript() {
   if (!transcriptData) {
     document.getElementById('content-wrap').innerHTML =
       '<div class="no-transcript-msg">No transcript available for this scenario.<br><br>' +
-      'Generate it with:<br><code>wsl -e bash tests/run-scenario.sh ' + esc(currentScenario || '') + '</code></div>';
+      'Generate it with:<br><code>python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf ' + esc(currentScenario || '') + '</code></div>';
     return;
   }
   currentView = 'transcript';
@@ -1100,7 +1100,7 @@ function showReplay() {
   if (!transcriptData) {
     document.getElementById('content-wrap').innerHTML =
       '<div class="no-transcript-msg">No transcript available for replay.<br><br>' +
-      'Generate it with:<br><code>wsl -e bash tests/run-scenario.sh ' + esc(currentScenario || '') + '</code></div>';
+      'Generate it with:<br><code>python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf ' + esc(currentScenario || '') + '</code></div>';
     return;
   }
   currentView = 'replay';
