@@ -4,18 +4,21 @@
     {
       "name": "zork1-play",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8765"],
-      "port": 8765
+      "runtimeArgs": [
+        "-c",
+        "import os, http.server as h; h.test(HandlerClass=h.SimpleHTTPRequestHandler, port=int(os.environ.get('PORT', '8765')), bind='127.0.0.1')"
+      ],
+      "port": 8765,
+      "autoPort": true
     },
     {
       "name": "hub-site",
       "runtimeExecutable": "python",
       "runtimeArgs": [
-        "C:/code/ifhub/tools/serve.py",
-        "--port",
-        "8892"
+        "C:/code/ifhub/tools/serve.py"
       ],
-      "port": 8892
+      "port": 8892,
+      "autoPort": true
     }
   ]
 }
