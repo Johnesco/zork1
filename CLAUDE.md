@@ -89,6 +89,8 @@ python tools/build_zil.py                                                 # v0, 
 
 `build_zil.py` compiles `src/zil/` with ZILF — install it and point `ZILF_HOME` at it (default `C:/tools/zilf-1.5.0`). It stages the sources into the `../zork-substrate/` layout `zork1.zil` includes, pins the Z-machine serial to the released `260217` so the build is reproducible, and asserts the result against the `dfrotz` hash in `tests/seeds.conf` — so a change in the ZIL source or the ZILF version fails loudly instead of quietly invalidating the golden seed and the `tests/zil/` baselines. `src/zil/` is read-only reference; the staging copy under `build/zil/` is what gets compiled.
 
+ZILF 1.9.0 compiles this source to the same bytes as the pinned 1.5.0 everywhere except the compiler version ZAPF stamps into the header at 0x38 (`ZILF150` vs `ZILF190`) — one byte, and the full ZIL walkthrough produces an identical transcript. That byte still changes the file hash, so a build on a newer ZILF fails the check; the script reports which compiler it used so a version bump is not mistaken for a change in the game. The stamp cannot be forged — ZAPF `-C` writes a bare number and `-N` clears the field — so reproducing the recorded hash means building with 1.5.0.
+
 ```bash
 # Walkthrough — expect 350/350 and "Result: PASS"
 python C:/code/text-games/i7/tools/run_walkthrough.py --config tests/project.conf --seed 26
