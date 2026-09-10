@@ -31,6 +31,7 @@ For Inform 7 syntax, text formatting, and the verb help system, see the referenc
 story.ni            Current Inform 7 source — EDIT HERE
 zork1.ulx           Compiled output (gitignored — rebuild from story.ni)
 zork1.gblorb        Sound-bundled binary (gitignored — rebuild via pipeline)
+zork1-v0.z3         v0 Z-machine build (gitignored — rebuild from src/zil)
 ifhub.conf          Engine + metadata for IF Hub
 index.html          Group landing page (auto-generated from landing.json)
 landing.json        Prose for the group landing page (Current + version cards)
@@ -44,7 +45,7 @@ src/sharpee/        Sharpee source files (separate port)
 Sounds/             .ogg audio assets for Blorb packaging
 zork1.blurb         Blorb manifest (sound IDs → .ogg files)
 scenarios/          Scenario guides and transcripts
-tools/              Project-specific test tooling (e.g. multi_play.py)
+tools/              Project-specific tooling (build_zil.py, multi_play.py)
 ```
 
 ## Version Philosophy (project-specific)
@@ -82,8 +83,11 @@ These are applied in two places: this game's own `play.html` (always active for 
 All testing happens in `tests/`. The runners live in the workspace toolchain at `C:\code\text-games\i7\tools\` — #180 retired the WSL-era `tests/run-*.sh` wrappers, and there is no longer a framework under `C:\code\ifhub\`. The compiled binary is gitignored, so build it before testing:
 
 ```bash
-(cd /c/code/text-games/i7 && python tools/build.py zork1 --compile-only)
+(cd /c/code/text-games/i7 && python tools/build.py zork1 --compile-only)   # Current
+python tools/build_zil.py                                                 # v0, for --alt comparisons
 ```
+
+`build_zil.py` compiles `src/zil/` with ZILF — install it and point `ZILF_HOME` at it (default `C:/tools/zilf-1.5.0`). It stages the sources into the `../zork-substrate/` layout `zork1.zil` includes, pins the Z-machine serial to the released `260217` so the build is reproducible, and asserts the result against the `dfrotz` hash in `tests/seeds.conf` — so a change in the ZIL source or the ZILF version fails loudly instead of quietly invalidating the golden seed and the `tests/zil/` baselines. `src/zil/` is read-only reference; the staging copy under `build/zil/` is what gets compiled.
 
 ```bash
 # Walkthrough — expect 350/350 and "Result: PASS"
@@ -112,7 +116,7 @@ python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf --li
 - Deterministic walkthroughs via `glulxe --rngseed N`
 - Scenario pins in `tests/zork1.scenario` for targeted regression checks
 - `python C:/code/text-games/i7/tools/find_seeds.py --config tests/project.conf` to re-discover a passing seed after code changes
-- ZIL transcript comparison (v0 vs Current via `dfrotz` and `glulxe`) — currently blocked: no raw `zork1.z3` exists in the workspace (#193)
+- ZIL transcript comparison (v0 vs Current via `dfrotz` and `glulxe`) — `run_walkthrough.py --alt` runs the ZIL walkthrough against the v0 binary built by `tools/build_zil.py`
 
 **Walkthrough files** (must stay in sync):
 - `tests/inform7/walkthrough.txt` — runner reads this (set in `tests/project.conf`)
@@ -123,7 +127,7 @@ python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf --li
 
 The pipeline's test stage auto-regenerates the guide and syncs files to the web root. When patching a frozen version, sync that version's repo too.
 
-**Multi-version side-by-side**: `tools/multi_play.py` runs commands against the frozen versions and Current in parallel and prints per-command diffs. Useful for ZIL-fidelity checks. It reads the frozen binaries from the sibling repos (`C:\code\text-games\i7\zork1-v1\zork1-v1.ulx` and so on) and skips any version whose binary is missing; `v0` needs a raw `.z3` and is unavailable until #193 is resolved.
+**Multi-version side-by-side**: `tools/multi_play.py` runs commands against the frozen versions and Current in parallel and prints per-command diffs. Useful for ZIL-fidelity checks. It reads the frozen binaries from the sibling repos (`C:\code\text-games\i7\zork1-v1\zork1-v1.ulx` and so on), takes `v0` from `zork1-v0.z3` in this repo, and skips any version whose binary is missing — so build the ones you want to compare first.
 
 ```bash
 python tools/multi_play.py tests/scratch/<commands.txt>                 # every version with a binary present

@@ -23,10 +23,10 @@ INTERP_DIR = WORKSPACE / "tools" / "interpreters"
 GLULXE = INTERP_DIR / "glulxe.exe"
 DFROTZ = INTERP_DIR / "dfrotz.exe"
 
-# Frozen versions live in sibling repos. v0 needs a raw .z3; the workspace only
-# ships the Parchment-encoded zork1.z3.js, so that lane is skipped (#193).
+# Frozen versions live in sibling repos; v0 is the Z-machine build of src/zil,
+# produced by tools/build_zil.py (gitignored, so build it before comparing).
 VERSIONS = {
-    "v0": {"interp": DFROTZ, "binary": WORKSPACE / "zork1-v0" / "zork1.z3", "args": ["-w", "200"], "prefix": ""},
+    "v0": {"interp": DFROTZ, "binary": ROOT / "zork1-v0.z3", "args": ["-w", "200"], "prefix": ""},
     "v1": {"interp": GLULXE, "binary": WORKSPACE / "zork1-v1" / "zork1-v1.ulx", "args": [], "prefix": ""},
     "v2": {"interp": GLULXE, "binary": WORKSPACE / "zork1-v2" / "zork1-v2.ulx", "args": [], "prefix": ""},
     "v3": {"interp": GLULXE, "binary": WORKSPACE / "zork1-v3" / "zork1-v3.ulx", "args": [], "prefix": ""},
