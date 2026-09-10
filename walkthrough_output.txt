@@ -4,7 +4,7 @@
 
 Zork I - The Great Underground Empire
 An Interactive Fiction by Infocom (translated to Inform 7)
-Release 4 / Serial number 260908 / Inform 7 v10.1.2 / D
+Release 4 / Serial number 260909 / Inform 7 v10.1.2 / D
 Current
 Translated to Inform 7 by John Escobedo
 Original by Marc Blank, Dave Lebling, Bruce Daniels, and Tim Anderson
@@ -177,26 +177,6 @@ Your sword has begun to glow very brightly.
 Almost as soon as the troll breathes his last breath, a cloud of sinister black fog envelops him, and when the fog lifts, the carcass has disappeared.
 
 Your sword is no longer glowing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
 
 >Dropped.
 
@@ -1717,18 +1697,6 @@ As the thief dies, the power of his magic decreases, and his treasures reappear:
   A granite wall
 
 The chalice is now safe to take.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
-
->You can't see any such thing.
 
 >Dropped.
 

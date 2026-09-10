@@ -114,6 +114,18 @@ python C:/code/text-games/i7/tools/run_tests.py --config tests/project.conf --li
 
 **Golden seed**: 26 (Current). Each frozen version has its own golden seed in its repo's `tests/seeds.conf`.
 
+**Combat padding is tuned to the seed.** The walkthroughs repeat `kill troll with sword` and `kill thief with axe` a fixed number of times, and the counts are chosen per version against that version's golden seed — not padded for safety. Surplus swings are turns spent standing in the room: they generate parser errors, and in the Troll Room they give the thief a window to rob the player, which is what the v0 transcript used to show (#202). The counts do not degrade gracefully — for v0 at seed 3, three swings wins clean while two scores 199 with two deaths and four scores 330 — so if a golden seed ever changes, re-tune with a sweep rather than adjusting by eye.
+
+| Version | Engine | Seed | troll | thief |
+|---|---|---|---|---|
+| Current | glulxe | 26 | 2 | 6 |
+| v3 | glulxe | 26 | 2 | 6 |
+| v2 | glulxe | 13 | 2 | 8 |
+| v1 | glulxe | 13 | 2 | 8 |
+| v0 | dfrotz | 3 | 3 | 6 |
+
+The same counts appear in `tests/zork1.scenario`'s `full-run`, which has its own copy of the command list.
+
 **Methodology**:
 - Deterministic walkthroughs via `glulxe --rngseed N`
 - Scenario pins in `tests/zork1.scenario` for targeted regression checks
