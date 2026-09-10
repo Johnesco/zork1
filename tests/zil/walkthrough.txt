@@ -37,15 +37,6 @@ n
 kill troll with sword
 kill troll with sword
 kill troll with sword
-kill troll with sword
-kill troll with sword
-kill troll with sword
-kill troll with sword
-kill troll with sword
-kill troll with sword
-kill troll with sword
-kill troll with sword
-kill troll with sword
 drop sword
 e
 e
@@ -389,12 +380,6 @@ u
 give egg to thief
 d
 u
-kill thief with axe
-kill thief with axe
-kill thief with axe
-kill thief with axe
-kill thief with axe
-kill thief with axe
 kill thief with axe
 kill thief with axe
 kill thief with axe

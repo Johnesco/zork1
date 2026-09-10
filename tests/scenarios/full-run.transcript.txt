@@ -255,46 +255,6 @@ Almost as soon as the troll breathes his last breath, a cloud of sinister black 
 Your sword is no longer glowing.
 
 
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
-> kill troll with sword
-You can't see any such thing.
-
-
 > drop sword
 Dropped.
 
@@ -2511,30 +2471,6 @@ As the thief dies, the power of his magic decreases, and his treasures reappear:
   A granite wall
 
 The chalice is now safe to take.
-
-
-> kill thief with axe
-You can't see any such thing.
-
-
-> kill thief with axe
-You can't see any such thing.
-
-
-> kill thief with axe
-You can't see any such thing.
-
-
-> kill thief with axe
-You can't see any such thing.
-
-
-> kill thief with axe
-You can't see any such thing.
-
-
-> kill thief with axe
-You can't see any such thing.
 
 
 > drop axe
