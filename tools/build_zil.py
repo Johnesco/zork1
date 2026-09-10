@@ -42,9 +42,23 @@ GAME = ["zork1", "dungeon", "actions"]
 # output differs from the reference in exactly those three bytes.
 PINNED_SERIAL = "260217"
 
+# ZAPF stamps its own version at 0x38 as "ZILF<major><minor><patch>". The
+# reference binary was built with 1.5.0; ZILF 1.9.0 compiles this source to the
+# same bytes everywhere else, so a hash mismatch with a different stamp here is a
+# compiler bump rather than a change in the game. The stamp cannot be forged:
+# ZAPF -C writes a bare number and -N clears the field.
+CREATOR_SPAN = slice(0x38, 0x3F)
+REFERENCE_CREATOR = "ZILF150"
+
 
 def zilf_home() -> Path:
     return Path(os.environ.get("ZILF_HOME", DEFAULT_ZILF_HOME))
+
+
+def creator(data: bytes) -> str:
+    """The compiler version ZAPF stamped into the header."""
+    return "".join(c if 32 <= ord(c) < 127 else "?"
+                   for c in data[CREATOR_SPAN].decode("ascii", "replace"))
 
 
 def expected_hash() -> str | None:
@@ -113,7 +127,8 @@ def main() -> int:
     serial = data[18:24].decode("ascii", "replace")
     release = int.from_bytes(data[2:4], "big")
     if not args.quiet:
-        print(f"{out.name}: {len(data)} bytes, Release {release} / Serial {serial}, sha256 {digest[:8]}")
+        print(f"{out.name}: {len(data)} bytes, Release {release} / Serial {serial}, "
+              f"sha256 {digest[:8]}, built by {creator(data)}")
 
     if args.no_verify:
         return 0
@@ -122,12 +137,23 @@ def main() -> int:
         print("no dfrotz entry in tests/seeds.conf to verify against", file=sys.stderr)
         return 0
     if digest[:8] != want:
-        print(
-            f"hash mismatch: built {digest[:8]}, seeds.conf expects {want}.\n"
-            "The ZIL source or the ZILF version changed. Re-validate the dfrotz "
-            "golden seed and the tests/zil baselines, then update seeds.conf.",
-            file=sys.stderr,
-        )
+        built_with = creator(data)
+        print(f"hash mismatch: built {digest[:8]}, seeds.conf expects {want}.", file=sys.stderr)
+        if built_with != REFERENCE_CREATOR:
+            print(
+                f"This build used {built_with}, not the {REFERENCE_CREATOR} that produced the\n"
+                "reference. ZAPF stamps its own version into the header, so a compiler bump\n"
+                "changes the hash even when the compiled game is identical - 1.9.0 differs from\n"
+                f"{REFERENCE_CREATOR} in that one byte and nothing else. Diff a transcript against the\n"
+                "reference build before assuming the game changed.",
+                file=sys.stderr,
+            )
+        else:
+            print(
+                "Same compiler as the reference, so the ZIL source changed. Re-validate the\n"
+                "dfrotz golden seed and the tests/zil baselines, then update seeds.conf.",
+                file=sys.stderr,
+            )
         return 1
     if not args.quiet:
         print(f"matches the golden dfrotz binary ({want})")
