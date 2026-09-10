@@ -1,0 +1,21 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "zork1-play",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8765"],
+      "port": 8765
+    },
+    {
+      "name": "hub-site",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "C:/code/ifhub/tools/serve.py",
+        "--port",
+        "8892"
+      ],
+      "port": 8892
+    }
+  ]
+}
