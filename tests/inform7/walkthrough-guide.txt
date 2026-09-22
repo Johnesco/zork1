@@ -122,19 +122,9 @@
 # The Troll Room This is a small room with passages to the east and south and
 #   a forbidding hole leading west.
 > n
-# Combat: troll (12 attempts)
 # Your sword crashes down, knocking the troll into dreamland.
 > kill troll with sword
-> kill troll with sword
-> kill troll with sword
-> kill troll with sword
-> kill troll with sword
-> kill troll with sword
-> kill troll with sword
-> kill troll with sword
-> kill troll with sword
-> kill troll with sword
-> kill troll with sword
+# The unconscious troll cannot defend himself: He dies.
 > kill troll with sword
 > drop sword
 
@@ -1251,14 +1241,8 @@
 # You hear a scream of anguish as you violate the robber's hideaway. Using
 #   passages unknown to you, he rushes to its defense.
 > u
-# Combat: thief (12 attempts)
+# Combat: thief (6 attempts)
 # A good stroke, but it's too slow; the thief dodges.
-> kill thief with axe
-> kill thief with axe
-> kill thief with axe
-> kill thief with axe
-> kill thief with axe
-> kill thief with axe
 > kill thief with axe
 > kill thief with axe
 > kill thief with axe
@@ -1323,8 +1307,6 @@
 # +1 points
 > take bauble
 
-## Stage 7
-
 ## North of House
 
 > s
@@ -1361,6 +1343,8 @@
 # The map shows a forest with three clearings. The largest clearing contains a
 #   house. Three paths leave the large clearing.
 > read map
+
+## Stage 7
 
 ## Kitchen
 

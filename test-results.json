@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "storyId": "zork1",
-  "timestamp": "2026-09-08T12:56:19.840283+00:00",
+  "timestamp": "2026-09-22T09:31:56.891673+00:00",
   "transcripts": [
     {
       "file": "zork1.scenario",
@@ -7936,7 +7936,7 @@
           ]
         },
         {
-          "lineNumber": 52,
+          "lineNumber": 42,
           "input": "e",
           "output": "Loud Room\nThis is a large room with a ceiling which cannot be detected from the ground. There is a narrow passage from east to west and a stone stairway leading upward. The room is deafeningly loud with an undetermined rushing sound. The sound seems to reverberate from all of the walls, making it di...",
           "passed": true,
@@ -7950,7 +7950,7 @@
           ]
         },
         {
-          "lineNumber": 53,
+          "lineNumber": 43,
           "input": "echo",
           "output": "The acoustics of the room change subtly.",
           "passed": true,
@@ -7964,7 +7964,7 @@
           ]
         },
         {
-          "lineNumber": 54,
+          "lineNumber": 44,
           "input": "take platinum bar",
           "output": "Taken.\n\n[Your score has just gone up by ten points.]",
           "passed": true,
@@ -7983,7 +7983,7 @@
           ]
         },
         {
-          "lineNumber": 59,
+          "lineNumber": 49,
           "input": "n",
           "output": "Dam Lobby\nThis room appears to have been the waiting room for groups touring the dam. There are open doorways here to the north and east marked \"Private\", and there is a path leading south over the top of the dam.\n\nSome guidebooks entitled \"Flood Control Dam #3\" are on the reception desk.\n\nThere is ...",
           "passed": true,
@@ -7997,7 +7997,7 @@
           ]
         },
         {
-          "lineNumber": 61,
+          "lineNumber": 51,
           "input": "n",
           "output": "Maintenance Room\nThis is what appears to have been the maintenance room for Flood Control Dam #3. Apparently, this room has been ransacked recently, for most of the valuable equipment is gone. On the wall in front of you is a group of buttons colored blue, yellow, brown, and red. There are doorways ...",
           "passed": true,
@@ -8011,7 +8011,7 @@
           ]
         },
         {
-          "lineNumber": 81,
+          "lineNumber": 71,
           "input": "se",
           "output": "Cyclops Room\nThis room has an exit on the northwest, and a staircase leading up.\n\nA cyclops, who looks prepared to eat horses (much less mere adventurers), blocks the staircase. From his state of health, and the bloodstains on the walls, you gather that he is not very friendly, though he likes peopl...",
           "passed": true,
@@ -8025,7 +8025,7 @@
           ]
         },
         {
-          "lineNumber": 82,
+          "lineNumber": 72,
           "input": "odysseus",
           "output": "The cyclops, hearing the name of his father's deadly nemesis, flees the room by knocking down the wall on the east of the room.",
           "passed": true,
@@ -8039,7 +8039,7 @@
           ]
         },
         {
-          "lineNumber": 84,
+          "lineNumber": 74,
           "input": "e",
           "output": "Living Room\nYou are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a closed trap door at your feet.\n\nYour collection of treasures consists of:\n  a jewel-encrusted egg",
           "passed": true,
@@ -8053,7 +8053,7 @@
           ]
         },
         {
-          "lineNumber": 87,
+          "lineNumber": 77,
           "input": "put platinum bar in case",
           "output": "You put the platinum bar into the trophy case.\n\n[Your score has just gone up by five points.]",
           "passed": true,
@@ -8067,7 +8067,7 @@
           ]
         },
         {
-          "lineNumber": 98,
+          "lineNumber": 88,
           "input": "e",
           "output": "Dome Room\nYou are at the periphery of a large dome, which forms the ceiling of another room below. Protecting you from a precipitous drop is a wooden railing which circles the dome.",
           "passed": true,
@@ -8081,7 +8081,7 @@
           ]
         },
         {
-          "lineNumber": 100,
+          "lineNumber": 90,
           "input": "d",
           "output": "Torch Room\nThis is a large room with a prominent doorway leading to a down staircase. Above you is a large dome. Up around the edge of the dome (20 feet up) is a wooden railing. In the center of the room sits a white marble pedestal.\nA piece of rope descends from the railing above, ending some five ...",
           "passed": true,
@@ -8095,7 +8095,7 @@
           ]
         },
         {
-          "lineNumber": 108,
+          "lineNumber": 98,
           "input": "d",
           "output": "Entrance to Hades\nYou are outside a large gateway, on which is inscribed\n\n  Abandon every hope all ye who enter here!\n\nThe gate is open; through it you can see a desolation, with a pile of mangled bodies in one corner. Thousands of voices, lamenting some hideous fate, can be heard.\nThe way through t...",
           "passed": true,
@@ -8109,7 +8109,7 @@
           ]
         },
         {
-          "lineNumber": 117,
+          "lineNumber": 107,
           "input": "take skull",
           "output": "Taken.\n\n[Your score has just gone up by ten points.]",
           "passed": true,
@@ -8123,7 +8123,7 @@
           ]
         },
         {
-          "lineNumber": 137,
+          "lineNumber": 127,
           "input": "put skull in case",
           "output": "You put the crystal skull into the trophy case.\n\n[Your score has just gone up by ten points.]",
           "passed": true,
@@ -8137,7 +8137,7 @@
           ]
         },
         {
-          "lineNumber": 148,
+          "lineNumber": 138,
           "input": "d",
           "output": "Egyptian Room\nThis is a room which looks like an Egyptian tomb. There is an ascending staircase to the west.\n\nThe solid-gold coffin used for the burial of Ramses II is here.",
           "passed": true,
@@ -8151,7 +8151,7 @@
           ]
         },
         {
-          "lineNumber": 150,
+          "lineNumber": 140,
           "input": "open coffin",
           "output": "The gold coffin opens.\nA sceptre, possibly that of ancient Egypt itself, is in the coffin. The sceptre is ornamented with colored enamel, and tapers to a sharp point.",
           "passed": true,
@@ -8165,7 +8165,7 @@
           ]
         },
         {
-          "lineNumber": 153,
+          "lineNumber": 143,
           "input": "s",
           "output": "Altar\nThis is the south end of a large temple. In front of you is what appears to be an altar. In one corner is a small hole in the floor which leads into darkness. You probably could not get back up it.",
           "passed": true,
@@ -8179,7 +8179,7 @@
           ]
         },
         {
-          "lineNumber": 164,
+          "lineNumber": 154,
           "input": "wave sceptre",
           "output": "Suddenly, the rainbow appears to become solid and, I venture, walkable (I think the giveaway was the stairs and bannister).\n\nA shimmering pot of gold appears at the end of the rainbow.",
           "passed": true,
@@ -8193,7 +8193,7 @@
           ]
         },
         {
-          "lineNumber": 165,
+          "lineNumber": 155,
           "input": "take pot of gold",
           "output": "Taken.\n\n[Your score has just gone up by ten points.]",
           "passed": true,
@@ -8207,7 +8207,7 @@
           ]
         },
         {
-          "lineNumber": 180,
+          "lineNumber": 170,
           "input": "put pot of gold in case",
           "output": "You put the pot of gold into the trophy case.\n\n[Your score has just gone up by ten points.]",
           "passed": true,
@@ -8221,7 +8221,7 @@
           ]
         },
         {
-          "lineNumber": 194,
+          "lineNumber": 184,
           "input": "take trident",
           "output": "Taken.\n\n[Your score has just gone up by four points.]",
           "passed": true,
@@ -8235,7 +8235,7 @@
           ]
         },
         {
-          "lineNumber": 216,
+          "lineNumber": 206,
           "input": "put trident in case",
           "output": "You put the crystal trident into the trophy case.\n\n[Your score has just gone up by eleven points.]",
           "passed": true,
@@ -8249,7 +8249,7 @@
           ]
         },
         {
-          "lineNumber": 236,
+          "lineNumber": 226,
           "input": "s",
           "output": "Mirror Room\nYou are in a large square room with tall ceilings. On the south wall is an enormous mirror which fills the entire wall. There are exits on the other three sides of the room.",
           "passed": true,
@@ -8263,7 +8263,7 @@
           ]
         },
         {
-          "lineNumber": 237,
+          "lineNumber": 227,
           "input": "rub mirror",
           "output": "There is a rumble from deep within the earth and the room shakes.",
           "passed": true,
@@ -8277,7 +8277,7 @@
           ]
         },
         {
-          "lineNumber": 249,
+          "lineNumber": 239,
           "input": "take bracelet",
           "output": "Taken.\n\n[Your score has just gone up by five points.]",
           "passed": true,
@@ -8291,7 +8291,7 @@
           ]
         },
         {
-          "lineNumber": 293,
+          "lineNumber": 283,
           "input": "take diamond",
           "output": "Taken.\n\n[Your score has just gone up by ten points.]",
           "passed": true,
@@ -8305,7 +8305,7 @@
           ]
         },
         {
-          "lineNumber": 324,
+          "lineNumber": 314,
           "input": "put torch in case",
           "output": "You put the torch into the trophy case.\n\n[Your score has just gone up by six points.]",
           "passed": true,
@@ -8319,7 +8319,7 @@
           ]
         },
         {
-          "lineNumber": 335,
+          "lineNumber": 325,
           "input": "d",
           "output": "Dam Base\nYou are at the base of Flood Control Dam #3, which looms above you and to the north. The river Frigid is flowing by here. Along the river are the White Cliffs which seem to form giant walls stretching from north to south along the shores of the river as it winds its way downstream.\n\nThere i...",
           "passed": true,
@@ -8333,7 +8333,7 @@
           ]
         },
         {
-          "lineNumber": 340,
+          "lineNumber": 330,
           "input": "launch",
           "output": "You push off from the shore.\n\nFrigid River (in the magic boat)\nYou are on the Frigid River in the vicinity of the Dam. The river flows quietly here. There is a landing on the west shore.\n\nIn the magic boat you can see a tan label.",
           "passed": true,
@@ -8347,7 +8347,7 @@
           ]
         },
         {
-          "lineNumber": 354,
+          "lineNumber": 344,
           "input": "take scarab",
           "output": "Taken.\n\n[Your score has just gone up by five points.]",
           "passed": true,
@@ -8361,7 +8361,7 @@
           ]
         },
         {
-          "lineNumber": 359,
+          "lineNumber": 349,
           "input": "take emerald",
           "output": "Taken.\n\n[Your score has just gone up by five points.]",
           "passed": true,
@@ -8375,7 +8375,7 @@
           ]
         },
         {
-          "lineNumber": 414,
+          "lineNumber": 398,
           "input": "put chalice in case",
           "output": "You put the chalice into the trophy case.\n\n[Your score has just gone up by five points.]",
           "passed": true,
@@ -8389,7 +8389,7 @@
           ]
         },
         {
-          "lineNumber": 420,
+          "lineNumber": 404,
           "input": "wind canary",
           "output": "The canary chirps, slightly off-key, an aria from a forgotten opera. From out of the greenery flies a lovely songbird. It perches on a limb just over your head and opens its beak to sing. As it does so a beautiful brass bauble drops from its mouth, bounces off the top of your head, and lands glimmer...",
           "passed": true,
@@ -8403,7 +8403,7 @@
           ]
         },
         {
-          "lineNumber": 428,
+          "lineNumber": 412,
           "input": "put bauble in case",
           "output": "You put the beautiful brass bauble into the trophy case.\n\n\nAn almost inaudible voice whispers in your ear, \"Look to your treasures for the final secret.\"\n\n[Your score has just gone up by one point.]",
           "passed": true,
@@ -8417,7 +8417,7 @@
           ]
         },
         {
-          "lineNumber": 429,
+          "lineNumber": 413,
           "input": "look",
           "output": "Living Room\nYou are in the living room. There is a doorway to the east. To the west is a cyclops-shaped opening in an old wooden door, above which is some strange gothic lettering, a trophy case, and a rug lying beside an open trap door.\n\nYour collection of treasures consists of:\n  an ancient map\n  ...",
           "passed": true,
@@ -8431,7 +8431,7 @@
           ]
         },
         {
-          "lineNumber": 430,
+          "lineNumber": 414,
           "input": "take map",
           "output": "Taken.",
           "passed": true,
@@ -8445,7 +8445,7 @@
           ]
         },
         {
-          "lineNumber": 437,
+          "lineNumber": 421,
           "input": "enter barrow",
           "output": "Inside the Barrow\nAs you enter the barrow, the door closes inexorably behind you. Around you it is dark, but ahead is an enormous cavern, brightly lit. Through its center runs a wide stream. Spanning the stream is a small wooden footbridge, and beyond a path leads into a dark tunnel. Above the bridg...",
           "passed": true,
