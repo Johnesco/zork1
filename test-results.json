@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "storyId": "zork1",
-  "timestamp": "2026-09-22T09:31:56.891673+00:00",
+  "timestamp": "2026-10-13T09:51:49.550494+00:00",
   "transcripts": [
     {
       "file": "zork1.scenario",
@@ -13961,7 +13961,7 @@
         {
           "lineNumber": 12,
           "input": "read door",
-          "output": "(the old wooden door)\nThe engravings translate to \"This space intentionally left blank.\"",
+          "output": "The engravings translate to \"This space intentionally left blank.\"",
           "passed": true,
           "skipped": false,
           "assertions": [
@@ -13969,13 +13969,18 @@
               "type": "ok-matches",
               "passed": true,
               "value": "intentionally left blank"
+            },
+            {
+              "type": "ok-not-contains",
+              "passed": true,
+              "value": "(the old wooden door)"
             }
           ]
         },
         {
           "lineNumber": 13,
           "input": "examine door",
-          "output": "(the old wooden door)\nThe engravings translate to \"This space intentionally left blank.\"",
+          "output": "The engravings translate to \"This space intentionally left blank.\"",
           "passed": true,
           "skipped": false,
           "assertions": [
@@ -13983,6 +13988,11 @@
               "type": "ok-matches",
               "passed": true,
               "value": "intentionally left blank"
+            },
+            {
+              "type": "ok-not-contains",
+              "passed": true,
+              "value": "(the old wooden door)"
             }
           ]
         }
