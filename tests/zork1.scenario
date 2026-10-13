@@ -1606,5 +1606,7 @@
 ?! elvish
 > read door
 ? /intentionally left blank
+?! (the old wooden door)
 > examine door
 ? /intentionally left blank
+?! (the old wooden door)

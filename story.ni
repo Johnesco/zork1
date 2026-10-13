@@ -1283,6 +1283,9 @@ Before doing anything when the second noun is a zil-invisible thing:
 [ZIL INVISIBLE objects are never parser candidates; the guards above reject them only after parsing, so a hidden trap door still provoked "Which do you mean, the trap door or the old wooden door?" (#167 follow-up, found by #177).]
 Does the player mean doing something to a zil-invisible thing: it is very unlikely.
 
+[That rule settles the choice, but Inform still announces it — "(the old wooden door)" before "read door" in the Living Room — because the hidden trap door matched the word too. ZIL's parser never saw the trap door, so it chose silently (#208). While the trap door is hidden the wooden door is the only real candidate; once the rug is moved both are visible and "door" is genuinely ambiguous, so the announcement (or question) returns.]
+Rule for clarifying the parser's choice of the old wooden door when the trap door is zil-invisible: do nothing.
+
 Instead of entering the trap door: try going down.
 
 Before going down in Living Room:
