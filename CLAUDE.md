@@ -14,9 +14,9 @@ This repo is **Current** — the active working copy. Frozen versions live in th
 
 For the multi-version model, change-propagation rules, and per-version repo conventions, see `C:\code\ifhub\reference\multi-version-guide.md`.
 
-For build, test, and publish workflows, see `C:\code\ifhub\reference\project-guide.md`.
+For build and test, see the workspace `C:\code\text-games\i7\CLAUDE.md`; for publishing and the game/hub contract, `C:\code\ifhub\docs\publishing.md`.
 
-For Inform 7 syntax, text formatting, and the verb help system, see the references in `C:\code\ifhub\reference\`.
+For Inform 7 syntax, text formatting, and the verb help system, see the references in `C:\code\text-games\i7\reference\`.
 
 ## GitHub Repository
 
@@ -76,7 +76,7 @@ For the general model see the multi-version guide. The promotion rules **for thi
 - Typography: 19px buffer / 17px grid, fade-in on new content, mood-colored text shadows
 - Synchronized 1.2s timing across all transitions
 
-These are applied in two places: this game's own `play.html` (always active for Current/v3), and the shared IF Hub player at `ifhub/play.html` (gated on `body.zork1-enhanced` which is added only for v3+ via binary path regex).
+These live only in the game's own player — IF Hub has no Zork-specific code and iframes `play.html` as-is. Hub themes reach the game through `ifhub.conf`'s `overlayLabel` and `theme-listener.js`: a game that loads the listener announces `ifhub:overlayReady` and renders hub themes itself; one that doesn't is themed by CSS the hub injects. Current's `play-template.html` does not load the listener yet, so it takes injection and its own overlay is not selectable as a hub style (#207).
 
 ## Testing
 
