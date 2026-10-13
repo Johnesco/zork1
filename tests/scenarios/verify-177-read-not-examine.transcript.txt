@@ -89,11 +89,9 @@ How does one read a sword?
 
 
 > read door
-(the old wooden door)
 The engravings translate to "This space intentionally left blank."
 
 > examine door
-(the old wooden door)
 The engravings translate to "This space intentionally left blank."
 
 
